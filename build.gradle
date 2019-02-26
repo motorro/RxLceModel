@@ -73,3 +73,16 @@ ext {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task runBaseUnitTests(type: Task, dependsOn: [':base:cleanTest', ':base:test'], group: 'verification') {
+    description 'Run unit tests for Bbase library.'
+}
+
+task runDiskLruUnitTests(type: Task, dependsOn: [':disklrucache:cleanTest', ':disklrucache:test'], group: 'verification') {
+    description 'Run unit tests for DiskLruCache library.'
+}
+
+task runUnitTests(type: Task, dependsOn: ['runBaseUnitTests', 'runDiskLruUnitTests'], group: 'verification') {
+    description 'Run unit tests for libraries.'
+}
+
