@@ -1,0 +1,48 @@
+/*
+ * Copyright 2019 Nikolai Kotchetkov.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.motorro.rxlcemodel.base.service
+
+import com.motorro.rxlcemodel.base.entity.Entity
+import com.motorro.rxlcemodel.base.service.UpdateOperationState.*
+import io.reactivex.Observable
+import io.reactivex.Single
+
+/**
+ * Cache update operation state
+ */
+internal sealed class UpdateOperationState {
+    object IDLE: UpdateOperationState()
+    object LOADING: UpdateOperationState()
+    data class ERROR(val error: Throwable): UpdateOperationState()
+}
+
+/**
+ * Creates a cache-update operation that gets data from [dataSource] and saves to cache.
+ * Network error is returned as [UpdateOperationState.ERROR] while cache save terminates with error
+ * to simplify debug.
+ * @receiver Cache service
+ * @param D Data type
+ * @param P Param type
+ * @param params Params to build [dataSource]
+ * @param dataSource Update operation data source factory
+ */
+internal inline fun <D: Any, P: Any> CacheService<D, P>.buildUpdateOperation(params: P, dataSource: (params: P) -> Single<out Entity<D>>) =
+       Observable.concat<UpdateOperationState>(
+            Observable.just(LOADING),
+            dataSource(params).flatMapObservable<UpdateOperationState> { networkData ->
+                save(params, networkData).andThen(Observable.just(IDLE))
+            }.onErrorResumeNext { error: Throwable ->
+                Observable.just(ERROR(error))
+            }
+       )
