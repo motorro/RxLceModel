@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 kapt {
@@ -20,11 +17,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.motorro.rxlcemodel.sample"
+        applicationId "${project.group}.sample"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode versionCode
         versionName versionName
+        versionCode versionCode
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
