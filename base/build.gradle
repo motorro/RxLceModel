@@ -1,5 +1,6 @@
 apply plugin: 'kotlin'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'org.jetbrains.dokka'
 
 buildscript {
     repositories {
@@ -13,6 +14,13 @@ buildscript {
 project.sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
     test.java.srcDirs += 'src/test/kotlin'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.6"
 }
 
 publish {

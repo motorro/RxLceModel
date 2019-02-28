@@ -1,0 +1,14 @@
+$dokka.format:gfm
+$dokka.linkExtension:md
+$dokka.location:com.motorro.rxlcemodel.base$dataNoErrors#io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.dataNoErrors.DATA, com.motorro.rxlcemodel.base.dataNoErrors.PARAMS))))com.motorro.rxlcemodel.base/io.reactivex.-observable/data-no-errors.md
+$dokka.location:com.motorro.rxlcemodel.base$dataStopOnEmptyErrors#io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.dataStopOnEmptyErrors.DATA, com.motorro.rxlcemodel.base.dataStopOnEmptyErrors.PARAMS))))com.motorro.rxlcemodel.base/io.reactivex.-observable/data-stop-on-empty-errors.md
+$dokka.location:com.motorro.rxlcemodel.base$dataStopOnErrors#io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.dataStopOnErrors.DATA, com.motorro.rxlcemodel.base.dataStopOnErrors.PARAMS))))com.motorro.rxlcemodel.base/io.reactivex.-observable/data-stop-on-errors.md
+$dokka.location:com.motorro.rxlcemodel.base$getData(io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.getData.DATA, com.motorro.rxlcemodel.base.getData.PARAMS)))), kotlin.Function1((com.motorro.rxlcemodel.base.LceState.Error((com.motorro.rxlcemodel.base.getData.DATA, com.motorro.rxlcemodel.base.getData.PARAMS)), kotlin.Boolean)))com.motorro.rxlcemodel.base/io.reactivex.-observable/get-data.md
+$dokka.location:com.motorro.rxlcemodel.base$stopOnEmptyErrors#io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.stopOnEmptyErrors.DATA, com.motorro.rxlcemodel.base.stopOnEmptyErrors.PARAMS))))com.motorro.rxlcemodel.base/io.reactivex.-observable/stop-on-empty-errors.md
+$dokka.location:com.motorro.rxlcemodel.base$stopOnErrors#io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.stopOnErrors.DATA, com.motorro.rxlcemodel.base.stopOnErrors.PARAMS))))com.motorro.rxlcemodel.base/io.reactivex.-observable/stop-on-errors.md
+$dokka.location:com.motorro.rxlcemodel.base$terminateOnError(io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.terminateOnError.DATA, com.motorro.rxlcemodel.base.terminateOnError.PARAMS)))), kotlin.Function1((com.motorro.rxlcemodel.base.LceState.Error((com.motorro.rxlcemodel.base.terminateOnError.DATA, com.motorro.rxlcemodel.base.terminateOnError.PARAMS)), kotlin.Boolean)))com.motorro.rxlcemodel.base/io.reactivex.-observable/terminate-on-error.md
+$dokka.location:com.motorro.rxlcemodel.base$validData#io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.validData.DATA, com.motorro.rxlcemodel.base.validData.PARAMS))))com.motorro.rxlcemodel.base/io.reactivex.-observable/valid-data.md
+com.motorro.rxlcemodel.base
+com.motorro.rxlcemodel.base.entity
+com.motorro.rxlcemodel.base.service
+com.motorro.rxlcemodel.disklrucache

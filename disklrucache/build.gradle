@@ -1,5 +1,6 @@
 apply plugin: 'kotlin'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'org.jetbrains.dokka'
 
 buildscript {
     repositories {
@@ -8,6 +9,14 @@ buildscript {
     dependencies {
         classpath 'com.novoda:bintray-release:0.9'
     }
+}
+
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.6"
 }
 
 project.sourceSets {

@@ -11,6 +11,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.17'
         classpath 'org.ajoberstar:gradle-git:1.7.2'
     }
 }
@@ -30,6 +31,9 @@ ext {
     //Bin-tray
     bintrayUserOrg="motorro"
     bintrayRepoName="RxLceModel"
+
+    // Dokka
+    docDir = "${projectDir}/doc"
 }
 
 allprojects {
@@ -82,6 +86,7 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+    delete docDir
 }
 
 task runBaseUnitTests(type: Task, dependsOn: [':base:cleanTest', ':base:test'], group: 'verification') {
@@ -100,6 +105,43 @@ task displayVersion(type: Task, group: 'documentation') {
     description 'Display application version name'
     doLast {
         println("Project version: ${project.version}")
+    }
+}
+
+/**
+ * Finds sub-projects that need dokka generation
+ * Place `apply plugin: 'org.jetbrains.dokka'` there
+ * @return A set of projects that have dokka task
+ */
+Set<Project> findDokkaProjects() {
+    subprojects.findAll {
+        !it.tasks.findAll { "dokka" == it.getName() }.isEmpty()
+    }
+}
+
+task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
+    outputDirectory = docDir
+    outputFormat = "gfm"
+    includes = ["${projectDir}/module.md"]
+
+    externalDocumentationLink {
+        url = new URL ("http://reactivex.io/RxJava/2.x/javadoc/")
+        packageListUrl = new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list")
+    }
+
+    dependsOn {
+        findDokkaProjects().collect {
+            it.tasks.getByName("jar")
+        }
+    }
+
+    doFirst {
+        def dokkaProjects = findDokkaProjects()
+
+        classpath = dokkaProjects.collect { project -> project.jar.outputs.files.getFiles() }.flatten()
+        classpath += files(dokkaProjects.collect { project -> project.sourceSets.main.compileClasspath })
+
+        sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
     }
 }
 
