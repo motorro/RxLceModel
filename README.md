@@ -1,7 +1,5 @@
 # RxLceModel
 [![Build Status](https://travis-ci.com/motorro/RxLceModel.svg?token=ZyJexBWWUzhwyHdkocKJ&branch=master)](https://travis-ci.com/motorro/RxLceModel)
-[ ![Base](https://api.bintray.com/packages/motorro/RxLceModel/base/images/download.svg) ](https://bintray.com/motorro/RxLceModel/base/_latestVersion)
-[ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion)
 
 A reactive data loading with cache as a 'Single source of truth' for Android based on 
 [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
@@ -18,18 +16,19 @@ operation state (`Loading`/`Content`/`Error`).
 - Extendable architecture
 
 ## Setting up the dependency
-Basic module:
+Basic module [ ![Base](https://api.bintray.com/packages/motorro/RxLceModel/base/images/download.svg) ](https://bintray.com/motorro/RxLceModel/base/_latestVersion):
 ```groovy
 dependencies {
     // Base model components
-    implementation "com.motorro.rxlcemodel:base:1.0.0"
+    implementation "com.motorro.rxlcemodel:base:x.x.x"
 }
 ```
-Additional modules:
+[Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion)
+:
 ```groovy
 dependencies {
     // Jake Wharton's DiskLruCache delegate for cache implementation
-    implementation "com.motorro.rxlcemodel:disklrucache:1.0.0"
+    implementation "com.motorro.rxlcemodel:disklrucache:x.x.x"
 }
 ```
  
