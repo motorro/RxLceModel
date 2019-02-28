@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`DiskLruCacheSyncDelegate(prefix: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, sd: `[`CacheDelegateSerializerDeserializer`](../../com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)`<`[`D`](index.md#D)`>, cacheProvider: `[`DiskLruCacheProvider`](-disk-lru-cache-provider/index.md)`, clock: `[`Clock`](../../com.motorro.rxlcemodel.base.entity/-clock/index.md)`)`
+`DiskLruCacheSyncDelegate(prefix: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, sd: `[`CacheDelegateSerializerDeserializer`](../../com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)`<`[`D`](index.md#D)`>, cacheProvider: `[`DiskLruCacheProvider`](-disk-lru-cache-provider/index.md)`, clock: `[`Clock`](../../com.motorro.rxlcemodel.base.entity/-clock/index.md)` = Clock.SYSTEM)`
 
 [DiskLruCache](#) caching delegate for [SyncDelegateCacheService](../../com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md)
 Designed to operate common [cacheProvider](#) instance with other delegates to be able to kill all

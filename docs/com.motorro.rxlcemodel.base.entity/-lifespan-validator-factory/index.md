@@ -8,15 +8,15 @@ Creates [Lifespan](../-entity-validator/-lifespan/index.md) as a cache-control
 
 ### Parameters
 
-`clock` - System clock
-
 `cacheTtl` - Cache TTL
+
+`clock` - System clock
 
 ### Constructors
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `LifespanValidatorFactory(clock: `[`Clock`](../-clock/index.md)`, cacheTtl: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)`)`<br>Creates [Lifespan](../-entity-validator/-lifespan/index.md) as a cache-control |
+| [&lt;init&gt;](-init-.md) | `LifespanValidatorFactory(cacheTtl: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)`, clock: `[`Clock`](../-clock/index.md)` = Clock.SYSTEM)`<br>Creates [Lifespan](../-entity-validator/-lifespan/index.md) as a cache-control |
 
 ### Functions
 

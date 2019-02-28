@@ -10,7 +10,7 @@ Deserializes validator from string
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `LifespanDeserializer(clock: `[`Clock`](../../../-clock/index.md)`)`<br>Deserializes validator from string |
+| [&lt;init&gt;](-init-.md) | `LifespanDeserializer(clock: `[`Clock`](../../../-clock/index.md)` = Clock.SYSTEM)`<br>Deserializes validator from string |
 
 ### Functions
 

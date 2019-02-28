@@ -5,6 +5,7 @@
 `interface CacheManager`
 
 Closes and deletes cache
+May be used to close or delete all scoped cache at once e.g. for current user
 
 ### Properties
 

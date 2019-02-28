@@ -9,3 +9,5 @@ Serializes and deserialises [Serializable](http://docs.oracle.com/javase/6/docs/
 ### Parameters
 
 `validatorFactory` - [Entity](../../../com.motorro.rxlcemodel.base.entity/-entity/index.md) validator factory
+
+`dataClass` - Class type to cast result to

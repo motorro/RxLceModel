@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`LifespanDeserializer(clock: `[`Clock`](../../../-clock/index.md)`)`
+`LifespanDeserializer(clock: `[`Clock`](../../../-clock/index.md)` = Clock.SYSTEM)`
 
 Deserializes validator from string
 

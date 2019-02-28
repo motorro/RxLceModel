@@ -24,7 +24,7 @@ Uses creation time and TTL to validate
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `Lifespan(ttl: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)`, clock: `[`Clock`](../../-clock/index.md)`)` |
+| [&lt;init&gt;](-init-.md) | `Lifespan(ttl: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)`, clock: `[`Clock`](../../-clock/index.md)` = Clock.SYSTEM)` |
 
 ### Functions
 

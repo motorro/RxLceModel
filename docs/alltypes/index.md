@@ -7,7 +7,7 @@ Base model library
 | Name | Summary |
 |---|---|
 | [com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer](../com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md) | Serializer for cache delegates |
-| [com.motorro.rxlcemodel.base.service.CacheManager](../com.motorro.rxlcemodel.base.service/-cache-manager/index.md) | Closes and deletes cache |
+| [com.motorro.rxlcemodel.base.service.CacheManager](../com.motorro.rxlcemodel.base.service/-cache-manager/index.md) | Closes and deletes cache May be used to close or delete all scoped cache at once e.g. for current user |
 | [com.motorro.rxlcemodel.base.service.CacheService](../com.motorro.rxlcemodel.base.service/-cache-service/index.md) | Interface to cache an [com.motorro.rxlcemodel.base.entity.Entity](../com.motorro.rxlcemodel.base.entity/-entity/index.md) locally Cache should notify subscribers that data has been updated through [getData](../com.motorro.rxlcemodel.base.service/-cache-service/get-data.md) channel |
 | [com.motorro.rxlcemodel.base.CacheThenNetLceModel](../com.motorro.rxlcemodel.base/-cache-then-net-lce-model/index.md) | A [LceModel](../com.motorro.rxlcemodel.base/-lce-model/index.md) which uses cache subscription as a source of truth. When [state](../com.motorro.rxlcemodel.base/-cache-then-net-lce-model/state.md) is subscribed it loads cache data refreshing it if cache is stall or whenever cache returns [com.gojuno.koptional.None](#). The model always returns cached data first - then network if data is stall Cache service *must* notify of its data changes! |
 | [com.motorro.rxlcemodel.base.entity.Clock](../com.motorro.rxlcemodel.base.entity/-clock/index.md) | Time provider |

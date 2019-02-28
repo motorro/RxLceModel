@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`Lifespan(ttl: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)`, clock: `[`Clock`](../../-clock/index.md)`)`
+`Lifespan(ttl: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)`, clock: `[`Clock`](../../-clock/index.md)` = Clock.SYSTEM)`
 
 ### Parameters
 

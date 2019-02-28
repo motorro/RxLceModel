@@ -6,8 +6,8 @@
 
 System clock
 
-### Properties
+### Functions
 
 | Name | Summary |
 |---|---|
-| [millis](millis.md) | `val millis: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)<br>Current milliseconds value |
+| [getMillis](get-millis.md) | `fun getMillis(): `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)<br>Current milliseconds value |

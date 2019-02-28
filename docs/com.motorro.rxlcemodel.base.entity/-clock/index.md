@@ -12,11 +12,11 @@ Time provider
 |---|---|
 | [SYSTEM](-s-y-s-t-e-m/index.md) | `object SYSTEM : `[`Clock`](./index.md)<br>System clock |
 
-### Properties
+### Functions
 
 | Name | Summary |
 |---|---|
-| [millis](millis.md) | `abstract val millis: `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)<br>Current milliseconds value |
+| [getMillis](get-millis.md) | `abstract fun getMillis(): `[`Long`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)<br>Current milliseconds value |
 
 ### Inheritors
 
