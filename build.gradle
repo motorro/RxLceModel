@@ -16,7 +16,7 @@ buildscript {
     }
 }
 
-version = buildVersionName()
+setVersion(buildVersionName())
 group = "com.motorro.rxlcemodel"
 
 ext {
@@ -86,7 +86,6 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-    delete docDir
 }
 
 task runBaseUnitTests(type: Task, dependsOn: [':base:cleanTest', ':base:test'], group: 'verification') {
@@ -130,6 +129,7 @@ task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
     }
 
     dependsOn {
+        delete docDir
         findDokkaProjects().collect {
             it.tasks.getByName("jar")
         }
