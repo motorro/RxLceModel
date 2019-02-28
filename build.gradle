@@ -33,7 +33,7 @@ ext {
     bintrayRepoName="RxLceModel"
 
     // Dokka
-    docDir = "${projectDir}/doc"
+    docDir = "${projectDir}/docs"
 }
 
 allprojects {
