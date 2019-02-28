@@ -38,7 +38,10 @@ interface Entity<out T: Any>: EntityValidator {
      * @param data Stored data
      * @param validator Entity validator
      */
-    data class Impl<out T: Any>(override val data: T, private val validator: EntityValidator): Entity<T>, EntityValidator by validator {
+    data class Impl<out T: Any>(
+        override val data: T,
+        private val validator: EntityValidator
+    ): Entity<T>, EntityValidator by validator {
         /**
          * Transforms Entity [data] to another entity data with [mapper]
          * Validation remains the same
@@ -94,7 +97,8 @@ interface EntityValidator {
              * @param serialized Serialized validator
              * @return Deserialized validator or null if not recognized
              */
-            override fun deserialize(serialized: String): EntityValidator? = if (SERIALIZED_ALWAYS == serialized) Always else null
+            override fun deserialize(serialized: String): EntityValidator? =
+                if (SERIALIZED_ALWAYS == serialized) Always else null
         }
 
         /**
@@ -126,7 +130,8 @@ interface EntityValidator {
              * @param serialized Serialized validator
              * @return Deserialized validator or null if not recognized
              */
-            override fun deserialize(serialized: String): EntityValidator? = if (SERIALIZED_NEVER == serialized) Never else null
+            override fun deserialize(serialized: String): EntityValidator? =
+                if (SERIALIZED_NEVER == serialized) Never else null
         }
 
         /**
@@ -146,12 +151,15 @@ interface EntityValidator {
      * @param ttl Time to live
      * @param clock Clock implementation
      */
-    class Lifespan private constructor(private val wasBorn: Long, private val ttl: Long, private val clock: Clock) :
-        EntityValidator {
+    class Lifespan private constructor(
+        private val wasBorn: Long,
+        private val ttl: Long,
+        private val clock: Clock
+    ): EntityValidator {
         /**
          * Deserializes validator from string
          */
-        class LifespanDeserializer(private val clock: Clock) : Deserializer {
+        class LifespanDeserializer @JvmOverloads constructor (private val clock: Clock = Clock.SYSTEM) : Deserializer {
             companion object {
                 /**
                  * Pattern to deserialize
@@ -179,12 +187,12 @@ interface EntityValidator {
          * @param ttl Time to live
          * @param clock Clock implementation
          */
-        constructor(ttl: Long, clock: Clock) : this(clock.millis, ttl, clock)
+        @JvmOverloads constructor(ttl: Long, clock: Clock = Clock.SYSTEM) : this(clock.getMillis(), ttl, clock)
 
         /**
          * If true cached entity is valid.
          */
-        override fun isValid(): Boolean = clock.millis - wasBorn <= ttl
+        override fun isValid(): Boolean = clock.getMillis() - wasBorn <= ttl
 
         /**
          * A way to serialize entity

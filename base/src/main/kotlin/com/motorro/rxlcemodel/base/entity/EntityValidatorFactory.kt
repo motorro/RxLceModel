@@ -29,10 +29,13 @@ interface EntityValidatorFactory {
 
 /**
  * Creates [Lifespan] as a cache-control
- * @param clock System clock
  * @param cacheTtl Cache TTL
+ * @param clock System clock
  */
-class LifespanValidatorFactory(private val clock: Clock, private val cacheTtl: Long): EntityValidatorFactory {
+class LifespanValidatorFactory @JvmOverloads constructor(
+    private val cacheTtl: Long,
+    private val clock: Clock = Clock.SYSTEM
+): EntityValidatorFactory {
     /**
      * Deserializer
      */

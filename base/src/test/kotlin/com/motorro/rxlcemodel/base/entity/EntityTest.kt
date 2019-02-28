@@ -56,7 +56,7 @@ class EntityTest {
 
     @Test
     fun serializesAndDeserializesLifespan() {
-        whenever(clock.millis).thenReturn(5)
+        whenever(clock.getMillis()).thenReturn(5)
         val v = Lifespan(5, clock)
         val s = v.serialize()
         assertEquals(v, Lifespan.LifespanDeserializer(clock).deserialize(s))
@@ -64,7 +64,7 @@ class EntityTest {
 
     @Test
     fun lifespanWillNotDeserializeUnknownString() {
-        whenever(clock.millis).thenReturn(5)
+        whenever(clock.getMillis()).thenReturn(5)
         val s = "Unknown"
         assertNull(Lifespan.LifespanDeserializer(clock).deserialize(s))
     }
@@ -72,7 +72,7 @@ class EntityTest {
     // As soon as we should provide Entity interface - not internal state
     @Test
     fun twoDifferentLifeSpansBothUpToDateShouldBeEqual() {
-        whenever(clock.millis).thenReturn(5).thenReturn(10)
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10)
         val entity1 = Lifespan(15, clock)
         val entity2 = Lifespan(25, clock)
         assertTrue { entity1 == entity2 }
@@ -80,7 +80,7 @@ class EntityTest {
 
     @Test
     fun twoDifferentLifeSpansWithDifferentUpToDateShouldNotBeEqual() {
-        whenever(clock.millis).thenReturn(5).thenReturn(10).thenReturn(30)
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10).thenReturn(30)
         val entity1 = Lifespan(15, clock)
         val entity2 = Lifespan(25, clock)
 
@@ -94,7 +94,7 @@ class EntityTest {
     // As soon as we should provide Entity interface - not internal state
     @Test
     fun twoDifferentLifeSpansBothUpToDateShouldHaveSameHashCode() {
-        whenever(clock.millis).thenReturn(5).thenReturn(10)
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10)
         val entity1 = Lifespan(15, clock)
         val entity2 = Lifespan(25, clock)
 
@@ -103,7 +103,7 @@ class EntityTest {
 
     @Test
     fun twoDifferentLifeSpansWithDifferentUpToDateShouldHaveDifferentHashCode() {
-        whenever(clock.millis).thenReturn(5).thenReturn(10).thenReturn(30)
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10).thenReturn(30)
         val entity1 = Lifespan(15, clock)
         val entity2 = Lifespan(25, clock)
 

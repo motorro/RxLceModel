@@ -34,8 +34,7 @@ import io.reactivex.subjects.PublishSubject
  * @param params Params that identify data being loaded
  * @param serviceSet Data service-set
  */
-class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(override val params: PARAMS, serviceSet: ServiceSet<DATA, PARAMS>) :
-    LceModel<DATA, PARAMS> {
+class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(override val params: PARAMS, serviceSet: ServiceSet<DATA, PARAMS>): LceModel<DATA, PARAMS> {
     /**
      * Network operation state broadcast
      */

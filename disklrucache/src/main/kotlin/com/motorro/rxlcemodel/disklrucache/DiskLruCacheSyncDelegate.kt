@@ -34,11 +34,11 @@ import java.io.*
  * @param cacheProvider Disk LRU cache provider. Opens cache with a proper entry config.
  * @param clock Provides timestamp for cache status marks
  */
-class DiskLruCacheSyncDelegate<D: Any>(
+class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
     private val prefix: String,
     private val sd: CacheDelegateSerializerDeserializer<D>,
     private val cacheProvider: DiskLruCacheProvider,
-    private val clock: Clock
+    private val clock: Clock = Clock.SYSTEM
 ): SyncDelegateCacheService.Delegate<D, String> {
     /**
      * Provides properly configured [DiskLruCache] with required entry config
@@ -169,7 +169,7 @@ class DiskLruCacheSyncDelegate<D: Any>(
                 withDataOutputStream {
                     sd.serialize(entity, it)
                 }
-                setCreatedAt(clock.millis)
+                setCreatedAt(clock.getMillis())
                 setInvalidatedAt(0L)
                 commit()
             }.getOrElse {
@@ -186,7 +186,7 @@ class DiskLruCacheSyncDelegate<D: Any>(
         cacheProvider.cache.get(key)?.use {
             it.edit()?.run {
                 runCatching {
-                    setInvalidatedAt(clock.millis)
+                    setInvalidatedAt(clock.getMillis())
                     commit()
                 }.getOrElse {
                     abort()
@@ -199,6 +199,6 @@ class DiskLruCacheSyncDelegate<D: Any>(
      * Invalidates all cached values
      */
     override fun invalidateAll() {
-        allInvalidatedAt = clock.millis
+        allInvalidatedAt = clock.getMillis()
     }
 }

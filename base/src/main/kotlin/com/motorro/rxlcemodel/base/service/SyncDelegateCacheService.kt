@@ -27,8 +27,7 @@ import io.reactivex.subjects.Subject
  * Service implementation
  * @param delegate Delegate to perform concrete caching operations
  */
-class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val delegate: Delegate<D, P>) :
-    CacheService<D, P> {
+class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val delegate: Delegate<D, P>): CacheService<D, P> {
     /**
      * Delegate that synchronously performs caching operations
      */
@@ -93,12 +92,14 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
      */
     override fun getData(params: P): Observable<Optional<Entity<D>>> {
         val readFromCache = Observable.fromCallable { delegate.get(params).toOptional() }
-        return Observable.concatEager(listOf(
-                readFromCache,
-                refreshChannel
-                        .filter { it.isForMe(params) }
-                        .switchMap { readFromCache }
-        )).distinctUntilChanged()
+        return Observable.concatEager(
+                listOf(
+                    readFromCache,
+                    refreshChannel
+                            .filter { it.isForMe(params) }
+                            .switchMap { readFromCache }
+                )
+        ).distinctUntilChanged()
     }
 
     /**

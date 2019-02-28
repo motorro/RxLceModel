@@ -40,9 +40,12 @@ interface CacheDelegateSerializerDeserializer<D: Any> {
     /**
      * Serializes and deserialises [Serializable] objects
      * @param validatorFactory [Entity] validator factory
+     * @param dataClass Class type to cast result to
      */
-    class WithObjectStream<D: Serializable>(private val validatorFactory: EntityValidatorFactory, private val dataClass: Class<D>) :
-        CacheDelegateSerializerDeserializer<D> {
+    class WithObjectStream<D: Serializable>(
+        private val validatorFactory: EntityValidatorFactory,
+        private val dataClass: Class<D>
+    ): CacheDelegateSerializerDeserializer<D> {
         /**
          * Class to store serialized data
          * @property data Entity data

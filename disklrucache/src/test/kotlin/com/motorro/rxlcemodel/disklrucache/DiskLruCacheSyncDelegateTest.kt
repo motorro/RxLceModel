@@ -101,7 +101,7 @@ class DiskLruCacheSyncDelegateTest {
 
     @Test
     fun createsAndReturnsEntity() {
-        whenever(clock.millis).thenReturn(100)
+        whenever(clock.getMillis()).thenReturn(100)
         delegate.save("key", ENTITY)
         assertEquals(ENTITY, delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
@@ -114,13 +114,13 @@ class DiskLruCacheSyncDelegateTest {
         // https://github.com/JakeWharton/DiskLruCache/issues/70
         assumeFalse(isRunningWindows())
 
-        whenever(clock.millis).thenReturn(100)
+        whenever(clock.getMillis()).thenReturn(100)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
         verify(sd).deserialize(any(), any(), eq(false))
 
-        whenever(clock.millis).thenReturn(200)
+        whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidate("key")
         assertNotNull(delegate.get("key"))
         verify(sd).deserialize(any(), any(), eq(true))
@@ -137,18 +137,18 @@ class DiskLruCacheSyncDelegateTest {
         // https://github.com/JakeWharton/DiskLruCache/issues/70
         assumeFalse(isRunningWindows())
 
-        whenever(clock.millis).thenReturn(100)
+        whenever(clock.getMillis()).thenReturn(100)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
         verify(sd).deserialize(any(), any(), eq(false))
 
-        whenever(clock.millis).thenReturn(200)
+        whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidate("key")
         assertNotNull(delegate.get("key"))
         verify(sd).deserialize(any(), any(), eq(true))
 
-        whenever(clock.millis).thenReturn(300)
+        whenever(clock.getMillis()).thenReturn(300)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd, times(2)).deserialize(any(), any(), eq(false))
@@ -156,13 +156,13 @@ class DiskLruCacheSyncDelegateTest {
 
     @Test
     fun invalidatesAllEntities() {
-        whenever(clock.millis).thenReturn(100)
+        whenever(clock.getMillis()).thenReturn(100)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
         verify(sd).deserialize(any(), any(), eq(false))
 
-        whenever(clock.millis).thenReturn(200)
+        whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidateAll()
 
         assertNotNull(delegate.get("key"))
@@ -175,19 +175,19 @@ class DiskLruCacheSyncDelegateTest {
         // https://github.com/JakeWharton/DiskLruCache/issues/70
         assumeFalse(isRunningWindows())
 
-        whenever(clock.millis).thenReturn(100)
+        whenever(clock.getMillis()).thenReturn(100)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
         verify(sd).deserialize(any(), any(), eq(false))
 
-        whenever(clock.millis).thenReturn(200)
+        whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidateAll()
 
         assertNotNull(delegate.get("key"))
         verify(sd).deserialize(any(), any(), eq(true))
 
-        whenever(clock.millis).thenReturn(300)
+        whenever(clock.getMillis()).thenReturn(300)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd, times(2)).deserialize(any(), any(), eq(false))

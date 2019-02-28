@@ -55,7 +55,7 @@ sealed class LceState<out DATA: Any, PARAMS: Any> {
      * @property params Params used to load [data]
      * @property type Loading type
      */
-    data class Loading<out DATA: Any, PARAMS: Any>(
+    data class Loading<out DATA: Any, PARAMS: Any> @JvmOverloads constructor (
             override val data: DATA?,
             override val dataIsValid: Boolean,
             override val params: PARAMS,

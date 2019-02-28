@@ -20,14 +20,12 @@ interface Clock {
     /**
      * Current milliseconds value
      */
-    val millis: Long
+    fun getMillis(): Long
 
     /**
      * System clock
      */
     object SYSTEM: Clock {
-        override val millis: Long
-            get() = System.currentTimeMillis()
-
+        override fun getMillis(): Long = System.currentTimeMillis()
     }
 }
