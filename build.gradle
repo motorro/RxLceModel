@@ -131,7 +131,7 @@ task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
     dependsOn {
         delete docDir
         findDokkaProjects().collect {
-            it.tasks.getByName("jar")
+            it.tasks.getByName("dokka")
         }
     }
 

@@ -54,8 +54,18 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+dokka {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+    archiveClassifier.set('javadoc')
+    from "$buildDir/javadoc"
+}
+
 artifacts {
-    archives sourcesJar
+    archives sourcesJar, javadocJar
 }
 
 bintrayUpload.dependsOn build
