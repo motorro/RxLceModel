@@ -21,9 +21,23 @@ jdk:
 notifications:
   email: false
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
   - $HOME/.m2
-  - $HOME/.gradle
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
 
-script: "./gradlew runUnitTests --no-daemon"
+script: "./gradlew build --no-daemon"
+
+deploy:
+  provider: script
+  script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false"
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+
