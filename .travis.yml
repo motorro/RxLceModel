@@ -32,23 +32,25 @@ cache:
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
 
-script: "./gradlew build dokka --no-daemon"
+script:
+  - "./gradlew build"
+  - "./gradlew dokka"
 
 deploy:
   - provider: script
     script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false"
     skip_cleanup: true
+    verbose: true
     on:
-      repo: motorro/RxLceModel
       tags: true
-      condition: $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+/
+      condition: $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+/ AND fork = false
   - provider: pages
     local-dir: ./docs
     target-branch: master
     keep-history: true
     skip-cleanup: true
     github-token: $GITHUB_PUSH_TOKEN
+    verbose: true
     on:
-      repo: motorro/RxLceModel
       branch: master
-      condition: type = push
+      condition: type = push AND fork = false
