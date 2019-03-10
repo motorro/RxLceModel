@@ -33,8 +33,13 @@ import io.reactivex.subjects.PublishSubject
  * @param PARAMS Params type that identify data being loaded
  * @param params Params that identify data being loaded
  * @param serviceSet Data service-set
+ * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
  */
-class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(override val params: PARAMS, serviceSet: ServiceSet<DATA, PARAMS>): LceModel<DATA, PARAMS> {
+class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
+    override val params: PARAMS,
+    serviceSet: ServiceSet<DATA, PARAMS>,
+    startWith: Observable<LceState<DATA, PARAMS>>
+): LceModel<DATA, PARAMS> {
     /**
      * Network operation state broadcast
      */
@@ -61,7 +66,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(override val params: PARAMS, 
      */
     override val state: Observable<LceState<DATA, PARAMS>> by lazy {
         Observable.concat(
-                Observable.just(Loading(null, false, params)),
+                startWith,
                 serviceSet.cache.getData(params).switchMap<LceState<DATA, PARAMS>> { fromCache ->
                     val entity = fromCache.toNullable()
 
