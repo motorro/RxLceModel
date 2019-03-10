@@ -54,3 +54,5 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
+
+dokka.dependsOn assemble
