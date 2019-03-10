@@ -47,7 +47,6 @@ jobs:
       script: "./gradlew dokka --no-daemon"
       deploy:
         provider: pages
-        local-dir: ./docs
         target-branch: master
         keep-history: true
         skip-cleanup: true
