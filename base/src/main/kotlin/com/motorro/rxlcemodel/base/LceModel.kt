@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.base
 
+import com.motorro.rxlcemodel.base.LceState.*
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
 import io.reactivex.Completable
@@ -32,12 +33,17 @@ interface LceModel<DATA: Any, PARAMS: Any> {
          * @param PARAMS Params type that identify data being loaded
          * @param params Params that identify data being loaded
          * @param serviceSet Service-set to load data
+         * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
          */
-        fun <DATA: Any, PARAMS: Any> cacheThanNet(params: PARAMS, serviceSet: ServiceSet<DATA, PARAMS>): LceModel<DATA, PARAMS> =
-                CacheThenNetLceModel(
-                        params = params,
-                        serviceSet = serviceSet
-                )
+        @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThanNet(
+            params: PARAMS,
+            serviceSet: ServiceSet<DATA, PARAMS>,
+            startWith: Observable<LceState<DATA, PARAMS>> = Observable.just(Loading(null, false, params))
+        ): LceModel<DATA, PARAMS> = CacheThenNetLceModel(
+                params = params,
+                serviceSet = serviceSet,
+                startWith = startWith
+        )
     }
 
     /**

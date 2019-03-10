@@ -51,7 +51,11 @@ class CacheThenNetLceModelTest {
         val testServiceSet = createServiceSet<Int, Unit, String>(configure)
         serviceSet = testServiceSet
         cacheData = testServiceSet.cacheData
-        model = CacheThenNetLceModel(PARAMS, serviceSet)
+        model = CacheThenNetLceModel(
+            PARAMS,
+            serviceSet,
+            Observable.just<LceState<Int, String>>(LceState.Loading(null, false, PARAMS))
+        )
     }
 
     @Test
@@ -211,7 +215,11 @@ class CacheThenNetLceModelTest {
         whenever(serviceSet.net.get(any())).thenReturn(Single.create { /* Endless wait */ })
         whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just(Some(VALID_ENTITY)))
 
-        model = CacheThenNetLceModel(PARAMS, serviceSet)
+        model = CacheThenNetLceModel(
+            PARAMS,
+            serviceSet,
+            Observable.just<LceState<Int, String>>(LceState.Loading(null, false, PARAMS))
+        )
         val s = model.state.test()
         s.assertNoErrors()
         s.assertNotComplete()
@@ -248,7 +256,11 @@ class CacheThenNetLceModelTest {
         whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just(Some(INVALID_ENTITY)))
         whenever(serviceSet.cache.save(any(), any())).thenReturn(Completable.complete())
 
-        model = CacheThenNetLceModel(PARAMS, serviceSet)
+        model = CacheThenNetLceModel(
+            PARAMS,
+            serviceSet,
+            Observable.just<LceState<Int, String>>(LceState.Loading(null, false, PARAMS))
+        )
         val s1 = model.state.test()
         s1.assertNoErrors()
         s1.assertNotComplete()
