@@ -25,7 +25,7 @@ Model asynchronously loads data and transmits it through [state](state.md)
 
 | Name | Summary |
 |---|---|
-| [cacheThanNet](cache-than-net.md) | `fun <DATA : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`, PARAMS : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> cacheThanNet(params: `[`PARAMS`](cache-than-net.md#PARAMS)`, serviceSet: `[`ServiceSet`](../../com.motorro.rxlcemodel.base.service/-service-set/index.md)`<`[`DATA`](cache-than-net.md#DATA)`, `[`PARAMS`](cache-than-net.md#PARAMS)`>): `[`LceModel`](./index.md)`<`[`DATA`](cache-than-net.md#DATA)`, `[`PARAMS`](cache-than-net.md#PARAMS)`>`<br>Creates a model that returns cached data first, than refreshes if stall |
+| [cacheThanNet](cache-than-net.md) | `fun <DATA : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`, PARAMS : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> cacheThanNet(params: `[`PARAMS`](cache-than-net.md#PARAMS)`, serviceSet: `[`ServiceSet`](../../com.motorro.rxlcemodel.base.service/-service-set/index.md)`<`[`DATA`](cache-than-net.md#DATA)`, `[`PARAMS`](cache-than-net.md#PARAMS)`>, startWith: `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](cache-than-net.md#DATA)`, `[`PARAMS`](cache-than-net.md#PARAMS)`>> = Observable.just(Loading(null, false, params))): `[`LceModel`](./index.md)`<`[`DATA`](cache-than-net.md#DATA)`, `[`PARAMS`](cache-than-net.md#PARAMS)`>`<br>Creates a model that returns cached data first, than refreshes if stall |
 
 ### Extension Functions
 
