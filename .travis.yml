@@ -42,9 +42,9 @@ stages:
 jobs:
   include:
     - stage: tests
-      script: "./gradlew build --no-daemon"
+      script: "./gradlew displayVersion build --no-daemon"
     - stage: docs
-      script: "./gradlew dokka --no-daemon"
+      script: "./gradlew displayVersion dokka --no-daemon"
       deploy:
         provider: pages
         target-branch: master
@@ -53,7 +53,7 @@ jobs:
         github-token: $GITHUB_PUSH_TOKEN
         verbose: true
     - stage: deploy
-      script: "./gradlew :base:assemble :disklrucache:assemble"
+      script: "./gradlew displayVersion :base:assemble :disklrucache:assemble"
       deploy:
         provider: script
         script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false"
