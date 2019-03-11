@@ -31,7 +31,7 @@ import java.io.*
  * 2 - timestamp entity was invalidated with `invalidate`
  * @param prefix Cache file prefix to group cached files
  * @param sd Entity serializer/deserializer
- * @param cacheProvider Disk LRU cache provider. Opens cache with a proper entry config.
+ * @param cacheProvider Disk LRU cache provider. Opens cache with a proper entry config
  * @param clock Provides timestamp for cache status marks
  * @see DiskLruCacheProvider
  */
