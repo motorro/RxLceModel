@@ -18,7 +18,7 @@ Each entry contains:
 
 `sd` - Entity serializer/deserializer
 
-`cacheProvider` - Disk LRU cache provider. Opens cache with a proper entry config.
+`cacheProvider` - Disk LRU cache provider. Opens cache with a proper entry config
 
 `clock` - Provides timestamp for cache status marks
 
