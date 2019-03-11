@@ -11,7 +11,6 @@ Each entry contains:
 0 - saved entity
 1 - timestamp entity was last updated with `save`
 2 - timestamp entity was invalidated with `invalidate`
-Thus, delegate requires [cacheProvider](#) with `valueCount` equals to 3
 
 ### Parameters
 
@@ -23,6 +22,10 @@ Thus, delegate requires [cacheProvider](#) with `valueCount` equals to 3
 
 `clock` - Provides timestamp for cache status marks
 
+**See Also**
+
+[DiskLruCacheProvider](-disk-lru-cache-provider/index.md)
+
 ### Types
 
 | Name | Summary |
@@ -33,7 +36,7 @@ Thus, delegate requires [cacheProvider](#) with `valueCount` equals to 3
 
 | Name | Summary |
 |---|---|
-| [&lt;init&gt;](-init-.md) | `DiskLruCacheSyncDelegate(prefix: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, sd: `[`CacheDelegateSerializerDeserializer`](../../com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)`<`[`D`](index.md#D)`>, cacheProvider: `[`DiskLruCacheProvider`](-disk-lru-cache-provider/index.md)`, clock: `[`Clock`](../../com.motorro.rxlcemodel.base.entity/-clock/index.md)` = Clock.SYSTEM)`<br>[DiskLruCache](#) caching delegate for [SyncDelegateCacheService](../../com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md) Designed to operate common [cacheProvider](#) instance together with other delegates to be able to clean-up all cache all-together - say delete user's cache when user logs out Each entry contains: 0 - saved entity 1 - timestamp entity was last updated with `save` 2 - timestamp entity was invalidated with `invalidate` Thus, delegate requires [cacheProvider](#) with `valueCount` equals to 3 |
+| [&lt;init&gt;](-init-.md) | `DiskLruCacheSyncDelegate(prefix: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`, sd: `[`CacheDelegateSerializerDeserializer`](../../com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)`<`[`D`](index.md#D)`>, cacheProvider: `[`DiskLruCacheProvider`](-disk-lru-cache-provider/index.md)`, clock: `[`Clock`](../../com.motorro.rxlcemodel.base.entity/-clock/index.md)` = Clock.SYSTEM)`<br>[DiskLruCache](#) caching delegate for [SyncDelegateCacheService](../../com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md) Designed to operate common [cacheProvider](#) instance together with other delegates to be able to clean-up all cache all-together - say delete user's cache when user logs out Each entry contains: 0 - saved entity 1 - timestamp entity was last updated with `save` 2 - timestamp entity was invalidated with `invalidate` |
 
 ### Functions
 

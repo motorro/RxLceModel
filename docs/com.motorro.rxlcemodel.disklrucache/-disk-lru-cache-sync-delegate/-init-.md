@@ -11,7 +11,6 @@ Each entry contains:
 0 - saved entity
 1 - timestamp entity was last updated with `save`
 2 - timestamp entity was invalidated with `invalidate`
-Thus, delegate requires [cacheProvider](#) with `valueCount` equals to 3
 
 ### Parameters
 
@@ -22,3 +21,8 @@ Thus, delegate requires [cacheProvider](#) with `valueCount` equals to 3
 `cacheProvider` - Disk LRU cache provider. Opens cache with a proper entry config.
 
 `clock` - Provides timestamp for cache status marks
+
+**See Also**
+
+[DiskLruCacheProvider](-disk-lru-cache-provider/index.md)
+
