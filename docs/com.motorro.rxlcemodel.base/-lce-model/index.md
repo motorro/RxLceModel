@@ -4,8 +4,7 @@
 
 `interface LceModel<DATA : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`, PARAMS : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`>`
 
-A model interface to load and hold some data.
-Model asynchronously loads data and transmits it through [state](state.md)
+A model interface to load data and transmit it to subscribers along with loading operation state
 
 ### Parameters
 
