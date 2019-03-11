@@ -13,15 +13,14 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.motorro.rxlcemodel.base.LceState.*
+import com.motorro.rxlcemodel.base.LceState.Loading
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
 import io.reactivex.Completable
 import io.reactivex.Observable
 
 /**
- * A model interface to load and hold some data.
- * Model asynchronously loads data and transmits it through [state]
+ * A model interface to load data and transmit it to subscribers along with loading operation state
  * @param DATA Data type of data being held
  * @param PARAMS Params type that identify data being loaded
  */
