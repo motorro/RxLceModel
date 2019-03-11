@@ -61,7 +61,7 @@ jobs:
         committer-from-gh: false
         verbose: true
     - stage: deploy
-      script: "./gradlew displayVersion :base:assemble :disklrucache:assemble"
+      script: skip
       deploy:
         provider: script
         script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false"

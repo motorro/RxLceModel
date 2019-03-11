@@ -56,3 +56,4 @@ artifacts {
 }
 
 dokka.dependsOn assemble
+bintrayUpload.dependsOn assemble
