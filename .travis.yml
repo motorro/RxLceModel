@@ -67,3 +67,5 @@ jobs:
         script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false"
         skip_cleanup: true
         verbose: true
+        on:
+          tags: true
