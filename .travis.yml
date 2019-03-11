@@ -38,14 +38,14 @@ stages:
   - name: docs
     if: |
       sender != "traviscibot" \
-      type = push \
+      AND type = push \
       AND branch = master \
       AND fork = false \
       AND NOT tag =~ /^v[0-9]+\.[0-9]+\.[0-9]+/
   - name: deploy
     if: |
       sender != "traviscibot" \
-      branch = master \
+      AND branch = master \
       AND fork = false \
       AND tag =~ /^v[0-9]+\.[0-9]+\.[0-9]+/
 

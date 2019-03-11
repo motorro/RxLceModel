@@ -22,7 +22,7 @@ import java.io.*
 
 /**
  * [DiskLruCache] caching delegate for [SyncDelegateCacheService]
- * Designed to operate common [cacheProvider] instance together with other delegates to be able to kill all
+ * Designed to operate common [cacheProvider] instance together with other delegates to be able to clean-up all
  * cache all-together - say delete user's cache when user logs out
  * Each entry contains:
  * 0 - saved entity
