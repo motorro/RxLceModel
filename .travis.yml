@@ -36,7 +36,8 @@ stages:
   - name: tests
   - name: docs
     if: |
-      type = push \
+      NOT commit_message =~ ^Deploy \
+      AND type = push \
       AND branch = master \
       AND fork = false \
       AND NOT tag =~ /^v[0-9]+\.[0-9]+\.[0-9]+/
