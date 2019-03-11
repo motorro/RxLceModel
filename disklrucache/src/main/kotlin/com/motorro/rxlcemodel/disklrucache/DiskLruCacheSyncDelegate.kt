@@ -18,6 +18,7 @@ import com.motorro.rxlcemodel.base.entity.Clock
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
 import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService
+import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import java.io.*
 
 /**
@@ -28,11 +29,11 @@ import java.io.*
  * 0 - saved entity
  * 1 - timestamp entity was last updated with `save`
  * 2 - timestamp entity was invalidated with `invalidate`
- * Thus, delegate requires [cacheProvider] with `valueCount` equals to 3
  * @param prefix Cache file prefix to group cached files
  * @param sd Entity serializer/deserializer
  * @param cacheProvider Disk LRU cache provider. Opens cache with a proper entry config.
  * @param clock Provides timestamp for cache status marks
+ * @see DiskLruCacheProvider
  */
 class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
     private val prefix: String,
