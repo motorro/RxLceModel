@@ -24,7 +24,7 @@ import io.reactivex.functions.Function
 import io.reactivex.subjects.PublishSubject
 
 /**
- * A [LceModel] which uses cache subscription as a source of truth.
+ * A [LceModel] which uses cache subscription as a 'source of truth'.
  * When [state] is subscribed it loads cache data refreshing it if cache is stall or whenever cache
  * returns [com.gojuno.koptional.None].
  * The model always returns cached data first - then network if data is stall

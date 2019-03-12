@@ -34,6 +34,7 @@ cache:
 
 stages:
   - name: tests
+    if: NOT commit_message =~ ^Deploy
   - name: docs
     if: |
       NOT commit_message =~ ^Deploy \
@@ -48,7 +49,7 @@ stages:
 
 jobs:
   include:
-    - stage: tests
+    - stage: test
       script: "./gradlew displayVersion build --no-daemon"
     - stage: docs
       script: "./gradlew displayVersion dokka --no-daemon"
@@ -64,7 +65,7 @@ jobs:
       script: skip
       deploy:
         provider: script
-        script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false"
+        script: "./gradlew bintrayUpload -x publishMavenPublicationToMavenLocal -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false --no-daemon"
         skip_cleanup: true
         verbose: true
         on:
