@@ -33,7 +33,7 @@ cache:
   - $HOME/.android/build-cache
 
 stages:
-  - name: tests
+  - name: test
     if: NOT commit_message =~ ^Deploy
   - name: docs
     if: |
