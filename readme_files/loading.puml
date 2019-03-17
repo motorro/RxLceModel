@@ -1,0 +1,26 @@
+@startuml
+Actor Subscriber
+Participant LceModel
+Database CacheService
+Participant NetService
+Entity Value
+
+== Subscribe to state changes ==
+Subscriber -> LceModel: subscribe state
+LceModel -> Subscriber: onNext(Loading(data = null))
+== Subscribe to cache events ==
+LceModel -> CacheService: subscribe getData(params)
+LceModel <- CacheService: onNext(None)
+note right
+    Cache is empty
+end note
+== Retrieve data from network and save to cache ==
+LceModel -> NetService: get(params)
+create Value
+NetService -> Value: retrieve
+LceModel <-- Value
+LceModel -> CacheService: save(value)
+== Cache emits saved value ==
+LceModel <- CacheService: onNext(Some(value))
+LceModel -> Subscriber: onNext(Content(data = value))
+@enduml
