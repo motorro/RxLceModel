@@ -1,0 +1,32 @@
+@startuml
+Actor Subscriber
+Participant LceModel
+Database CacheService
+Entity OldValue
+Participant NetService
+Entity NewValue
+
+== Subscribe to state changes ==
+Subscriber -> LceModel: subscribe state
+LceModel -> Subscriber: onNext(Loading(data = null))
+== Subscribe to cache events ==
+LceModel -> CacheService: subscribe getData(params)
+LceModel <- OldValue: onNext(OldValue)
+LceModel -> OldValue: isValid()
+LceModel <-- OldValue: false
+note right
+    Cache has some **stall** data.
+    Emit and refresh from network
+end note
+LceModel -> Subscriber: onNext(Loading(data = oldValue, type = REFRESHING))
+destroy OldValue
+== Retrieve data from network and save to cache ==
+LceModel -> NetService: get(params)
+create NewValue
+NetService -> NewValue: retrieve
+LceModel <-- NewValue
+LceModel -> CacheService: save(value)
+== Cache emits saved value ==
+LceModel <- CacheService: onNext(Some(newValue))
+LceModel -> Subscriber: onNext(Content(data = newValue))
+@enduml
