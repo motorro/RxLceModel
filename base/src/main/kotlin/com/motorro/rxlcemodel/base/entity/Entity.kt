@@ -54,6 +54,14 @@ interface Entity<out T: Any>: EntityValidator {
 }
 
 /**
+ * Converts [T] to [Entity] to use with services
+ * @param validator Entity validator
+ * @see com.motorro.rxlcemodel.base.service.NetService
+ * @see com.motorro.rxlcemodel.base.service.CacheService
+ */
+fun <T: Any> T.toEntity(validator: EntityValidator) = Entity.Impl(this, validator)
+
+/**
  * Entity validator
  */
 interface EntityValidator {
