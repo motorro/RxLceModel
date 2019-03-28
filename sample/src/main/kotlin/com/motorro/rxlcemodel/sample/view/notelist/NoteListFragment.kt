@@ -30,6 +30,7 @@ import com.motorro.rxlcemodel.sample.view.LceFragment
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_note_list.*
 import org.threeten.bp.format.DateTimeFormatter
+import timber.log.Timber
 import javax.inject.Inject
 
 class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
@@ -116,6 +117,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
 
     private fun setupRefresh() {
         swipe_refresh.setOnRefreshListener {
+            Timber.i("Refreshing note list...")
             noteListModel.refresh()
         }
     }

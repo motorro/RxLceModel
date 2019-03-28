@@ -27,9 +27,16 @@ class ConnectionChecker {
     private val status = AtomicBoolean(true)
 
     /**
-     * Updates network status
+     * Get current status
+     * @see com.motorro.rxlcemodel.sample.view.MainActivity
      */
-    fun update(status: Boolean) {
+    fun getStatus() = status.get()
+
+    /**
+     * Updates network status
+     * @see com.motorro.rxlcemodel.sample.view.MainActivity
+     */
+    fun setStatus(status: Boolean) {
         Timber.i("Turning connection ${ if (status) "on" else "off" }")
         this.status.set(status)
     }

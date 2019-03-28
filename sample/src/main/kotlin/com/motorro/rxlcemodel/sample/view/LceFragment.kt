@@ -101,7 +101,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
         _stateDisplay?.text = when(state) {
             is Loading -> "Loading (${state.type})"
             is Content -> "Content"
-            is Error -> "Error (${ if (null != state.data) "with" else "no"} data)"
+            is Error -> "Error (${ if (null != state.data) "with cached" else "no"} data)"
         }
     }
 

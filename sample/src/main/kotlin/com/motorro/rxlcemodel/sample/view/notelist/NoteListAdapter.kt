@@ -33,7 +33,7 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = notes.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val container = LayoutInflater.from(parent.context).inflate(R.layout.note_list_item, parent, false) as ViewGroup
+        val container = LayoutInflater.from(parent.context).inflate(R.layout.list_item_note, parent, false) as ViewGroup
         return ViewHolder(container)
     }
 

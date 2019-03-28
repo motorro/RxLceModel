@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.service.CacheManager
+import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -33,6 +34,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var cacheManager: CacheManager
+
+    @Inject
+    lateinit var connectionChecker: ConnectionChecker
 
     /**
      * Returns an [AndroidInjector] of [Fragment]s.
@@ -53,6 +57,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setupConnectionSwitch()
+    }
+
+    /**
+     * A duct-tape to emulate network disconnection
+     */
+    private fun setupConnectionSwitch() {
+        connection_state.isChecked = connectionChecker.getStatus()
+        connection_state.setOnCheckedChangeListener { _, isChecked ->  connectionChecker.setStatus(isChecked) }
     }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(nav_host_fragment).navigateUp()

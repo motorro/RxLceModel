@@ -103,11 +103,9 @@ class NoteListViewModel (val state: LiveData<LceState<NoteList, Unit>>, private 
                 .observeOn(schedulers.ui)
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = if (modelClass.isAssignableFrom(NoteListViewModel::class.java)) {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val lceModel = createLceModel()
-            NoteListViewModel(lceModel.createStateLiveData(), lceModel.setupRefresh()) as T
-        } else {
-            throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.simpleName}")
+            return NoteListViewModel(lceModel.createStateLiveData(), lceModel.setupRefresh()) as T
         }
     }
 }
