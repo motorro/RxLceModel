@@ -1,0 +1,122 @@
+
+/*
+ * Copyright 2019 Nikolai Kotchetkov.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.motorro.rxlcemodel.sample.view.notelist
+
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.sample.domain.data.NoteList
+import com.motorro.rxlcemodel.sample.view.LceFragment
+import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_note_list.*
+import org.threeten.bp.format.DateTimeFormatter
+import javax.inject.Inject
+
+class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
+    /**
+     * Factory for [noteListModel]
+     */
+    @Inject
+    lateinit var userListModelFactory: ViewModelProvider.Factory
+
+    /**
+     * Model to load user list
+     */
+    private lateinit var noteListModel: NoteListViewModel
+
+    /**
+     * List adapter
+     */
+    private val listAdapter = UserListAdapter()
+
+    /**
+     * Called by [processState] to process new data
+     */
+    override fun processStateData(data: NoteList) {
+        loaded_at.text = DateTimeFormatter.ISO_TIME.format(data.timeStamp)
+        listAdapter.notes = data.notes
+        if (data.notes.isNotEmpty()) {
+            data_view.visibility = View.VISIBLE
+            no_data_view.visibility = View.GONE
+        } else {
+            data_view.visibility = View.GONE
+            no_data_view.visibility = View.VISIBLE
+        }
+    }
+
+    /**
+     * Updates view according to [state]
+     * Removes refresh indicator when load completes
+     */
+    override fun processStateView(state: LceState<NoteList, Unit>) {
+        super.processStateView(state)
+        if (state is LceState.Error || state is LceState.Content) {
+            swipe_refresh.isRefreshing = false
+        }
+    }
+
+    /**
+     * Performs action on error click
+     */
+    override fun onErrorClick() = noteListModel.refresh()
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        noteListModel = ViewModelProviders.of(this, userListModelFactory).get(NoteListViewModel::class.java)
+        noteListModel.state.observe(this, Observer<LceState<NoteList, Unit>> { processState(it) })
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(com.motorro.rxlcemodel.sample.R.layout.fragment_note_list, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupUserList()
+        setupRefresh()
+    }
+
+    private fun setupUserList() {
+        val layoutManager = LinearLayoutManager(this.context)
+        note_list.layoutManager = layoutManager
+        note_list.adapter = listAdapter
+        note_list.setHasFixedSize(true)
+        val itemDecoration = DividerItemDecoration(
+            note_list.context,
+            layoutManager.orientation
+        )
+        note_list.addItemDecoration(itemDecoration)
+    }
+
+    private fun setupRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            noteListModel.refresh()
+        }
+    }
+}

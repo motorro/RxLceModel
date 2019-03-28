@@ -38,7 +38,7 @@ interface CacheDelegateSerializerDeserializer<D: Any> {
     fun deserialize (input: InputStream, length: Long, invalidated: Boolean): Entity<D>?
 
     /**
-     * Serializes and deserialises [Serializable] objects
+     * Serializes and deserializes [Serializable] objects
      * @param validatorFactory [Entity] validator factory
      * @param dataClass Class type to cast result to
      */
