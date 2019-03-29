@@ -16,42 +16,45 @@ package com.motorro.rxlcemodel.sample.di
 import android.content.Context
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.sample.App
+import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.FakeServer
 import com.motorro.rxlcemodel.sample.service.NetRepository
 import com.motorro.rxlcemodel.sample.service.usecase.NoteListNetService
+import com.motorro.rxlcemodel.sample.service.usecase.NoteNetService
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import dagger.Binds
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
+
+
 @Singleton
 @Component(modules = [AndroidSupportInjectionModule::class, ApplicationModule::class, ActivityModule::class])
-interface ApplicationComponent {
-    /**
-     * Injects application
-     */
-    fun inject(app: App)
+interface ApplicationComponent: AndroidInjector<App> {
+    @Component.Builder
+    abstract class Builder : AndroidInjector.Builder<App>()
 }
 
 @Module(includes = [ServiceModule::class, CacheConfigModule::class])
 /**
  * Provides common application parts
  */
-class ApplicationModule(private val app: App) {
+class ApplicationModule {
     /**
      * Application context
      */
     @Singleton
     @Provides
-    fun context(): Context = app.applicationContext
+    fun context(app: App): Context = app.applicationContext
 
     /**
      * Provides schedulers
@@ -84,5 +87,9 @@ abstract class ServiceModule {
     @Singleton
     @Binds
     abstract fun noteListNetService(impl: NoteListNetService): NetService<NoteList, Unit>
+
+    @Singleton
+    @Binds
+    abstract fun noteNetService(impl: NoteNetService): NetService<Note, Int>
 }
 

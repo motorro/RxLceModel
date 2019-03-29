@@ -14,11 +14,16 @@
 package com.motorro.rxlcemodel.sample.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.motorro.rxlcemodel.sample.view.NoteFragment
-import com.motorro.rxlcemodel.sample.view.notelist.NoteListViewModel
-import dagger.Binds
+import com.motorro.rxlcemodel.base.service.CacheService
+import com.motorro.rxlcemodel.base.service.NetService
+import com.motorro.rxlcemodel.sample.domain.data.NoteList
+import com.motorro.rxlcemodel.sample.utils.BaseLceModelFactory
+import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
+import com.motorro.rxlcemodel.sample.view.note.NoteFragment
+import com.motorro.rxlcemodel.sample.view.note.NoteViewModel
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import dagger.Provides
+import javax.inject.Named
 import javax.inject.Scope
 
 /**
@@ -29,15 +34,34 @@ import javax.inject.Scope
 annotation class FragmentScope
 
 @Module
-abstract class NoteListFragmentModule {
+class NoteListFragmentModule {
     @FragmentScope
-    @Binds
-    abstract fun viewModelFactory(impl: NoteListViewModel.Factory): ViewModelProvider.Factory
+    @Provides
+    fun viewModelFactory(
+        netService: @JvmSuppressWildcards NetService<NoteList, Unit>,
+        cacheService: @JvmSuppressWildcards CacheService<NoteList, Unit>,
+        schedulers: SchedulerRepository
+    ): ViewModelProvider.Factory = object : BaseLceModelFactory<NoteList, Unit>(netService, cacheService, schedulers) {
+        /**
+         * Bound params
+         */
+        override val params: Unit = Unit
+    }
 }
 
 @Module
-abstract class NoteFragmentModule {
+class NoteFragmentModule {
+    companion object {
+        const val NOTE_ID = "noteId"
+    }
+
     @FragmentScope
-    @ContributesAndroidInjector(modules = [MainActivityModule::class, NoteFragmentModule::class])
-    abstract fun noteFragment(): NoteFragment
+    @Provides
+    @Named(NOTE_ID)
+    fun noteId(noteFragment: NoteFragment): Int = noteFragment.noteId
+
+    @FragmentScope
+    @Provides
+    fun viewModelFactory(impl: NoteViewModel.Factory): ViewModelProvider.Factory = impl
 }
+

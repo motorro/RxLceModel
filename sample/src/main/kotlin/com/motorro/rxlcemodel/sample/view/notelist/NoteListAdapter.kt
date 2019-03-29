@@ -24,7 +24,7 @@ import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import org.threeten.bp.format.DateTimeFormatter
 import kotlin.properties.Delegates
 
-class UserListAdapter: RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
+class UserListAdapter(private val selectionListener: (Int, CharSequence) -> Unit): RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     var notes: List<NoteList.Child> by Delegates.observable(emptyList()) { _, old, new ->
         calculateDiff(UserDiff(old, new), false).dispatchUpdatesTo(this)
@@ -33,8 +33,17 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = notes.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val container = LayoutInflater.from(parent.context).inflate(R.layout.list_item_note, parent, false) as ViewGroup
-        return ViewHolder(container)
+        val container = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.list_item_note, parent, false) as ViewGroup
+
+        val viewHolder = ViewHolder(container)
+
+        container.setOnClickListener {
+            selectionListener(viewHolder.id, viewHolder.title.text)
+        }
+
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = notes[position].run {

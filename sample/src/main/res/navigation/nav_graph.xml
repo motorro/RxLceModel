@@ -15,18 +15,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nav_graph"
-            app:startDestination="@id/userListFragment">
+            app:startDestination="@id/noteListFragment">
 
     <fragment
-        android:id="@+id/userListFragment"
+        android:id="@+id/noteListFragment"
         android:name="com.motorro.rxlcemodel.sample.view.notelist.NoteListFragment"
-        android:label="UserListFragment" >
+        android:label="Notes">
         <action
-            android:id="@+id/action_userListFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            android:id="@+id/action_noteListFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
     </fragment>
     <fragment
-        android:id="@+id/userProfileFragment"
-        android:name="com.motorro.rxlcemodel.sample.view.NoteFragment"
-        android:label="UserProfileFragment" />
+        android:id="@+id/noteFragment"
+        android:name="com.motorro.rxlcemodel.sample.view.note.NoteFragment"
+        android:label="{noteTitle}">
+        <argument
+            android:name="noteId"
+            app:argType="integer" />
+        <argument
+            android:name="noteTitle"
+            app:argType="string" />
+    </fragment>
 </navigation>

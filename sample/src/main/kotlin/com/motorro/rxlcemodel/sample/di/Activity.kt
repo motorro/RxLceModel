@@ -14,6 +14,7 @@
 package com.motorro.rxlcemodel.sample.di
 
 import com.motorro.rxlcemodel.sample.view.MainActivity
+import com.motorro.rxlcemodel.sample.view.note.NoteFragment
 import com.motorro.rxlcemodel.sample.view.notelist.NoteListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -38,4 +39,8 @@ abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [NoteListFragmentModule::class])
     abstract fun noteListFragment(): NoteListFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [NoteFragmentModule::class])
+    abstract fun noteFragment(): NoteFragment
 }

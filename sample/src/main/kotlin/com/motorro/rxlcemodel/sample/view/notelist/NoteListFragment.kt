@@ -22,10 +22,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
+import com.motorro.rxlcemodel.sample.utils.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_note_list.*
@@ -38,17 +40,17 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
      * Factory for [noteListModel]
      */
     @Inject
-    lateinit var userListModelFactory: ViewModelProvider.Factory
+    lateinit var noteListModelFactory: ViewModelProvider.Factory
 
     /**
      * Model to load user list
      */
-    private lateinit var noteListModel: NoteListViewModel
+    private lateinit var noteListModel: BaseLceModel<NoteList, Unit>
 
     /**
      * List adapter
      */
-    private val listAdapter = UserListAdapter()
+    private val listAdapter = UserListAdapter(this::onNoteClicked)
 
     /**
      * Called by [processState] to process new data
@@ -89,7 +91,8 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        noteListModel = ViewModelProviders.of(this, userListModelFactory).get(NoteListViewModel::class.java)
+        @Suppress("UNCHECKED_CAST")
+        noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList, Unit>
         noteListModel.state.observe(this, Observer<LceState<NoteList, Unit>> { processState(it) })
     }
 
@@ -120,5 +123,12 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
             Timber.i("Refreshing note list...")
             noteListModel.refresh()
         }
+    }
+
+    private fun onNoteClicked(id: Int, title: CharSequence) {
+        Timber.i("Opening note $id")
+        view?.findNavController()?.navigate(
+            NoteListFragmentDirections.actionNoteListFragmentToNoteFragment(id, title.toString())
+        )
     }
 }

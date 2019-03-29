@@ -11,15 +11,16 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.sample.view
+package com.motorro.rxlcemodel.sample.di
 
-import android.content.Context
-import androidx.fragment.app.Fragment
-import dagger.android.support.AndroidSupportInjection
-
-class NoteFragment : Fragment() {
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
+/**
+ * Provides note ID for module parametrization
+ * @see com.motorro.rxlcemodel.sample.di.NoteFragmentModule
+ * @see com.motorro.rxlcemodel.sample.view.note.NoteFragment
+ */
+interface ProvidesNoteId {
+    /**
+     * Note ID
+     */
+    val noteId: Int
 }

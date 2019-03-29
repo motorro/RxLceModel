@@ -16,7 +16,6 @@ package com.motorro.rxlcemodel.sample
 import android.app.Activity
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.motorro.rxlcemodel.sample.di.ApplicationModule
 import com.motorro.rxlcemodel.sample.di.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -39,8 +38,7 @@ class App: Application(), HasActivityInjector {
      */
     private fun inject() = DaggerApplicationComponent
         .builder()
-        .applicationModule(ApplicationModule(this))
-        .build()
+        .create(this)
         .inject(this)
 
     /**

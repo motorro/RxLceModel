@@ -16,7 +16,9 @@ package com.motorro.rxlcemodel.sample.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.service.CacheManager
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
      */
     override fun onDestroy() {
         super.onDestroy()
-        cacheManager.delete()
+        //cacheManager.delete()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +60,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(toolbar)
+        setupNavigation()
         setupConnectionSwitch()
     }
 
@@ -69,5 +73,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         connection_state.setOnCheckedChangeListener { _, isChecked ->  connectionChecker.setStatus(isChecked) }
     }
 
-    override fun onSupportNavigateUp(): Boolean = findNavController(nav_host_fragment).navigateUp()
+    private fun setupNavigation() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
 }

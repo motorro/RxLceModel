@@ -14,6 +14,7 @@ buildscript {
         classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.17'
         classpath 'org.ajoberstar.grgit:grgit-gradle:3.0.0'
         classpath 'com.novoda:bintray-release:0.9'
+        classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0'
     }
 }
 
