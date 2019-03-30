@@ -100,4 +100,12 @@ abstract class MemorySyncDelegate<D: Any, P: Any>: SyncDelegateCacheService.Dele
     override fun invalidateAll() {
         cache.clear()
     }
+
+    /**
+     * Deletes cached value
+     * @param params Caching key
+     */
+    override fun delete(params: P) {
+        cache.remove(params)
+    }
 }

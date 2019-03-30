@@ -192,4 +192,21 @@ class DiskLruCacheSyncDelegateTest {
         assertNotNull(delegate.get("key"))
         verify(sd, times(2)).deserialize(any(), any(), eq(false))
     }
+
+    @Test
+    fun deletesEntity() {
+        whenever(clock.getMillis()).thenReturn(100)
+        delegate.save("key", ENTITY)
+        assertNotNull(delegate.get("key"))
+        verify(sd).serialize(eq(ENTITY), any())
+        verify(sd).deserialize(any(), any(), eq(false))
+
+        delegate.delete("key")
+        assertNull(delegate.get("key"))
+    }
+
+    @Test
+    fun deletesOnlyIfKeySaved() {
+        delegate.delete("key")
+    }
 }

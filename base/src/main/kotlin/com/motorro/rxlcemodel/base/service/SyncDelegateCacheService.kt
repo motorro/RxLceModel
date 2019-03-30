@@ -55,6 +55,12 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
          * Invalidates all cached values
          */
         fun invalidateAll()
+
+        /**
+         * Deletes cached value
+         * @param params Caching key
+         */
+        fun delete(params: P)
     }
 
     /**
@@ -128,6 +134,16 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
         delegate.invalidateAll()
         refreshChannel.onNext(All())
     }
+
+    /**
+     * Deletes cached value.
+     * The [getData] observable for the same key wil emit [com.gojuno.koptional.None]
+     * @param params Caching key
+     */
+    override fun delete(params: P): Completable = Completable.fromAction {
+        delegate.delete(params)
+        refreshChannel.onNext(Individual(params))
+    }
 }
 
 /**
@@ -141,4 +157,5 @@ inline fun <D: Any, P: Any> SyncDelegateCacheService.Delegate<D, String>.stringi
     override fun save(params: P, entity: Entity<D>) = this@stringifyParams.save(params.stringify(), entity)
     override fun invalidate(params: P) = this@stringifyParams.invalidate(params.stringify())
     override fun invalidateAll() = this@stringifyParams.invalidateAll()
+    override fun delete(params: P) = this@stringifyParams.delete(params.stringify())
 }

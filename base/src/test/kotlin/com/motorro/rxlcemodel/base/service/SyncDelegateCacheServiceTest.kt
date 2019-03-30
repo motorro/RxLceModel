@@ -197,6 +197,44 @@ class SyncDelegateCacheServiceTest {
     }
 
     @Test
+    fun deletesCacheAndAndUpdatesFromDelegate() {
+        whenever(cacheDelegate.get(any())).thenReturn(null)
+
+        val s = service.getData(PARAMS_1).test()
+        s.assertNoErrors()
+        s.assertNotComplete()
+        s.assertValues(None)
+        verify(cacheDelegate).get(PARAMS_1)
+
+        service.delete(PARAMS_1).test().assertComplete()
+        verify(cacheDelegate).delete(PARAMS_1)
+
+        s.assertNoErrors()
+        s.assertNotComplete()
+        s.assertValues(None)
+        verify(cacheDelegate, times(2)).get(PARAMS_1)
+    }
+
+    @Test
+    fun failsToDeleteCacheIfDelegateFails() {
+        val error = Exception("Error")
+        whenever(cacheDelegate.delete(any())).thenAnswer {
+            throw error
+        }
+
+        val s = service.getData(PARAMS_1).test()
+        s.assertNoErrors()
+        s.assertNotComplete()
+        s.assertValues(None)
+
+        service.delete(PARAMS_1).test().assertError(error)
+        s.assertNoErrors()
+        s.assertNotComplete()
+        s.assertValues(None)
+        verify(cacheDelegate, times(1)).get(PARAMS_1)
+    }
+
+    @Test
     fun integratesWithCacheThenNetModelWhenNotCached() {
         val model = LceModel.cacheThanNet(
                 "key",
