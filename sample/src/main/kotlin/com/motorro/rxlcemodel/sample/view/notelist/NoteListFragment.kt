@@ -120,13 +120,13 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
 
     private fun setupRefresh() {
         swipe_refresh.setOnRefreshListener {
-            Timber.i("Refreshing note list...")
+            Timber.d("Refreshing note list...")
             noteListModel.refresh()
         }
     }
 
     private fun onNoteClicked(id: Int, title: CharSequence) {
-        Timber.i("Opening note $id")
+        Timber.d("Opening note $id")
         view?.findNavController()?.navigate(
             NoteListFragmentDirections.actionNoteListFragmentToNoteFragment(id, title.toString())
         )

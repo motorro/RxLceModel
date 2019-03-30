@@ -25,6 +25,8 @@ import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.LceState.*
 import com.motorro.rxlcemodel.base.LceState.Loading.Type.LOADING
 import com.motorro.rxlcemodel.sample.R
+import timber.log.Timber
+import java.lang.IllegalStateException
 
 /**
  * Fragment to display Loading/Content/Error and a non-fatal error in case there is a content to display
@@ -74,6 +76,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      */
     @CallSuper
     protected open fun processStateView(state: LceState<DATA, PARAMS>) {
+        Timber.d("LceState change: %s", state.toString())
         when(state) {
             is Loading -> when(state.type) {
                 LOADING -> showLoading()
@@ -91,6 +94,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
             } else {
                 showError(state.error)
             }
+            is Terminated -> processTermination()
         }
     }
 
@@ -102,6 +106,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
             is Loading -> "Loading (${state.type})"
             is Content -> "Content"
             is Error -> "Error (${ if (null != state.data) "with cached" else "no"} data)"
+            is Terminated -> "Terminated"
         }
     }
 
@@ -109,6 +114,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      * Displays loading when no data available
      */
     private fun showLoading() {
+        Timber.d("Show `Loading`")
         _loadingView?.visibility = VISIBLE
         _contentView?.visibility = GONE
         _errorView?.visibility = GONE
@@ -117,12 +123,16 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
     /**
      * Displays data refresh
      */
-    protected open fun showRefreshing() = Unit
+    @CallSuper
+    protected open fun showRefreshing(){
+        Timber.d("Show `Refreshing`")
+    }
 
     /**
      * Displays content
      */
     private fun showContent() {
+        Timber.d("Show `Content`")
         _loadingView?.visibility = GONE
         _contentView?.visibility = VISIBLE
         _errorView?.visibility = GONE
@@ -132,6 +142,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      * Displays content when there is no data to display
      */
     private fun showError(error: Throwable) {
+        Timber.w(error, "Show `Error`")
         _errorView?.run {
             text = error.message
             _loadingView?.visibility = GONE
@@ -149,8 +160,14 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      * Displays some error notification when the error is non-critical and some content may be displayed
      */
     private fun showNonFatalError(error: Throwable) = activity?.let {
+        Timber.w(error, "Show `Non-fatal error`")
         Toast.makeText(it, error.message, Toast.LENGTH_SHORT).show()
     }
+
+    /**
+     * Process [LceState.Terminated]
+     */
+    protected open fun processTermination(): Unit = throw IllegalStateException("Unexpected `Terminated` state")
 
     override fun onDestroyView() {
         super.onDestroyView()

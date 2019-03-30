@@ -53,6 +53,6 @@ class App: Application(), HasActivityInjector {
         AndroidThreeTen.init(this)
         inject()
         setupLogger()
-        Timber.i("Application started")
+        Timber.d("Application started")
     }
 }
