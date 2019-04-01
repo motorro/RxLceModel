@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.toLiveData
 import com.motorro.rxlcemodel.base.LceModel
+import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
@@ -54,12 +55,10 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
     /**
      * Creates state live-data
      */
-    protected fun LceModel<DATA, PARAMS>.createStateLiveData() =
+    protected open fun LceModel<DATA, PARAMS>.createStateLiveData(): Observable<LceState<DATA, PARAMS>> =
         state
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.ui)
-            .toFlowable(BackpressureStrategy.LATEST)
-            .toLiveData()
 
     /**
      * Sets-up refresh operation
@@ -73,7 +72,7 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
      * Model factory function
      * Creates [BaseLceModel] by default
      */
-    protected open fun createModel(lceModel: LceModel<DATA, PARAMS>): ViewModel = BaseLceModel(
+    protected open fun createModel(lceModel: LceModel<DATA, PARAMS>): ViewModel = BaseLceModel.Impl(
         lceModel.createStateLiveData(),
         lceModel.setupRefresh()
     )

@@ -14,36 +14,91 @@
 package com.motorro.rxlcemodel.sample.utils
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.sample.domain.data.Note
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 
-/**
- * Basic ViewModel with LceModel inside
- * @property state LCE state
- * @param refresh Refresh completable
- */
-open class BaseLceModel<DATA: Any, PARAMS: Any>(val state: LiveData<LceState<DATA, PARAMS>>, private val refresh: Completable): ViewModel() {
+
+abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
     /**
      * Maintains refresh subscriptions
      */
-    private val disposables = CompositeDisposable()
+    protected val disposables = CompositeDisposable()
+
+    /**
+     * Call this function to initialize a new model and start receiving events
+     */
+    abstract fun initialize()
+
+    /**
+     * LCE State
+     */
+    abstract val state: LiveData<LceState<DATA, PARAMS>>
 
     /**
      * Requests data refresh
-     * Errors are ignored as they are transmitted through [state] property
      */
-    fun refresh() {
-        disposables.add(refresh.onErrorComplete().subscribe())
-    }
+    abstract fun refresh()
 
     /**
      * Disposes active operations when model is destroyed
-     * The state subscription is implemented using androidx converter
      */
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
     }
+
+    /**
+     * Basic ViewModel with LceModel inside
+     * @property state LCE state
+     * @param refresh Refresh completable
+     */
+    class Impl<DATA: Any, PARAMS: Any>(private val stateObservable: Observable<LceState<DATA, PARAMS>>, private val refresh: Completable): BaseLceModel<DATA, PARAMS>() {
+        /**
+         * State live-data
+         */
+        private val stateData = MutableLiveData<LceState<DATA, PARAMS>>()
+
+        /**
+         * Initialization flag as we want to do it only once
+         */
+        private var initialized: Boolean = false
+
+        /**
+         * Call this function to initialize a new model and start receiving events
+         */
+        override fun initialize() {
+            if (initialized) {
+                return
+            }
+
+            val subscription = stateObservable
+                .subscribe(
+                    { state -> stateData.value = state},
+                    { error -> throw error }
+                )
+            disposables.add(subscription)
+
+            initialized = true
+        }
+
+        /**
+         * LCE State
+         */
+        override val state: LiveData<LceState<DATA, PARAMS>>
+            get() = stateData
+
+        /**
+         * Requests data refresh
+         */
+        override fun refresh() {
+            // Errors are ignored as they are transmitted through [state] property
+            disposables.add(refresh.onErrorComplete().subscribe())
+        }
+    }
 }
+

@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_note_list.*
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     /**

@@ -28,10 +28,12 @@ import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.di.ProvidesNoteId
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.view.LceFragment
+import com.motorro.rxlcemodel.sample.view.note.viewmodel.NoteViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_note.*
 import org.threeten.bp.format.DateTimeFormatter
 import javax.inject.Inject
+import javax.inject.Named
 
 class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
 
@@ -82,6 +84,7 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
 
         noteListModel = ViewModelProviders.of(this, noteModelFactory).get(NoteViewModel::class.java)
         noteListModel.state.observe(this, Observer<LceState<Note, Int>> { processState(it) })
+        noteListModel.initialize()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

@@ -3,6 +3,7 @@
 This is a classic notes application that illustrates `RxLceModel` use along with:
 * [Dagger2](https://github.com/google/dagger)
 * [Android architecture components](https://developer.android.com/topic/libraries/architecture)
+* Basic `ViewModel` unit-testing
 
 If you have questions on a general use of these tools in Android projects please refer to the following excellent 
 articles by [James Shvarts](https://github.com/jshvarts):

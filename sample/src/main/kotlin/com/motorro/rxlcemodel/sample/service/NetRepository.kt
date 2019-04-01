@@ -37,7 +37,22 @@ interface NetRepository {
     /**
      * Returns user profile
      */
-    fun getNote(id: Int): Single<Note>
+    fun getNote(noteId: Int): Single<Note>
+
+    /**
+     * Sets new note title
+     */
+    fun setNoteTitle(noteId: Int, title: String): Single<Note>
+
+    /**
+     * Sets new note text
+     */
+    fun setNoteText(noteId: Int, text: String): Single<Note>
+
+    /**
+     * Deletes note
+     */
+    fun deleteNote(noteId: Int): Completable
 }
 
 /**
@@ -73,17 +88,6 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
             .doOnError { Timber.w(it, "Request error".withTimeStamp()) }
 
     /**
-     * Emulates network delay of data update
-     * @param action Action to update data
-     */
-    private fun emulateUpdate(action: () -> Unit): Completable =
-        Completable.timer(SERVER_DELAY, TimeUnit.MILLISECONDS, schedulersRepository.computation)
-            .andThen(Completable.fromAction(action))
-            .doOnSubscribe { Timber.i("Performing server data update request...".withTimeStamp()) }
-            .doOnComplete { Timber.i("Request complete".withTimeStamp()) }
-            .doOnError { Timber.w(it, "Request error".withTimeStamp()) }
-
-    /**
      * Internal note data storage class
      */
     private data class NoteProperties(val title: String, val text: String, val lastModified: LocalTime = LocalTime.now()) {
@@ -107,13 +111,6 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
     }
 
     /**
-     * Returns a note
-     */
-    override fun getNote(id: Int): Single<Note> = emulateLoad {
-        notes[id]?.toDomain(id) ?: throw (IllegalArgumentException("No note found for id: $id"))
-    }
-
-    /**
      * Returns a list of notes
      */
     override val noteList: Single<NoteList> = emulateLoad {
@@ -122,4 +119,60 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
             LocalTime.now()
         )
     }
+
+    /**
+     * Finds note in note-list and transforms data with [operation]
+     */
+    private inline fun <T> withNoteProperties(noteId: Int, operation: (Int, NoteProperties) -> T): T {
+        val properties = notes[noteId] ?: throw (IllegalArgumentException("No note found for id: $noteId"))
+        return operation(noteId, properties)
+    }
+
+    /**
+     * Returns a note
+     */
+    override fun getNote(noteId: Int): Single<Note> = emulateLoad {
+        withNoteProperties(noteId) { id, properties ->
+            properties.toDomain(id)
+        }
+    }
+
+    /**
+     * Common patch actions
+     */
+    private inline fun updateNote(noteId: Int, crossinline operation: (Int, NoteProperties) -> NoteProperties): Single<Note> = Completable.fromAction {
+        withNoteProperties(noteId) { id, properties ->
+            operation(id, properties).also {
+                notes[id] = properties
+            }
+        }
+    }.andThen(getNote(noteId))
+
+    /**
+     * Sets new note title
+     */
+    override fun setNoteTitle(noteId: Int, title: String): Single<Note> = updateNote(noteId) { id, properties ->
+        Timber.i("Patching note $id title: $title")
+        properties.setTitle(title)
+    }
+
+    /**
+     * Sets new note text
+     */
+    override fun setNoteText(noteId: Int, text: String): Single<Note> = updateNote(noteId) { id, properties ->
+        Timber.i("Patching note $id text: $text")
+        properties.setText(text)
+    }
+
+    /**
+     * Deletes note
+     */
+    override fun deleteNote(noteId: Int): Completable =
+        Completable.timer(SERVER_DELAY, TimeUnit.MILLISECONDS, schedulersRepository.computation)
+        .andThen(Completable.fromAction {
+            notes.remove(noteId) ?: throw (IllegalArgumentException("No note found for id: $noteId"))
+        })
+        .doOnSubscribe { Timber.i("Deleting note $noteId...".withTimeStamp()) }
+        .doOnComplete { Timber.i("Request complete".withTimeStamp()) }
+        .doOnError { Timber.w(it, "Request error".withTimeStamp()) }
 }
