@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.fragment_note_list.*
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Named
 
 class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     /**
@@ -56,8 +55,9 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     /**
      * Called by [processState] to process new data
      */
-    override fun processStateData(data: NoteList) {
+    override fun processStateData(data: NoteList, isValid: Boolean) {
         loaded_at.text = DateTimeFormatter.ISO_TIME.format(data.timeStamp)
+        is_valid_data.text = isValid.toString()
         listAdapter.notes = data.notes
         if (data.notes.isNotEmpty()) {
             data_view.visibility = View.VISIBLE
@@ -89,14 +89,6 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
         super.onAttach(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        @Suppress("UNCHECKED_CAST")
-        noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList, Unit>
-        noteListModel.state.observe(this, Observer<LceState<NoteList, Unit>> { processState(it) })
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(com.motorro.rxlcemodel.sample.R.layout.fragment_note_list, container, false)
 
@@ -105,6 +97,11 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
 
         setupUserList()
         setupRefresh()
+
+        @Suppress("UNCHECKED_CAST")
+        noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList, Unit>
+        noteListModel.state.observe(this, Observer<LceState<NoteList, Unit>> { processState(it) })
+        noteListModel.initialize()
     }
 
     private fun setupUserList() {

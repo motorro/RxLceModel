@@ -2,7 +2,6 @@ package com.motorro.rxlcemodel.sample.utils
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.testOnCleared
 import com.nhaarman.mockitokotlin2.mock
@@ -10,10 +9,8 @@ import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import kotlin.reflect.jvm.isAccessible
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

@@ -13,4 +13,7 @@
     <string name="note_title">Title</string>
     <string name="note_text">Text</string>
     <string name="data_last_modified">Last modified:</string>
+    <string name="patch">Patch</string>
+    <string name="delete">Delete</string>
+    <string name="data_is_valid">Data is valid</string>
 </resources>

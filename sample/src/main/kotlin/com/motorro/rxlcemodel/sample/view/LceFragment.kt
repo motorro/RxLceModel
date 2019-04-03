@@ -26,7 +26,6 @@ import com.motorro.rxlcemodel.base.LceState.*
 import com.motorro.rxlcemodel.base.LceState.Loading.Type.LOADING
 import com.motorro.rxlcemodel.sample.R
 import timber.log.Timber
-import java.lang.IllegalStateException
 
 /**
  * Fragment to display Loading/Content/Error and a non-fatal error in case there is a content to display
@@ -56,7 +55,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      */
     protected fun processState(state: LceState<DATA, PARAMS>) {
         processParams(state.params)
-        state.data?.let { processStateData(it) }
+        state.data?.let { processStateData(it, state.dataIsValid) }
         processStateView(state)
         updateStateDisplay(state)
     }
@@ -69,7 +68,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
     /**
      * Called by [processState] to process new data
      */
-    protected abstract fun processStateData(data: DATA)
+    protected abstract fun processStateData(data: DATA, isValid: Boolean)
 
     /**
      * Updates view according to [state]
