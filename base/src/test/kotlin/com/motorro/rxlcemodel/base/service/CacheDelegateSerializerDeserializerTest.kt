@@ -39,7 +39,7 @@ class CacheDelegateSerializerDeserializerTest {
     @Before
     fun init() {
         validatorFactory = mock()
-        whenever(validatorFactory.create(any())).thenReturn(EntityValidator.Always)
+        whenever(validatorFactory.createSnapshot(any())).thenReturn(EntityValidator.Always)
 
         objectStream = CacheDelegateSerializerDeserializer.WithObjectStream(validatorFactory, String::class.java)
     }
@@ -54,7 +54,7 @@ class CacheDelegateSerializerDeserializerTest {
         val sIn = ByteArrayInputStream(sOut.toByteArray())
         assertEquals(
                 ENTITY,
-                objectStream.deserialize(sIn, sOut.size().toLong(), false)
+                objectStream.deserializeSnapshot(sIn, sOut.size().toLong(), false)
         )
     }
 
@@ -66,13 +66,13 @@ class CacheDelegateSerializerDeserializerTest {
         assertTrue { sOut.size() > 0 }
 
         val sIn = ByteArrayInputStream(sOut.toByteArray())
-        assertFalse { objectStream.deserialize(sIn, sOut.size().toLong(), true)!!.isValid() }
+        assertFalse { objectStream.deserializeSnapshot(sIn, sOut.size().toLong(), true)!!.isValid() }
     }
 
     @Test
     fun ifDeserializationFailsReturnsNull() {
         val sIn = ByteArrayInputStream(emptyArray<Byte>().toByteArray())
-        assertNull(objectStream.deserialize(sIn, 0L, false))
+        assertNull(objectStream.deserializeSnapshot(sIn, 0L, false))
     }
 
     @Test
@@ -83,10 +83,10 @@ class CacheDelegateSerializerDeserializerTest {
         assertTrue { sOut.size() > 0 }
 
         val sIn = ByteArrayInputStream(sOut.toByteArray())
-        whenever(validatorFactory.create(any())).thenAnswer {
+        whenever(validatorFactory.createSnapshot(any())).thenAnswer {
             throw Exception("Error")
         }
 
-        assertNull(objectStream.deserialize(sIn, sOut.size().toLong(), false))
+        assertNull(objectStream.deserializeSnapshot(sIn, sOut.size().toLong(), false))
     }
 }

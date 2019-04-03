@@ -29,6 +29,25 @@ class EntityTest {
     }
 
     @Test
+    fun serializesAndDeserializesSimple() {
+        var v = Simple(true)
+        var s = v.serialize()
+        assertEquals(v, Simple.SimpleDeserializer.deserialize(s))
+        assertTrue(v.isValid())
+
+        v = Simple(false)
+        s = v.serialize()
+        assertEquals(v, Simple.SimpleDeserializer.deserialize(s))
+        assertFalse(v.isValid())
+    }
+
+    @Test
+    fun simpleWillNotDeserializeUnknownString() {
+        val s = "Unknown"
+        assertNull(Simple.SimpleDeserializer.deserialize(s))
+    }
+
+    @Test
     fun serializesAndDeserializesAlways() {
         val v = Always
         val s = v.serialize()
@@ -112,5 +131,40 @@ class EntityTest {
         assertTrue { entity2.isValid() }
 
         assertNotEquals(entity1.hashCode(), entity2.hashCode())
+    }
+
+    @Test
+    fun lifeSpanWillExpire() {
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10).thenReturn(15)
+        val entity = Lifespan(5, clock)
+        assertTrue(entity.isValid())
+        assertFalse(entity.isValid())
+    }
+
+    @Test
+    fun lifeSpanSnapshotWillNotExpire() {
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10).thenReturn(15)
+        val entity = Lifespan.createSnapshot(5, clock)
+        assertTrue(entity.isValid())
+        assertTrue(entity.isValid())
+    }
+
+    @Test
+    fun deserializesSnapshot() {
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10).thenReturn(15)
+        val lifespan = Lifespan(5, clock)
+        val serialized = lifespan.serialize()
+        val deserialized = Lifespan.LifespanDeserializer(clock).deserializeSnapshot(serialized)
+        assertTrue(deserialized!!.isValid())
+    }
+
+    @Test
+    fun deserializedSnapshotCreatesLifespan() {
+        whenever(clock.getMillis()).thenReturn(5).thenReturn(10).thenReturn(15)
+        val lifespan = Lifespan.createSnapshot(5, clock)
+        assertTrue(lifespan.isValid())
+        val serialized = lifespan.serialize()
+        val deserialized = Lifespan.LifespanDeserializer(clock).deserialize(serialized)
+        assertFalse(deserialized!!.isValid())
     }
 }

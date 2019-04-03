@@ -70,7 +70,7 @@ class DiskLruCacheSyncDelegateTest {
                 oStream.writeObject(entity.data)
             }
         }
-        whenever(sd.deserialize(any(), any(), any())).thenAnswer {
+        whenever(sd.deserializeSnapshot(any(), any(), any())).thenAnswer {
             val stream = it.arguments[0] as InputStream
             val invalidated = it.arguments[2] as Boolean
             ObjectInputStream(stream).use { iStream ->
@@ -105,7 +105,7 @@ class DiskLruCacheSyncDelegateTest {
         delegate.save("key", ENTITY)
         assertEquals(ENTITY, delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
-        verify(sd).deserialize(any(), any(), eq(false))
+        verify(sd).deserializeSnapshot(any(), any(), eq(false))
     }
 
     @Test
@@ -118,12 +118,12 @@ class DiskLruCacheSyncDelegateTest {
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
-        verify(sd).deserialize(any(), any(), eq(false))
+        verify(sd).deserializeSnapshot(any(), any(), eq(false))
 
         whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidate("key")
         assertNotNull(delegate.get("key"))
-        verify(sd).deserialize(any(), any(), eq(true))
+        verify(sd).deserializeSnapshot(any(), any(), eq(true))
     }
 
     @Test
@@ -141,17 +141,17 @@ class DiskLruCacheSyncDelegateTest {
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
-        verify(sd).deserialize(any(), any(), eq(false))
+        verify(sd).deserializeSnapshot(any(), any(), eq(false))
 
         whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidate("key")
         assertNotNull(delegate.get("key"))
-        verify(sd).deserialize(any(), any(), eq(true))
+        verify(sd).deserializeSnapshot(any(), any(), eq(true))
 
         whenever(clock.getMillis()).thenReturn(300)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
-        verify(sd, times(2)).deserialize(any(), any(), eq(false))
+        verify(sd, times(2)).deserializeSnapshot(any(), any(), eq(false))
     }
 
     @Test
@@ -160,13 +160,13 @@ class DiskLruCacheSyncDelegateTest {
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
-        verify(sd).deserialize(any(), any(), eq(false))
+        verify(sd).deserializeSnapshot(any(), any(), eq(false))
 
         whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidateAll()
 
         assertNotNull(delegate.get("key"))
-        verify(sd).deserialize(any(), any(), eq(true))
+        verify(sd).deserializeSnapshot(any(), any(), eq(true))
     }
 
     @Test
@@ -179,18 +179,18 @@ class DiskLruCacheSyncDelegateTest {
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
-        verify(sd).deserialize(any(), any(), eq(false))
+        verify(sd).deserializeSnapshot(any(), any(), eq(false))
 
         whenever(clock.getMillis()).thenReturn(200)
         delegate.invalidateAll()
 
         assertNotNull(delegate.get("key"))
-        verify(sd).deserialize(any(), any(), eq(true))
+        verify(sd).deserializeSnapshot(any(), any(), eq(true))
 
         whenever(clock.getMillis()).thenReturn(300)
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
-        verify(sd, times(2)).deserialize(any(), any(), eq(false))
+        verify(sd, times(2)).deserializeSnapshot(any(), any(), eq(false))
     }
 
     @Test
@@ -199,7 +199,7 @@ class DiskLruCacheSyncDelegateTest {
         delegate.save("key", ENTITY)
         assertNotNull(delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
-        verify(sd).deserialize(any(), any(), eq(false))
+        verify(sd).deserializeSnapshot(any(), any(), eq(false))
 
         delegate.delete("key")
         assertNull(delegate.get("key"))

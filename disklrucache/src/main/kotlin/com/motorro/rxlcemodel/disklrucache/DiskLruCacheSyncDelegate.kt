@@ -154,7 +154,7 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
         cacheProvider.cache.get(key)?.use { snapshot -> with(snapshot) {
             val invalidated = getCreatedAt() < Math.max(getInvalidatedAt(), allInvalidatedAt)
             withDataInputStream {
-                sd.deserialize(it, getDataLength(), invalidated)
+                sd.deserializeSnapshot(it, getDataLength(), invalidated)
             }
         }}
     }

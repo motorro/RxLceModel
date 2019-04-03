@@ -75,7 +75,7 @@ abstract class MemorySyncDelegate<D: Any, P: Any>: SyncDelegateCacheService.Dele
      * Returns data if cached
      * @param params Caching key
      */
-    override fun get(params: P): Entity<D>? = cache[params]
+    override fun get(params: P): Entity<D>? = cache[params]?.createSnapshot()
 
     /**
      * Saves data to cache
