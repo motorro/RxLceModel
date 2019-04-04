@@ -35,7 +35,6 @@ import javax.inject.Singleton
 
 /**
  * Defines caching behaviour
- * We need that at [Singleton] scope as soon as we provide network use-cases (services) globally
  * @see com.motorro.rxlcemodel.sample.di.ServiceModule
  */
 @Module
@@ -77,16 +76,16 @@ class CacheModule {
     /**
      * Cache directory
      */
+    @Singleton
     @Provides
-    @ActivityScope
     @Named("cacheDir")
     fun cacheDir(context: Context): File = context.cacheDir
 
     /**
      * DiskLruCache config provider
      */
+    @Singleton
     @Provides
-    @ActivityScope
     fun cacheProvider(@Named("cacheDir") cacheDir: File) = DiskLruCacheSyncDelegate.DiskLruCacheProvider(
         cacheDir,
         BuildConfig.VERSION_CODE,
@@ -96,8 +95,8 @@ class CacheModule {
     /**
      * Cache manager
      */
+    @Singleton
     @Provides
-    @ActivityScope
     fun cacheManager(provider: DiskLruCacheSyncDelegate.DiskLruCacheProvider): CacheManager = object : CacheManager {
         /**
          * Deletes all cache at once
@@ -112,7 +111,7 @@ class CacheModule {
      * to not to mix data with other delegates.
      * The [DiskLruCacheSyncDelegate.sd] is a serializer/deserializer that saves/restores entity from file streams
      */
-    @ActivityScope
+    @Singleton
     @Provides
     fun noteListCacheDelegate(
         diskCache: DiskLruCacheSyncDelegate.DiskLruCacheProvider,
@@ -133,8 +132,8 @@ class CacheModule {
      * In case of user list we have [Unit] for params as the list is always the same.
      * So we just supply some arbitrary string to uniquely identify our cache file to [stringifyParams]
      */
+    @Singleton
     @Provides
-    @ActivityScope
     internal fun noteListCacheService(cacheDelegate: @JvmSuppressWildcards SyncDelegateCacheService.Delegate<NoteList, String>): CacheService<NoteList, Unit> =
         CacheService.withSyncDelegate(cacheDelegate.stringifyParams { "notes" })
 
@@ -145,7 +144,7 @@ class CacheModule {
      * to not to mix data with other delegates.
      * The [DiskLruCacheSyncDelegate.sd] is a serializer/deserializer that saves/restores entity from file streams.
      */
-    @ActivityScope
+    @Singleton
     @Provides
     fun noteCacheDelegate(
         diskCache: DiskLruCacheSyncDelegate.DiskLruCacheProvider,
@@ -166,8 +165,8 @@ class CacheModule {
      * Thus we should substitute data identifying parameters with string somehow.
      * In case of user profile caching we just stringify user id within [stringifyParams]
      */
+    @Singleton
     @Provides
-    @ActivityScope
     internal fun noteCacheService(cacheDelegate: @JvmSuppressWildcards SyncDelegateCacheService.Delegate<Note, String>): CacheService<Note, Int> =
         CacheService.withSyncDelegate(cacheDelegate.stringifyParams { this.toString() })
 }

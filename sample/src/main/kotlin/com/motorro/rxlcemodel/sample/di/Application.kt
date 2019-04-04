@@ -44,7 +44,7 @@ interface ApplicationComponent: AndroidInjector<App> {
     abstract class Builder : AndroidInjector.Builder<App>()
 }
 
-@Module(includes = [ServiceModule::class, CacheConfigModule::class])
+@Module(includes = [ServiceModule::class, CacheConfigModule::class, CacheModule::class])
 /**
  * Provides common application parts
  */

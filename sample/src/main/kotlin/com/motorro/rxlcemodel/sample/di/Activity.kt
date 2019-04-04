@@ -34,7 +34,7 @@ abstract class ActivityModule {
     abstract fun mainActivity(): MainActivity
 }
 
-@Module(includes = [CacheModule::class])
+@Module
 abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [NoteListFragmentModule::class])

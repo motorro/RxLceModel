@@ -4,7 +4,6 @@ import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.entity.toEntity
 import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.sample.di.ActivityScope
 import com.motorro.rxlcemodel.sample.di.CacheConfigModule
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
@@ -14,12 +13,13 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
 /**
  * Common actions to take when patching note properties
  * As the note changes we should refresh the note-list. That is done by invalidating [listCache].
  */
-@ActivityScope
+@Singleton
 class PatchNote @Inject constructor (
     private val connectionChecker: ConnectionChecker,
     private val netRepository: NetRepository,
@@ -42,7 +42,7 @@ class PatchNote @Inject constructor (
 /**
  * Sets note title and invalidates list cache
  */
-@ActivityScope
+@Singleton
 class PatchNoteTitle @Inject constructor (private val patcher: PatchNote) {
     /**
      * Sets note title
@@ -55,7 +55,7 @@ class PatchNoteTitle @Inject constructor (private val patcher: PatchNote) {
 /**
  * Sets note text and invalidates list cache
  */
-@ActivityScope
+@Singleton
 class PatchNoteText @Inject constructor (private val patcher: PatchNote) {
     /**
      * Sets note text
@@ -68,7 +68,7 @@ class PatchNoteText @Inject constructor (private val patcher: PatchNote) {
 /**
  * Deletes note on server, invalidates list cache and removes cached note
  */
-@ActivityScope
+@Singleton
 class DeleteNote @Inject constructor (
     private val netRepository: NetRepository,
     private val listCache: @JvmSuppressWildcards CacheService<NoteList, Unit>,
