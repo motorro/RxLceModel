@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_noteListFragment_to_noteFragment"
             app:destination="@id/noteFragment" />
+        <action
+            android:id="@+id/action_noteListFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
@@ -36,4 +39,8 @@
             android:name="noteTitle"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.motorro.rxlcemodel.sample.view.addnote.AddNoteFragment"
+        android:label="Add Note" />
 </navigation>

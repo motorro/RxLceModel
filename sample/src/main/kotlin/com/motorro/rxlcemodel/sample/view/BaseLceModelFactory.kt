@@ -11,17 +11,16 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.sample.utils
+package com.motorro.rxlcemodel.sample.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.toLiveData
 import com.motorro.rxlcemodel.base.LceModel
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
-import io.reactivex.BackpressureStrategy
+import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import io.reactivex.Observable
 
 /**
@@ -72,10 +71,11 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
      * Model factory function
      * Creates [BaseLceModel] by default
      */
-    protected open fun createModel(lceModel: LceModel<DATA, PARAMS>): ViewModel = BaseLceModel.Impl(
-        lceModel.createStateLiveData(),
-        lceModel.setupRefresh()
-    )
+    protected open fun createModel(lceModel: LceModel<DATA, PARAMS>): ViewModel =
+        BaseLceModel.Impl(
+            lceModel.createStateLiveData(),
+            lceModel.setupRefresh()
+        )
 
     /**
      * Creates a new instance of the given `Class`.

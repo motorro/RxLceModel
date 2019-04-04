@@ -66,6 +66,22 @@ class PatchNoteText @Inject constructor (private val patcher: PatchNote) {
 }
 
 /**
+ * Adds a new note
+ */
+@Singleton
+class AddNote @Inject constructor (
+    private val netRepository: NetRepository,
+    private val listCache: @JvmSuppressWildcards CacheService<NoteList, Unit>
+) {
+    /**
+     * Adds new note
+     */
+    fun add(title: String, text: String): Completable = netRepository.addNote(title, text)
+        .ignoreElement()
+        .andThen(listCache.invalidateAll)
+}
+
+/**
  * Deletes note on server, invalidates list cache and removes cached note
  */
 @Singleton

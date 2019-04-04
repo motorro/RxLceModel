@@ -11,13 +11,12 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.sample.utils
+package com.motorro.rxlcemodel.sample.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.sample.domain.data.Note
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -30,9 +29,22 @@ abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
     protected val disposables = CompositeDisposable()
 
     /**
+     * Is model initialized
+     */
+    var initialized: Boolean = false
+        private set
+
+    /**
      * Call this function to initialize a new model and start receiving events
      */
-    abstract fun initialize()
+    fun initialize() {
+        if (false == initialized) {
+            doInitialize()
+            initialized = true
+        }
+    }
+
+    protected abstract fun doInitialize()
 
     /**
      * LCE State
@@ -64,14 +76,9 @@ abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
         private val stateData = MutableLiveData<LceState<DATA, PARAMS>>()
 
         /**
-         * Initialization flag as we want to do it only once
-         */
-        private var initialized: Boolean = false
-
-        /**
          * Call this function to initialize a new model and start receiving events
          */
-        override fun initialize() {
+        override fun doInitialize() {
             if (initialized) {
                 return
             }
@@ -82,8 +89,6 @@ abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
                     { error -> throw error }
                 )
             disposables.add(subscription)
-
-            initialized = true
         }
 
         /**

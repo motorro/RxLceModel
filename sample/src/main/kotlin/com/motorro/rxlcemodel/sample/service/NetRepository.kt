@@ -40,6 +40,11 @@ interface NetRepository {
     fun getNote(noteId: Int): Single<Note>
 
     /**
+     * Adds new note
+     */
+    fun addNote(title: String, text: String): Single<Note>
+
+    /**
      * Sets new note title
      */
     fun setNoteTitle(noteId: Int, title: String): Single<Note>
@@ -136,6 +141,17 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
             properties.toDomain(id)
         }
     }
+
+    /**
+     * Adds new note
+     */
+    override fun addNote(title: String, text: String): Single<Note> =
+        Single.fromCallable { nextNoteId.getAndIncrement() }
+            .flatMap { id ->
+                Completable.fromAction {
+                    notes[id] = NoteProperties(title, text)
+                }.andThen(getNote(id))
+            }
 
     /**
      * Common patch actions

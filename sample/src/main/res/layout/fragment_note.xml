@@ -45,7 +45,7 @@
                     android:layout_weight="1">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/title"
+                        android:id="@+id/note_title"
                         style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -75,14 +75,13 @@
                     tools:ignore="NestedWeights">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/text"
+                        android:id="@+id/note_text"
                         style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="start"
                         android:hint="@string/note_text"
                         android:inputType="textAutoCorrect|textMultiLine"
-                        android:imeOptions="actionDone"
                         android:maxLines="10" />
 
                 </com.google.android.material.textfield.TextInputLayout>

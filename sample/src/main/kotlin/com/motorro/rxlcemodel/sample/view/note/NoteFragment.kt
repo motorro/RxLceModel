@@ -27,10 +27,10 @@ import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.di.ProvidesNoteId
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.view.LceFragment
+import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
 import com.motorro.rxlcemodel.sample.view.note.viewmodel.NoteViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_note.*
-import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -63,11 +63,11 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
      * Called by [processState] to process new data
      */
     override fun processStateData(data: Note, isValid: Boolean, isUpdating: Boolean) {
-        last_modified.text = DateTimeFormatter.ISO_TIME.format(data.lastModified)
+        last_modified.text = TIME_FORMATTER.format(data.lastModified)
         is_valid_data.text = isValid.toString()
         if (!isUpdating) {
-            title.setText(data.title, TextView.BufferType.EDITABLE)
-            text.setText(data.text, TextView.BufferType.EDITABLE)
+            note_title.setText(data.title, TextView.BufferType.EDITABLE)
+            note_text.setText(data.text, TextView.BufferType.EDITABLE)
             restoreButtons()
         }
     }
@@ -171,10 +171,10 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
         noteModel.initialize()
 
         patch_title.setOnClickListener {
-            patch(it, title) { title -> patchTitle(title) }
+            patch(it, note_title) { title -> patchTitle(title) }
         }
         patch_text.setOnClickListener {
-            patch(it, text) { text -> patchText(text) }
+            patch(it, note_text) { text -> patchText(text) }
         }
     }
 

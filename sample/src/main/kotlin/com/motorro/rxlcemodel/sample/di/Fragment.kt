@@ -16,13 +16,10 @@ package com.motorro.rxlcemodel.sample.di
 import androidx.lifecycle.ViewModelProvider
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
-import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
-import com.motorro.rxlcemodel.sample.service.usecase.DeleteNote
-import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteText
-import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
-import com.motorro.rxlcemodel.sample.utils.BaseLceModelFactory
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
+import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
+import com.motorro.rxlcemodel.sample.view.addnote.AddNoteViewModel
 import com.motorro.rxlcemodel.sample.view.note.NoteFragment
 import com.motorro.rxlcemodel.sample.view.note.viewmodel.NoteViewModel
 import dagger.Module
@@ -67,5 +64,12 @@ class NoteFragmentModule {
     @FragmentScope
     @Provides
     fun viewModelFactory(impl: NoteViewModel.Factory): ViewModelProvider.Factory = impl
+}
+
+@Module
+class AddNoteFragmentModule {
+    @FragmentScope
+    @Provides
+    fun viewModelFactory(impl: AddNoteViewModel.Factory): ViewModelProvider.Factory = impl
 }
 

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.testOnCleared
+import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Completable

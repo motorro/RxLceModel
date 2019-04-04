@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.DiffUtil.calculateDiff
 import androidx.recyclerview.widget.RecyclerView
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
-import org.threeten.bp.format.DateTimeFormatter
+import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
 import kotlin.properties.Delegates
 
 class UserListAdapter(private val selectionListener: (Int, CharSequence) -> Unit): RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
@@ -49,7 +49,7 @@ class UserListAdapter(private val selectionListener: (Int, CharSequence) -> Unit
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = notes[position].run {
         holder.id = id
         holder.title.text = title
-        holder.lastModified.text = NoteLastModifiedFormatter.format(lastModified)
+        holder.lastModified.text = TIME_FORMATTER.format(lastModified)
     }
 
     class ViewHolder(itemView: ViewGroup): RecyclerView.ViewHolder(itemView) {
@@ -74,5 +74,3 @@ private class UserDiff(private val old: List<NoteList.Child>, private val new: L
         return oldItem.lastModified == newItem.lastModified && oldItem.title == newItem.title
     }
 }
-
-private val NoteLastModifiedFormatter = DateTimeFormatter.ofPattern("HH:mm:s")

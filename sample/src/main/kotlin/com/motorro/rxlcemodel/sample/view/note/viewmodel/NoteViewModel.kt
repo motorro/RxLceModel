@@ -13,11 +13,9 @@
 
 package com.motorro.rxlcemodel.sample.view.note.viewmodel
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.toLiveData
 import com.motorro.rxlcemodel.base.LceModel
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.UpdateWrapper
@@ -29,13 +27,10 @@ import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.service.usecase.DeleteNote
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteText
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
-import com.motorro.rxlcemodel.sample.utils.BaseLceModel
-import com.motorro.rxlcemodel.sample.utils.BaseLceModelFactory
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import io.reactivex.BackpressureStrategy
+import com.motorro.rxlcemodel.sample.view.BaseLceModel
+import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
 import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -50,11 +45,6 @@ class NoteViewModel(noteId: Int, private val startState: NoteViewModelState): Ba
      * Current model
      */
     private lateinit var modelState: NoteViewModelState
-
-    /**
-     * Initialization flag as we want to do it only once
-     */
-    private var initialized = false
 
     /**
      * Interacts with a current model state
@@ -91,14 +81,12 @@ class NoteViewModel(noteId: Int, private val startState: NoteViewModelState): Ba
     /**
      * Call this function to initialize a new model and start receiving events
      */
-    override fun initialize() {
+    override fun doInitialize() {
         if (initialized) {
             return
         }
 
         stateMaster.setNewState(startState)
-
-        initialized = true
     }
 
     /**

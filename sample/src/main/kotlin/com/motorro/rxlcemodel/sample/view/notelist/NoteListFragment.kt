@@ -27,11 +27,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
-import com.motorro.rxlcemodel.sample.utils.BaseLceModel
+import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.LceFragment
+import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_note_list.*
-import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,7 +56,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
      * Called by [processState] to process new data
      */
     override fun processStateData(data: NoteList, isValid: Boolean, isUpdating: Boolean) {
-        loaded_at.text = DateTimeFormatter.ISO_TIME.format(data.timeStamp)
+        loaded_at.text = TIME_FORMATTER.format(data.timeStamp)
         is_valid_data.text = isValid.toString()
         listAdapter.notes = data.notes
         if (data.notes.isNotEmpty()) {
@@ -97,6 +97,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
 
         setupUserList()
         setupRefresh()
+        add_note.setOnClickListener { onAddClicked() }
 
         @Suppress("UNCHECKED_CAST")
         noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList, Unit>
@@ -127,6 +128,13 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
         Timber.d("Opening note $id")
         view?.findNavController()?.navigate(
             NoteListFragmentDirections.actionNoteListFragmentToNoteFragment(id, title.toString())
+        )
+    }
+
+    private fun onAddClicked() {
+        Timber.d("Going to add a note...")
+        view?.findNavController()?.navigate(
+            NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment()
         )
     }
 }

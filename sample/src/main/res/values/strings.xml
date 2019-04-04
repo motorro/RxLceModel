@@ -16,4 +16,5 @@
     <string name="patch">Patch</string>
     <string name="delete">Delete</string>
     <string name="data_is_valid">Data is valid</string>
+    <string name="save">Save</string>
 </resources>
