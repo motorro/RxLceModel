@@ -55,7 +55,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      */
     protected fun processState(state: LceState<DATA, PARAMS>) {
         processParams(state.params)
-        state.data?.let { processStateData(it, state.dataIsValid) }
+        state.data?.let { processStateData(it, state.dataIsValid, state is Loading && Loading.Type.UPDATING == state.type) }
         processStateView(state)
         updateStateDisplay(state)
     }
@@ -68,7 +68,17 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
     /**
      * Called by [processState] to process new data
      */
-    protected abstract fun processStateData(data: DATA, isValid: Boolean)
+    protected abstract fun processStateData(data: DATA, isValid: Boolean, isUpdating: Boolean)
+
+    /**
+     * Called when content is displayed
+     */
+    protected open fun onShowContent(): Unit = Unit
+
+    /**
+     * Called when content is hidden
+     */
+    protected open fun onHideContent(): Unit = Unit
 
     /**
      * Updates view according to [state]
@@ -117,6 +127,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
         _loadingView?.visibility = VISIBLE
         _contentView?.visibility = GONE
         _errorView?.visibility = GONE
+        onHideContent()
     }
 
     /**
@@ -135,6 +146,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
         _loadingView?.visibility = GONE
         _contentView?.visibility = VISIBLE
         _errorView?.visibility = GONE
+        onShowContent()
     }
 
     /**
@@ -148,6 +160,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
             _contentView?.visibility = GONE
             _errorView?.visibility = VISIBLE
         }
+        onHideContent()
     }
 
     /**

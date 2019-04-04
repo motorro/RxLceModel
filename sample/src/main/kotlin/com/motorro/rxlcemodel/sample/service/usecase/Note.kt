@@ -9,12 +9,11 @@ import com.motorro.rxlcemodel.sample.di.CacheConfigModule
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.NetRepository
+import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.SingleSource
 import javax.inject.Inject
 import javax.inject.Named
-import javax.inject.Singleton
 
 /**
  * Common actions to take when patching note properties
@@ -22,6 +21,7 @@ import javax.inject.Singleton
  */
 @ActivityScope
 class PatchNote @Inject constructor (
+    private val connectionChecker: ConnectionChecker,
     private val netRepository: NetRepository,
     private val listCache: @JvmSuppressWildcards CacheService<NoteList, Unit>,
     @Named(CacheConfigModule.NOTE) private val entityFactory: EntityValidatorFactory
@@ -30,11 +30,13 @@ class PatchNote @Inject constructor (
      * Patches note properties and invalidates note-list cache
      */
     fun patch(noteId: Int, patchOperation: NetRepository.(Int) -> Single<Note>) =
-        netRepository.patchOperation(noteId).flatMap {
-            listCache.invalidateAll.andThen(SingleSource<Entity<Note>> {
-                Single.fromCallable { it.toEntity(entityFactory.create()) }
-            })
-        }
+        connectionChecker.connectionCheck.andThen(
+            netRepository.patchOperation(noteId).flatMap {
+                listCache.invalidateAll.andThen(
+                    Single.fromCallable<Entity<Note>> { it.toEntity(entityFactory.create()) }
+                )
+            }
+        )
 }
 
 /**

@@ -43,7 +43,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     lateinit var noteListModelFactory: ViewModelProvider.Factory
 
     /**
-     * Model to load user list
+     * Model to load note list
      */
     private lateinit var noteListModel: BaseLceModel<NoteList, Unit>
 
@@ -55,7 +55,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     /**
      * Called by [processState] to process new data
      */
-    override fun processStateData(data: NoteList, isValid: Boolean) {
+    override fun processStateData(data: NoteList, isValid: Boolean, isUpdating: Boolean) {
         loaded_at.text = DateTimeFormatter.ISO_TIME.format(data.timeStamp)
         is_valid_data.text = isValid.toString()
         listAdapter.notes = data.notes

@@ -33,11 +33,12 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
 
     /**
-     * Fragment arguments
+     * Fragment arguments - note ID
      */
     private val arguments: NoteFragmentArgs by navArgs()
 
@@ -54,25 +55,66 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
     lateinit var noteModelFactory: ViewModelProvider.Factory
 
     /**
-     * Model to load user list
+     * Model to load a note
      */
     private lateinit var noteModel: NoteViewModel
-
 
     /**
      * Called by [processState] to process new data
      */
-    override fun processStateData(data: Note, isValid: Boolean) {
+    override fun processStateData(data: Note, isValid: Boolean, isUpdating: Boolean) {
         last_modified.text = DateTimeFormatter.ISO_TIME.format(data.lastModified)
         is_valid_data.text = isValid.toString()
-        title.setText(data.title, TextView.BufferType.EDITABLE)
-        text.setText(data.text, TextView.BufferType.EDITABLE)
+        if (!isUpdating) {
+            title.setText(data.title, TextView.BufferType.EDITABLE)
+            text.setText(data.text, TextView.BufferType.EDITABLE)
+            restoreButtons()
+        }
+    }
+
+    /**
+     * Delete option visibility
+     */
+    private var isDeleteVisible by Delegates.observable(false) { _, old, new ->
+        if (old != new) {
+            activity?.invalidateOptionsMenu()
+        }
+    }
+
+    /**
+     * Called when content is displayed
+     */
+    override fun onShowContent() {
+        super.onShowContent()
+        isDeleteVisible = true
+    }
+
+    /**
+     * Called when content is hidden
+     */
+    override fun onHideContent() {
+        super.onHideContent()
+        isDeleteVisible = false
     }
 
     /**
      * Performs action on error click
      */
     override fun onErrorClick() = noteModel.refresh()
+
+    /**
+     * Updates title
+     */
+    private fun patchTitle(title: String) {
+        noteModel.setTitle(title)
+    }
+
+    /**
+     * Updates text
+     */
+    private fun patchText(text: String) {
+        noteModel.setText(text)
+    }
 
     /**
      * Delete note...
@@ -106,9 +148,19 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_note, container, false)
 
+    private fun Menu.setDeleteVisible() {
+        findItem(R.id.action_delete)?.isVisible = isDeleteVisible
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu,inflater)
         inflater.inflate(R.menu.menu_fragment_note, menu)
+        menu.setDeleteVisible()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.setDeleteVisible()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,5 +169,22 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
         noteModel = ViewModelProviders.of(this, noteModelFactory).get(NoteViewModel::class.java)
         noteModel.state.observe(this, Observer<LceState<Note, Int>> { processState(it) })
         noteModel.initialize()
+
+        patch_title.setOnClickListener {
+            patch(it, title) { title -> patchTitle(title) }
+        }
+        patch_text.setOnClickListener {
+            patch(it, text) { text -> patchText(text) }
+        }
+    }
+
+    private inline fun patch(button: View, edit: TextView, toDo: (String) -> Unit) {
+        button.isEnabled = false
+        toDo(edit.text.toString())
+    }
+
+    private fun restoreButtons() {
+        patch_title.isEnabled = true
+        patch_text.isEnabled = true
     }
 }

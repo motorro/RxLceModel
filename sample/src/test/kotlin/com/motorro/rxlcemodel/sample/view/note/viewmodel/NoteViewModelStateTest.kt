@@ -6,7 +6,10 @@ import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -121,7 +124,7 @@ class NoteViewModelStateTest {
         master.out.observeForever(observer)
 
         state.subscribe()
-        verify(observer).onChanged(LceState.Loading(null, false, 1, LceState.Loading.Type.UPDATING))
+        verify(observer).onChanged(LceState.Loading(null, false, 1, LceState.Loading.Type.LOADING))
     }
 
     @Test
@@ -134,7 +137,7 @@ class NoteViewModelStateTest {
         master.out.observeForever(observer)
 
         state.subscribe()
-        verify(observer).onChanged(LceState.Loading(null, false, 1, LceState.Loading.Type.UPDATING))
+        verify(observer).onChanged(LceState.Loading(null, false, 1, LceState.Loading.Type.LOADING))
 
         subject.onError(error)
         verify(observer).onChanged(LceState.Error(null, false, 1, error))
@@ -151,7 +154,7 @@ class NoteViewModelStateTest {
         master.out.observeForever(observer)
 
         state.subscribe()
-        verify(observer).onChanged(LceState.Loading(null, false, 1, LceState.Loading.Type.UPDATING))
+        verify(observer).onChanged(LceState.Loading(null, false, 1, LceState.Loading.Type.LOADING))
 
         subject.onComplete()
         verify(master).setState(deletedState)

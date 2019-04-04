@@ -63,7 +63,7 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
         /**
          * Time 'loading' takes
          */
-        private const val SERVER_DELAY = 3000L
+        private const val SERVER_DELAY = 1000L
 
         /**
          * Time string for output
@@ -142,8 +142,8 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
      */
     private inline fun updateNote(noteId: Int, crossinline operation: (Int, NoteProperties) -> NoteProperties): Single<Note> = Completable.fromAction {
         withNoteProperties(noteId) { id, properties ->
-            operation(id, properties).also {
-                notes[id] = properties
+            operation(id, properties).also { update ->
+                notes[id] = update
             }
         }
     }.andThen(getNote(noteId))
@@ -170,7 +170,9 @@ class FakeServer(private val schedulersRepository: SchedulerRepository): NetRepo
     override fun deleteNote(noteId: Int): Completable =
         Completable.timer(SERVER_DELAY, TimeUnit.MILLISECONDS, schedulersRepository.computation)
         .andThen(Completable.fromAction {
-            notes.remove(noteId) ?: throw (IllegalArgumentException("No note found for id: $noteId"))
+            if (null == notes.remove(noteId)) {
+                throw (IllegalArgumentException("No note found for id: $noteId"))
+            }
         })
         .doOnSubscribe { Timber.i("Deleting note $noteId...".withTimeStamp()) }
         .doOnComplete { Timber.i("Request complete".withTimeStamp()) }

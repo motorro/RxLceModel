@@ -165,9 +165,9 @@ class DeletionState(
      * @see subscribe
      */
     private fun getDeleteOperation() = deleteNote
-        .toObservable<LceState<Note, Int>>()
+        .andThen(Observable.just<LceState<Note, Int>>(LceState.Terminated(master.params)))
         .onErrorReturn { LceState.Error(null, false, master.params, it) }
-        .startWith(LceState.Loading(null, false, master.params, LceState.Loading.Type.UPDATING))
+        .startWith(LceState.Loading(null, false, master.params, LceState.Loading.Type.LOADING))
 
     /**
      * Client subscribed model
@@ -177,9 +177,13 @@ class DeletionState(
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.ui)
             .subscribe(
-                { state -> master.out.value = state},
-                { error -> throw error },
-                { master.setState(deletedState) }
+                { state ->
+                    when(state) {
+                        is LceState.Terminated -> master.setState(deletedState)
+                        else -> master.out.value = state
+                    }
+                },
+                { error -> throw error }
             )
 
         disposables.add(subscription)
