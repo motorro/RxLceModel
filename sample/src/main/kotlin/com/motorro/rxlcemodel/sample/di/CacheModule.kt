@@ -16,11 +16,10 @@ package com.motorro.rxlcemodel.sample.di
 import android.content.Context
 import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.entity.LifespanValidatorFactory
-import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
 import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService
-import com.motorro.rxlcemodel.base.service.stringifyParams
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate
+import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
+import com.motorro.rxlcemodel.disklrucache.withObjectStream
 import com.motorro.rxlcemodel.sample.BuildConfig
 import com.motorro.rxlcemodel.sample.di.CacheConfigModule.Companion.NOTE
 import com.motorro.rxlcemodel.sample.di.CacheConfigModule.Companion.NOTE_LIST
@@ -105,68 +104,26 @@ class CacheModule {
     }
 
     /**
-     * Delegate for [SyncDelegateCacheService] that caches [NoteList]
-     * Delegate uses cache directory provided by [diskCache]. This directory is designed to be shared
-     * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
-     * to not to mix data with other delegates.
-     * The [DiskLruCacheSyncDelegate.sd] is a serializer/deserializer that saves/restores entity from file streams
+     * Note list cache service
      */
     @Singleton
     @Provides
-    fun noteListCacheDelegate(
+    internal fun noteListCacheService(
         diskCache: DiskLruCacheSyncDelegate.DiskLruCacheProvider,
         @Named(NOTE_LIST) validatorFactory: EntityValidatorFactory
-    ): SyncDelegateCacheService.Delegate<NoteList, String> = DiskLruCacheSyncDelegate(
-            prefix = "note_list",
-            sd = CacheDelegateSerializerDeserializer.WithObjectStream(
-                    validatorFactory = validatorFactory,
-                    dataClass = NoteList::class.java
-            ),
-            cacheProvider = diskCache
+    ): CacheService<NoteList, Unit> = CacheService.withSyncDelegate(
+        diskCache.withObjectStream("note", validatorFactory) { "notes" }
     )
-
-    /**
-     * Note list cache service
-     * [DiskLruCacheSyncDelegate] uses params to create cache keys which should be strings.
-     * Thus we should substitute data identifying parameters with string somehow.
-     * In case of user list we have [Unit] for params as the list is always the same.
-     * So we just supply some arbitrary string to uniquely identify our cache file to [stringifyParams]
-     */
-    @Singleton
-    @Provides
-    internal fun noteListCacheService(cacheDelegate: @JvmSuppressWildcards SyncDelegateCacheService.Delegate<NoteList, String>): CacheService<NoteList, Unit> =
-        CacheService.withSyncDelegate(cacheDelegate.stringifyParams { "notes" })
-
-    /**
-     * Delegate for [SyncDelegateCacheService] that caches [Note]
-     * Delegate uses cache directory provided by [diskCache]. This directory is designed to be shared between
-     * several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
-     * to not to mix data with other delegates.
-     * The [DiskLruCacheSyncDelegate.sd] is a serializer/deserializer that saves/restores entity from file streams.
-     */
-    @Singleton
-    @Provides
-    fun noteCacheDelegate(
-        diskCache: DiskLruCacheSyncDelegate.DiskLruCacheProvider,
-        @Named(NOTE) validatorFactory: EntityValidatorFactory
-    ): SyncDelegateCacheService.Delegate<Note, String> = DiskLruCacheSyncDelegate(
-        prefix = "note",
-        sd = CacheDelegateSerializerDeserializer.WithObjectStream(
-            validatorFactory = validatorFactory,
-            dataClass = Note::class.java
-        ),
-        cacheProvider = diskCache
-    )
-
 
     /**
      * Note cache service
-     * [DiskLruCacheSyncDelegate] uses params to create cache keys which should be strings.
-     * Thus we should substitute data identifying parameters with string somehow.
-     * In case of user profile caching we just stringify user id within [stringifyParams]
      */
     @Singleton
     @Provides
-    internal fun noteCacheService(cacheDelegate: @JvmSuppressWildcards SyncDelegateCacheService.Delegate<Note, String>): CacheService<Note, Int> =
-        CacheService.withSyncDelegate(cacheDelegate.stringifyParams { this.toString() })
+    internal fun noteCacheService(
+        diskCache: DiskLruCacheProvider,
+        @Named(NOTE) validatorFactory: EntityValidatorFactory
+    ): CacheService<Note, Int> = CacheService.withSyncDelegate(
+        diskCache.withObjectStream("note", validatorFactory)
+    )
 }
