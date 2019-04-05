@@ -17,3 +17,4 @@ Deserializes validator from string
 | Name | Summary |
 |---|---|
 | [deserialize](deserialize.md) | `fun deserialize(serialized: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`EntityValidator`](../../index.md)`?`<br>Deserializes validator from string if string is recognized |
+| [deserializeSnapshot](deserialize-snapshot.md) | `fun deserializeSnapshot(serialized: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`): `[`EntityValidator`](../../index.md)`?`<br>Deserializes an immutable snapshot of validator that does not change [EntityValidator.isValid](../../is-valid.md) with time |

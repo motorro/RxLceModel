@@ -23,6 +23,7 @@ Cache should notify subscribers that data has been updated through [getData](get
 
 | Name | Summary |
 |---|---|
+| [delete](delete.md) | `abstract fun delete(params: `[`P`](index.md#P)`): `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)<br>Deletes cached value. The [getData](get-data.md) observable for the same key wil emit [com.gojuno.koptional.None](#) |
 | [getData](get-data.md) | `abstract fun getData(params: `[`P`](index.md#P)`): `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<Optional<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>>`<br>Subscribes to cache data updates |
 | [invalidate](invalidate.md) | `abstract fun invalidate(params: `[`P`](index.md#P)`): `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)<br>Invalidates cached value |
 | [save](save.md) | `abstract fun save(params: `[`P`](index.md#P)`, entity: `[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>): `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)<br>Saves entity in a cache |

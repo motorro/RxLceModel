@@ -23,6 +23,7 @@ implement this interface for cache control
 
 | Name | Summary |
 |---|---|
+| [createSnapshot](create-snapshot.md) | `abstract fun createSnapshot(): `[`Entity`](./index.md)`<`[`T`](index.md#T)`>`<br>Crates a snapshot of validator preserving it's current [EntityValidator.isValid](../-entity-validator/is-valid.md) value |
 | [map](map.md) | `abstract fun <R : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> map(mapper: (`[`T`](index.md#T)`) -> `[`R`](map.md#R)`): `[`Entity`](./index.md)`<`[`R`](map.md#R)`>`<br>Transforms Entity [data](data.md) to another entity data with [mapper](map.md#com.motorro.rxlcemodel.base.entity.Entity$map(kotlin.Function1((com.motorro.rxlcemodel.base.entity.Entity.T, com.motorro.rxlcemodel.base.entity.Entity.map.R)))/mapper) Validation remains the same |
 
 ### Inherited Functions

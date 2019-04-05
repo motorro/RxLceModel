@@ -11,6 +11,7 @@ Cache-control [EntityValidator](../-entity-validator/index.md) factory for opera
 | Name | Summary |
 |---|---|
 | [create](create.md) | `abstract fun create(serialized: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`? = null): `[`EntityValidator`](../-entity-validator/index.md)<br>Creates entity cache-control |
+| [createSnapshot](create-snapshot.md) | `abstract fun createSnapshot(serialized: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`? = null): `[`EntityValidator`](../-entity-validator/index.md)<br>Creates a snapshot of entity cache-control.The [EntityValidator.isValid](../-entity-validator/is-valid.md) evaluated at the time of creation. |
 
 ### Inheritors
 

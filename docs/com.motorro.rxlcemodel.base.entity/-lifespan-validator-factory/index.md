@@ -23,3 +23,4 @@ Creates [Lifespan](../-entity-validator/-lifespan/index.md) as a cache-control
 | Name | Summary |
 |---|---|
 | [create](create.md) | `fun create(serialized: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`?): `[`EntityValidator`](../-entity-validator/index.md)<br>Creates entity cache-control |
+| [createSnapshot](create-snapshot.md) | `fun createSnapshot(serialized: `[`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)`?): `[`EntityValidator`](../-entity-validator/index.md)<br>Creates a snapshot of entity cache-control.The [EntityValidator.isValid](../-entity-validator/is-valid.md) evaluated at the time of creation. |

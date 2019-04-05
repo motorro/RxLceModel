@@ -28,6 +28,7 @@ A simple memory cache for [SyncDelegateCacheService](../-sync-delegate-cache-ser
 
 | Name | Summary |
 |---|---|
+| [delete](delete.md) | `open fun delete(params: `[`P`](index.md#P)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)<br>Deletes cached value |
 | [get](get.md) | `open fun get(params: `[`P`](index.md#P)`): `[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>?`<br>Returns data if cached |
 | [invalidate](invalidate.md) | `open fun invalidate(params: `[`P`](index.md#P)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)<br>Invalidates cached value |
 | [invalidateAll](invalidate-all.md) | `open fun invalidateAll(): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)<br>Invalidates all cached values |

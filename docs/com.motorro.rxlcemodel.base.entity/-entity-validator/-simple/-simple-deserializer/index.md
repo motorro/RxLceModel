@@ -1,8 +1,8 @@
-[com.motorro.rxlcemodel.base.entity](../../../index.md) / [EntityValidator](../../index.md) / [Always](../index.md) / [AlwaysDeserializer](./index.md)
+[com.motorro.rxlcemodel.base.entity](../../../index.md) / [EntityValidator](../../index.md) / [Simple](../index.md) / [SimpleDeserializer](./index.md)
 
-# AlwaysDeserializer
+# SimpleDeserializer
 
-`object AlwaysDeserializer : `[`Deserializer`](../../-deserializer/index.md)
+`object SimpleDeserializer : `[`Deserializer`](../../-deserializer/index.md)
 
 Deserializes validator from string
 

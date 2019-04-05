@@ -10,6 +10,7 @@ Delegate that synchronously performs caching operations
 
 | Name | Summary |
 |---|---|
+| [delete](delete.md) | `abstract fun delete(params: `[`P`](index.md#P)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)<br>Deletes cached value |
 | [get](get.md) | `abstract fun get(params: `[`P`](index.md#P)`): `[`Entity`](../../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>?`<br>Returns data if cached |
 | [invalidate](invalidate.md) | `abstract fun invalidate(params: `[`P`](index.md#P)`): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)<br>Invalidates cached value |
 | [invalidateAll](invalidate-all.md) | `abstract fun invalidateAll(): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)<br>Invalidates all cached values |
