@@ -14,13 +14,18 @@
 package com.motorro.rxlcemodel.sample.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.service.CacheManager
+import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -60,9 +65,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupConnectionSwitch()
+        setupDeleteListener()
         setSupportActionBar(toolbar)
         setupNavigation()
-        setupConnectionSwitch()
     }
 
     /**
@@ -71,6 +77,28 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private fun setupConnectionSwitch() {
         connection_state.isChecked = connectionChecker.getStatus()
         connection_state.setOnCheckedChangeListener { _, isChecked ->  connectionChecker.setStatus(isChecked) }
+    }
+
+    /**
+     * Notes are deleted using [WorkManager] to illustrate data updates from non-visual components
+     */
+    private fun setupDeleteListener() {
+        WorkManager.getInstance().getWorkInfosByTagLiveData(DeleteWorker.TAG).observe(this, Observer<List<WorkInfo>> { workInfo ->
+            if (workInfo.isNullOrEmpty()){
+                return@Observer
+            }
+
+            val message: String? = when {
+                workInfo.any { WorkInfo.State.SUCCEEDED == it.state } -> "Note deleted"
+                workInfo.any { WorkInfo.State.FAILED == it.state } -> "Failed to delete note"
+                else -> null
+            }
+            if (null != message) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+
+            WorkManager.getInstance().pruneWork()
+        })
     }
 
     private fun setupNavigation() {

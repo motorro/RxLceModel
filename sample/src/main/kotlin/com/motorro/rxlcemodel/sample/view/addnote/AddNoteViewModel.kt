@@ -26,6 +26,9 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
+/**
+ * Adds notes manually generating [LceState] for UI
+ */
 class AddNoteViewModel(private val addNote: (String, String) -> Completable): BaseLceModel<Unit, Unit>() {
     /**
      * State live-data

@@ -21,7 +21,7 @@ import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
 import com.motorro.rxlcemodel.sample.view.addnote.AddNoteViewModel
 import com.motorro.rxlcemodel.sample.view.note.NoteFragment
-import com.motorro.rxlcemodel.sample.view.note.viewmodel.NoteViewModel
+import com.motorro.rxlcemodel.sample.view.note.NoteViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

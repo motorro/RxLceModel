@@ -13,8 +13,6 @@
 
 package com.motorro.rxlcemodel.sample.service.usecase
 
-import com.motorro.rxlcemodel.base.entity.EntityValidator
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.sample.NOTE
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
@@ -29,12 +27,11 @@ import java.io.IOException
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class PatchNoteTest {
+class AddNoteTest {
     private lateinit var connectionChecker: ConnectionChecker
     private lateinit var repo: NetRepository
     private lateinit var listCache: CacheService<NoteList, Unit>
-    private lateinit var patcher: PatchNote
-    private lateinit var validatorFactory: EntityValidatorFactory
+    private lateinit var addNote: AddNote
 
     private var listCacheInvalidated = false
 
@@ -43,7 +40,7 @@ class PatchNoteTest {
         connectionChecker = ConnectionChecker()
 
         repo = mock {
-            on { setNoteTitle(any(), any()) } doReturn Single.just(NOTE)
+            on { addNote(any(), any()) } doReturn Single.just(NOTE)
         }
 
         listCacheInvalidated = false
@@ -53,43 +50,38 @@ class PatchNoteTest {
             }
         }
 
-        validatorFactory = mock {
-            on { create(anyOrNull()) } doReturn EntityValidator.Always
-        }
-
-        patcher = PatchNote(connectionChecker, repo, listCache, validatorFactory)
+        addNote = AddNote(connectionChecker, repo, listCache)
     }
 
+
     @Test
-    fun patcherPatches() {
-        patcher.patch(1) { id -> setNoteTitle(id, "Title") }
+    fun addsNote() {
+        addNote.add("Title", "Text")
             .test()
             .assertNoErrors()
             .assertComplete()
-            .assertValue {
-                NOTE == it.data
-            }
-        verify(repo).setNoteTitle(1, "Title")
-        assertTrue { listCacheInvalidated }
-        verify(validatorFactory).create()
+
+        verify(repo).addNote("Title", "Text")
+        assertTrue(listCacheInvalidated)
     }
 
     @Test
-    fun patcherFailsOnError() {
-        val error = IllegalArgumentException("Note not found")
-        patcher.patch(1) { Single.error(error) }
+    fun deleteFailsOnError() {
+        val error = RuntimeException("DB error")
+        whenever(repo.addNote("Title", "Text")).thenReturn(Single.error(error))
+        addNote.add("Title", "Text")
             .test()
             .assertNoValues()
             .assertError(error)
 
-        assertFalse { listCacheInvalidated }
+        assertFalse(listCacheInvalidated)
     }
 
     @Test
-    fun patcherFailsOnConnectionError() {
+    fun deleteFailsOnConnectionError() {
         connectionChecker.setStatus(false)
 
-        patcher.patch(1) { id -> setNoteTitle(id, "Title") }
+        addNote.add("Title", "Text")
             .test()
             .assertNoValues()
             .assertError(IOException::class.java)

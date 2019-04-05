@@ -70,13 +70,15 @@ class PatchNoteText @Inject constructor (private val patcher: PatchNote) {
  */
 @Singleton
 class AddNote @Inject constructor (
+    private val connectionChecker: ConnectionChecker,
     private val netRepository: NetRepository,
     private val listCache: @JvmSuppressWildcards CacheService<NoteList, Unit>
 ) {
     /**
      * Adds new note
      */
-    fun add(title: String, text: String): Completable = netRepository.addNote(title, text)
+    fun add(title: String, text: String): Completable = connectionChecker.connectionCheck
+        .andThen(netRepository.addNote(title, text))
         .ignoreElement()
         .andThen(listCache.invalidateAll)
 }
@@ -86,6 +88,7 @@ class AddNote @Inject constructor (
  */
 @Singleton
 class DeleteNote @Inject constructor (
+    private val connectionChecker: ConnectionChecker,
     private val netRepository: NetRepository,
     private val listCache: @JvmSuppressWildcards CacheService<NoteList, Unit>,
     private val noteCache: @JvmSuppressWildcards CacheService<Note, Int>
@@ -93,7 +96,8 @@ class DeleteNote @Inject constructor (
     /**
      * Deletes note
      */
-    fun delete(noteId: Int): Completable = netRepository.deleteNote(noteId)
+    fun delete(noteId: Int): Completable = connectionChecker.connectionCheck
+        .andThen(netRepository.deleteNote(noteId))
         .andThen(noteCache.delete(noteId))
         .andThen(listCache.invalidateAll)
 }

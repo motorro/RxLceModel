@@ -80,6 +80,16 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     }
 
     /**
+     * Refresh
+     */
+    private fun setupRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            Timber.d("Refreshing note list...")
+            noteListModel.refresh()
+        }
+    }
+
+    /**
      * Performs action on error click
      */
     override fun onErrorClick() = noteListModel.refresh()
@@ -115,13 +125,6 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
             layoutManager.orientation
         )
         note_list.addItemDecoration(itemDecoration)
-    }
-
-    private fun setupRefresh() {
-        swipe_refresh.setOnRefreshListener {
-            Timber.d("Refreshing note list...")
-            noteListModel.refresh()
-        }
     }
 
     private fun onNoteClicked(id: Int, title: CharSequence) {

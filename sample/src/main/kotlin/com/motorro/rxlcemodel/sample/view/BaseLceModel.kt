@@ -21,7 +21,9 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 
-
+/**
+ * Base model with [state] and [refresh]
+ */
 abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
     /**
      * Maintains refresh subscriptions

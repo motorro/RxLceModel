@@ -28,7 +28,6 @@ import com.motorro.rxlcemodel.sample.di.ProvidesNoteId
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
-import com.motorro.rxlcemodel.sample.view.note.viewmodel.NoteViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_note.*
 import timber.log.Timber
@@ -73,6 +72,17 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
     }
 
     /**
+     * Updates view according to [state]
+     * Removes refresh indicator when load completes
+     */
+    override fun processStateView(state: LceState<Note, Int>) {
+        super.processStateView(state)
+        if (state is LceState.Error || state is LceState.Content) {
+            swipe_refresh.isRefreshing = false
+        }
+    }
+
+    /**
      * Delete option visibility
      */
     private var isDeleteVisible by Delegates.observable(false) { _, old, new ->
@@ -95,6 +105,16 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
     override fun onHideContent() {
         super.onHideContent()
         isDeleteVisible = false
+    }
+
+    /**
+     * Refresh
+     */
+    private fun setupRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            Timber.d("Refreshing note...")
+            noteModel.refresh()
+        }
     }
 
     /**
@@ -165,6 +185,8 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupRefresh()
 
         noteModel = ViewModelProviders.of(this, noteModelFactory).get(NoteViewModel::class.java)
         noteModel.state.observe(this, Observer<LceState<Note, Int>> { processState(it) })

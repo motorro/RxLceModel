@@ -20,14 +20,12 @@ import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.FakeServer
 import com.motorro.rxlcemodel.sample.service.NetRepository
+import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.service.usecase.NoteListNetService
 import com.motorro.rxlcemodel.sample.service.usecase.NoteNetService
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import dagger.Binds
-import dagger.Component
-import dagger.Module
-import dagger.Provides
+import dagger.*
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import io.reactivex.Scheduler
@@ -36,12 +34,22 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 
-
 @Singleton
 @Component(modules = [AndroidSupportInjectionModule::class, ApplicationModule::class, ActivityModule::class])
 interface ApplicationComponent: AndroidInjector<App> {
     @Component.Builder
-    abstract class Builder : AndroidInjector.Builder<App>()
+    interface Builder {
+
+        fun build(): ApplicationComponent
+
+        @BindsInstance
+        fun application(application: App): Builder
+    }
+
+    /**
+     * Note deletion is done using worker
+     */
+    fun inject(deleteWorker: DeleteWorker)
 }
 
 @Module(includes = [ServiceModule::class, CacheConfigModule::class, CacheModule::class])

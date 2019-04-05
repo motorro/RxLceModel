@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.sample.view.note.viewmodel
+package com.motorro.rxlcemodel.sample.view.note
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,7 +24,7 @@ import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.sample.di.FragmentScope
 import com.motorro.rxlcemodel.sample.di.NoteFragmentModule.Companion.NOTE_ID
 import com.motorro.rxlcemodel.sample.domain.data.Note
-import com.motorro.rxlcemodel.sample.service.usecase.DeleteNote
+import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteText
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
@@ -35,93 +35,78 @@ import javax.inject.Inject
 import javax.inject.Named
 
 /**
- * The model that
+ * The model that:
  * - Displays note
  * - Updates note
- * - Deletes notes
+ * - Deletes notes using work manager to demonstrate data updates from non-visual components
  */
-class NoteViewModel(noteId: Int, private val startState: NoteViewModelState): BaseLceModel<Note, Int>() {
+class NoteViewModel(
+    private val noteId: Int,
+    private val lceModel: NoteLceModel,
+    private val schedulers: SchedulerRepository,
+    private val scheduleDelete: (Int) -> Unit
+): BaseLceModel<Note, Int>() {
     /**
-     * Current model
+     * State live-data
      */
-    private lateinit var modelState: NoteViewModelState
-
-    /**
-     * Interacts with a current model state
-     */
-    private val stateMaster = object: NoteViewModelStateMaster {
-        /**
-         * Params used to load data
-         */
-        override val params: Int = noteId
-
-        /**
-         * A live-data that exports a state to client
-         */
-        override val out: MutableLiveData<LceState<Note, Int>> = MutableLiveData()
-
-        /**
-         * Sets and initializes new state
-         */
-        fun setNewState(newState: NoteViewModelState) {
-            modelState = newState
-            modelState.master = this
-            modelState.subscribe()
-        }
-
-        /**
-         * Sets new state
-         */
-        override fun setState(newState: NoteViewModelState) {
-            modelState.clear()
-            setNewState(newState)
-        }
-    }
-
-    /**
-     * Call this function to initialize a new model and start receiving events
-     */
-    override fun doInitialize() {
-        if (initialized) {
-            return
-        }
-
-        stateMaster.setNewState(startState)
-    }
+    private val stateData = MutableLiveData<LceState<Note, Int>>()
 
     /**
      * LCE State
      */
     override val state: LiveData<LceState<Note, Int>>
-        get() = stateMaster.out
+        get() = stateData
+
+    /**
+     * Call this function to initialize a new model and start receiving events
+     */
+    override fun doInitialize() {
+        val subscription = lceModel
+            .state
+            .subscribeOn(schedulers.io)
+            .observeOn(schedulers.ui)
+            .subscribe(
+                { state -> stateData.value = state},
+                { error -> throw error }
+            )
+
+        disposables.add(subscription)
+    }
+
+    /**
+     * Applies schedulers and ignores errors - a common way to handle [lceModel] operations
+     */
+    private fun Completable.prepare(): Completable =
+        subscribeOn(schedulers.io).observeOn(schedulers.ui).onErrorComplete()
+
+    /**
+     * Starts operation
+     */
+    private fun Completable.execute() {
+        disposables.add(this.prepare().subscribe())
+    }
 
     /**
      * Requests data refresh
-     * Errors are ignored as they are transmitted through [state] property
      */
-    override fun refresh() = modelState.refresh()
+    override fun refresh() = lceModel.refresh.execute()
 
     /**
      * Updates note title
      */
-    fun setTitle(title: String) = modelState.setTitle(title)
+    fun setTitle(title: String) = lceModel.setTitle(title).execute()
 
     /**
      * Updates note text
      */
-    fun setText(text: String) = modelState.setText(text)
+    fun setText(text: String) = lceModel.setText(text).execute()
 
     /**
      * Deletes note
      */
-    fun delete() = modelState.delete()
-
-    /**
-     * Disposes active operations when model is destroyed
-     */
-    override fun onCleared() {
-        super.onCleared()
-        modelState.clear()
+    fun delete() {
+        scheduleDelete(noteId)
+        stateData.value = LceState.Terminated(noteId)
     }
 
 
@@ -139,7 +124,6 @@ class NoteViewModel(noteId: Int, private val startState: NoteViewModelState): Ba
         cacheService: @JvmSuppressWildcards CacheService<Note, Int>,
         private val patchNoteTitle: PatchNoteTitle,
         private val patchNoteText: PatchNoteText,
-        private val deleteNote: DeleteNote,
         schedulers: SchedulerRepository
     ): BaseLceModelFactory<Note, Int>(netService, cacheService, schedulers) {
         /**
@@ -154,40 +138,15 @@ class NoteViewModel(noteId: Int, private val startState: NoteViewModelState): Ba
             )
 
         /**
-         * Creates delete completable
-         */
-        private fun createDeleteNote() = deleteNote.delete(params)
-
-        /**
-         * Creates `Deleted` state
-         */
-        private fun createDeletedState(): NoteViewModelState = DeletedState()
-
-        /**
-         * Creates `Deletion` state
-         */
-        private fun createDeletionState(): NoteViewModelState = DeletionState(
-            deleteNote = createDeleteNote(),
-            schedulers = schedulers,
-            deletedState = createDeletedState()
-        )
-
-        /**
-         * Creates `Data` state
-         */
-        private fun createDataState(): NoteViewModelState = DataState(
-            lceModel = createUpdateWrapper(createLceModel()),
-            schedulers = schedulers,
-            deletionState = createDeletionState()
-        )
-
-        /**
          * Model factory function
          */
-        override fun createModel(lceModel: LceModel<Note, Int>): ViewModel = NoteViewModel(
-            noteId = params,
-            startState = createDataState()
-        )
+        override fun createModel(lceModel: LceModel<Note, Int>): ViewModel =
+            NoteViewModel(
+                noteId = params,
+                lceModel = createUpdateWrapper(createLceModel()),
+                schedulers = schedulers,
+                scheduleDelete = { DeleteWorker.execute(it) }
+            )
     }
 }
 

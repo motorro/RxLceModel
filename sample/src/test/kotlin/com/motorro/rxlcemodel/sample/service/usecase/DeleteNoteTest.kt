@@ -13,37 +13,35 @@
 
 package com.motorro.rxlcemodel.sample.service.usecase
 
-import com.motorro.rxlcemodel.base.entity.EntityValidator
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.sample.NOTE
+import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.NetRepository
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
-import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class PatchNoteTest {
+class DeleteNoteTest {
     private lateinit var connectionChecker: ConnectionChecker
     private lateinit var repo: NetRepository
     private lateinit var listCache: CacheService<NoteList, Unit>
-    private lateinit var patcher: PatchNote
-    private lateinit var validatorFactory: EntityValidatorFactory
+    private lateinit var noteCache: CacheService<Note, Int>
+    private lateinit var delete: DeleteNote
 
     private var listCacheInvalidated = false
+    private var noteCacheDeleted = false
 
     @Before
     fun init() {
         connectionChecker = ConnectionChecker()
 
         repo = mock {
-            on { setNoteTitle(any(), any()) } doReturn Single.just(NOTE)
+            on { deleteNote(any()) } doReturn Completable.complete()
         }
 
         listCacheInvalidated = false
@@ -52,44 +50,47 @@ class PatchNoteTest {
                 listCacheInvalidated = true
             }
         }
-
-        validatorFactory = mock {
-            on { create(anyOrNull()) } doReturn EntityValidator.Always
+        noteCacheDeleted = false
+        noteCache = mock {
+            on { delete(any()) } doReturn Completable.fromAction {
+                noteCacheDeleted = true
+            }
         }
 
-        patcher = PatchNote(connectionChecker, repo, listCache, validatorFactory)
+        delete = DeleteNote(connectionChecker, repo, listCache, noteCache)
     }
 
     @Test
-    fun patcherPatches() {
-        patcher.patch(1) { id -> setNoteTitle(id, "Title") }
+    fun deletesNote() {
+        delete.delete(1)
             .test()
             .assertNoErrors()
             .assertComplete()
-            .assertValue {
-                NOTE == it.data
-            }
-        verify(repo).setNoteTitle(1, "Title")
-        assertTrue { listCacheInvalidated }
-        verify(validatorFactory).create()
+
+        verify(repo).deleteNote(1)
+        verify(noteCache).delete(1)
+        assertTrue(listCacheInvalidated)
+        assertTrue(noteCacheDeleted)
     }
 
     @Test
-    fun patcherFailsOnError() {
+    fun deleteFailsOnError() {
         val error = IllegalArgumentException("Note not found")
-        patcher.patch(1) { Single.error(error) }
+        whenever(repo.deleteNote(any())).thenReturn(Completable.error(error))
+        delete.delete(1)
             .test()
             .assertNoValues()
             .assertError(error)
 
-        assertFalse { listCacheInvalidated }
+        assertFalse(listCacheInvalidated)
+        assertFalse(noteCacheDeleted)
     }
 
     @Test
-    fun patcherFailsOnConnectionError() {
+    fun deleteFailsOnConnectionError() {
         connectionChecker.setStatus(false)
 
-        patcher.patch(1) { id -> setNoteTitle(id, "Title") }
+        delete.delete(1)
             .test()
             .assertNoValues()
             .assertError(IOException::class.java)
