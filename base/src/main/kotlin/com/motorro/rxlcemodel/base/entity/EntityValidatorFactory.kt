@@ -25,6 +25,13 @@ interface EntityValidatorFactory {
      * @throws IllegalArgumentException if serialized can't be deserialized
      */
     fun create(serialized: String? = null): EntityValidator
+
+    /**
+     * Creates a snapshot of entity cache-control.The [EntityValidator.isValid] evaluated at the time of creation.
+     * @param serialized Serialized validator string. Creates a valid snapshot if null is passed
+     * @throws IllegalArgumentException if serialized can't be deserialized
+     */
+    fun createSnapshot(serialized: String? = null): EntityValidator
 }
 
 /**
@@ -46,5 +53,14 @@ class LifespanValidatorFactory @JvmOverloads constructor(
      * @param serialized Serialized validator string. Creates a new validator if null is passed
      * @throws IllegalArgumentException if serialized can't be deserialized
      */
-    override fun create(serialized: String?): EntityValidator = serialized?.let { deserializer.deserialize(serialized)} ?: Lifespan(cacheTtl, clock)
+    override fun create(serialized: String?): EntityValidator =
+        serialized?.let { deserializer.deserialize(serialized)} ?: Lifespan(cacheTtl, clock)
+
+    /**
+     * Creates a snapshot of entity cache-control.The [EntityValidator.isValid] evaluated at the time of creation.
+     * @param serialized Serialized validator string. Creates a valid snapshot if null is passed
+     * @throws IllegalArgumentException if serialized can't be deserialized
+     */
+    override fun createSnapshot(serialized: String?): EntityValidator =
+        serialized?.let { deserializer.deserializeSnapshot(serialized)} ?: Lifespan.createSnapshot(cacheTtl, clock)
 }

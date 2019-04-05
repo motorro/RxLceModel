@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">Sample</string>
+    <string name="app_name">Notes</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="note_not_found">Note not found</string>
+    <string name="notes_not_found">Notes not found</string>
+    <string name="loaded_at">Loaded at:</string>
+    <string name="not_connected">Not connected</string>
+    <string name="connected">Connected</string>
+    <string name="network_connection">Network connection</string>
+    <string name="data_time_stamp">Data time-stamp:</string>
+    <string name="current_state">Current state:</string>
+    <string name="note_title">Title</string>
+    <string name="note_text">Text</string>
+    <string name="data_last_modified">Last modified:</string>
+    <string name="patch">Patch</string>
+    <string name="delete">Delete</string>
+    <string name="data_is_valid">Data is valid</string>
+    <string name="save">Save</string>
 </resources>

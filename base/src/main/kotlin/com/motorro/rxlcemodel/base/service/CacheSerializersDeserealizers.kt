@@ -30,15 +30,17 @@ interface CacheDelegateSerializerDeserializer<D: Any> {
     fun serialize (entity: Entity<D>, output: OutputStream)
 
     /**
-     * Deserializes [Entity] from [input] stream
+     * Deserializes [Entity] snapshot from [input] stream
+     * Snapshots are used because the validity status is only actual when we are getting cached data.
+     * https://github.com/motorro/RxLceModel/issues/5
      * @param input Entity to deserialize
      * @param length Content length
      * @param invalidated If true, the entity was externally invalidated
      */
-    fun deserialize (input: InputStream, length: Long, invalidated: Boolean): Entity<D>?
+    fun deserializeSnapshot (input: InputStream, length: Long, invalidated: Boolean): Entity<D>?
 
     /**
-     * Serializes and deserialises [Serializable] objects
+     * Serializes and deserializes [Serializable] objects
      * @param validatorFactory [Entity] validator factory
      * @param dataClass Class type to cast result to
      */
@@ -71,7 +73,7 @@ interface CacheDelegateSerializerDeserializer<D: Any> {
          */
         private fun Storage<*>.toEntity(invalidated: Boolean): Entity<D> = Entity.Impl(
                 dataClass.cast(data),
-                if (invalidated) Never else validatorFactory.create(serializedValidator)
+                if (invalidated) Never else validatorFactory.createSnapshot(serializedValidator)
         )
 
         /**
@@ -88,7 +90,7 @@ interface CacheDelegateSerializerDeserializer<D: Any> {
          * @param input Entity to deserialize
          * @param length Content length
          */
-        override fun deserialize(input: InputStream, length: Long, invalidated: Boolean): Entity<D>? = runCatching {
+        override fun deserializeSnapshot(input: InputStream, length: Long, invalidated: Boolean): Entity<D>? = runCatching {
             ObjectInputStream(input).use {
                 (it.readObject() as Storage<*>).toEntity(invalidated)
             }

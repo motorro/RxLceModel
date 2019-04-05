@@ -50,6 +50,13 @@ interface CacheService<D: Any, in P: Any> {
      */
     val invalidateAll: Completable
 
+    /**
+     * Deletes cached value.
+     * The [getData] observable for the same key wil emit [com.gojuno.koptional.None]
+     * @param params Caching key
+     */
+    fun delete(params: P): Completable
+
     companion object {
         /**
          * Creates synchronous [SyncDelegateCacheService.Delegate] cache service

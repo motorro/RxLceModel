@@ -129,7 +129,7 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
         get() = cacheProvider.cache.get(invalidationKey)?.getInvalidatedAt() ?: 0L
         set(value) {
             cacheProvider.cache.edit(invalidationKey)?.run {
-                kotlin.runCatching {
+                runCatching {
                     setObject(DATA_INDEX, null)
                     setCreatedAt(0)
                     setInvalidatedAt(value)
@@ -154,7 +154,7 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
         cacheProvider.cache.get(key)?.use { snapshot -> with(snapshot) {
             val invalidated = getCreatedAt() < Math.max(getInvalidatedAt(), allInvalidatedAt)
             withDataInputStream {
-                sd.deserialize(it, getDataLength(), invalidated)
+                sd.deserializeSnapshot(it, getDataLength(), invalidated)
             }
         }}
     }
@@ -201,5 +201,17 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
      */
     override fun invalidateAll() {
         allInvalidatedAt = clock.getMillis()
+    }
+
+    /**
+     * Deletes cached value
+     * @param params Caching key
+     */
+    override fun delete(params: String) = withCacheKey<Unit>(params) { key ->
+        try {
+            cacheProvider.cache.remove(key)
+        } catch (e: Throwable) {
+            // Ignored
+        }
     }
 }

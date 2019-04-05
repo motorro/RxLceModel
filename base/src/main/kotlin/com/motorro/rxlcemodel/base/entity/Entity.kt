@@ -34,6 +34,11 @@ interface Entity<out T: Any>: EntityValidator {
     fun <R: Any> map(mapper: (T) -> R): Entity<R>
 
     /**
+     * Crates a snapshot of validator preserving it's current [EntityValidator.isValid] value
+     */
+    override fun createSnapshot(): Entity<T>
+
+    /**
      * Simple entity implementation
      * @param data Stored data
      * @param validator Entity validator
@@ -50,8 +55,21 @@ interface Entity<out T: Any>: EntityValidator {
                 data = mapper(data),
                 validator = validator
         )
+
+        /**
+         * Crates a snapshot of validator preserving it's current [EntityValidator.isValid] value
+         */
+        override fun createSnapshot(): Entity<T> = copy(validator = validator.createSnapshot())
     }
 }
+
+/**
+ * Converts [T] to [Entity] to use with services
+ * @param validator Entity validator
+ * @see com.motorro.rxlcemodel.base.service.NetService
+ * @see com.motorro.rxlcemodel.base.service.CacheService
+ */
+fun <T: Any> T.toEntity(validator: EntityValidator) = Entity.Impl(this, validator)
 
 /**
  * Entity validator
@@ -67,6 +85,13 @@ interface EntityValidator {
          * @return Deserialized validator or null if not recognized
          */
         fun deserialize(serialized: String): EntityValidator?
+
+        /**
+         * Deserializes an immutable snapshot of validator that does not change [EntityValidator.isValid] with time
+         * @param serialized Serialized validator
+         * @return Deserialized validator or null if not recognized
+         */
+        fun deserializeSnapshot(serialized: String): EntityValidator? = deserialize(serialized)?.createSnapshot()
     }
 
     /**
@@ -78,6 +103,50 @@ interface EntityValidator {
      * A way to serialize entity
      */
     fun serialize(): String
+
+    /**
+     * Crates a snapshot of validator preserving it's current [EntityValidator.isValid] value
+     */
+    fun createSnapshot(): EntityValidator = EntityValidator.Simple(isValid())
+
+    /**
+     * A simple validator which state is defined on creation
+     * May be used to fix the [isValid] state of dynamic validator such as [Lifespan]
+     * @param valid Validity state
+     */
+    data class Simple(private val valid: Boolean): EntityValidator {
+        /**
+         * Deserializes validator from string
+         */
+        object SimpleDeserializer : Deserializer {
+            /**
+             * Pattern to deserialize
+             */
+            private val DESERIALIZATION_PATTERN = Pattern.compile("^Simple:\\s(true|false)$")
+
+            /**
+             * Deserializes validator from string if string is recognized
+             * @param serialized Serialized validator
+             * @return Deserialized validator or null if not recognized
+             */
+            override fun deserialize(serialized: String): EntityValidator? = DESERIALIZATION_PATTERN
+                .matcher(serialized)
+                .takeIf { it.matches() }
+                ?.let { matcher ->
+                    Simple(matcher.toMatchResult()?.group(1)!!.toBoolean())
+                }
+        }
+
+        /**
+         * If true cached entity is valid.
+         */
+        override fun isValid(): Boolean = valid
+
+        /**
+         * A way to serialize entity
+         */
+        override fun serialize(): String = "Simple: $valid"
+    }
 
     /**
      * Entity that is always valid
@@ -149,13 +218,35 @@ interface EntityValidator {
      * Uses creation time and TTL to validate
      * @param wasBorn Time entity was born
      * @param ttl Time to live
-     * @param clock Clock implementation
+     * @param validation Validation delegate to create a dynamic or snapshot validator
      */
     class Lifespan private constructor(
         private val wasBorn: Long,
         private val ttl: Long,
-        private val clock: Clock
+        private val validation: Validation
     ): EntityValidator {
+        companion object {
+            /**
+             * Checks if entity has expired
+             */
+            private fun isValid(wasBorn: Long, ttl: Long, clock: Clock) = clock.getMillis() - wasBorn <= ttl
+
+            /**
+             * Creates a snapshot that may be serialized and deserialized back to dynamic [Lifespan]
+             * @param ttl Time to live
+             * @param clock Clock implementation
+             */
+            @JvmOverloads
+            fun createSnapshot(ttl: Long, clock: Clock = Clock.SYSTEM): Lifespan {
+                val wasBorn = clock.getMillis()
+                return Lifespan(
+                    wasBorn,
+                    ttl,
+                    Validation.Snapshot(isValid(wasBorn, ttl, clock))
+                )
+            }
+        }
+
         /**
          * Deserializes validator from string
          */
@@ -168,36 +259,90 @@ interface EntityValidator {
             }
 
             /**
-             * Deserializes validator from string if string is recognized
-             * @param serialized Serialized validator
-             * @return Deserialized validator or null if not recognized
+             * Parses temporal properties and executes [action] if succeeded
              */
-            override fun deserialize(serialized: String): EntityValidator? = DESERIALIZATION_PATTERN
+            private inline fun withTemporal(serialized: String, action: (Long, Long) -> Lifespan): Lifespan? =
+                DESERIALIZATION_PATTERN
                     .matcher(serialized)
                     .takeIf { it.matches() }
                     ?.let { matcher ->
                         matcher.toMatchResult().let { result ->
-                            Lifespan(result.group(1).toLong(), result.group(2).toLong(), clock)
+                            val wasBorn = result.group(1).toLong()
+                            val ttl = result.group(2).toLong()
+                            action(wasBorn, ttl)
                         }
                     }
+            /**
+             * Deserializes validator from string if string is recognized
+             * @param serialized Serialized validator
+             * @return Deserialized validator or null if not recognized
+             */
+            override fun deserialize(serialized: String): EntityValidator? = withTemporal(serialized) { wasBorn, ttl ->
+                Lifespan(wasBorn, ttl, Validation.Dynamic(clock))
+            }
+
+            /**
+             * Deserializes an immutable snapshot of validator that does not change [EntityValidator.isValid] with time
+             * @param serialized Serialized validator
+             * @return Deserialized validator or null if not recognized
+             */
+            override fun deserializeSnapshot(serialized: String): EntityValidator? = withTemporal(serialized) { wasBorn, ttl ->
+                Lifespan(wasBorn, ttl, Validation.Snapshot(isValid(wasBorn, ttl, clock)))
+            }
         }
 
         /**
+         * A delegate that performs validation
+         * Used to alter Lifespan dynamic instance or a snapshot
+         */
+        internal interface Validation {
+            /**
+             * Checks if [Lifespan] is valid
+             */
+            fun isValid(wasBorn: Long, ttl: Long): Boolean
+
+            /**
+             * Use in dynamic [Lifespan]
+             */
+            class Dynamic(private val clock: Clock): Validation {
+                override fun isValid(wasBorn: Long, ttl: Long): Boolean = isValid(wasBorn, ttl, clock)
+            }
+
+            /**
+             * Use in [Lifespan] snapshot
+             */
+            class Snapshot(private val valid: Boolean): Validation {
+                override fun isValid(wasBorn: Long, ttl: Long): Boolean = valid
+            }
+        }
+
+        /**
+         * Creates dynamic validator that will change it's [EntityValidator.isValid] in time
          * @constructor
          * @param ttl Time to live
          * @param clock Clock implementation
          */
-        @JvmOverloads constructor(ttl: Long, clock: Clock = Clock.SYSTEM) : this(clock.getMillis(), ttl, clock)
+        @JvmOverloads
+        constructor(ttl: Long, clock: Clock = Clock.SYSTEM) : this(
+            clock.getMillis(),
+            ttl,
+            Validation.Dynamic(clock)
+        )
 
         /**
          * If true cached entity is valid.
          */
-        override fun isValid(): Boolean = clock.getMillis() - wasBorn <= ttl
+        override fun isValid(): Boolean = validation.isValid(wasBorn, ttl)
 
         /**
          * A way to serialize entity
          */
         override fun serialize(): String = "Lifespan: $wasBorn/$ttl"
+
+        /**
+         * Crates a snapshot of validator preserving it's current [EntityValidator.isValid] value
+         */
+        override fun createSnapshot(): EntityValidator = Lifespan(wasBorn, ttl, Validation.Snapshot(isValid()))
 
         /**
          * As soon as we should provide [EntityValidator] interface we compare only

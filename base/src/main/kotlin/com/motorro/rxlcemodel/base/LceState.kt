@@ -109,6 +109,32 @@ sealed class LceState<out DATA: Any, PARAMS: Any> {
             override val params: PARAMS,
             val error: Throwable
     ): LceState<DATA, PARAMS>()
+
+    /**
+     * A special state that may be used to terminate state emission in cases we always need a latest state to proceed
+     * For example we have a view that subscribes to [LceState] for a resource identified with [PARAMS].
+     * Than a delete operation is performed on that resource and it is not available anymore.
+     * The one may emit [Terminated] to do a special processing (e.g. close the corresponding view) instead of
+     * doing it through server request that will return a `Not found` error and doing a special case
+     * processing afterwards.
+     * Also useful when `onComplete` from state-emitter can't be processed by the end-subscriber. For example LiveData
+     * does not emit completion and caches the latest emission. So converting stream to LiveData will loose Rx completion
+     * logic.
+     * @property params Params used to load [data]
+     */
+    data class Terminated<out DATA: Any, PARAMS: Any>(override val params: PARAMS): LceState<DATA, PARAMS>() {
+        /**
+         * State data
+         */
+        override val data: DATA? = null
+
+        /**
+         * A property that is evaluated internally and may mean that data being emitted is stall,
+         * invalidated or otherwise 'not-so-valid' until some further emission (say after network
+         * reload).
+         */
+        override val dataIsValid: Boolean = false
+    }
 }
 
 /**
@@ -120,5 +146,6 @@ inline fun <DATA_1: Any, DATA_2: Any, PARAMS: Any> LceState<DATA_1, PARAMS>.map(
         is LceState.Loading -> LceState.Loading(data?.let(mapper), dataIsValid, params, type)
         is LceState.Content -> LceState.Content(mapper(data), dataIsValid, params)
         is LceState.Error -> LceState.Error(data?.let(mapper), dataIsValid, params, error)
+        is LceState.Terminated -> LceState.Terminated(params)
     }
 }
