@@ -39,6 +39,9 @@ import javax.inject.Named
  * - Displays note
  * - Updates note
  * - Deletes notes using work manager to demonstrate data updates from non-visual components
+ * Model uses [NoteUpdateWrapper] descendant to demonstrate several update operations for data
+ * (like PATCHing requests in HTTP APIs). If PUTing a whole data structure on server is enough
+ * [com.motorro.rxlcemodel.base.UpdatingLceModel] is a simpler choice
  */
 class NoteViewModel(
     private val noteId: Int,
