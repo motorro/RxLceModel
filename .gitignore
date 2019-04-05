@@ -4,5 +4,6 @@
 .DS_Store
 .externalNativeBuild
 build
+release
 /local.properties
 /captures
