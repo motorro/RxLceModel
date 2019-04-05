@@ -33,7 +33,7 @@ import java.io.Serializable
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
-inline fun <reified D: Any, reified P: Any> DiskLruCacheProvider.createDelegate(
+inline fun <D: Any, P: Any> DiskLruCacheProvider.createDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<D>,
     crossinline stringify: P.() -> String = { toString() }
@@ -52,7 +52,7 @@ inline fun <reified D: Any, reified P: Any> DiskLruCacheProvider.createDelegate(
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
-inline fun <reified D: Serializable, reified P: Any> DiskLruCacheProvider.withObjectStream(
+inline fun <reified D: Serializable, P: Any> DiskLruCacheProvider.withObjectStream(
     prefix: String,
     validatorFactory: EntityValidatorFactory,
     crossinline stringify: P.() -> String = { toString() }
