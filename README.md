@@ -50,7 +50,7 @@ flow of immutable state-objects. Each of them the should contain the whole set o
 and display according to the business requirement. The most commonly used information besides the data itself is a state 
 of data-loading pipeline.
 
-![LceState class diagram](https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/lce_state.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![LceState class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/lce_state.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
 
 Each `LceState<DATA, PARAMS>` subclass represents a data-loading phase and contains the following data:
 *   `data: DATA?` - Loaded data
