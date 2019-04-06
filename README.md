@@ -52,47 +52,46 @@ of data-loading pipeline.
 
 ![LceState class diagram](https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_fallback_on_error.puml?token=AA4beL5-C8SrVVYQhbiIZuuWwBerlk2eks5csXBUwA%3D%3D)
 
-Each `LceState` subclass represents a data-loading phase and contains the following data:
-*   `data`        -   Loaded data
-*   `dataIsValid` -   The validity of data at the time of emission. May be used by caching services to indicate the need 
-    of data refresh. More about it in [CacheThenNetLceModel]($cachethennetlcemodel) section.
-*   `params`      -   Params that identify data being loaded
+Each `LceState<DATA, PARAMS>` subclass represents a data-loading phase and contains the following data:
+*   `data: DATA?` - Loaded data
+*   `dataIsValid: Boolean` - The validity of data at the time of emission. May be used by caching services to indicate 
+    the need of data refresh. More about it in [CacheThenNetLceModel](#cachethennetlcemodel) section.
+*   `params`: PARAMS - Params that identify data being loaded
 
 States being emitted are:
-*   `Loading` - data is being loaded or updated. The exact state is defined by `type` property:
+*   `Loading` - data is being loaded or updated. May contain some data. The exact state is defined by `type` property:
 ```kotlin
-   /**
-     * Loading type
+/**
+ * Loading type
+ */
+enum class Type {
+    /**
+     * Just loads. May be initial load operation
      */
-    enum class Type {
-        /**
-         * Just loads. May be initial load operation
-         */
-        LOADING,
-        /**
-         * Loading more items for paginated view
-         */
-        LOADING_MORE,
-        /**
-         * Refreshing content
-         */
-        REFRESHING,
-        /**
-         * Updating data on server
-         */
-        UPDATING,
-    }        
+    LOADING,
+    /**
+     * Loading more items for paginated view
+     */
+    LOADING_MORE,
+    /**
+     * Refreshing content
+     */
+    REFRESHING,
+    /**
+     * Updating data on server
+     */
+    UPDATING,
+}        
 ```
-    `Loading` may already contain some data.
 *   `Content` - data is loaded.
 *   `Error` - some error  while loading or updating data. May also contain some data.
 *   `Terminated` - a special state to indicate that resource identified by `params` is not available anymore. The sample
     application demonstrates the use of `Terminated` to indicate that the note is deleted and [view](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/note/NoteFragment.kt) 
     should be closed:
 ```kotlin
-    override fun processTermination() {
-        findNavController().popBackStack()
-    }
+override fun processTermination() {
+    findNavController().popBackStack()
+}
 ``` 
  
 ## LceModel
