@@ -108,7 +108,13 @@ class NoteViewModel(
      * Deletes note
      */
     fun delete() {
+        // Unsubscribe state updates
+        disposables.clear()
+
+        // Delete note
         scheduleDelete(noteId)
+
+        // Terminate view
         stateData.value = LceState.Terminated(noteId)
     }
 

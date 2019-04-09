@@ -17,17 +17,17 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.domain.data.Note
+import com.motorro.rxlcemodel.sample.testOnCleared
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class NoteViewModelTest {
@@ -83,5 +83,30 @@ class NoteViewModelTest {
         whenever(noteLceModel.setText("Text")).thenReturn(Completable.error(Exception()))
         model.setText("Text")
         verify(noteLceModel).setText("Text")
+    }
+
+    @Test
+    fun deletesOnDelete() {
+        model.delete()
+        verify(deleteScheduler)(1)
+    }
+
+    @Test
+    fun terminatesStateSubscriptionOnDelete() {
+        val state = PublishSubject.create<LceState<Note, Int>>()
+        whenever(noteLceModel.state).thenReturn(state)
+
+        model.initialize()
+        assertTrue { state.hasObservers() }
+        model.delete()
+        assertFalse { state.hasObservers() }
+    }
+
+    @Test
+    fun deletesTerminatesView() {
+        val observer: Observer<LceState<Note, Int>> = mock()
+        model.state.observeForever(observer)
+        model.delete()
+        verify(observer).onChanged(LceState.Terminated(1))
     }
 }

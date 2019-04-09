@@ -1,4 +1,4 @@
-package com.motorro.rxlcemodel.sample.utils
+package com.motorro.rxlcemodel.sample
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
