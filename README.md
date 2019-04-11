@@ -68,7 +68,7 @@ flow of immutable state-objects. Each of them should contain the whole set of da
 and display according to the business requirement. The most commonly used information besides the data itself is a state 
 of data-loading pipeline.
 
-![LceState class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/lce_state.puml)
+![LceState class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/lce_state.puml)
 
 Each `LceState<DATA, PARAMS>` subclass represents a data-loading phase and contains the following data:
 *   `data: DATA?` - Loaded data
@@ -141,7 +141,7 @@ As you may guess from it's name this kind of model tries to get cached data firs
 nothing found. It goes along with current [Android guide to app architecture](https://developer.android.com/jetpack/docs/guide). This type of model is called
 `CacheThenNetLceModel`. Here is the sequence diagram of data loading using this type of model:
 
-![CacheThanNet loading sequence](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/loading.puml)
+![CacheThanNet loading sequence](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/loading.puml)
 
 The model creates a data observable for given `PARAMS` in a [cache-service](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt) 
 and transmits it to subscriber. If cache does not contain any data or data is not valid (more on validation later) the 
