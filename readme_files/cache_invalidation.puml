@@ -1,0 +1,34 @@
+@startuml
+Actor Subscriber
+Actor PushService
+Participant LceModel
+Database CacheService
+Entity OldValue
+
+== Subscribe to state changes ==
+Subscriber -> LceModel: subscribe state
+LceModel -> Subscriber: onNext(Loading(data = null))
+== Subscribe to cache events ==
+LceModel -> CacheService: subscribe getData(params)
+LceModel <- OldValue: onNext(OldValue)
+LceModel -> OldValue: isValid()
+LceModel <-- OldValue: true
+note right
+    Cache has some **valid** data.
+end note
+LceModel -> Subscriber: onNext(Content(data = oldValue))
+== PushService needs the data to be reloaded ==
+PushService -> CacheService: invalidate(params)
+LceModel <- OldValue: onNext(OldValue)
+LceModel -> OldValue: isValid()
+LceModel <-- OldValue: false
+destroy OldValue
+note right
+    Cache emits the old value that is now
+    invalid. A network update starts...
+end note
+LceModel -> Subscriber: onNext(Loading(data = oldValue, type = REFRESHING))
+...
+== Fresh data is saved to cache and delivered to subscriber ==
+LceModel -> Subscriber: onNext(Content(data = newValue))
+@enduml
