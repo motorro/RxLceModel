@@ -375,3 +375,14 @@ write.update { id ->
 ```    
 *   A subclass of `UpdateWrapper` - implement any logic you like calling `doUpdate` to perform update. An [example](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/note/NoteViewModel.kt) 
     may be found in sample application.
+    
+## Getting data-only stream
+You may transform the `state` property `Observable` to strip state information and to get only the data. The library 
+ships with some of the functions already implemented like:
+*   `dataStopOnErrors` - emits data stopping on any error
+*   `dataStopOnEmptyErrors` - emits data and terminates on error only if there is no data in original emission 
+    (`LceState.Error` with `null` for `data` property)
+*   `dataNoErrors` - emits data and ignores errors
+*   `validData` - emits data only if it is valid
+More information about them may be found in [documentation](docs/com.motorro.rxlcemodel.base/io.reactivex.-observable/index.md)
+or in a source code.
