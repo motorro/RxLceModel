@@ -351,7 +351,7 @@ write.update(Data(10, "Ten")).subscribe()
 ```kotlin
 // A repository interface
 interface DataRepository {
-    // Patching `a` property od `Data`
+    // Patching `a` property of `Data`
     fun updateA(id: Int, value: Int): Single<Data>
 }
 
@@ -369,7 +369,7 @@ val write = StrategyUpdateWrapper(
 // Patch `Data`
 write.update { id -> 
     dataRepository
-        .updateA(10) // Patch data
+        .updateA(id, 10) // Patch data
         .map { it.toEntity(validatorFactory.create()) } // Create new entity
 }.subscribe()
 ```    
