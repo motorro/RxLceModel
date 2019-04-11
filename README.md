@@ -324,4 +324,54 @@ Nothing special is required for library itself. If you use `DiskLruCache` delega
 rules for `Serializable` classes as [described](https://www.guardsquare.com/en/products/proguard/manual/examples#serializable) 
 in the official guide.
 
- 
+## Updating data on server
+With `LceModel` you can update data easily with update operation state being transmitted through a `state` property just
+as with data loading. The updates are made with descendants of [UpdateWrapper](base/src/main/kotlin/com/motorro/rxlcemodel/base/UpdateWrapper.kt).
+The idea behind is to wrap an existing `LceModel` and to mix the update status to the existing state stream.
+The selection of ready-to use wrappers is:
+*   `UpdatingLceModelWrapper<DATA, UPDATE, PARAMS>` - the wrapper that updates the whole `DATA` using the `UPDATE` class.
+    The existing model may be extended with the factory function:
+```kotlin
+val serviceSet = object: UpdatingServiceSet<Data, Data, Int> {
+    override val net: UpdatingNetService<Data, Data, Int> = net
+    override val cache: CacheService<Data, Int> = cache
+}
+
+val read = LceModel.cacheThanNet(
+    params = 1,
+    serviceSet = serviceSet
+)
+
+val write = read.withUpdates(serviceSet)
+
+// Update data
+write.update(Data(10, "Ten")).subscribe()
+```  
+*   `StrategyUpdateWrapper<DATA, PARAMS>` - may perform any update (patch) using a strategy passed to class instance:
+```kotlin
+// A repository interface
+interface DataRepository {
+    // Patching `a` property od `Data`
+    fun updateA(id: Int, value: Int): Single<Data>
+}
+
+val read = LceModel.cacheThanNet(
+    params = 1,
+    net = netService, // Gets original data
+    cache = cacheService // Caches it to local storage
+)
+
+val write = StrategyUpdateWrapper(
+    upstream = read,
+    cache = cacheService // Caches new data to local storage
+)
+
+// Patch `Data`
+write.update { id -> 
+    dataRepository
+        .updateA(10) // Patch data
+        .map { it.toEntity(validatorFactory.create()) } // Create new entity
+}.subscribe()
+```    
+*   A subclass of `UpdateWrapper` - implement any logic you like calling `doUpdate` to perform update. An [example](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/note/NoteViewModel.kt) 
+    may be found in sample application.
