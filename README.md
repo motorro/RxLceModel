@@ -30,6 +30,21 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Implementing MVVM using LiveData, RxJava, Dagger Android](https://proandroiddev.com/mvvm-architecture-using-livedata-rxjava-and-new-dagger-android-injection-639837b1eb6c)
 * [Navigation Architecture Component for the Rest of Us](https://proandroiddev.com/navigation-architecture-component-for-the-rest-of-us-faafa890e5)
 
+## Table of Contents
+* [Setting up the dependency](#setting-up-the-dependency)
+* [LceState](#lcestate)
+* [LceModel](#lcemodel)
+* [CacheThenNetLceModel](#cachethennetlcemodel)
+* [Getting and caching data](#getting-and-caching-data)
+* [Choosing EntityValidator](#choosing-entityvalidator)
+* [Displaying 'invalid' data and cache fall-back](#displaying-invalid-data-and-cache-fall-back)
+* [Cache invalidation and data updates](#cache-invalidation-and-data-updates)
+* [Cache service implementation and DiskLruCache](#cache-service-implementation-and-disklrucache)
+* [A complete example of model setup](#a-complete-example-of-model-setup)
+* [ProGuard configuration](#proguard-configuration)
+* [Updating data on server](#updating-data-on-server)
+* [Getting data-only stream](#getting-data-only-stream)
+
 ## Setting up the dependency
 Basic module [ ![Base](https://api.bintray.com/packages/motorro/RxLceModel/base/images/download.svg) ](https://bintray.com/motorro/RxLceModel/base/_latestVersion):
 ```groovy
