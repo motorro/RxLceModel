@@ -112,18 +112,17 @@ class CacheModule {
         diskCache: DiskLruCacheSyncDelegate.DiskLruCacheProvider,
         @Named(NOTE_LIST) validatorFactory: EntityValidatorFactory
     ): CacheService<NoteList, Unit> = CacheService.withSyncDelegate(
-        diskCache.withObjectStream("note", validatorFactory) { "notes" }
+        diskCache.withObjectStream(validatorFactory, "note") { "notes" }
     )
 
     /**
      * Note cache service
+     * Using default factory-function parameters
      */
     @Singleton
     @Provides
     internal fun noteCacheService(
         diskCache: DiskLruCacheProvider,
         @Named(NOTE) validatorFactory: EntityValidatorFactory
-    ): CacheService<Note, Int> = CacheService.withSyncDelegate(
-        diskCache.withObjectStream("note", validatorFactory)
-    )
+    ): CacheService<Note, Int> = CacheService.withSyncDelegate(diskCache.withObjectStream(validatorFactory))
 }

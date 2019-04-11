@@ -1,0 +1,37 @@
+@startuml
+
+hide empty members
+
+class PARAMS
+PARAMS -* LceState: Identify loaded data
+
+abstract class LceState<DATA, PARAMS> {
+    +data: DATA?
+    +dataIsValid: Boolean
+    +params: PARAMS
+}
+LceState <|-- Loading
+LceState <|-- Content
+LceState <|-- Error
+LceState <|-- Terminated
+LceState *- "0..1" DATA: Loaded data if any
+
+class DATA
+
+class Loading
+Loading --> LoadingType: What's going on with network
+
+enum LoadingType {
+    LOADING
+    LOADING_MORE
+    REFRESHING
+    UPDATING
+}
+
+class Content
+
+class Error
+
+class Terminated #Crimson
+
+@enduml

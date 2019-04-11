@@ -14,6 +14,8 @@
 package com.motorro.rxlcemodel.base
 
 import com.motorro.rxlcemodel.base.LceState.Loading
+import com.motorro.rxlcemodel.base.service.CacheService
+import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
 import io.reactivex.Completable
@@ -41,6 +43,29 @@ interface LceModel<DATA: Any, PARAMS: Any> {
         ): LceModel<DATA, PARAMS> = CacheThenNetLceModel(
                 params = params,
                 serviceSet = serviceSet,
+                startWith = startWith
+        )
+
+        /**
+         * Creates a model that returns cached data first, than refreshes if stall
+         * @param DATA Data type of data being held
+         * @param PARAMS Params type that identify data being loaded
+         * @param params Params that identify data being loaded
+         * @param net Net-service
+         * @param cache Cache-service
+         * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
+         */
+        @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThanNet(
+            params: PARAMS,
+            net: NetService<DATA, PARAMS>,
+            cache: CacheService<DATA, PARAMS>,
+            startWith: Observable<LceState<DATA, PARAMS>> = Observable.just(Loading(null, false, params))
+        ): LceModel<DATA, PARAMS> = cacheThanNet(
+                params = params,
+                serviceSet = object : ServiceSet<DATA, PARAMS> {
+                    override val net: NetService<DATA, PARAMS> get() = net
+                    override val cache: CacheService<DATA, PARAMS> get() = cache
+                },
                 startWith = startWith
         )
     }

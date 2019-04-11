@@ -1,0 +1,9 @@
+@startuml
+interface CacheService {
+    +get(params: PARAMS): Observable<Optional<Entity<DATA>>>
+    +save(params: PARAMS, entity: Entity<DATA>): Completable
+    +invalidate(params: PARAMS): Completable
+    +invalidateAll: Completable
+    +delete(params: PARAMS): Completable
+}
+@enduml

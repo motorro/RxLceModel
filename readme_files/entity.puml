@@ -1,0 +1,37 @@
+@startuml
+
+hide empty members
+
+package entity <<Cloud>> {
+    interface EntityValidator {
+        +isValid(): Boolean
+        +serialize(): String
+    }
+    EntityValidator <|.. Entity
+
+    interface Entity<DATA> {
+        +data: DATA
+    }
+}
+
+interface EntityValidatorFactory {
+    +create(serialized: String?): EntityValidator
+    +createSnapshot(serialized: String?): EntityValidator
+}
+EntityValidatorFactory -> EntityValidator: creates
+
+interface NetService {
+    +get(params: PARAMS): Single<Entity<DATA>>
+}
+NetService -> Entity: Adds validation to loaded data
+
+interface CacheService {
+    +get(params: PARAMS): Observable<Optional<Entity<DATA>>>
+    +save(params: PARAMS, entity: Entity<DATA>): Completable
+    +invalidate(params: PARAMS): Completable
+    +invalidateAll: Completable
+    +delete(params: PARAMS): Completable
+}
+Entity <-- CacheService : Retrieves validation status
+
+@enduml

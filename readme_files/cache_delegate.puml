@@ -1,0 +1,10 @@
+@startuml
+hide empty members
+interface SyncDelegateCacheService.Delegate<DATA, PARAMS> {
+        +get(params: PARAMS): Entity<D>?
+        +save(params: PARAMS, entity: Entity<DATA>)
+        +invalidate(params: PARAMS)
+        +invalidateAll()
+        +delete(params: PARAMS)
+}
+@enduml
