@@ -52,8 +52,8 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createDelegate(
  * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
  *
  * @receiver Cache provider
- * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  * @param validatorFactory Entity validation factory (defines cache TTL)
+ * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
