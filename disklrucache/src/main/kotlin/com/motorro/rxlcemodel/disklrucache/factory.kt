@@ -21,6 +21,11 @@ import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCache
 import java.io.Serializable
 
 /**
+ * Default delegate prefix for type
+ */
+fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.toLowerCase()
+
+/**
  * Creates DiskLRU caching delegate for [SyncDelegateCacheService]
  * Delegate uses cache directory provided by [DiskLruCacheProvider]. This directory is designed to be shared
  * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
@@ -53,8 +58,8 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createDelegate(
  * data identifying parameters with string using [stringifyParams]
  */
 inline fun <reified D: Serializable, P: Any> DiskLruCacheProvider.withObjectStream(
-    prefix: String,
     validatorFactory: EntityValidatorFactory,
+    prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String = { toString() }
 ) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
     prefix = prefix,
