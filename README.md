@@ -68,7 +68,7 @@ flow of immutable state-objects. Each of them should contain the whole set of da
 and display according to the business requirement. The most commonly used information besides the data itself is a state 
 of data-loading pipeline.
 
-![LceState class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/lce_state.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![LceState class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/lce_state.puml)
 
 Each `LceState<DATA, PARAMS>` subclass represents a data-loading phase and contains the following data:
 *   `data: DATA?` - Loaded data
@@ -141,7 +141,7 @@ As you may guess from it's name this kind of model tries to get cached data firs
 nothing found. It goes along with current [Android guide to app architecture](https://developer.android.com/jetpack/docs/guide). This type of model is called
 `CacheThenNetLceModel`. Here is the sequence diagram of data loading using this type of model:
 
-![CacheThanNet loading sequence](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/loading.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![CacheThenNet loading sequence](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/loading.puml)
 
 The model creates a data observable for given `PARAMS` in a [cache-service](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt) 
 and transmits it to subscriber. If cache does not contain any data or data is not valid (more on validation later) the 
@@ -156,7 +156,7 @@ your choice for later reuse.
 
 To create new `CacheThenNet` model call a factory function:
 ```kotlin
-protected open fun createLceModel() = LceModel.cacheThanNet(
+protected open fun createLceModel() = LceModel.cacheThenNet(
     params = "user_123",
     net = netService, // Gets original data
     cache = cacheService // Caches it to local storage
@@ -172,7 +172,7 @@ As already mentioned above caching model uses two services to get data from netw
 Caching data always brings up a problem of cache updates and invalidation. Be it a caching policy of your backend team
 or some internal logic of your application the data validity evaluation may be easily implemented: 
 
-![Entity and validation](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/entity.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![Entity and validation](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/entity.puml)
 
 The `NetService` retrieved data and packages it to [Entity](base/src/main/kotlin/com/motorro/rxlcemodel/base/entity/Entity.kt) 
 wrapper - effectively the data itself and some `EntityValidator` to provide information when data expires.
@@ -226,7 +226,7 @@ in case network is not available and to keep working. This is an easy way to cre
 complex state synchronization between the app and server is not required. With 'cache-then-net' model you get the cache 
 fall-back already implemented. Here is what you get when network connection is not available:
 
-![Cache fallback](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/cache_fallback_on_error.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![Cache fallback](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_fallback_on_error.puml)
 
 When there is no cached data available you just get `null` for `data` property in emitted `LceState.Error`. 
  
@@ -236,7 +236,7 @@ happens in another part. Reloading a list of messages in a chat application when
 There are different ways of doing this - event-buses, Rx-subjects, you name it. 
 With reactive cache-service the library provides such an invalidation is made in a simple and clean way:
 
-![Cache invalidation](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/cache_invalidation.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![Cache invalidation](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_invalidation.puml)
 
 If the push-message brings a pyload that is enough to display data change you could simply save the new data to cash 
 with `save` method or delete it with `delete` method of [CacheService](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt) interface:
@@ -257,7 +257,7 @@ fun delete(noteId: Int): Completable = connectionChecker.connectionCheck
 While you can implement any cache-service you like the library comes with a simple [SyncDelegateCacheService](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/SyncDelegateCacheService.kt)
 which uses the following delegate for data IO:
 
-![Cache delegate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/docs/readme_files/cache_delegate.puml?token=AA4beOp3V1D2VF-WGRD04-ND5kPma7A9ks5csgx-wA%3D%3D)
+![Cache delegate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_delegate.puml)
 
 The interface is self-explanatory and does all the IO for `CacheService` in a synchronous way.
 The library comes with a delegate that uses famous [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion)
@@ -327,7 +327,7 @@ val cacheService: CacheService<Data, Int> = CacheService.withSyncDelegate(
 /**
  * A model to load [Data] identified by [1]
  */
-val model = LceModel.cacheThanNet(
+val model = LceModel.cacheThenNet(
     params = 1,
     net = netService,
     cache = cacheService
@@ -352,7 +352,7 @@ val serviceSet = object: UpdatingServiceSet<Data, Data, Int> {
     override val cache: CacheService<Data, Int> = cache
 }
 
-val read = LceModel.cacheThanNet(
+val read = LceModel.cacheThenNet(
     params = 1,
     serviceSet = serviceSet
 )
@@ -370,7 +370,7 @@ interface DataRepository {
     fun updateA(id: Int, value: Int): Single<Data>
 }
 
-val read = LceModel.cacheThanNet(
+val read = LceModel.cacheThenNet(
     params = 1,
     net = netService, // Gets original data
     cache = cacheService // Caches it to local storage

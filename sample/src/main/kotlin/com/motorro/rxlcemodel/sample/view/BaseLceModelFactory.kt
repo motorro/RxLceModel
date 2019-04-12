@@ -42,7 +42,7 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
     /**
      * Creates [LceModel]
      */
-    protected open fun createLceModel() = LceModel.cacheThanNet(
+    protected open fun createLceModel() = LceModel.cacheThenNet(
         params = params,
         serviceSet = object : ServiceSet<DATA, PARAMS> {
             override val net: NetService<DATA, PARAMS> get() = netService

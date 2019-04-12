@@ -236,7 +236,7 @@ class SyncDelegateCacheServiceTest {
 
     @Test
     fun integratesWithCacheThenNetModelWhenNotCached() {
-        val model = LceModel.cacheThanNet(
+        val model = LceModel.cacheThenNet(
                 "key",
                 object : ServiceSet<String, String> {
                     override val net: NetService<String, String> = object : NetService<String, String> {
@@ -256,7 +256,7 @@ class SyncDelegateCacheServiceTest {
 
     @Test
     fun integratesWithCacheThenNetModelWhenCached() {
-        val model = LceModel.cacheThanNet(
+        val model = LceModel.cacheThenNet(
                 "key",
                 object : ServiceSet<String, String> {
                     override val net: NetService<String, String> = object : NetService<String, String> {

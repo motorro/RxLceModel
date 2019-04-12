@@ -29,14 +29,14 @@ import io.reactivex.Observable
 interface LceModel<DATA: Any, PARAMS: Any> {
     companion object {
         /**
-         * Creates a model that returns cached data first, than refreshes if stall
+         * Creates a model that returns cached data first, then refreshes if stall
          * @param DATA Data type of data being held
          * @param PARAMS Params type that identify data being loaded
          * @param params Params that identify data being loaded
          * @param serviceSet Service-set to load data
          * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
          */
-        @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThanNet(
+        @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThenNet(
             params: PARAMS,
             serviceSet: ServiceSet<DATA, PARAMS>,
             startWith: Observable<LceState<DATA, PARAMS>> = Observable.just(Loading(null, false, params))
@@ -55,12 +55,12 @@ interface LceModel<DATA: Any, PARAMS: Any> {
          * @param cache Cache-service
          * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
          */
-        @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThanNet(
+        @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThenNet(
             params: PARAMS,
             net: NetService<DATA, PARAMS>,
             cache: CacheService<DATA, PARAMS>,
             startWith: Observable<LceState<DATA, PARAMS>> = Observable.just(Loading(null, false, params))
-        ): LceModel<DATA, PARAMS> = cacheThanNet(
+        ): LceModel<DATA, PARAMS> = cacheThenNet(
                 params = params,
                 serviceSet = object : ServiceSet<DATA, PARAMS> {
                     override val net: NetService<DATA, PARAMS> get() = net

@@ -300,7 +300,7 @@ class UpdateWrapperTest {
             netUpdate = { updatedEntity }
         }
 
-        val upstreamModel = LceModel.cacheThanNet(PARAMS, serviceSet)
+        val upstreamModel = LceModel.cacheThenNet(PARAMS, serviceSet)
         wrapper = TestWrapper(upstreamModel, serviceSet)
 
         val s = wrapper.state.test()
