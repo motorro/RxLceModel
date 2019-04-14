@@ -1,6 +1,9 @@
 
 
-Base model library
+A reactive data loading for Android based on 
+[RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
+[Android guide to app architecture](https://developer.android.com/jetpack/docs/guide) to load data and report an 
+operation state (`Loading`/`Content`/`Error`).
 
 ### All Types
 
