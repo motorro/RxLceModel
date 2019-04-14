@@ -6,7 +6,7 @@ A reactive data loading for Android based on
 [Android guide to app architecture](https://developer.android.com/jetpack/docs/guide) to load data and report an 
 operation state (`Loading`/`Content`/`Error`). 
 
-A compiled javadoc is available at [Github Pages](https://motorro.github.io/RxLceModel/)
+A compiled javadoc is available at [Github Pages][https://motorro.github.io/RxLceModel/]
 
 ## Features
 - Widely used design with `Loading`/`Content`/`Error` states
