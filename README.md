@@ -260,8 +260,9 @@ which uses the following delegate for data IO:
 ![Cache delegate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_delegate.puml)
 
 The interface is self-explanatory and does all the IO for `CacheService` in a synchronous way.
-The library comes with a delegate that uses famous [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion)
-to store cache in files. The delegate is to be plugged-in as a separate dependency as described in [Setting up the dependency](#setting-up-the-dependency).
+The library comes with a delegate that uses famous [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) 
+cache delegate to store cache in files. The delegate is to be plugged-in as a separate dependency as described in 
+[Setting up the dependency](#setting-up-the-dependency).
 
 The delegate requires a [CacheDelegateSerializerDeserializer](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheSerializersDeserealizers.kt)
 to save/restore data from file streams. The implemented serializer that comes with the library uses `ObjectStream` and
