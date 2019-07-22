@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.sample.view.note
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -133,6 +134,7 @@ class NoteViewModel(
         cacheService: @JvmSuppressWildcards CacheService<Note, Int>,
         private val patchNoteTitle: PatchNoteTitle,
         private val patchNoteText: PatchNoteText,
+        private val context: Context,
         schedulers: SchedulerRepository
     ): BaseLceModelFactory<Note, Int>(netService, cacheService, schedulers) {
         /**
@@ -154,7 +156,7 @@ class NoteViewModel(
                 noteId = params,
                 lceModel = createUpdateWrapper(createLceModel()),
                 schedulers = schedulers,
-                scheduleDelete = { DeleteWorker.execute(it) }
+                scheduleDelete = { DeleteWorker.execute(context, it) }
             )
     }
 }

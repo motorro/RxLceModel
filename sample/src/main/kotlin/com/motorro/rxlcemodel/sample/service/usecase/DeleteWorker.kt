@@ -31,14 +31,15 @@ class DeleteWorker(context: Context, params: WorkerParameters) : RxWorker(contex
 
         /**
          * Schedules a job
+         * @param context Context
          * @param noteId Note ID to delete
          */
-        fun execute(noteId: Int) {
+        fun execute(context: Context, noteId: Int) {
             val request = OneTimeWorkRequestBuilder<DeleteWorker>()
                 .setInputData(workDataOf(NOTE_ID to noteId))
                 .addTag(TAG)
                 .build()
-            WorkManager.getInstance().enqueue(request)
+            WorkManager.getInstance(context).enqueue(request)
             Timber.d("DeleteWorker scheduled to delete note $noteId")
         }
     }

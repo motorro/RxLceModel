@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
      * Notes are deleted using [WorkManager] to illustrate data updates from non-visual components
      */
     private fun setupDeleteListener() {
-        WorkManager.getInstance().getWorkInfosByTagLiveData(DeleteWorker.TAG).observe(this, Observer<List<WorkInfo>> { workInfo ->
+        WorkManager.getInstance(applicationContext).getWorkInfosByTagLiveData(DeleteWorker.TAG).observe(this, Observer<List<WorkInfo>> { workInfo ->
             if (workInfo.isNullOrEmpty()){
                 return@Observer
             }
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
 
-            WorkManager.getInstance().pruneWork()
+            WorkManager.getInstance(applicationContext).pruneWork()
         })
     }
 
