@@ -8,10 +8,14 @@ project.sourceSets {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.6"
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ['-module-name', "rxlcemodel-${project.name}"]
+    }
 }
+
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.6"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 publish {

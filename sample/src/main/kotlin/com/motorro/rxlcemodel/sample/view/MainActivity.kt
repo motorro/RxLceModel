@@ -16,7 +16,6 @@ package com.motorro.rxlcemodel.sample.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -30,14 +29,14 @@ import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var fragmentInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var cacheManager: CacheManager
@@ -46,9 +45,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var connectionChecker: ConnectionChecker
 
     /**
-     * Returns an [AndroidInjector] of [Fragment]s.
+     * Returns an [AndroidInjector].
      */
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+    override fun androidInjector(): AndroidInjector<Any> = fragmentInjector
 
     /**
      * Destroys cache when activity is destroyed to illustrate cache management.

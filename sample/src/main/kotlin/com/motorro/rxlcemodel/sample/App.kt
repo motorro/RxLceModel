@@ -13,7 +13,6 @@
 
 package com.motorro.rxlcemodel.sample
 
-import android.app.Activity
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.motorro.rxlcemodel.sample.di.ApplicationComponent
@@ -21,23 +20,23 @@ import com.motorro.rxlcemodel.sample.di.DaggerApplicationComponent
 import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.HasAndroidInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-class App: Application(), HasActivityInjector, ProvidesApplicationComponent {
+class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
     /**
      * Application component
      */
     override lateinit var applicationComponent: ApplicationComponent
 
     @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    lateinit var activityInjector: DispatchingAndroidInjector<Any>
 
     /**
-     * Returns an [AndroidInjector] of [Activity]s.
+     * Returns an [AndroidInjector].
      */
-    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+    override fun androidInjector(): AndroidInjector<Any> = activityInjector
 
     /**
      * Creates Dagger application component and injects application
