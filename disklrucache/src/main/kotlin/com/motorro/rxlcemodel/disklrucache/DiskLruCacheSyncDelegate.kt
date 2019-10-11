@@ -175,6 +175,7 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
                 commit()
             }.getOrElse {
                 abort()
+                throw it
             }
         }
     }

@@ -29,6 +29,7 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.OutputStream
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -106,6 +107,14 @@ class DiskLruCacheSyncDelegateTest {
         assertEquals(ENTITY, delegate.get("key"))
         verify(sd).serialize(eq(ENTITY), any())
         verify(sd).deserializeSnapshot(any(), any(), eq(false))
+    }
+
+    @Test
+    fun throwsErrorIfSaveFails() {
+        whenever(sd.serialize(any(), any())).thenThrow(RuntimeException("Error saving data"))
+        assertFailsWith<RuntimeException> {
+            delegate.save("key", ENTITY)
+        }
     }
 
     @Test
