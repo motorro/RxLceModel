@@ -82,22 +82,26 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
                 }
 
         /**
-         * Object wrappers
+         * Long wrappers
          */
-        private inline fun <reified T: Serializable?> DiskLruCache.Snapshot.getObject(index: Int): T = withInputStream(index) {
-            ObjectInputStream(it).use { oi -> oi.readObject() as T }
+        private fun DiskLruCache.Snapshot.readLong(index: Int): Long = withInputStream(index) {
+            DataInputStream(it).use { ds -> ds.readLong() }
         }
-        private fun DiskLruCache.Editor.setObject(index: Int, obj: Serializable?) = withOutputStream(index) {
-            ObjectOutputStream(it).use { oo -> oo.writeObject(obj) }
+        private fun DiskLruCache.Editor.writeLong(index: Int, value: Long) = withOutputStream(index) {
+            DataOutputStream(it).use { ds -> ds.writeLong(value) }
         }
 
         /**
          * Data
          */
         private inline fun <T: Any?> DiskLruCache.Snapshot.withDataInputStream(crossinline action: (InputStream) -> T): T = withInputStream(
-            DATA_INDEX, action)
+            DATA_INDEX,
+            action
+        )
         private inline fun DiskLruCache.Editor.withDataOutputStream(crossinline action: (OutputStream) -> Unit) = withOutputStream(
-            DATA_INDEX, action)
+            DATA_INDEX,
+            action
+        )
 
         /**
          * Data length
@@ -107,14 +111,14 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
         /**
          * Created
          */
-        private fun DiskLruCache.Snapshot.getCreatedAt(): Long = getObject(CREATED_INDEX)
-        private fun DiskLruCache.Editor.setCreatedAt(value: Long) = setObject(CREATED_INDEX, value)
+        private fun DiskLruCache.Snapshot.getCreatedAt(): Long = readLong(CREATED_INDEX)
+        private fun DiskLruCache.Editor.setCreatedAt(value: Long) = writeLong(CREATED_INDEX, value)
 
         /**
          * Invalidated
          */
-        private fun DiskLruCache.Snapshot.getInvalidatedAt(): Long = getObject(INVALIDATED_INDEX)
-        private fun DiskLruCache.Editor.setInvalidatedAt(value: Long) = setObject(INVALIDATED_INDEX, value)
+        private fun DiskLruCache.Snapshot.getInvalidatedAt(): Long = readLong(INVALIDATED_INDEX)
+        private fun DiskLruCache.Editor.setInvalidatedAt(value: Long) = writeLong(INVALIDATED_INDEX, value)
     }
 
     /**
@@ -130,7 +134,9 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
         set(value) {
             cacheProvider.cache.edit(invalidationKey)?.run {
                 runCatching {
-                    setObject(DATA_INDEX, null)
+                    withOutputStream(DATA_INDEX) {
+                        it.write(0)
+                    }
                     setCreatedAt(0)
                     setInvalidatedAt(value)
                     commit()
