@@ -54,8 +54,8 @@ abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(private val upstream: LceMo
      * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
      * Wrapper mixes the [upstream] emissions with update operation status.
      */
-    override val state: Observable<LceState<DATA, PARAMS>> by lazy {
-        val mapper = BiFunction<UpdateOperationState, LceState<DATA, PARAMS>, LceState<DATA, PARAMS>> { update, upstream ->
+    override val state: Observable<LceState<DATA>> by lazy {
+        val mapper = BiFunction<UpdateOperationState, LceState<DATA>, LceState<DATA>> { update, upstream ->
             when(update) {
                 UpdateOperationState.IDLE -> upstream
                 UpdateOperationState.LOADING -> upstream.toLoading(type = LceState.Loading.Type.UPDATING)

@@ -38,7 +38,7 @@ import io.reactivex.subjects.PublishSubject
 class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
     override val params: PARAMS,
     serviceSet: ServiceSet<DATA, PARAMS>,
-    startWith: Observable<LceState<DATA, PARAMS>>
+    startWith: Observable<LceState<DATA>>
 ): LceModel<DATA, PARAMS> {
     /**
      * Network operation state broadcast
@@ -64,17 +64,17 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      * Model data. Subscription starts data load for the first subscriber.
      * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
      */
-    override val state: Observable<LceState<DATA, PARAMS>> by lazy {
+    override val state: Observable<LceState<DATA>> by lazy {
         Observable.concat(
                 startWith,
-                serviceSet.cache.getData(params).switchMap<LceState<DATA, PARAMS>> { fromCache ->
+                serviceSet.cache.getData(params).switchMap<LceState<DATA>> { fromCache ->
                     val entity = fromCache.toNullable()
 
                     val data = entity?.data
                     val isValid = true == entity?.isValid()
 
                     // Transforms cache update operation status to [LceState]
-                    val updateStateTransformer = Function<UpdateOperationState, Observable<LceState<DATA, PARAMS>>> { updateStatus ->
+                    val updateStateTransformer = Function<UpdateOperationState, Observable<LceState<DATA>>> { updateStatus ->
                         val loadingType = if(null != data) {
                             // Cache has some content. Loads will refresh current data.
                             Loading.Type.REFRESHING
@@ -84,11 +84,11 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
                         }
 
                         when(updateStatus) {
-                            LOADING -> Observable.just(Loading(data, isValid, params, loadingType))
-                            is ERROR -> Observable.just(Error(data, isValid, params, updateStatus.error))
+                            LOADING -> Observable.just(Loading(data, isValid, loadingType))
+                            is ERROR -> Observable.just(Error(data, isValid, updateStatus.error))
                             IDLE -> if (null != data) {
                                 // Emit same content if cache did not change or is late to emit upstream
-                                Observable.just<LceState<DATA, PARAMS>>(Content(data, isValid, params))
+                                Observable.just<LceState<DATA>>(Content(data, isValid))
                             } else {
                                 // Prevent content emission when has no data. Effectively this happens if
                                 // cache has not yet re-emitted loaded data
@@ -101,7 +101,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
                     // Subscribe to refresh operations state afterwards
                     Observable.concat(
                             if (null != data && isValid) {
-                                Observable.just(Content(data, isValid, params))
+                                Observable.just(Content(data, isValid))
                             } else {
                                 loadAndCacheNetwork.switchMap(updateStateTransformer)
                             },

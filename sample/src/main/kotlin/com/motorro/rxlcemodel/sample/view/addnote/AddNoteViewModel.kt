@@ -29,23 +29,23 @@ import javax.inject.Inject
 /**
  * Adds notes manually generating [LceState] for UI
  */
-class AddNoteViewModel(private val addNote: (String, String) -> Completable): BaseLceModel<Unit, Unit>() {
+class AddNoteViewModel(private val addNote: (String, String) -> Completable): BaseLceModel<Unit>() {
     /**
      * State live-data
      */
-    private val stateData = MutableLiveData<LceState<Unit, Unit>>()
+    private val stateData = MutableLiveData<LceState<Unit>>()
 
     /**
      * LCE State
      */
-    override val state: LiveData<LceState<Unit, Unit>>
+    override val state: LiveData<LceState<Unit>>
         get() = stateData
 
     /**
      * Call this function to initialize a new model and start receiving events
      */
     override fun doInitialize() {
-        stateData.value = LceState.Content(Unit, true, Unit)
+        stateData.value = LceState.Content(Unit, true)
     }
 
     /**
@@ -58,10 +58,10 @@ class AddNoteViewModel(private val addNote: (String, String) -> Completable): Ba
      */
     fun add(title: String, text: String) {
         val subscription = addNote(title, text)
-            .toObservable<LceState<Unit, Unit>>()
-            .startWith(LceState.Loading(null, false, Unit, LceState.Loading.Type.LOADING))
-            .onErrorReturn { LceState.Error(null, false, Unit, it) }
-            .concatWith(Observable.just(LceState.Terminated(Unit)))
+            .toObservable<LceState<Unit>>()
+            .startWith(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
+            .onErrorReturn { LceState.Error(null, false, it) }
+            .concatWith(Observable.just(LceState.Terminated()))
             .subscribe(
                 { state -> stateData.value = state},
                 { error -> throw error }

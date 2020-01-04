@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.fragment_note_list.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
+class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
     /**
      * Factory for [noteListModel]
      */
@@ -45,7 +45,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
     /**
      * Model to load note list
      */
-    private lateinit var noteListModel: BaseLceModel<NoteList, Unit>
+    private lateinit var noteListModel: BaseLceModel<NoteList>
 
     /**
      * List adapter
@@ -72,7 +72,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
      * Updates view according to [state]
      * Removes refresh indicator when load completes
      */
-    override fun processStateView(state: LceState<NoteList, Unit>) {
+    override fun processStateView(state: LceState<NoteList>) {
         super.processStateView(state)
         if (state is LceState.Error || state is LceState.Content) {
             swipe_refresh.isRefreshing = false
@@ -110,8 +110,8 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList, Unit>() {
         add_note.setOnClickListener { onAddClicked() }
 
         @Suppress("UNCHECKED_CAST")
-        noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList, Unit>
-        noteListModel.state.observe(this, Observer<LceState<NoteList, Unit>> { processState(it) })
+        noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList>
+        noteListModel.state.observe(this, Observer<LceState<NoteList>> { processState(it) })
         noteListModel.initialize()
     }
 

@@ -24,7 +24,7 @@ import io.reactivex.disposables.CompositeDisposable
 /**
  * Base model with [state] and [refresh]
  */
-abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
+abstract class BaseLceModel<DATA: Any> : ViewModel() {
     /**
      * Maintains refresh subscriptions
      */
@@ -51,7 +51,7 @@ abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
     /**
      * LCE State
      */
-    abstract val state: LiveData<LceState<DATA, PARAMS>>
+    abstract val state: LiveData<LceState<DATA>>
 
     /**
      * Requests data refresh
@@ -71,11 +71,11 @@ abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
      * @property state LCE state
      * @param refresh Refresh completable
      */
-    class Impl<DATA: Any, PARAMS: Any>(private val stateObservable: Observable<LceState<DATA, PARAMS>>, private val refresh: Completable): BaseLceModel<DATA, PARAMS>() {
+    class Impl<DATA: Any>(private val stateObservable: Observable<LceState<DATA>>, private val refresh: Completable): BaseLceModel<DATA>() {
         /**
          * State live-data
          */
-        private val stateData = MutableLiveData<LceState<DATA, PARAMS>>()
+        private val stateData = MutableLiveData<LceState<DATA>>()
 
         /**
          * Call this function to initialize a new model and start receiving events
@@ -96,7 +96,7 @@ abstract class BaseLceModel<DATA: Any, PARAMS: Any> : ViewModel() {
         /**
          * LCE State
          */
-        override val state: LiveData<LceState<DATA, PARAMS>>
+        override val state: LiveData<LceState<DATA>>
             get() = stateData
 
         /**

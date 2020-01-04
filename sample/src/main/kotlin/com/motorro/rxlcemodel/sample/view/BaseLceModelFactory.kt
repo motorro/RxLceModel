@@ -54,7 +54,7 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
     /**
      * Creates state live-data
      */
-    protected open fun LceModel<DATA, PARAMS>.createStateLiveData(): Observable<LceState<DATA, PARAMS>> =
+    protected open fun LceModel<DATA, PARAMS>.createStateLiveData(): Observable<LceState<DATA>> =
         state
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.ui)

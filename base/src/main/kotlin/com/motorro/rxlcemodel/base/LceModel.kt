@@ -39,7 +39,7 @@ interface LceModel<DATA: Any, PARAMS: Any> {
         @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThenNet(
             params: PARAMS,
             serviceSet: ServiceSet<DATA, PARAMS>,
-            startWith: Observable<LceState<DATA, PARAMS>> = Observable.just(Loading(null, false, params))
+            startWith: Observable<LceState<DATA>> = Observable.just(Loading(null, false))
         ): LceModel<DATA, PARAMS> = CacheThenNetLceModel(
                 params = params,
                 serviceSet = serviceSet,
@@ -59,7 +59,7 @@ interface LceModel<DATA: Any, PARAMS: Any> {
             params: PARAMS,
             net: NetService<DATA, PARAMS>,
             cache: CacheService<DATA, PARAMS>,
-            startWith: Observable<LceState<DATA, PARAMS>> = Observable.just(Loading(null, false, params))
+            startWith: Observable<LceState<DATA>> = Observable.just(Loading(null, false))
         ): LceModel<DATA, PARAMS> = cacheThenNet(
                 params = params,
                 serviceSet = object : ServiceSet<DATA, PARAMS> {
@@ -74,7 +74,7 @@ interface LceModel<DATA: Any, PARAMS: Any> {
      * Model state. Subscription starts data load for the first subscriber.
      * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
      */
-    val state: Observable<LceState<DATA, PARAMS>>
+    val state: Observable<LceState<DATA>>
 
     /**
      * Requests a refresh of data.
@@ -119,11 +119,10 @@ fun <DATA: Any, UPDATE: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withUpdates(ser
 /**
  * Terminates [LceModel.state] stream if [predicate] returns true
  * @param DATA Source model data type
- * @param PARAMS Params type
  * @param predicate A predicate to check error state. If predicate returns true, the stream
  * is terminated with [LceState.Error.error]
  */
-fun <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.terminateOnError(predicate: (LceState.Error<DATA, PARAMS>) -> Boolean): Observable<LceState<DATA, PARAMS>> = map { state ->
+fun <DATA: Any> Observable<LceState<DATA>>.terminateOnError(predicate: (LceState.Error<DATA>) -> Boolean): Observable<LceState<DATA>> = map { state ->
     when {
         state is LceState.Error && predicate(state) -> throw state.error
         else -> state
@@ -133,27 +132,24 @@ fun <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.terminateOnError
 /**
  * Model's state stream which terminates on any error
  * @param DATA Source model data type
- * @param PARAMS Params type
  */
-val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.stopOnErrors: Observable<LceState<DATA, PARAMS>>
+val <DATA: Any> Observable<LceState<DATA>>.stopOnErrors: Observable<LceState<DATA>>
     get() = terminateOnError { true }
 
 /**
  * Model's state stream which terminates on errors with empty data
  * @param DATA Source model data type
- * @param PARAMS Params type
  */
-val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.stopOnEmptyErrors: Observable<LceState<DATA, PARAMS>>
+val <DATA: Any> Observable<LceState<DATA>>.stopOnEmptyErrors: Observable<LceState<DATA>>
     get() = terminateOnError { null == it.data }
 
 /**
  * Returns model's data stream dropping state information
  * @param DATA Source model data type
- * @param PARAMS Params type
  * @param terminateOnError A predicate to check error state. If predicate returns true, the stream
  * is terminated with [LceState.Error.error]
  */
-fun <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.getData(terminateOnError: (LceState.Error<DATA, PARAMS>) -> Boolean): Observable<DATA> =
+fun <DATA: Any> Observable<LceState<DATA>>.getData(terminateOnError: (LceState.Error<DATA>) -> Boolean): Observable<DATA> =
         terminateOnError(terminateOnError)
                 .switchMap {
                     val data = it.data
@@ -168,36 +164,32 @@ fun <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.getData(terminat
  * Model's data stream with state information dropped.
  * No error state terminates stream
  * @param DATA Source model data type
- * @param PARAMS Params type
  */
-val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.dataNoErrors: Observable<DATA>
+val <DATA: Any> Observable<LceState<DATA>>.dataNoErrors: Observable<DATA>
     get() = getData { false }
 
 /**
  * Model's data stream with state information dropped.
  * Will terminate on any error
  * @param DATA Source model data type
- * @param PARAMS Params type
  */
-val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.dataStopOnErrors: Observable<DATA>
+val <DATA: Any> Observable<LceState<DATA>>.dataStopOnErrors: Observable<DATA>
     get() = getData { true }
 
 /**
  * Model's data stream with state information dropped.
  * Will terminate on errors with empty data
  * @param DATA Source model data type
- * @param PARAMS Params type
  */
-val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.dataStopOnEmptyErrors: Observable<DATA>
+val <DATA: Any> Observable<LceState<DATA>>.dataStopOnEmptyErrors: Observable<DATA>
     get() = getData { null == it.data }
 
 /**
  * Model's valid data stream with state information dropped.
  * Will terminate on any error
  * @param DATA Source model data type
- * @param PARAMS Params type
  */
-val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.validData: Observable<DATA>
+val <DATA: Any> Observable<LceState<DATA>>.validData: Observable<DATA>
     get() = terminateOnError { true }
             .switchMap {
                 val data = it.data
@@ -212,12 +204,10 @@ val <DATA: Any, PARAMS: Any> Observable<LceState<DATA, PARAMS>>.validData: Obser
  * Creates a model wrapper that converts [DATA_1] to [DATA_2]
  * @param DATA_1 Source model data type
  * @param DATA_2 Resulting model data type
- * @param PARAMS Params type
  * @param mapper Data mapper
  */
-fun <DATA_1: Any, DATA_2: Any, PARAMS: Any> LceModel<DATA_1, PARAMS>.map(mapper: (data: DATA_1) -> DATA_2): LceModel<DATA_2, PARAMS> = object :
-    LceModel<DATA_2, PARAMS> {
-    override val state: Observable<LceState<DATA_2, PARAMS>> = this@map.state.map { it.map(mapper) }
+fun <DATA_1: Any, DATA_2: Any, PARAMS: Any> LceModel<DATA_1, PARAMS>.map(mapper: (data: DATA_1) -> DATA_2): LceModel<DATA_2, PARAMS> = object : LceModel<DATA_2, PARAMS> {
+    override val state: Observable<LceState<DATA_2>> = this@map.state.map { it.map(mapper) }
     override val refresh: Completable = this@map.refresh
     override val params: PARAMS = this@map.params
 }

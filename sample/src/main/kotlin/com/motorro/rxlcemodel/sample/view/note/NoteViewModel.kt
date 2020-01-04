@@ -49,16 +49,16 @@ class NoteViewModel(
     private val lceModel: NoteLceModel,
     private val schedulers: SchedulerRepository,
     private val scheduleDelete: (Int) -> Unit
-): BaseLceModel<Note, Int>() {
+): BaseLceModel<Note>() {
     /**
      * State live-data
      */
-    private val stateData = MutableLiveData<LceState<Note, Int>>()
+    private val stateData = MutableLiveData<LceState<Note>>()
 
     /**
      * LCE State
      */
-    override val state: LiveData<LceState<Note, Int>>
+    override val state: LiveData<LceState<Note>>
         get() = stateData
 
     /**
@@ -116,7 +116,7 @@ class NoteViewModel(
         scheduleDelete(noteId)
 
         // Terminate view
-        stateData.value = LceState.Terminated(noteId)
+        stateData.value = LceState.Terminated()
     }
 
 

@@ -22,8 +22,8 @@ class LceModelKtTest {
         private const val PARAMS = "params"
     }
 
-    private fun createStateModel(vararg states: LceState<Int, String>) = object : LceModel<Int, String> {
-        override val state: Observable<LceState<Int, String>> = Observable.fromArray(*states)
+    private fun createStateModel(vararg states: LceState<Int>) = object : LceModel<Int, String> {
+        override val state: Observable<LceState<Int>> = Observable.fromArray(*states)
         override val refresh: Completable = Completable.error(NotImplementedError("An operation is not implemented"))
         override val params: String = PARAMS
     }
@@ -31,7 +31,7 @@ class LceModelKtTest {
     @Test
     fun terminateOnErrorWillUsePredicateToStop() {
         val error = Exception("error")
-        val value = LceState.Error(null, false, PARAMS, error)
+        val value = LceState.Error(null, false, error)
         val model = createStateModel(value)
 
         model.state.terminateOnError { true }.test().assertNoValues().assertError(error)
@@ -43,8 +43,8 @@ class LceModelKtTest {
     fun stopOnErrorWillStopOnAnyError() {
         val error = Exception("error")
         val models = listOf(
-                createStateModel(LceState.Error(null, false, PARAMS, error)),
-                createStateModel(LceState.Error(1, true, PARAMS, error))
+                createStateModel(LceState.Error(null, false, error)),
+                createStateModel(LceState.Error(1, true, error))
         )
         models.forEach {
             it.state.stopOnErrors.test().assertNoValues().assertError(error)
@@ -54,17 +54,17 @@ class LceModelKtTest {
     @Test
     fun stopOnEmptyErrorWillStopOnEmptyError() {
         val error = Exception("error")
-        val model1 = createStateModel(LceState.Error(null, false, PARAMS, error))
-        val model2 = createStateModel(LceState.Error(1, true, PARAMS, error))
+        val model1 = createStateModel(LceState.Error(null, false, error))
+        val model2 = createStateModel(LceState.Error(1, true, error))
 
         model1.state.stopOnErrors.test().assertNoValues().assertError(error)
-        model2.state.stopOnEmptyErrors.test().assertNoErrors().assertComplete().assertValues(LceState.Error(1, true, PARAMS, error))
+        model2.state.stopOnEmptyErrors.test().assertNoErrors().assertComplete().assertValues(LceState.Error(1, true, error))
     }
 
     @Test
     fun getDataWillUsePredicateToMapError() {
         val error = Exception("error")
-        val model = createStateModel(LceState.Error(null, false, PARAMS, error))
+        val model = createStateModel(LceState.Error(null, false, error))
 
         model.state.getData { true }.test().assertNoValues().assertError(error)
         model.state.getData { false }.test().assertNoErrors().assertComplete()
@@ -73,9 +73,9 @@ class LceModelKtTest {
     @Test
     fun getDataWillPassNonNullData() {
         val models = listOf(
-                createStateModel(LceState.Loading(1, true, PARAMS)),
-                createStateModel(LceState.Content(1, true, PARAMS)),
-                createStateModel(LceState.Error(1, true, PARAMS, Exception()))
+                createStateModel(LceState.Loading(1, true)),
+                createStateModel(LceState.Content(1, true)),
+                createStateModel(LceState.Error(1, true, Exception()))
         )
         models.forEach {
             it.state.getData { false }.test().assertNoErrors().assertComplete().assertValues(1)
@@ -85,8 +85,8 @@ class LceModelKtTest {
     @Test
     fun getDataWillNotPassNulls() {
         val models = listOf(
-                createStateModel(LceState.Loading(null, false, PARAMS)),
-                createStateModel(LceState.Error(null, false, PARAMS, Exception()))
+                createStateModel(LceState.Loading(null, false)),
+                createStateModel(LceState.Error(null, false, Exception()))
         )
         models.forEach {
             it.state.getData { false }.test().assertNoErrors().assertComplete().assertNoValues()
@@ -95,21 +95,21 @@ class LceModelKtTest {
 
     @Test
     fun getDataDistinctUntilDataChanged() {
-        val model = createStateModel(LceState.Loading(1, true, PARAMS), LceState.Content(1, true, PARAMS))
+        val model = createStateModel(LceState.Loading(1, true), LceState.Content(1, true))
         model.state.getData { false }.test().assertNoErrors().assertComplete().assertValues(1)
     }
 
     @Test
     fun dataNoErrorsWillNotStopOnAnyError() {
         val error = Exception("error")
-        createStateModel(LceState.Error(null, false, PARAMS, error))
+        createStateModel(LceState.Error(null, false, error))
                 .state
                 .dataNoErrors
                 .test()
                 .assertNoValues()
                 .assertComplete()
 
-        createStateModel(LceState.Error(1, true, PARAMS, error))
+        createStateModel(LceState.Error(1, true, error))
                 .state
                 .dataNoErrors
                 .test()
@@ -121,8 +121,8 @@ class LceModelKtTest {
     fun dataStopOnErrorWillStopOnAnyError() {
         val error = Exception("error")
         val models = listOf(
-                createStateModel(LceState.Error(null, false, PARAMS, error)),
-                createStateModel(LceState.Error(1, true, PARAMS, error))
+                createStateModel(LceState.Error(null, false, error)),
+                createStateModel(LceState.Error(1, true, error))
         )
         models.forEach {
             it.state.dataStopOnErrors.test().assertNoValues().assertError(error)
@@ -132,8 +132,8 @@ class LceModelKtTest {
     @Test
     fun dataStopOnEmptyErrorWillStopOnEmptyError() {
         val error = Exception("error")
-        val model1 = createStateModel(LceState.Error(null, false, PARAMS, error))
-        val model2 = createStateModel(LceState.Error(1, true, PARAMS, error))
+        val model1 = createStateModel(LceState.Error(null, false, error))
+        val model2 = createStateModel(LceState.Error(1, true, error))
 
         model1.state.dataStopOnEmptyErrors.test().assertNoValues().assertError(error)
         model2.state.dataStopOnEmptyErrors.test().assertNoErrors().assertComplete().assertValues(1)
@@ -142,13 +142,13 @@ class LceModelKtTest {
 
     @Test
     fun validDataReturnsValidDataOnly() {
-        val model = createStateModel(LceState.Loading(0, false, PARAMS), LceState.Content(1, true, PARAMS))
+        val model = createStateModel(LceState.Loading(0, false), LceState.Content(1, true))
         model.state.validData.test().assertNoErrors().assertComplete().assertValues(1)
     }
 
     @Test
     fun validDataDistinctUntilDataChanged() {
-        val model = createStateModel(LceState.Content(1, true, PARAMS), LceState.Content(1, true, PARAMS))
+        val model = createStateModel(LceState.Content(1, true), LceState.Content(1, true))
         model.state.validData.test().assertNoErrors().assertComplete().assertValues(1)
     }
 
@@ -156,8 +156,8 @@ class LceModelKtTest {
     fun validDataWillStopOnAnyError() {
         val error = Exception("error")
         val models = listOf(
-                createStateModel(LceState.Error(null, false, PARAMS, error)),
-                createStateModel(LceState.Error(1, true, PARAMS, error))
+                createStateModel(LceState.Error(null, false, error)),
+                createStateModel(LceState.Error(1, true, error))
         )
         models.forEach {
             it.state.validData.test().assertNoValues().assertError(error)

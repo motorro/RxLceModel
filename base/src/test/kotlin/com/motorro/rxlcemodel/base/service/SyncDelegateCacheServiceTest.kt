@@ -251,7 +251,7 @@ class SyncDelegateCacheServiceTest {
         val s = model.state.test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(LceState.Loading(null, false, "key"), LceState.Content(VALID_ENTITY.data, true, "key"))
+        s.assertValues(LceState.Loading(null, false), LceState.Content(VALID_ENTITY.data, true))
     }
 
     @Test
@@ -271,6 +271,6 @@ class SyncDelegateCacheServiceTest {
         val s = model.state.test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(LceState.Loading(null, false, "key"), LceState.Content(VALID_ENTITY.data, true, "key"))
+        s.assertValues(LceState.Loading(null, false), LceState.Content(VALID_ENTITY.data, true))
     }
 }

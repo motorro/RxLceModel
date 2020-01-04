@@ -29,7 +29,7 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import javax.inject.Inject
 
-class AddNoteFragment: LceFragment<ViewGroup, Unit, Unit>() {
+class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
 
     /**
      * Factory for [noteModel]
@@ -78,7 +78,7 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit, Unit>() {
         super.onViewCreated(view, savedInstanceState)
 
         noteModel = ViewModelProviders.of(this, noteModelFactory).get(AddNoteViewModel::class.java)
-        noteModel.state.observe(this, Observer<LceState<Unit, Unit>> { processState(it) })
+        noteModel.state.observe(this, Observer<LceState<Unit>> { processState(it) })
         noteModel.initialize()
 
         add_note.setOnClickListener { addNote() }

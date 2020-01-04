@@ -54,7 +54,7 @@ class CacheThenNetLceModelTest {
         model = CacheThenNetLceModel(
             PARAMS,
             serviceSet,
-            Observable.just<LceState<Int, String>>(LceState.Loading(null, false, PARAMS))
+            Observable.just<LceState<Int>>(LceState.Loading(null, false))
         )
     }
 
@@ -68,8 +68,8 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
         )
 
         with (serviceSet) {
@@ -88,8 +88,8 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
         )
         with (serviceSet) {
             verify(cache).getData(PARAMS)
@@ -109,12 +109,12 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Loading(INVALID_ENTITY.data, false, PARAMS, REFRESHING),
+                LceState.Loading(null, false),
+                LceState.Loading(INVALID_ENTITY.data, false, REFRESHING),
                 // Network operation completion re-emits a content value
-                LceState.Content(INVALID_ENTITY.data, false, PARAMS),
+                LceState.Content(INVALID_ENTITY.data, false),
                 // Cache update
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Content(VALID_ENTITY.data, true)
         )
         with (serviceSet) {
             verify(cache).getData(PARAMS)
@@ -133,17 +133,17 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
         )
 
         val newData = 3
         val updatedEntity = VALID_ENTITY.copy(data = newData)
         cacheData.onNext(Some(updatedEntity))
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS),
-                LceState.Content(updatedEntity.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true),
+                LceState.Content(updatedEntity.data, true)
         )
     }
 
@@ -158,16 +158,16 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
         )
 
         model.refresh.test().await(100, TimeUnit.MILLISECONDS)
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS),
-                LceState.Loading(VALID_ENTITY.data, true, PARAMS, REFRESHING),
-                LceState.Content(updatedEntity.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true),
+                LceState.Loading(VALID_ENTITY.data, true, REFRESHING),
+                LceState.Content(updatedEntity.data, true)
         )
 
         verify(serviceSet.cache).save(PARAMS, updatedEntity)
@@ -184,8 +184,8 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Error(null, false, PARAMS, error)
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error)
         )
     }
 
@@ -200,9 +200,9 @@ class CacheThenNetLceModelTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Loading(INVALID_ENTITY.data, false, PARAMS, REFRESHING),
-                LceState.Error(INVALID_ENTITY.data, false, PARAMS, error)
+                LceState.Loading(null, false),
+                LceState.Loading(INVALID_ENTITY.data, false, REFRESHING),
+                LceState.Error(INVALID_ENTITY.data, false, error)
         )
     }
 
@@ -218,14 +218,14 @@ class CacheThenNetLceModelTest {
         model = CacheThenNetLceModel(
             PARAMS,
             serviceSet,
-            Observable.just<LceState<Int, String>>(LceState.Loading(null, false, PARAMS))
+            Observable.just<LceState<Int>>(LceState.Loading(null, false))
         )
         val s = model.state.test()
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
         )
 
         val r = model.refresh.test()
@@ -235,10 +235,10 @@ class CacheThenNetLceModelTest {
         r.dispose()
 
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS),
-                LceState.Loading(VALID_ENTITY.data, true, PARAMS, REFRESHING),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true),
+                LceState.Loading(VALID_ENTITY.data, true, REFRESHING),
+                LceState.Content(VALID_ENTITY.data, true)
         )
     }
 
@@ -259,20 +259,20 @@ class CacheThenNetLceModelTest {
         model = CacheThenNetLceModel(
             PARAMS,
             serviceSet,
-            Observable.just<LceState<Int, String>>(LceState.Loading(null, false, PARAMS))
+            Observable.just<LceState<Int>>(LceState.Loading(null, false))
         )
         val s1 = model.state.test()
         s1.assertNoErrors()
         s1.assertNotComplete()
         s1.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Loading(INVALID_ENTITY.data, false, PARAMS, REFRESHING)
+                LceState.Loading(null, false),
+                LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)
         )
         val s2 = model.state.test()
         s2.assertNoErrors()
         s2.assertNotComplete()
         s2.assertValues(
-                LceState.Loading(null, false, PARAMS)
+                LceState.Loading(null, false)
         )
 
         netValue.onNext(VALID_ENTITY.data)

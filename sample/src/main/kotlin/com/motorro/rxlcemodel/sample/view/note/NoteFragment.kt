@@ -34,7 +34,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
+class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
 
     /**
      * Fragment arguments - note ID
@@ -75,7 +75,7 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
      * Updates view according to [state]
      * Removes refresh indicator when load completes
      */
-    override fun processStateView(state: LceState<Note, Int>) {
+    override fun processStateView(state: LceState<Note>) {
         super.processStateView(state)
         if (state is LceState.Error || state is LceState.Content) {
             swipe_refresh.isRefreshing = false
@@ -189,7 +189,7 @@ class NoteFragment : LceFragment<ViewGroup, Note, Int>(), ProvidesNoteId {
         setupRefresh()
 
         noteModel = ViewModelProviders.of(this, noteModelFactory).get(NoteViewModel::class.java)
-        noteModel.state.observe(this, Observer<LceState<Note, Int>> { processState(it) })
+        noteModel.state.observe(this, Observer<LceState<Note>> { processState(it) })
         noteModel.initialize()
 
         patch_title.setOnClickListener {

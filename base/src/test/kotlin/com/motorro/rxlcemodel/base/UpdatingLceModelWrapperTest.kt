@@ -44,8 +44,8 @@ class UpdatingLceModelWrapperTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                Loading(null, false, PARAMS),
-                Content(VALID_ENTITY.data, true, PARAMS)
+                Loading(null, false),
+                Content(VALID_ENTITY.data, true)
         )
 
         model.update(updatedEntity.data).test().assertComplete().assertNoErrors()
@@ -54,11 +54,11 @@ class UpdatingLceModelWrapperTest {
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                Loading(null, false, PARAMS),
-                Content(VALID_ENTITY.data, true, PARAMS),
-                Loading(VALID_ENTITY.data, true, PARAMS, Loading.Type.UPDATING),
-                Loading(updatedEntity.data, true, PARAMS, Loading.Type.UPDATING),
-                Content(updatedEntity.data, true, PARAMS)
+                Loading(null, false),
+                Content(VALID_ENTITY.data, true),
+                Loading(VALID_ENTITY.data, true, Loading.Type.UPDATING),
+                Loading(updatedEntity.data, true, Loading.Type.UPDATING),
+                Content(updatedEntity.data, true)
         )
     }
 }

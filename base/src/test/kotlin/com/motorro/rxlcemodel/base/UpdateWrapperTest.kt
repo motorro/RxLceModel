@@ -49,7 +49,7 @@ class UpdateWrapperTest {
         }
     }
 
-    private lateinit var upstream: Subject<LceState<Int, String>>
+    private lateinit var upstream: Subject<LceState<Int>>
     private lateinit var serviceSet: UpdatingServiceSet<Int, Int, String>
     private lateinit var wrapper: TestWrapper
 
@@ -57,9 +57,9 @@ class UpdateWrapperTest {
      * Creates test wrapper and service set
      */
     private fun createWrapper(configure: ServiceConfig<Int>.() -> Unit) {
-        upstream = BehaviorSubject.createDefault(LceState.Loading(null, false, PARAMS))
+        upstream = BehaviorSubject.createDefault(LceState.Loading(null, false))
         val upstreamModel = object : LceModel<Int, String> {
-            override val state: Observable<LceState<Int, String>> = upstream
+            override val state: Observable<LceState<Int>> = upstream
             override val refresh: Completable = Completable.error(UnsupportedOperationException("Should not be executed"))
             override val params: String = PARAMS
         }
@@ -89,14 +89,14 @@ class UpdateWrapperTest {
         val s = wrapper.state.test()
         s.assertNotComplete()
         s.assertNoErrors()
-        s.assertValues(LceState.Loading(null, false, PARAMS))
+        s.assertValues(LceState.Loading(null, false))
 
-        upstream.onNext(LceState.Content(2, true, PARAMS))
+        upstream.onNext(LceState.Content(2, true))
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(2, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(2, true)
         )
     }
 
@@ -110,15 +110,15 @@ class UpdateWrapperTest {
         val s = wrapper.state.test()
         s.assertNotComplete()
         s.assertNoErrors()
-        s.assertValues(LceState.Loading(null, false, PARAMS))
+        s.assertValues(LceState.Loading(null, false))
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Loading(null, false, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Loading(null, false, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Loading(null, false, LceState.Loading.Type.UPDATING),
+                LceState.Loading(null, false)
         )
     }
 
@@ -133,15 +133,15 @@ class UpdateWrapperTest {
         val s = wrapper.state.test()
         s.assertNotComplete()
         s.assertNoErrors()
-        s.assertValues(LceState.Loading(null, false, PARAMS))
+        s.assertValues(LceState.Loading(null, false))
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Loading(null, false, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Error(null, false, PARAMS, error)
+                LceState.Loading(null, false),
+                LceState.Loading(null, false, LceState.Loading.Type.UPDATING),
+                LceState.Error(null, false, error)
         )
     }
 
@@ -153,22 +153,22 @@ class UpdateWrapperTest {
         }
 
         val s = wrapper.state.test()
-        upstream.onNext(LceState.Content(2, true, PARAMS))
+        upstream.onNext(LceState.Content(2, true))
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(2, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(2, true)
         )
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(2, true, PARAMS),
-                LceState.Loading(2, true, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Content(2, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(2, true),
+                LceState.Loading(2, true, LceState.Loading.Type.UPDATING),
+                LceState.Content(2, true)
         )
     }
 
@@ -181,22 +181,22 @@ class UpdateWrapperTest {
         }
 
         val s = wrapper.state.test()
-        upstream.onNext(LceState.Content(2, true, PARAMS))
+        upstream.onNext(LceState.Content(2, true))
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(2, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(2, true)
         )
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(2, true, PARAMS),
-                LceState.Loading(2, true, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Error(2, true, PARAMS, error)
+                LceState.Loading(null, false),
+                LceState.Content(2, true),
+                LceState.Loading(2, true, LceState.Loading.Type.UPDATING),
+                LceState.Error(2, true, error)
         )
     }
 
@@ -209,22 +209,22 @@ class UpdateWrapperTest {
         }
 
         val s = wrapper.state.test()
-        upstream.onNext(LceState.Error(null, false, PARAMS, error))
+        upstream.onNext(LceState.Error(null, false, error))
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Error(null, false, PARAMS, error)
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error)
         )
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Error(null, false, PARAMS, error),
-                LceState.Loading(null, false, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Error(null, false, PARAMS, error)
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error),
+                LceState.Loading(null, false, LceState.Loading.Type.UPDATING),
+                LceState.Error(null, false, error)
         )
     }
 
@@ -238,22 +238,22 @@ class UpdateWrapperTest {
         }
 
         val s = wrapper.state.test()
-        upstream.onNext(LceState.Error(null, false, PARAMS, error1))
+        upstream.onNext(LceState.Error(null, false, error1))
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Error(null, false, PARAMS, error1)
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error1)
         )
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Error(null, false, PARAMS, error1),
-                LceState.Loading(null, false, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Error(null, false, PARAMS, error2)
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error1),
+                LceState.Loading(null, false, LceState.Loading.Type.UPDATING),
+                LceState.Error(null, false, error2)
         )
     }
 
@@ -265,9 +265,9 @@ class UpdateWrapperTest {
         }
         whenever(serviceSet.net.update(any(), any())).thenReturn(Single.create { /* Endless wait */ })
         whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just(Some(VALID_ENTITY)))
-        upstream = BehaviorSubject.createDefault(LceState.Loading(null, false, PARAMS))
+        upstream = BehaviorSubject.createDefault(LceState.Loading(null, false))
         val upstreamModel = object : LceModel<Int, String> {
-            override val state: Observable<LceState<Int, String>> = upstream
+            override val state: Observable<LceState<Int>> = upstream
             override val refresh: Completable = Completable.error(UnsupportedOperationException("Should not be executed"))
             override val params: String = PARAMS
         }
@@ -276,7 +276,7 @@ class UpdateWrapperTest {
         val s = wrapper.state.test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(LceState.Loading(null, false, PARAMS))
+        s.assertValues(LceState.Loading(null, false))
 
         val u = wrapper.callUpdate.test()
         u.assertNoErrors()
@@ -285,9 +285,9 @@ class UpdateWrapperTest {
         u.dispose()
 
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Loading(null, false, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Loading(null, false, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Loading(null, false, LceState.Loading.Type.UPDATING),
+                LceState.Loading(null, false)
         )
     }
 
@@ -307,8 +307,8 @@ class UpdateWrapperTest {
         s.assertNoErrors()
         s.assertNotComplete()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
         )
 
         wrapper.callUpdate.test().assertComplete().assertNoErrors()
@@ -317,11 +317,11 @@ class UpdateWrapperTest {
         s.assertNotComplete()
         s.assertNoErrors()
         s.assertValues(
-                LceState.Loading(null, false, PARAMS),
-                LceState.Content(VALID_ENTITY.data, true, PARAMS),
-                LceState.Loading(VALID_ENTITY.data, true, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Loading(updatedEntity.data, true, PARAMS, LceState.Loading.Type.UPDATING),
-                LceState.Content(updatedEntity.data, true, PARAMS)
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true),
+                LceState.Loading(VALID_ENTITY.data, true, LceState.Loading.Type.UPDATING),
+                LceState.Loading(updatedEntity.data, true, LceState.Loading.Type.UPDATING),
+                LceState.Content(updatedEntity.data, true)
         )
     }
 }
