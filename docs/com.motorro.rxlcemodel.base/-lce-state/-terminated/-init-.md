@@ -2,10 +2,10 @@
 
 # &lt;init&gt;
 
-`Terminated(params: `[`PARAMS`](index.md#PARAMS)`)`
+`Terminated()`
 
 A special state that may be used to terminate state emission in cases we always need a latest state to proceed
-For example we have a view that subscribes to [LceState](../index.md) for a resource identified with [PARAMS](index.md#PARAMS).
+For example we have a view that subscribes to [LceState](../index.md) for a resource identified with some PARAMS.
 Than a delete operation is performed on that resource and it is not available anymore.
 The one may emit [Terminated](index.md) to do a special processing (e.g. close the corresponding view) instead of
 doing it through server request that will return a `Not found` error and doing a special case

@@ -2,7 +2,7 @@
 
 # toError
 
-`fun toError(error: `[`Throwable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html)`): `[`Error`](-error/index.md)`<`[`DATA`](index.md#DATA)`, `[`PARAMS`](index.md#PARAMS)`>`
+`fun toError(error: `[`Throwable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html)`): `[`Error`](-error/index.md)`<`[`DATA`](index.md#DATA)`>`
 
 Transfers to [Error](-error/index.md) state preserving data
 

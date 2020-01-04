@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`Error(data: `[`DATA`](index.md#DATA)`?, dataIsValid: `[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`, params: `[`PARAMS`](index.md#PARAMS)`, error: `[`Throwable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html)`)`
+`Error(data: `[`DATA`](index.md#DATA)`?, dataIsValid: `[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`, error: `[`Throwable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html)`)`
 
 Data (or part of it) failed to load
 

@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`Loading(data: `[`DATA`](index.md#DATA)`?, dataIsValid: `[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`, params: `[`PARAMS`](index.md#PARAMS)`, type: `[`Type`](-type/index.md)` = Type.LOADING)`
+`Loading(data: `[`DATA`](index.md#DATA)`?, dataIsValid: `[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`, type: `[`Type`](-type/index.md)` = Type.LOADING)`
 
 View is loading
 

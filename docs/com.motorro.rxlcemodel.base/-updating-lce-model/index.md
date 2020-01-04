@@ -20,7 +20,7 @@
 |---|---|
 | [params](../-lce-model/params.md) | `abstract val params: `[`PARAMS`](../-lce-model/index.md#PARAMS)<br>Params that identify data being loaded |
 | [refresh](../-lce-model/refresh.md) | `abstract val refresh: `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)<br>Requests a refresh of data. Data will be updated asynchronously |
-| [state](../-lce-model/state.md) | `abstract val state: `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](../-lce-model/index.md#DATA)`, `[`PARAMS`](../-lce-model/index.md#PARAMS)`>>`<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates |
+| [state](../-lce-model/state.md) | `abstract val state: `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](../-lce-model/index.md#DATA)`>>`<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates |
 
 ### Functions
 

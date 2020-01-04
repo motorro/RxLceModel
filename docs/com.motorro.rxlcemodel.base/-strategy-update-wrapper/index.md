@@ -28,7 +28,7 @@ Implement methods to update properties using [doUpdate](../-update-wrapper/do-up
 
 | Name | Summary |
 |---|---|
-| [state](../-update-wrapper/state.md) | `open val state: `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](../-update-wrapper/index.md#DATA)`, `[`PARAMS`](../-update-wrapper/index.md#PARAMS)`>>`<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates Wrapper mixes the [upstream](#) emissions with update operation status. |
+| [state](../-update-wrapper/state.md) | `open val state: `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](../-update-wrapper/index.md#DATA)`>>`<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates Wrapper mixes the [upstream](#) emissions with update operation status. |
 
 ### Functions
 

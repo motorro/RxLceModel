@@ -2,7 +2,7 @@
 
 # toLoading
 
-`fun toLoading(type: `[`Type`](-loading/-type/index.md)` = Loading.Type.LOADING): `[`Loading`](-loading/index.md)`<`[`DATA`](index.md#DATA)`, `[`PARAMS`](index.md#PARAMS)`>`
+`fun toLoading(type: `[`Type`](-loading/-type/index.md)` = Loading.Type.LOADING): `[`Loading`](-loading/index.md)`<`[`DATA`](index.md#DATA)`>`
 
 Transfers to [Loading](-loading/index.md) state preserving data
 
