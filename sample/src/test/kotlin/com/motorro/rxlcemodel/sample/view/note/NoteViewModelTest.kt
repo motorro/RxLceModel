@@ -17,11 +17,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.domain.data.Note
-import com.motorro.rxlcemodel.sample.testOnCleared
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.junit.Before
@@ -56,14 +57,14 @@ class NoteViewModelTest {
 
     @Test
     fun subscribesLceModelAndTransfersState() {
-        val terminated = LceState.Terminated<Note, Int>(0)
-        val subject = PublishSubject.create<LceState<Note, Int>>()
+        val terminated = LceState.Terminated<Note>()
+        val subject = PublishSubject.create<LceState<Note>>()
         whenever(noteLceModel.state).thenReturn(subject)
 
         model.initialize()
         assertTrue(subject.hasObservers())
 
-        val observer: Observer<LceState<Note, Int>> = mock()
+        val observer: Observer<LceState<Note>> = mock()
         model.state.observeForever(observer)
 
         subject.onNext(terminated)
@@ -93,7 +94,7 @@ class NoteViewModelTest {
 
     @Test
     fun terminatesStateSubscriptionOnDelete() {
-        val state = PublishSubject.create<LceState<Note, Int>>()
+        val state = PublishSubject.create<LceState<Note>>()
         whenever(noteLceModel.state).thenReturn(state)
 
         model.initialize()
@@ -104,9 +105,9 @@ class NoteViewModelTest {
 
     @Test
     fun deletesTerminatesView() {
-        val observer: Observer<LceState<Note, Int>> = mock()
+        val observer: Observer<LceState<Note>> = mock()
         model.state.observeForever(observer)
         model.delete()
-        verify(observer).onChanged(LceState.Terminated(1))
+        verify(observer).onChanged(LceState.Terminated())
     }
 }

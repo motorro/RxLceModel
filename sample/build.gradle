@@ -59,7 +59,7 @@ android {
 }
 
 dependencies {
-    def dagger_version = '2.25.2'
+    def dagger_version = '2.25.4'
     def nav_version = "2.1.0"
     def work_version = '2.2.0'
 

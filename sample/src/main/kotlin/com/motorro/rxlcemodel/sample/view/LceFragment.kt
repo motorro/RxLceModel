@@ -30,7 +30,7 @@ import timber.log.Timber
 /**
  * Fragment to display Loading/Content/Error and a non-fatal error in case there is a content to display
  */
-abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
+abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
     private var _loadingView: View? = null
     private var _contentView: CV? = null
     private var _errorView: TextView? = null
@@ -53,17 +53,11 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
     /**
      * Call to process view state and data whenever new state arrives from model
      */
-    protected fun processState(state: LceState<DATA, PARAMS>) {
-        processParams(state.params)
+    protected fun processState(state: LceState<DATA>) {
         state.data?.let { processStateData(it, state.dataIsValid, state is Loading && Loading.Type.UPDATING == state.type) }
         processStateView(state)
         updateStateDisplay(state)
     }
-
-    /**
-     * Called by [processState] to process params the data was retrieved with and were fed back with the result
-     */
-    protected open fun processParams(params: PARAMS) = Unit
 
     /**
      * Called by [processState] to process new data
@@ -84,7 +78,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
      * Updates view according to [state]
      */
     @CallSuper
-    protected open fun processStateView(state: LceState<DATA, PARAMS>) {
+    protected open fun processStateView(state: LceState<DATA>) {
         Timber.d("LceState change: %s", state.toString())
         when(state) {
             is Loading -> when(state.type) {
@@ -110,7 +104,7 @@ abstract class LceFragment<CV: View, DATA: Any, PARAMS: Any>: Fragment() {
     /**
      * Displays current state for 
      */
-    private fun updateStateDisplay(state: LceState<DATA, PARAMS>) {
+    private fun updateStateDisplay(state: LceState<DATA>) {
         _stateDisplay?.text = when(state) {
             is Loading -> "Loading (${state.type})"
             is Content -> "Content"

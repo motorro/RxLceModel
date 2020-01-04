@@ -28,7 +28,7 @@ import org.junit.Test
 class AddNoteViewModelTest {
     private lateinit var useCase: (String, String) -> Completable
     private lateinit var model: AddNoteViewModel
-    private lateinit var observer: Observer<LceState<Unit, Unit>>
+    private lateinit var observer: Observer<LceState<Unit>>
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -47,7 +47,7 @@ class AddNoteViewModelTest {
     @Test
     fun setsContentStateOnInitialize() {
         model.initialize()
-        verify(observer).onChanged(LceState.Content(Unit, true, Unit))
+        verify(observer).onChanged(LceState.Content(Unit, true))
     }
 
     @Test
@@ -55,9 +55,9 @@ class AddNoteViewModelTest {
         model.initialize()
         model.add("Title", "Text")
 
-        verify(observer).onChanged(LceState.Content(Unit, true, Unit))
-        verify(observer).onChanged(LceState.Loading(null, false, Unit, LceState.Loading.Type.LOADING))
-        verify(observer).onChanged(LceState.Terminated(Unit))
+        verify(observer).onChanged(LceState.Content(Unit, true))
+        verify(observer).onChanged(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
+        verify(observer).onChanged(LceState.Terminated())
 
         verify(useCase)("Title", "Text")
     }
@@ -70,9 +70,9 @@ class AddNoteViewModelTest {
         model.initialize()
         model.add("Title", "Text")
 
-        verify(observer).onChanged(LceState.Content(Unit, true, Unit))
-        verify(observer).onChanged(LceState.Loading(null, false, Unit, LceState.Loading.Type.LOADING))
-        verify(observer).onChanged(LceState.Error(null, false, Unit, error))
+        verify(observer).onChanged(LceState.Content(Unit, true))
+        verify(observer).onChanged(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
+        verify(observer).onChanged(LceState.Error(null, false, error))
 
         verify(useCase)("Title", "Text")
     }
