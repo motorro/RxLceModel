@@ -76,7 +76,6 @@ Each `LceState<DATA, PARAMS>` subclass represents a data-loading phase and conta
 *   `data: DATA?` - Loaded data
 *   `dataIsValid: Boolean` - The validity of data at the time of emission. May be used by caching services to indicate 
     the need of data refresh. More about it in [CacheThenNetLceModel](#cachethennetlcemodel) section.
-*   `params`: PARAMS - Params that identify data being loaded
 
 States being emitted are:
 *   `Loading` - data is being loaded or updated. May contain some data. The exact state is defined by `type` property:

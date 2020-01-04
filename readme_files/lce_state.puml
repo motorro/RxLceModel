@@ -5,7 +5,7 @@ hide empty members
 class PARAMS
 PARAMS -* LceState: Identify loaded data
 
-abstract class LceState<DATA, PARAMS> {
+abstract class LceState<DATA> {
     +data: DATA?
     +dataIsValid: Boolean
     +params: PARAMS
