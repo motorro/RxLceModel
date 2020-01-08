@@ -24,3 +24,5 @@ Contains tools to maintain data validity
 Contains tools to load and store data
 # Package com.motorro.rxlcemodel.disklrucache
 [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel
+# Package com.motorro.rxlcemodel.kserializer
+DiskLruCache serialization delegate using [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/)

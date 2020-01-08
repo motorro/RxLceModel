@@ -98,11 +98,15 @@ task runDiskLruUnitTests(type: Task, dependsOn: [':disklrucache:cleanTest', ':di
     description 'Run unit tests for DiskLruCache library.'
 }
 
+task runKserializerUnitTests(type: Task, dependsOn: [':kserializer:cleanTest', ':kserializer:test'], group: 'verification') {
+    description 'Run unit tests for KSerializer library.'
+}
+
 task runSampleUnitTests(type: Task, dependsOn: [':sample:cleanTest', ':sample:test'], group: 'verification') {
     description 'Run unit tests for Sample application.'
 }
 
-task runUnitTests(type: Task, dependsOn: ['runBaseUnitTests', 'runDiskLruUnitTests', 'runSampleUnitTests'], group: 'verification') {
+task runUnitTests(type: Task, dependsOn: ['runBaseUnitTests', 'runDiskLruUnitTests', 'runKserializerUnitTests', 'runSampleUnitTests'], group: 'verification') {
     description 'Run unit tests for libraries.'
 }
 

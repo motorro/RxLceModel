@@ -1,1 +1,1 @@
-include ':sample', ':base', ':disklrucache'
+include ':sample', ':base', ':disklrucache', ':kserializer'

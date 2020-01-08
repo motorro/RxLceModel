@@ -43,6 +43,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Cache invalidation and data updates](#cache-invalidation-and-data-updates)
 * [Cache service implementation and DiskLruCache](#cache-service-implementation-and-disklrucache)
 * [A complete example of model setup](#a-complete-example-of-model-setup)
+* [Kotlin serialization](#kotlin-serialization)
 * [ProGuard configuration](#proguard-configuration)
 * [Updating data on server](#updating-data-on-server)
 * [Getting data-only stream](#getting-data-only-stream)
@@ -55,12 +56,18 @@ dependencies {
     implementation "com.motorro.rxlcemodel:base:x.x.x"
 }
 ```
-[Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion)
-:
+Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion):
 ```groovy
 dependencies {
     // Jake Wharton's DiskLruCache delegate for cache implementation
     implementation "com.motorro.rxlcemodel:disklrucache:x.x.x"
+}
+```
+Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [ ![Kotlin serializer](https://api.bintray.com/packages/motorro/RxLceModel/kserializer/images/download.svg) ](https://bintray.com/motorro/RxLceModel/kserializer/_latestVersion):
+```groovy
+dependencies {
+    // Jake Wharton's DiskLruCache delegate for cache implementation
+    implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
 }
 ```
 
@@ -335,6 +342,25 @@ val model = LceModel.cacheThenNet(
     cache = cacheService
 )
 ```
+
+## Kotlin serialization
+Instead of using Java serialization in cache delegate you may add `kserializer` library and use 
+`@Serializable` data classes. 
+Here is an updated above configuration using kotlin serialization:
+```kotlin
+/**
+ * Data.
+ */
+@Serializable
+data class Data(val a: Int, val b: String)
+
+/**
+ * Cache service
+ */
+val cacheService: CacheService<Data, Int> = CacheService.withSyncDelegate(
+    diskCache.withKotlin(validatorFactory, Data.serializer())
+)
+``` 
 
 ## ProGuard configuration
 Nothing special is required for library itself. If you use `DiskLruCache` delegate than you may want to add general 
