@@ -12,3 +12,4 @@ com.motorro.rxlcemodel.base
 com.motorro.rxlcemodel.base.entity
 com.motorro.rxlcemodel.base.service
 com.motorro.rxlcemodel.disklrucache
+com.motorro.rxlcemodel.kserializer

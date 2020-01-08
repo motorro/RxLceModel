@@ -23,4 +23,5 @@ Serializer for cache delegates
 
 | Name | Summary |
 |---|---|
+| [KotlinCacheDelegateSerializer](../../com.motorro.rxlcemodel.kserializer/-kotlin-cache-delegate-serializer/index.md) | `class KotlinCacheDelegateSerializer<D : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> : `[`CacheDelegateSerializerDeserializer`](./index.md)`<`[`D`](../../com.motorro.rxlcemodel.kserializer/-kotlin-cache-delegate-serializer/index.md#D)`>`<br>Serializes and deserializes objects with [kotlinx.serialization.KSerializer](#) |
 | [WithObjectStream](-with-object-stream/index.md) | `class WithObjectStream<D : `[`Serializable`](http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html)`> : `[`CacheDelegateSerializerDeserializer`](./index.md)`<`[`D`](-with-object-stream/index.md#D)`>`<br>Serializes and deserializes [Serializable](http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html) objects |
