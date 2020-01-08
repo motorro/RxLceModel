@@ -19,11 +19,12 @@ import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService
 import com.motorro.rxlcemodel.base.service.stringifyParams
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import java.io.Serializable
+import java.util.*
 
 /**
  * Default delegate prefix for type
  */
-fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.toLowerCase()
+fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.toLowerCase(Locale.getDefault())
 
 /**
  * Creates DiskLRU caching delegate for [SyncDelegateCacheService]
