@@ -202,8 +202,10 @@ val <DATA: Any> Observable<LceState<DATA>>.validData: Observable<DATA>
 
 /**
  * Creates a model wrapper that converts [DATA_1] to [DATA_2]
+ * @receiver Original model
  * @param DATA_1 Source model data type
  * @param DATA_2 Resulting model data type
+ * @param PARAMS Params type that identify data being loaded
  * @param mapper Data mapper
  */
 fun <DATA_1: Any, DATA_2: Any, PARAMS: Any> LceModel<DATA_1, PARAMS>.map(mapper: (data: DATA_1) -> DATA_2): LceModel<DATA_2, PARAMS> = object : LceModel<DATA_2, PARAMS> {
@@ -211,3 +213,17 @@ fun <DATA_1: Any, DATA_2: Any, PARAMS: Any> LceModel<DATA_1, PARAMS>.map(mapper:
     override val refresh: Completable = this@map.refresh
     override val params: PARAMS = this@map.params
 }
+
+/**
+ * Takes the [LceModel.state] of model that is being refreshed each time [refreshStream] emits a value
+ * Useful when you create a model as a result of mapping of some input (params for example) and the
+ * [LceModel.refresh] property becomes invisible for the outside world
+ * @receiver Original model
+ * @param DATA Source model data type
+ * @param PARAMS Params type that identify data being loaded
+ * @param refreshStream Whenever this stream emits a value, the model is refreshed
+ */
+fun <DATA: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withRefresh(refreshStream: Observable<Int>): Observable<LceState<DATA>> = Observable.merge(
+    this.state,
+    refreshStream.flatMapCompletable { this.refresh }.toObservable()
+)
