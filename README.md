@@ -66,7 +66,7 @@ dependencies {
 Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [ ![Kotlin serializer](https://api.bintray.com/packages/motorro/RxLceModel/kserializer/images/download.svg) ](https://bintray.com/motorro/RxLceModel/kserializer/_latestVersion):
 ```groovy
 dependencies {
-    // Jake Wharton's DiskLruCache delegate for cache implementation
+    // Data serializer for DiskLruCache using Kotlin serialization
     implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
 }
 ```
