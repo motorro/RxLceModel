@@ -12,7 +12,14 @@ Creates a model wrapper that converts [DATA_1](map.md#DATA_1) to [DATA_2](map.md
 
 `DATA_2` - Resulting model data type
 
-`mapper` - Data mapper`inline fun <DATA_1 : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`, DATA_2 : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> `[`LceState`](-lce-state/index.md)`<`[`DATA_1`](map.md#DATA_1)`>.map(mapper: (data: `[`DATA_1`](map.md#DATA_1)`) -> `[`DATA_2`](map.md#DATA_2)`): `[`LceState`](-lce-state/index.md)`<`[`DATA_2`](map.md#DATA_2)`>`
+`PARAMS` - Params type that identify data being loaded
+
+`mapper` - Data mapper
+
+**Receiver**
+Original model
+
+`inline fun <DATA_1 : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`, DATA_2 : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> `[`LceState`](-lce-state/index.md)`<`[`DATA_1`](map.md#DATA_1)`>.map(mapper: (data: `[`DATA_1`](map.md#DATA_1)`) -> `[`DATA_2`](map.md#DATA_2)`): `[`LceState`](-lce-state/index.md)`<`[`DATA_2`](map.md#DATA_2)`>`
 
 Maps data in LceState
 
