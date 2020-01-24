@@ -94,7 +94,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${commonLibVersions.rx_java}"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
@@ -102,5 +102,5 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation 'org.threeten:threetenbp:1.4.0'
+    testImplementation 'org.threeten:threetenbp:1.4.1'
 }
