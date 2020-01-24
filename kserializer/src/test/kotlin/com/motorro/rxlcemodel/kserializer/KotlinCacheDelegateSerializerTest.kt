@@ -20,6 +20,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.cbor.Cbor
 import org.junit.Before
 import org.junit.Test
 import java.io.ByteArrayInputStream
@@ -46,7 +47,7 @@ class KotlinCacheDelegateSerializerTest {
         validatorFactory = mock()
         whenever(validatorFactory.createSnapshot(any())).thenReturn(EntityValidator.Always)
 
-        kSerializer = KotlinCacheDelegateSerializer(validatorFactory, TestData.serializer())
+        kSerializer = KotlinCacheDelegateSerializer(validatorFactory, TestData.serializer(), Cbor.plain)
     }
 
     @Test

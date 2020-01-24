@@ -27,10 +27,12 @@ import java.io.OutputStream
  * Serializes and deserializes objects with [kotlinx.serialization.KSerializer]
  * @param validatorFactory [Entity] validator factory
  * @param kSerializer Serializer to use with [D]
+ * @param cbor Cbor serializer to use
  */
 class KotlinCacheDelegateSerializer<D: Any>(
     private val validatorFactory: EntityValidatorFactory,
-    private val kSerializer: KSerializer<D>
+    private val kSerializer: KSerializer<D>,
+    private val cbor: Cbor
 ): CacheDelegateSerializerDeserializer<D> {
     /**
      * Class to store serialized data
@@ -63,9 +65,9 @@ class KotlinCacheDelegateSerializer<D: Any>(
      * @param entity Entity to serialize
      * @param output Output stream
      */
-    override fun serialize(entity: Entity<D>, output: OutputStream)  = output.use {
+    override fun serialize(entity: Entity<D>, output: OutputStream) = output.use {
         it.write(
-            Cbor.dump(
+            cbor.dump(
                 Storage.serializer(kSerializer),
                 Storage(entity)
             )

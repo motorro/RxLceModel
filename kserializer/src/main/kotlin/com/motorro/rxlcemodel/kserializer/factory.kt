@@ -21,6 +21,7 @@ import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCache
 import com.motorro.rxlcemodel.disklrucache.createDefaultDelegatePrefix
 import com.motorro.rxlcemodel.disklrucache.createDelegate
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.cbor.Cbor
 
 /**
  * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts Kotlin-serializable data
@@ -35,13 +36,15 @@ import kotlinx.serialization.KSerializer
 inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
+    cbor: Cbor = Cbor.plain,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String = { toString() }
 ) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
-        kSerializer = serializer
+        kSerializer = serializer,
+        cbor = cbor
     ),
     stringify = stringify
 )
