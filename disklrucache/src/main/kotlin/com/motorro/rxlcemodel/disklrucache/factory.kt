@@ -36,13 +36,33 @@ fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.toLower
  * @receiver Cache provider
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  * @param sd Entity Serializer/deserializer
+ */
+fun <D: Any, P: CacheFriend> DiskLruCacheProvider.createDelegate(
+    prefix: String,
+    sd: CacheDelegateSerializerDeserializer<D>
+) : SyncDelegateCacheService.Delegate<D, P> = DiskLruCacheSyncDelegate(
+    prefix = prefix,
+    sd = sd,
+    cacheProvider = this
+).stringifyParams { cacheKey }
+
+/**
+ * Creates DiskLRU caching delegate for [SyncDelegateCacheService]
+ * Delegate uses cache directory provided by [DiskLruCacheProvider]. This directory is designed to be shared
+ * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
+ * to not to mix data with other delegates.
+ * The [DiskLruCacheSyncDelegate.sd] is a serializer/deserializer that saves/restores entity from file streams.
+ *
+ * @receiver Cache provider
+ * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
+ * @param sd Entity Serializer/deserializer
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
 inline fun <D: Any, P: Any> DiskLruCacheProvider.createDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<D>,
-    crossinline stringify: P.() -> String = { toString() }
+    crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = DiskLruCacheSyncDelegate(
     prefix = prefix,
     sd = sd,
@@ -88,8 +108,27 @@ fun <D: Any, P: CacheFriend> DiskLruCacheProvider.createNormalizedDelegate(
 inline fun <D: Any, P: Any> DiskLruCacheProvider.createNormalizedDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<DataWithCacheKey<D>>,
-    crossinline stringify: P.() -> String = { toString() }
+    crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate<D, CacheFriend>(prefix,sd).makeFriendParams(stringify)
+
+/**
+ * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
+ * with cache key normalizing and check
+ *
+ * @receiver Cache provider
+ * @param validatorFactory Entity validation factory (defines cache TTL)
+ * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
+ */
+inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withObjectStream(
+    validatorFactory: EntityValidatorFactory,
+    prefix: String = createDefaultDelegatePrefix(D::class.java)
+) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
+    prefix = prefix,
+    sd = CacheDelegateSerializerDeserializer.WithObjectStream(
+        validatorFactory = validatorFactory,
+        dataClass = D::class.java
+    )
+)
 
 /**
  * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
@@ -104,7 +143,7 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createNormalizedDelegate(
 inline fun <reified D: Serializable, P: Any> DiskLruCacheProvider.withObjectStream(
     validatorFactory: EntityValidatorFactory,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
-    crossinline stringify: P.() -> String = { toString() }
+    crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
     prefix = prefix,
     sd = CacheDelegateSerializerDeserializer.WithObjectStream(
@@ -147,7 +186,7 @@ inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withOb
 inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withObjectStreamNormalized(
     validatorFactory: EntityValidatorFactory,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
-    crossinline stringify: P.() -> String = { toString() }
+    crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = WithObjectStreamAndCacheKey(

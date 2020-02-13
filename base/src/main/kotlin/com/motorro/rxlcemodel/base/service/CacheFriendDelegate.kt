@@ -19,16 +19,6 @@ import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import java.io.*
 
 /**
- * Generates a cache-friendly key value for parameters
- */
-interface CacheFriend {
-    /**
-     * A cache key
-     */
-    val cacheKey: String
-}
-
-/**
  * Data combined with full cached key to validate we get exactly what we are looking for
  * For example, DiskLruCache has strict requirements and limited length of a cache key and
  * hashing of keys may be required to fit into requirements - thus there is a possibility of key

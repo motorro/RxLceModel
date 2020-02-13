@@ -32,6 +32,29 @@ import kotlinx.serialization.cbor.Cbor
  * @param validatorFactory Entity validation factory (defines cache TTL)
  * @param serializer Data serializer/deserializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
+ */
+inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
+    validatorFactory: EntityValidatorFactory,
+    serializer: KSerializer<D>,
+    cbor: Cbor = Cbor.plain,
+    prefix: String = createDefaultDelegatePrefix(D::class.java)
+) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
+    prefix = prefix,
+    sd = KotlinCacheDelegateSerializer(
+        validatorFactory = validatorFactory,
+        kSerializer = serializer,
+        cbor = cbor
+    ),
+    stringify = { cacheKey }
+)
+
+/**
+ * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts Kotlin-serializable data
+ *
+ * @receiver Cache provider
+ * @param validatorFactory Entity validation factory (defines cache TTL)
+ * @param serializer Data serializer/deserializer
+ * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
@@ -40,7 +63,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
     serializer: KSerializer<D>,
     cbor: Cbor = Cbor.plain,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
-    crossinline stringify: P.() -> String = { toString() }
+    crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
@@ -90,7 +113,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlinNormalized(
     serializer: KSerializer<D>,
     cbor: Cbor = Cbor.plain,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
-    crossinline stringify: P.() -> String = { toString() }
+    crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
