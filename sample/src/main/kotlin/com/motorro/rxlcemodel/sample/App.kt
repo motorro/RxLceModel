@@ -21,7 +21,11 @@ import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
+import java.io.IOException
+import java.net.SocketException
 import javax.inject.Inject
 
 class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
@@ -34,7 +38,7 @@ class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
     lateinit var activityInjector: DispatchingAndroidInjector<Any>
 
     /**
-     * Returns an [AndroidInjector].
+     * Returns an AndroidInjector
      */
     override fun androidInjector(): AndroidInjector<Any> = activityInjector
 
@@ -63,5 +67,30 @@ class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
         inject()
         setupLogger()
         Timber.d("Application started")
+        setRxErrorHook()
+    }
+
+    /**
+     * Sets Rx error handler:
+     * See "error handling" section here:
+     * https://github.com/ReactiveX/RxJava/wiki/What%27s-different-in-2.0
+     */
+    private fun setRxErrorHook() {
+        RxJavaPlugins.setErrorHandler {
+            val error: Throwable = if (it is UndeliverableException) (it.cause ?: it) else it
+            fun noteException(errorToNote: Throwable) {
+                Timber.w(errorToNote, "Unhandled Rx warning:")
+            }
+            fun pipelineException(errorToPipeline: Throwable) {
+                Timber.e(errorToPipeline, "Fatal error:")
+                throw errorToPipeline
+            }
+            when(error) {
+                // fine, some blocking code was interrupted by a dispose call
+                is InterruptedException -> noteException(error)
+                // fine, irrelevant network problem or API that throws on cancellation
+                else -> pipelineException(error)
+            }
+        }
     }
 }
