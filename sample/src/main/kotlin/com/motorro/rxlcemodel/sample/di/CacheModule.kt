@@ -17,7 +17,6 @@ import android.content.Context
 import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.entity.LifespanValidatorFactory
 import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import com.motorro.rxlcemodel.disklrucache.withObjectStream
 import com.motorro.rxlcemodel.sample.BuildConfig
@@ -85,7 +84,7 @@ class CacheModule {
      */
     @Singleton
     @Provides
-    fun cacheProvider(@Named("cacheDir") cacheDir: File) = DiskLruCacheSyncDelegate.DiskLruCacheProvider(
+    fun cacheProvider(@Named("cacheDir") cacheDir: File) = DiskLruCacheProvider(
         cacheDir,
         BuildConfig.VERSION_CODE,
         CACHE_SIZE
@@ -96,7 +95,7 @@ class CacheModule {
      */
     @Singleton
     @Provides
-    fun cacheManager(provider: DiskLruCacheSyncDelegate.DiskLruCacheProvider): CacheManager = object : CacheManager {
+    fun cacheManager(provider: DiskLruCacheProvider): CacheManager = object : CacheManager {
         /**
          * Deletes all cache at once
          */
@@ -109,7 +108,7 @@ class CacheModule {
     @Singleton
     @Provides
     internal fun noteListCacheService(
-        diskCache: DiskLruCacheSyncDelegate.DiskLruCacheProvider,
+        diskCache: DiskLruCacheProvider,
         @Named(NOTE_LIST) validatorFactory: EntityValidatorFactory
     ): CacheService<NoteList, Unit> = CacheService.withSyncDelegate(
         diskCache.withObjectStream(validatorFactory, "note") { "notes" }
@@ -124,5 +123,7 @@ class CacheModule {
     internal fun noteCacheService(
         diskCache: DiskLruCacheProvider,
         @Named(NOTE) validatorFactory: EntityValidatorFactory
-    ): CacheService<Note, Int> = CacheService.withSyncDelegate(diskCache.withObjectStream(validatorFactory))
+    ): CacheService<Note, Int> = CacheService.withSyncDelegate(
+        diskCache.withObjectStream(validatorFactory) { toString() }
+    )
 }
