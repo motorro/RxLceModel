@@ -44,6 +44,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Cache service implementation and DiskLruCache](#cache-service-implementation-and-disklrucache)
 * [A complete example of model setup](#a-complete-example-of-model-setup)
 * [Kotlin serialization](#kotlin-serialization)
+* [Cache key normalization](#cache-key-normalization)
 * [ProGuard configuration](#proguard-configuration)
 * [Updating data on server](#updating-data-on-server)
 * [Getting data-only stream](#getting-data-only-stream)
@@ -330,7 +331,7 @@ val diskCache = DiskLruCacheSyncDelegate.DiskLruCacheProvider(
  * Cache service
  */
 val cacheService: CacheService<Data, Int> = CacheService.withSyncDelegate(
-    diskCache.withObjectStream(validatorFactory)
+    diskCache.withObjectStream(validatorFactory) { toString() }
 )
 
 /**
@@ -358,9 +359,58 @@ data class Data(val a: Int, val b: String)
  * Cache service
  */
 val cacheService: CacheService<Data, Int> = CacheService.withSyncDelegate(
-    diskCache.withKotlin(validatorFactory, Data.serializer())
+    diskCache.withKotlin(validatorFactory, Data.serializer()) { toString() }
 )
 ``` 
+
+## Cache key normalization
+Sometimes the data that form your key is too long for your cache key. For example the latest 
+published version of [DiskLruCache](https://github.com/JakeWharton/DiskLruCache/issues/98)
+has the following pattern to validate key: `[a-z0-9_-]{1,64}`.
+Also the total length of cash key in [DiskLruCache delegate](#cache-service-implementation-and-disklrucache)
+includes the length of `prefix` used to construct delegate so stringifying `params` should result 
+in even shorter string to fit into 64 symbols.
+Thus if your parameters exceed the maximum length or has unsupported symbols you'll want to make use 
+of some hashing function to generate cache key which may (depending on the has algorithm used) lead 
+to key collisions and wrong results from cache.
+To make things easier there are several utility classes and functions you may use to automate hasing
+and validation:
+```kotlin
+/**
+ * Cache service with Serializable
+ */
+val cacheService: CacheService<Data, Int> = CacheService.withObjectStreamNormalized(
+    diskCache.withObjectStream(validatorFactory) { toString() }
+)
+
+/**
+ * Cache service with kotlin
+ */
+val cacheService: CacheService<Data, Int> = CacheService.withSyncDelegateNormalized (
+    diskCache.withKotlinNormalized(validatorFactory, Data.serializer()) { toString() }
+)
+```
+These functions create a wrapping [CacheFriendDelegate](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheFriendDelegate.kt)
+which stores data along with original key to be able to compare it to the one used when reading data.
+If original keys do not match - `null` is returned. 
+Besides that the key is normalized before going to `DiskLruCache` - if it is considered invalid then
+it is being hashed.
+
+To make delegate do less transformations and to try to avoid hashing your `PARAMS` class may 
+implement the following interface:
+ 
+```kotlin
+/**
+ * Generates a cache-friendly key value for parameters
+ */
+interface CacheFriend {
+    /**
+     * A cache key
+     */
+    val cacheKey: String get() = toString()
+}
+``` 
+All delegate factories have overloads to accept parameters of that kind. 
 
 ## ProGuard configuration
 Nothing special is required for library itself. If you use `DiskLruCache` delegate than you may want to add general 
