@@ -22,10 +22,10 @@ class FactoryKtTest {
         const val VALID_KEY = "short"
 
         const val LONG_KEY = "long_long_long_long_long_long_long_long_long_long_long_long_long"
-        const val LONG_KEY_MD5 = "64C9C1CCAD29DCCE46F03A73132338D5"
+        const val LONG_KEY_MD5 = "64c9c1ccad29dcce46f03a73132338d5"
 
         const val INVALID_KEY = "long/long"
-        const val INVALID_KEY_MD5 = "EC841A7B07A85A7EB3E4589C7DCCE191"
+        const val INVALID_KEY_MD5 = "ec841a7b07a85a7eb3e4589c7dcce191"
     }
 
     /**
@@ -59,6 +59,6 @@ class FactoryKtTest {
         assertEquals(almostLongKey, params.getNormalizedKey(okPrefix))
 
         val tooLongPrefix = "prefi" // 64
-        assertEquals("97B516D8932A1C0C89A9D36C8F3C5728", params.getNormalizedKey(tooLongPrefix))
+        assertEquals("97b516d8932a1c0c89a9d36c8f3c5728", params.getNormalizedKey(tooLongPrefix))
     }
 }

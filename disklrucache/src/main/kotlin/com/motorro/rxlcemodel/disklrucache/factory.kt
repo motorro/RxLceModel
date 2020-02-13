@@ -166,7 +166,7 @@ private val DISKLRU_PATTERN = "[a-z0-9_-]{1,$DISKLRU_LENGTH}".toRegex()
 /**
  * Hex characters
  */
-val HEX_CHARS = "0123456789ABCDEF".toCharArray()
+val HEX_CHARS = "0123456789abcdef".toCharArray()
 
 /**
  * Byte array -> Hex
