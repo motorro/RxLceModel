@@ -17,9 +17,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motorro.rxlcemodel.base.LceState
@@ -56,7 +56,7 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
     /**
      * Model to load a note
      */
-    private lateinit var noteModel: NoteViewModel
+    private val noteModel: NoteViewModel by viewModels { noteModelFactory }
 
     /**
      * Called by [processState] to process new data
@@ -111,7 +111,7 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
      * Refresh
      */
     private fun setupRefresh() {
-        swipe_refresh.setOnRefreshListener {
+        (swipe_refresh).setOnRefreshListener {
             Timber.d("Refreshing note...")
             noteModel.refresh()
         }
@@ -188,8 +188,7 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
 
         setupRefresh()
 
-        noteModel = ViewModelProviders.of(this, noteModelFactory).get(NoteViewModel::class.java)
-        noteModel.state.observe(this, Observer<LceState<Note>> { processState(it) })
+        noteModel.state.observe(viewLifecycleOwner, Observer<LceState<Note>> { processState(it) })
         noteModel.initialize()
 
         patch_title.setOnClickListener {

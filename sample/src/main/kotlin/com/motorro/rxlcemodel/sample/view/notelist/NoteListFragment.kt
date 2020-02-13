@@ -19,9 +19,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +45,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
     /**
      * Model to load note list
      */
-    private lateinit var noteListModel: BaseLceModel<NoteList>
+    private val noteListModel: BaseLceModel<NoteList> by viewModels { noteListModelFactory }
 
     /**
      * List adapter
@@ -110,8 +110,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
         add_note.setOnClickListener { onAddClicked() }
 
         @Suppress("UNCHECKED_CAST")
-        noteListModel = ViewModelProviders.of(this, noteListModelFactory).get(BaseLceModel::class.java) as BaseLceModel<NoteList>
-        noteListModel.state.observe(this, Observer<LceState<NoteList>> { processState(it) })
+        noteListModel.state.observe(viewLifecycleOwner, Observer<LceState<NoteList>> { processState(it) })
         noteListModel.initialize()
     }
 

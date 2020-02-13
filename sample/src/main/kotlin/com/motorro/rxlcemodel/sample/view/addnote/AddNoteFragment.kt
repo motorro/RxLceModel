@@ -18,9 +18,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.R
@@ -40,7 +40,7 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
     /**
      * Model to load a note
      */
-    private lateinit var noteModel: AddNoteViewModel
+    private val noteModel: AddNoteViewModel by viewModels { noteModelFactory }
 
     /**
      * Called by [processState] to process new data
@@ -77,8 +77,7 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        noteModel = ViewModelProviders.of(this, noteModelFactory).get(AddNoteViewModel::class.java)
-        noteModel.state.observe(this, Observer<LceState<Unit>> { processState(it) })
+        noteModel.state.observe(viewLifecycleOwner, Observer<LceState<Unit>> { processState(it) })
         noteModel.initialize()
 
         add_note.setOnClickListener { addNote() }
