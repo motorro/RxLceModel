@@ -15,13 +15,16 @@ package com.motorro.rxlcemodel.base.service
 
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Before
 import org.junit.Test
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class CacheFriendDelegateTest {
     companion object {
@@ -29,15 +32,22 @@ class CacheFriendDelegateTest {
             override val cacheKey: String = "params1"
         }
         private val VALID_ENTITY = Entity.Impl("data", EntityValidator.Always)
+        private val VALID_ENTITY_WITH_KEY = Entity.Impl(DataWithCacheKey("data", PARAMS.cacheKey), EntityValidator.Always)
     }
 
     private lateinit var cacheDelegate: SyncDelegateCacheService.Delegate<DataWithCacheKey<String>, CacheFriend>
     private lateinit var friendDelegate: SyncDelegateCacheService.Delegate<String, CacheFriend>
+    private lateinit var validatorFactory: EntityValidatorFactory
+    private lateinit var objectStream: CacheDelegateSerializerDeserializer<DataWithCacheKey<String>>
 
     @Before
     fun init() {
         cacheDelegate = mock()
         friendDelegate = CacheFriendDelegate(cacheDelegate)
+
+        validatorFactory = mock()
+        whenever(validatorFactory.createSnapshot(any())).thenReturn(EntityValidator.Always)
+        objectStream = WithObjectStreamAndCacheKey(validatorFactory, String::class.java)
     }
 
     @Test
@@ -62,5 +72,72 @@ class CacheFriendDelegateTest {
     fun returnsNullifParamsNotMatch() {
         whenever(cacheDelegate.get(PARAMS)).thenReturn(VALID_ENTITY.map { DataWithCacheKey("data", "params2") })
         assertNull(friendDelegate.get(PARAMS))
+    }
+
+    @Test
+    fun serializesToObjectStream() {
+        val sOut = ByteArrayOutputStream()
+
+        objectStream.serialize(VALID_ENTITY_WITH_KEY, sOut)
+        assertTrue { sOut.size() > 0 }
+
+        val sIn = ByteArrayInputStream(sOut.toByteArray())
+        assertEquals(
+            VALID_ENTITY_WITH_KEY,
+            objectStream.deserializeSnapshot(sIn, sOut.size().toLong(), false)
+        )
+    }
+
+    @Test
+    fun ifInvalidatedCreatesInvalidEntity() {
+        val sOut = ByteArrayOutputStream()
+
+        objectStream.serialize(VALID_ENTITY_WITH_KEY, sOut)
+        assertTrue { sOut.size() > 0 }
+
+        val sIn = ByteArrayInputStream(sOut.toByteArray())
+        assertFalse { objectStream.deserializeSnapshot(sIn, sOut.size().toLong(), true)!!.isValid() }
+    }
+
+    @Test
+    fun ifDeserializationFailsReturnsNull() {
+        val sIn = ByteArrayInputStream(emptyArray<Byte>().toByteArray())
+        assertNull(objectStream.deserializeSnapshot(sIn, 0L, false))
+    }
+
+    @Test
+    fun ifValidatorFactoryFailsReturnsNull() {
+        val sOut = ByteArrayOutputStream()
+
+        objectStream.serialize(VALID_ENTITY_WITH_KEY, sOut)
+        assertTrue { sOut.size() > 0 }
+
+        val sIn = ByteArrayInputStream(sOut.toByteArray())
+        whenever(validatorFactory.createSnapshot(any())).thenAnswer {
+            throw Exception("Error")
+        }
+
+        assertNull(objectStream.deserializeSnapshot(sIn, sOut.size().toLong(), false))
+    }
+
+    @Test
+    fun createsFriendWrapper() {
+        friendDelegate = mock()
+        val wrapper: SyncDelegateCacheService.Delegate<String, String> = friendDelegate.makeFriendParams { this }
+
+        wrapper.get("params")
+        verify(friendDelegate).get(argThat { "params" == cacheKey })
+
+        wrapper.save("params", VALID_ENTITY)
+        verify(friendDelegate).save(argThat { "params" == cacheKey }, any())
+
+        wrapper.invalidate("params")
+        verify(friendDelegate).invalidate(argThat { "params" == cacheKey })
+
+        wrapper.invalidateAll()
+        verify(friendDelegate).invalidateAll()
+
+        wrapper.delete("params")
+        verify(friendDelegate).delete(argThat { "params" == cacheKey })
     }
 }

@@ -14,6 +14,9 @@
 package com.motorro.rxlcemodel.base.service
 
 import com.motorro.rxlcemodel.base.entity.Entity
+import com.motorro.rxlcemodel.base.entity.EntityValidator
+import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
+import java.io.*
 
 /**
  * Generates a cache-friendly key value for parameters
@@ -34,7 +37,7 @@ interface CacheFriend {
  * @param cacheKey Full unmodified cache key
  * @see CacheFriendDelegate
  */
-data class DataWithCacheKey<D: Any>(val data: D, val cacheKey: String)
+data class DataWithCacheKey<D: Any>(val data: D, val cacheKey: String): Serializable
 
 /**
  * Wraps [delegate] adding unmodified [CacheFriend.cacheKey] to the mix with data.
@@ -77,3 +80,80 @@ class CacheFriendDelegate<D: Any, P: CacheFriend>(private val delegate: SyncDele
      */
     override fun delete(params: P) = delegate.delete(params)
 }
+
+/**
+ * Serializes and deserializes [Serializable] objects along with their caching key
+ * @param validatorFactory [Entity] validator factory
+ * @param dataClass Class type to cast result to
+ */
+class WithObjectStreamAndCacheKey<D: Serializable>(
+    private val validatorFactory: EntityValidatorFactory,
+    private val dataClass: Class<D>
+): CacheDelegateSerializerDeserializer<DataWithCacheKey<D>> {
+    /**
+     * Class to store serialized data
+     * @property data Entity data
+     * @property cacheKey Cache key to store along with data
+     * @property serializedValidator Serialized entity validator
+     */
+    private data class Storage<D: Serializable>(val data: D, val cacheKey: String, val serializedValidator: String): Serializable {
+        companion object {
+            private const val serialVersionUID: Long = 1
+        }
+
+        /**
+         * Takes entity to serialize
+         * @param entity Entity to be stored
+         */
+        constructor(entity: Entity<DataWithCacheKey<D>>): this(
+            entity.data.data,
+            entity.data.cacheKey,
+            entity.serialize()
+        )
+    }
+
+    /**
+     * Creates [Entity] from serialized data
+     */
+    private fun Storage<*>.toEntity(invalidated: Boolean): Entity<DataWithCacheKey<D>> = Entity.Impl(
+        DataWithCacheKey(dataClass.cast(data), cacheKey),
+        if (invalidated) EntityValidator.Never else validatorFactory.createSnapshot(serializedValidator)
+    )
+
+    /**
+     * Serializes [entity] to [output] stream
+     * @param entity Entity to serialize
+     * @param output Output stream
+     */
+    override fun serialize(entity: Entity<DataWithCacheKey<D>>, output: OutputStream) = ObjectOutputStream(output).use {
+        it.writeObject(Storage(entity))
+    }
+
+    /**
+     * Deserializes [Entity] from [input] stream
+     * @param input Entity to deserialize
+     * @param length Content length
+     */
+    override fun deserializeSnapshot(input: InputStream, length: Long, invalidated: Boolean): Entity<DataWithCacheKey<D>>? = runCatching {
+        ObjectInputStream(input).use {
+            (it.readObject() as Storage<*>).toEntity(invalidated)
+        }
+    }.getOrNull()
+}
+
+/**
+ * Creates an adapter delegate that creates [CacheFriend] params using [stringify] function
+ * @param stringify Function to stringify [P]
+ * @receiver Delegate with [CacheFriend] params e.g. the one that saves data to files and uses params as file names
+ */
+inline fun <D: Any, P: Any> SyncDelegateCacheService.Delegate<D, CacheFriend>.makeFriendParams(crossinline stringify: P.() -> String) = object : SyncDelegateCacheService.Delegate<D, P> {
+    private fun createFriend(params: P) = object : CacheFriend {
+        override val cacheKey: String = params.stringify()
+    }
+    override fun get(params: P): Entity<D>? = this@makeFriendParams.get(createFriend(params))
+    override fun save(params: P, entity: Entity<D>) = this@makeFriendParams.save(createFriend(params), entity)
+    override fun invalidate(params: P) = this@makeFriendParams.invalidate(createFriend(params))
+    override fun invalidateAll() = this@makeFriendParams.invalidateAll()
+    override fun delete(params: P) = this@makeFriendParams.delete(createFriend(params))
+}
+

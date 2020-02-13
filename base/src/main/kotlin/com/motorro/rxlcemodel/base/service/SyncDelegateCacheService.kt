@@ -151,8 +151,7 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
  * @receiver Delegate with String params e.g. the one that saves data to files and uses params as file names
  * @param stringify Function to stringify [P]
  */
-inline fun <D: Any, P: Any> SyncDelegateCacheService.Delegate<D, String>.stringifyParams(crossinline stringify: P.() -> String = { toString() }) = object :
-    SyncDelegateCacheService.Delegate<D, P> {
+inline fun <D: Any, P: Any> SyncDelegateCacheService.Delegate<D, String>.stringifyParams(crossinline stringify: P.() -> String = { toString() }) = object : SyncDelegateCacheService.Delegate<D, P> {
     override fun get(params: P): Entity<D>? = this@stringifyParams.get(params.stringify())
     override fun save(params: P, entity: Entity<D>) = this@stringifyParams.save(params.stringify(), entity)
     override fun invalidate(params: P) = this@stringifyParams.invalidate(params.stringify())
