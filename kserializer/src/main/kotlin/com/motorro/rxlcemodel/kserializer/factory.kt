@@ -22,6 +22,7 @@ import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCache
 import com.motorro.rxlcemodel.disklrucache.createDefaultDelegatePrefix
 import com.motorro.rxlcemodel.disklrucache.createDelegate
 import com.motorro.rxlcemodel.disklrucache.createNormalizedDelegate
+import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.cbor.Cbor
 
@@ -31,19 +32,20 @@ import kotlinx.serialization.cbor.Cbor
  * @receiver Cache provider
  * @param validatorFactory Entity validation factory (defines cache TTL)
  * @param serializer Data serializer/deserializer
+ * @param binaryFormat Binary format serializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  */
 inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
-    cbor: Cbor = Cbor.plain,
+    binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java)
 ) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
         kSerializer = serializer,
-        cbor = cbor
+        binaryFormat = binaryFormat
     ),
     stringify = { cacheKey }
 )
@@ -54,6 +56,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
  * @receiver Cache provider
  * @param validatorFactory Entity validation factory (defines cache TTL)
  * @param serializer Data serializer/deserializer
+ * @param binaryFormat Binary format serializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
@@ -61,7 +64,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
 inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
-    cbor: Cbor = Cbor.plain,
+    binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
@@ -69,7 +72,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
         kSerializer = serializer,
-        cbor = cbor
+        binaryFormat = binaryFormat
     ),
     stringify = stringify
 )
@@ -81,19 +84,20 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
  * @receiver Cache provider
  * @param validatorFactory Entity validation factory (defines cache TTL)
  * @param serializer Data serializer/deserializer
+ * @param binaryFormat Binary format serializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  */
 inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNormalized(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
-    cbor: Cbor = Cbor.plain,
+    binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java)
 ) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
         kSerializer = DataWithCacheKeySerializer(serializer),
-        cbor = cbor
+        binaryFormat = binaryFormat
     )
 )
 
@@ -104,6 +108,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNorma
  * @receiver Cache provider
  * @param validatorFactory Entity validation factory (defines cache TTL)
  * @param serializer Data serializer/deserializer
+ * @param binaryFormat Binary format serializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
@@ -111,7 +116,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNorma
 inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlinNormalized(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
-    cbor: Cbor = Cbor.plain,
+    binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String
 ) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
@@ -119,7 +124,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlinNormalized(
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
         kSerializer = DataWithCacheKeySerializer(serializer),
-        cbor = cbor
+        binaryFormat = binaryFormat
     ),
     stringify = stringify
 )

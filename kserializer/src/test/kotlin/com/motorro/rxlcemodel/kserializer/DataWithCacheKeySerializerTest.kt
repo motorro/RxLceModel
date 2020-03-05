@@ -17,9 +17,9 @@ package com.motorro.rxlcemodel.kserializer
 
 import com.motorro.rxlcemodel.base.service.DataWithCacheKey
 import kotlinx.serialization.UseSerializers
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.serializer
 import org.junit.Test
 
 class DataWithCacheKeySerializerTest() {

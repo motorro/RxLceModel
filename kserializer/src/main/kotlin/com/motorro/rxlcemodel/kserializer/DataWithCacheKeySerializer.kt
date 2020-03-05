@@ -15,7 +15,7 @@ package com.motorro.rxlcemodel.kserializer
 
 import com.motorro.rxlcemodel.base.service.DataWithCacheKey
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.SerialClassDescImpl
+import kotlinx.serialization.builtins.serializer
 
 /**
  * Serializer for [DataWithCacheKey]
@@ -23,17 +23,15 @@ import kotlinx.serialization.internal.SerialClassDescImpl
 @Serializer(forClass = DataWithCacheKey::class)
 data class DataWithCacheKeySerializer<D: Any>(val dataSerializer: KSerializer<D>):
     KSerializer<DataWithCacheKey<D>> {
-    override val descriptor: SerialDescriptor = object : SerialClassDescImpl("DataWithCacheKey") {
-        init {
-            addElement("data")
-            addElement("cacheKey")
-        }
+    override val descriptor: SerialDescriptor = SerialDescriptor("DataWithCacheKey") {
+        element("data", dataSerializer.descriptor)
+        element("cacheKey", String.serializer().descriptor)
     }
 
-    override fun serialize(encoder: Encoder, obj: DataWithCacheKey<D>) {
+    override fun serialize(encoder: Encoder, value: DataWithCacheKey<D>) {
         val out = encoder.beginStructure(descriptor)
-        out.encodeSerializableElement(descriptor, 0, dataSerializer, obj.data)
-        out.encodeStringElement(descriptor, 1, obj.cacheKey)
+        out.encodeSerializableElement(descriptor, 0, dataSerializer, value.data)
+        out.encodeStringElement(descriptor, 1, value.cacheKey)
         out.endStructure(descriptor)
     }
 

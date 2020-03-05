@@ -47,7 +47,7 @@ class KotlinCacheDelegateSerializerTest {
         validatorFactory = mock()
         whenever(validatorFactory.createSnapshot(any())).thenReturn(EntityValidator.Always)
 
-        kSerializer = KotlinCacheDelegateSerializer(validatorFactory, TestData.serializer(), Cbor.plain)
+        kSerializer = KotlinCacheDelegateSerializer(validatorFactory, TestData.serializer(), Cbor)
     }
 
     @Test

@@ -61,7 +61,7 @@ android {
 dependencies {
     def dagger_version = '2.26'
     def nav_version = '2.2.1'
-    def work_version = '2.3.1'
+    def work_version = '2.3.3'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':base')

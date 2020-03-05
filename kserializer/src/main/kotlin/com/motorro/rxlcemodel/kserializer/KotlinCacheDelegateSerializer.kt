@@ -17,6 +17,7 @@ import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
+import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.cbor.Cbor
@@ -27,12 +28,12 @@ import java.io.OutputStream
  * Serializes and deserializes objects with [kotlinx.serialization.KSerializer]
  * @param validatorFactory [Entity] validator factory
  * @param kSerializer Serializer to use with [D]
- * @param cbor Cbor serializer to use
+ * @param binaryFormat Cbor serializer to use
  */
 class KotlinCacheDelegateSerializer<D: Any>(
     private val validatorFactory: EntityValidatorFactory,
     private val kSerializer: KSerializer<D>,
-    private val cbor: Cbor
+    private val binaryFormat: BinaryFormat
 ): CacheDelegateSerializerDeserializer<D> {
     /**
      * Class to store serialized data
@@ -67,7 +68,7 @@ class KotlinCacheDelegateSerializer<D: Any>(
      */
     override fun serialize(entity: Entity<D>, output: OutputStream) = output.use {
         it.write(
-            cbor.dump(
+            binaryFormat.dump(
                 Storage.serializer(kSerializer),
                 Storage(entity)
             )
