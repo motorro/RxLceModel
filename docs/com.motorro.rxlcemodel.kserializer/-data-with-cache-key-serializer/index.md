@@ -24,4 +24,4 @@ Serializer for [DataWithCacheKey](../../com.motorro.rxlcemodel.base.service/-dat
 | Name | Summary |
 |---|---|
 | [deserialize](deserialize.md) | `fun deserialize(decoder: Decoder): `[`DataWithCacheKey`](../../com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)`<`[`D`](index.md#D)`>` |
-| [serialize](serialize.md) | `fun serialize(encoder: Encoder, obj: `[`DataWithCacheKey`](../../com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)`<`[`D`](index.md#D)`>): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |
+| [serialize](serialize.md) | `fun serialize(encoder: Encoder, value: `[`DataWithCacheKey`](../../com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)`<`[`D`](index.md#D)`>): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) |

@@ -2,7 +2,7 @@
 
 # &lt;init&gt;
 
-`KotlinCacheDelegateSerializer(validatorFactory: `[`EntityValidatorFactory`](../../com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md)`, kSerializer: KSerializer<`[`D`](index.md#D)`>, cbor: Cbor)`
+`KotlinCacheDelegateSerializer(validatorFactory: `[`EntityValidatorFactory`](../../com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md)`, kSerializer: KSerializer<`[`D`](index.md#D)`>, binaryFormat: BinaryFormat)`
 
 Serializes and deserializes objects with [kotlinx.serialization.KSerializer](#)
 
@@ -12,4 +12,4 @@ Serializes and deserializes objects with [kotlinx.serialization.KSerializer](#)
 
 `kSerializer` - Serializer to use with [D](index.md#D)
 
-`cbor` - Cbor serializer to use
+`binaryFormat` - Cbor serializer to use
