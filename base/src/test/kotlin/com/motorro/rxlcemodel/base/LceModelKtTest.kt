@@ -193,4 +193,22 @@ class LceModelKtTest {
         observer.assertNoErrors()
         observer.assertValues(value1, value2)
     }
+
+    @Test
+    fun substitutesEmptyLoading() {
+        val original = LceState.Loading(null, false)
+        val substitute = LceState.Content(10, true)
+        val source = Observable.just<LceState<Int>>(original)
+        val modified = source.onEmptyLoadingReturn { substitute }
+        modified.test().assertComplete().assertNoErrors().assertValue(substitute)
+    }
+
+    @Test
+    fun passesNonEmptyLoading() {
+        val original = LceState.Loading(10, true)
+        val substitute = LceState.Content(10, true)
+        val source = Observable.just<LceState<Int>>(original)
+        val modified = source.onEmptyLoadingReturn { substitute }
+        modified.test().assertComplete().assertNoErrors().assertValue(original)
+    }
 }

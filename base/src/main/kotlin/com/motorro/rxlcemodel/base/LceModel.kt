@@ -227,3 +227,16 @@ fun <DATA: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withRefresh(refreshStream: O
     this.state,
     refreshStream.flatMapCompletable { this.refresh }.toObservable()
 )
+
+/**
+ * Substitutes [LceState.Loading] with empty data with state produced by [block]
+ * @receiver LCE stream
+ * @param block transformation block
+ */
+inline fun <DATA: Any> Observable<LceState<DATA>>.onEmptyLoadingReturn(crossinline block: (Loading<DATA>) -> LceState<DATA>): Observable<LceState<DATA>> = map {
+    if (it is Loading && null == it.data) {
+        block(it)
+    } else {
+        it
+    }
+}
