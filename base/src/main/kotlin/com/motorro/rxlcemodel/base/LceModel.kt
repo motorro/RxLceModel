@@ -13,13 +13,14 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.motorro.rxlcemodel.base.LceState.Loading
+import com.motorro.rxlcemodel.base.LceState.*
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 
 /**
  * A model interface to load data and transmit it to subscribers along with loading operation state
@@ -122,9 +123,9 @@ fun <DATA: Any, UPDATE: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withUpdates(ser
  * @param predicate A predicate to check error state. If predicate returns true, the stream
  * is terminated with [LceState.Error.error]
  */
-fun <DATA: Any> Observable<LceState<DATA>>.terminateOnError(predicate: (LceState.Error<DATA>) -> Boolean): Observable<LceState<DATA>> = map { state ->
+fun <DATA: Any> Observable<LceState<DATA>>.terminateOnError(predicate: (Error<DATA>) -> Boolean): Observable<LceState<DATA>> = map { state ->
     when {
-        state is LceState.Error && predicate(state) -> throw state.error
+        state is Error && predicate(state) -> throw state.error
         else -> state
     }
 }
@@ -149,7 +150,7 @@ val <DATA: Any> Observable<LceState<DATA>>.stopOnEmptyErrors: Observable<LceStat
  * @param terminateOnError A predicate to check error state. If predicate returns true, the stream
  * is terminated with [LceState.Error.error]
  */
-fun <DATA: Any> Observable<LceState<DATA>>.getData(terminateOnError: (LceState.Error<DATA>) -> Boolean): Observable<DATA> =
+fun <DATA: Any> Observable<LceState<DATA>>.getData(terminateOnError: (Error<DATA>) -> Boolean): Observable<DATA> =
         terminateOnError(terminateOnError)
                 .switchMap {
                     val data = it.data
@@ -199,6 +200,37 @@ val <DATA: Any> Observable<LceState<DATA>>.validData: Observable<DATA>
                 }
             }
             .distinctUntilChanged()
+
+/**
+ * Maps each [DATA_1] to single for [DATA_2] and merges back to LceState.
+ * If error occurs in [mapper] emits [LceState.Error].
+ * Example: load some [DATA_2] from server using original [DATA_1] as a parameter.
+ * @param DATA_1 Source data type
+ * @param DATA_2 Resulting data type
+ * @param mapper Data mapper
+ */
+fun <DATA_1: Any, DATA_2: Any> Observable<LceState<DATA_1>>.flatMapSingleData(mapper: (data: DATA_1) -> Single<DATA_2>): Observable<LceState<DATA_2>> {
+
+    fun dataMapper(data1: DATA_1, block: (DATA_2) -> LceState<DATA_2>) = mapper(data1)
+        .map { block(it) }
+        .onErrorReturn { Error(null, false, it) }
+
+    fun nullableMapper(data1: DATA_1?, block: (DATA_2?) -> LceState<DATA_2>) = if (null == data1) {
+        Single.just(block(null))
+    } else {
+        dataMapper(data1, block)
+    }
+
+    @Suppress("RemoveExplicitTypeArguments")
+    return flatMapSingle<LceState<DATA_2>> { state ->
+        when (state) {
+            is Loading -> nullableMapper(state.data) { Loading(it, state.dataIsValid, state.type) }
+            is Content -> dataMapper(state.data) { Content(it, state.dataIsValid) }
+            is Error -> nullableMapper(state.data) { Error(it, state.dataIsValid, state.error) }
+            is Terminated -> Single.just(Terminated())
+        }
+    }
+}
 
 /**
  * Creates a model wrapper that converts [DATA_1] to [DATA_2]

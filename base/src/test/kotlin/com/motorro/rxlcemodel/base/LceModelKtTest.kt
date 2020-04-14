@@ -15,9 +15,11 @@ package com.motorro.rxlcemodel.base
 
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
+import java.io.IOException
 
 class LceModelKtTest {
     companion object {
@@ -164,6 +166,64 @@ class LceModelKtTest {
         models.forEach {
             it.state.validData.test().assertNoValues().assertError(error)
         }
+    }
+
+    @Test
+    fun flatMapsSingleData() {
+        val error = IOException("error")
+
+        fun mapper(input: Int) = Single.just(input.toString())
+
+        val source = Observable.just(
+            LceState.Loading(null, false),
+            LceState.Loading(1, true),
+            LceState.Content(2, true),
+            LceState.Error(null, false, error),
+            LceState.Error(3, true, error),
+            LceState.Terminated()
+        )
+
+        source.flatMapSingleData(::mapper)
+            .test()
+            .assertNoErrors()
+            .assertValues(
+                LceState.Loading(null, false),
+                LceState.Loading("1", true),
+                LceState.Content("2", true),
+                LceState.Error(null, false, error),
+                LceState.Error("3", true, error),
+                LceState.Terminated()
+            )
+    }
+
+    @Test
+    fun returnsErrorIfSingleDataMapperFails() {
+        val error1 = IOException("error 1")
+        val error2 = IOException("error 2")
+
+        @Suppress("UNUSED_PARAMETER")
+        fun mapper(input: Int) = Single.error<String>(error2)
+
+        val source = Observable.just(
+            LceState.Loading(null, false),
+            LceState.Loading(1, true),
+            LceState.Content(2, true),
+            LceState.Error(null, false, error1),
+            LceState.Error(3, true, error1),
+            LceState.Terminated()
+        )
+
+        source.flatMapSingleData(::mapper)
+            .test()
+            .assertNoErrors()
+            .assertValues(
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error2),
+                LceState.Error(null, false, error2),
+                LceState.Error(null, false, error1),
+                LceState.Error(null, false, error2),
+                LceState.Terminated()
+            )
     }
 
     @Test
