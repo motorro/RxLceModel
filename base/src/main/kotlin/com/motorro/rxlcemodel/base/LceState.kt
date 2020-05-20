@@ -140,3 +140,58 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.map(mapper: (data: DATA_1
         is LceState.Terminated -> LceState.Terminated()
     }
 }
+
+/**
+ * Combines two Lce states.
+ * Here is the result state matrix
+ * | Receiver   | other      | Result     |
+ * |------------|------------|------------|
+ * | Loading    | Loading    | Loading    |
+ * | Loading    | Content    | Loading    |
+ * | Loading    | Error      | Error      |
+ * | Loading    | Terminated | Terminated |
+ * | Content    | Loading    | Loading    |
+ * | Content    | Content    | Content*   |
+ * | Content    | Error      | Error      |
+ * | Content    | Terminated | Terminated |
+ * | Error      | Loading    | Error      |
+ * | Error      | Content    | Error      |
+ * | Error      | Error      | Error      |
+ * | Error      | Terminated | Terminated |
+ * | Terminated | Loading    | Terminated |
+ * | Terminated | Content    | Terminated |
+ * | Terminated | Error      | Terminated |
+ * | Terminated | Terminated | Terminated |
+ * @receiver An Lce state that has a priority in final state resolution
+ * @param other Other state to combine with
+ * @param mapper Data mapper function. Returning null from it means data is not ready and will result
+ * in loading state even if both states has data. You may return null-value of any kind to alter resulting state.
+ */
+inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(other: LceState<DATA_2>, mapper: (data1: DATA_1?, data2: DATA_2?) -> DATA_3?):  LceState<DATA_3> {
+    val data3 = mapper(data, other.data)
+    val dataIsValid = null != data3 && dataIsValid && other.dataIsValid
+
+    return when (this) {
+        is LceState.Loading -> when (other) {
+            is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
+            is LceState.Terminated -> LceState.Terminated()
+            else -> LceState.Loading(data3, dataIsValid, this.type)
+        }
+        is LceState.Content -> when (other) {
+            is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
+            is LceState.Terminated -> LceState.Terminated()
+            is LceState.Loading -> LceState.Loading(data3, dataIsValid, other.type)
+            is LceState.Content -> if (null == data3) {
+                LceState.Loading(null, false)
+            } else {
+                LceState.Content(data3, dataIsValid)
+            }
+        }
+        is LceState.Error -> if (other is LceState.Terminated) {
+            LceState.Terminated()
+        } else {
+            LceState.Error(data3, dataIsValid, error)
+        }
+        is LceState.Terminated -> LceState.Terminated()
+    }
+}
