@@ -227,7 +227,7 @@ fun <DATA_1: Any, DATA_2: Any> Observable<LceState<DATA_1>>.flatMapSingleData(ma
             is Loading -> nullableMapper(state.data) { Loading(it, state.dataIsValid, state.type) }
             is Content -> dataMapper(state.data) { Content(it, state.dataIsValid) }
             is Error -> nullableMapper(state.data) { Error(it, state.dataIsValid, state.error) }
-            is Terminated -> Single.just(Terminated())
+            is Terminated -> Single.just(Terminated)
         }
     }
 }

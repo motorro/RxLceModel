@@ -55,7 +55,7 @@ class LceStateCombineKtTest {
     @Test
     fun loadingAndTerminatedResultsInTerminated() {
         val state1 = LceState.Loading(1, false)
-        val state2 = LceState.Terminated<Int>()
+        val state2 = LceState.Terminated
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
     }
@@ -107,7 +107,7 @@ class LceStateCombineKtTest {
     @Test
     fun contentAndTerminatedResultsInTerminated() {
         val state1 = LceState.Content(1, true)
-        val state2 = LceState.Terminated<Int>()
+        val state2 = LceState.Terminated
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
     }
@@ -153,14 +153,14 @@ class LceStateCombineKtTest {
     fun errorAndTerminatedResultsInTerminated() {
         val error = Error("Some error")
         val state1 = LceState.Error(1, false, error)
-        val state2 = LceState.Terminated<Int>()
+        val state2 = LceState.Terminated
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
     }
 
     @Test
     fun terminatedAndLoadingResultsInTerminated() {
-        val state1 = LceState.Terminated<Int>()
+        val state1 = LceState.Terminated
         val state2 = LceState.Loading(2, false, Type.REFRESHING)
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
@@ -168,7 +168,7 @@ class LceStateCombineKtTest {
 
     @Test
     fun terminatedAndContentResultsInTerminated() {
-        val state1 = LceState.Terminated<Int>()
+        val state1 = LceState.Terminated
         val state2 = LceState.Content(2, true)
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
@@ -177,7 +177,7 @@ class LceStateCombineKtTest {
     @Test
     fun terminatedAndErrorResultsInReceiverTerminated() {
         val error = Error("Some error")
-        val state1 = LceState.Terminated<Int>()
+        val state1 = LceState.Terminated
         val state2 = LceState.Error(2, true, error)
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
@@ -185,8 +185,8 @@ class LceStateCombineKtTest {
 
     @Test
     fun terminatedAndTerminatedResultsInTerminated() {
-        val state1 = LceState.Terminated<Int>()
-        val state2 = LceState.Terminated<Int>()
+        val state1 = LceState.Terminated
+        val state2 = LceState.Terminated
         val state3 = state1.combine(state2) { _, _ -> null }
         assertTrue(state3 is LceState.Terminated)
     }

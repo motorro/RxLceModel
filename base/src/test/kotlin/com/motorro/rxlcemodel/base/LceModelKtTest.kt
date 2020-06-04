@@ -180,7 +180,7 @@ class LceModelKtTest {
             LceState.Content(2, true),
             LceState.Error(null, false, error),
             LceState.Error(3, true, error),
-            LceState.Terminated()
+            LceState.Terminated
         )
 
         source.flatMapSingleData(::mapper)
@@ -192,7 +192,7 @@ class LceModelKtTest {
                 LceState.Content("2", true),
                 LceState.Error(null, false, error),
                 LceState.Error("3", true, error),
-                LceState.Terminated()
+                LceState.Terminated
             )
     }
 
@@ -210,7 +210,7 @@ class LceModelKtTest {
             LceState.Content(2, true),
             LceState.Error(null, false, error1),
             LceState.Error(3, true, error1),
-            LceState.Terminated()
+            LceState.Terminated
         )
 
         source.flatMapSingleData(::mapper)
@@ -222,7 +222,7 @@ class LceModelKtTest {
                 LceState.Error(null, false, error2),
                 LceState.Error(null, false, error1),
                 LceState.Error(null, false, error2),
-                LceState.Terminated()
+                LceState.Terminated
             )
     }
 
