@@ -31,7 +31,7 @@ import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 import javax.inject.Named
 

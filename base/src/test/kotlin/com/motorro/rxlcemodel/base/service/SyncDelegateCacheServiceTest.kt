@@ -20,7 +20,7 @@ import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 import org.junit.Test
 import java.util.*

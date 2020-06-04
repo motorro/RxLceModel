@@ -15,8 +15,8 @@ package com.motorro.rxlcemodel.base.service
 
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.UpdateOperationState.*
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Cache update operation state

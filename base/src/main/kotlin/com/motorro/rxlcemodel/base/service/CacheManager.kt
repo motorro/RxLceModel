@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.base.service
 
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 
 /**
  * Closes and deletes cache

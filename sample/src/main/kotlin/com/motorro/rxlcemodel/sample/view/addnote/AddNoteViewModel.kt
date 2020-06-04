@@ -22,8 +22,8 @@ import com.motorro.rxlcemodel.sample.di.FragmentScope
 import com.motorro.rxlcemodel.sample.service.usecase.AddNote
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModel
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 /**
@@ -59,9 +59,9 @@ class AddNoteViewModel(private val addNote: (String, String) -> Completable): Ba
     fun add(title: String, text: String) {
         val subscription = addNote(title, text)
             .toObservable<LceState<Unit>>()
-            .startWith(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
+            .startWithItem(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
             .onErrorReturn { LceState.Error(null, false, it) }
-            .concatWith(Observable.just(LceState.Terminated()))
+            .concatWith(Observable.just(LceState.Terminated))
             .subscribe(
                 { state -> stateData.value = state},
                 { error -> throw error }

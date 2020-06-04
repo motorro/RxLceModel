@@ -20,7 +20,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

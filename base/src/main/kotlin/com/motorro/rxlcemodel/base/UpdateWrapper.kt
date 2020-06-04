@@ -17,11 +17,11 @@ import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.UpdateOperationState
 import com.motorro.rxlcemodel.base.service.buildUpdateOperation
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.functions.BiFunction
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 /**
  * A base class that wraps [LceModel] and mixes in a data update state
@@ -64,7 +64,7 @@ abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(private val upstream: LceMo
         }
 
         Observable.combineLatest(
-                networkOperationState.startWith(UpdateOperationState.IDLE),
+                networkOperationState.startWithItem(UpdateOperationState.IDLE),
                 upstream.state,
                 mapper
         )

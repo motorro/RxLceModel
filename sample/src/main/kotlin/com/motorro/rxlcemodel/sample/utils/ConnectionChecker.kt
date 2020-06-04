@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.sample.utils
 
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean

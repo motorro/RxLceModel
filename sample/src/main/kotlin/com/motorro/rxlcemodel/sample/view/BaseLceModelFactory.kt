@@ -21,7 +21,7 @@ import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * A basic functionality for ViewModel creation that exports state as live-data

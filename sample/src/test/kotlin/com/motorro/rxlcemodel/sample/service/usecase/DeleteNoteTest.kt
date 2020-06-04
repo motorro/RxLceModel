@@ -19,7 +19,7 @@ import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.NetRepository
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException

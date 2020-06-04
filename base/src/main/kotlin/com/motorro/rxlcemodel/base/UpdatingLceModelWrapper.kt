@@ -14,7 +14,7 @@
 package com.motorro.rxlcemodel.base
 
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 
 /**
  * Wraps an [LceModel] to enable simple data updates with the [UPDATE] structure

@@ -18,10 +18,10 @@ import com.gojuno.koptional.toOptional
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService.RefreshCommand.All
 import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService.RefreshCommand.Individual
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 /**
  * Service implementation

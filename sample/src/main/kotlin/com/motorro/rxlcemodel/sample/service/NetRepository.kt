@@ -16,8 +16,8 @@ package com.motorro.rxlcemodel.sample.service
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber

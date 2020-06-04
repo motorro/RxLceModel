@@ -15,8 +15,8 @@ package com.motorro.rxlcemodel.base.service
 
 import com.gojuno.koptional.Optional
 import com.motorro.rxlcemodel.base.entity.Entity
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * Interface to cache an [com.motorro.rxlcemodel.base.entity.Entity] locally

@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.sample.utils
 
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.Scheduler
 
 /**
  * Provides Rx schedulers

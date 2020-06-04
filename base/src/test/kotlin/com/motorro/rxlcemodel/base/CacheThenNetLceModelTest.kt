@@ -23,11 +23,11 @@ import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
 import java.util.concurrent.TimeUnit

@@ -16,7 +16,7 @@ package com.motorro.rxlcemodel.sample.service.usecase
 import android.content.Context
 import androidx.work.*
 import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import timber.log.Timber
 import javax.inject.Inject
 

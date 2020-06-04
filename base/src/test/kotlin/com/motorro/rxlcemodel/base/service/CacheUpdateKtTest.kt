@@ -17,8 +17,8 @@ import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.motorro.rxlcemodel.base.service.UpdateOperationState.*
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 import org.junit.Test
 

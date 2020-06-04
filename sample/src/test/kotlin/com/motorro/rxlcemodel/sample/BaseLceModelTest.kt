@@ -6,9 +6,9 @@ import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
