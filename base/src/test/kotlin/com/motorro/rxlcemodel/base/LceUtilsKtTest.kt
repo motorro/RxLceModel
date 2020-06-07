@@ -16,8 +16,6 @@ package com.motorro.rxlcemodel.base
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 import java.io.IOException
 
@@ -224,35 +222,6 @@ class LceUtilsKtTest {
                 LceState.Error(null, false, error2),
                 LceState.Terminated()
             )
-    }
-
-
-    @Test
-    fun createsRefreshingStream() {
-        val value1 = LceState.Content(1, true)
-        val value2 = LceState.Content(2, true)
-        val refreshStream = PublishSubject.create<Int>()
-        val model = object : LceModel<Int, String> {
-            val stateSubject = BehaviorSubject.createDefault<LceState<Int>>(value1)
-            var refreshed = false
-
-            override val state: Observable<LceState<Int>> = stateSubject
-            override val refresh: Completable = Completable.fromAction {
-                refreshed = true
-                stateSubject.onNext(value2)
-            }
-            override val params: String = PARAMS
-        }
-
-        val observer = model.withRefresh(refreshStream).test()
-        observer.assertNotComplete()
-        observer.assertNoErrors()
-        observer.assertValues(value1)
-
-        refreshStream.onNext(1)
-        observer.assertNotComplete()
-        observer.assertNoErrors()
-        observer.assertValues(value1, value2)
     }
 
     @Test
