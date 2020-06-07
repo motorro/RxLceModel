@@ -24,10 +24,10 @@ import io.reactivex.Single
 
 /**
  * A model interface to load data and transmit it to subscribers along with loading operation state
- * @param DATA Data type of data being held
+ * @param DATA Data type of data being loaded
  * @param PARAMS Params type that identify data being loaded
  */
-interface LceModel<DATA: Any, PARAMS: Any> {
+interface LceModel<DATA: Any, PARAMS: Any>: LceUseCase<DATA> {
     companion object {
         /**
          * Creates a model that returns cached data first, then refreshes if stall
@@ -70,18 +70,6 @@ interface LceModel<DATA: Any, PARAMS: Any> {
                 startWith = startWith
         )
     }
-
-    /**
-     * Model state. Subscription starts data load for the first subscriber.
-     * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
-     */
-    val state: Observable<LceState<DATA>>
-
-    /**
-     * Requests a refresh of data.
-     * Data will be updated asynchronously
-     */
-    val refresh: Completable
 
     /**
      * Params that identify data being loaded
