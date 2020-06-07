@@ -4,7 +4,7 @@
 
 `val refresh: `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
 
-Overrides [LceModel.refresh](../-lce-model/refresh.md)
+Overrides [LceUseCase.refresh](../-lce-use-case/refresh.md)
 
 Requests a refresh of data.
 Data will be updated asynchronously
