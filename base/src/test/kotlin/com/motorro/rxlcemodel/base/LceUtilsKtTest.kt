@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2020 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Test
 import java.io.IOException
 
-class LceModelKtTest {
+class LceUtilsKtTest {
     companion object {
         private const val PARAMS = "params"
     }
@@ -225,6 +225,7 @@ class LceModelKtTest {
                 LceState.Terminated
             )
     }
+
 
     @Test
     fun createsRefreshingStream() {

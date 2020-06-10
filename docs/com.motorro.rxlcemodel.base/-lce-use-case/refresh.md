@@ -1,4 +1,4 @@
-[com.motorro.rxlcemodel.base](../index.md) / [LceModel](index.md) / [refresh](./refresh.md)
+[com.motorro.rxlcemodel.base](../index.md) / [LceUseCase](index.md) / [refresh](./refresh.md)
 
 # refresh
 

@@ -1,4 +1,4 @@
-[com.motorro.rxlcemodel.base](../index.md) / [LceModel](index.md) / [state](./state.md)
+[com.motorro.rxlcemodel.base](../index.md) / [LceUseCase](index.md) / [state](./state.md)
 
 # state
 

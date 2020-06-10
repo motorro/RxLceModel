@@ -4,7 +4,7 @@
 
 `fun <DATA : `[`Any`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)`> `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](terminate-on-error.md#DATA)`>>.terminateOnError(predicate: (`[`Error`](../-lce-state/-error/index.md)`<`[`DATA`](terminate-on-error.md#DATA)`>) -> `[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`): `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<`[`LceState`](../-lce-state/index.md)`<`[`DATA`](terminate-on-error.md#DATA)`>>`
 
-Terminates [LceModel.state](../-lce-model/state.md) stream if [predicate](terminate-on-error.md#com.motorro.rxlcemodel.base$terminateOnError(io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.terminateOnError.DATA)))), kotlin.Function1((com.motorro.rxlcemodel.base.LceState.Error((com.motorro.rxlcemodel.base.terminateOnError.DATA)), kotlin.Boolean)))/predicate) returns true
+Terminates [LceModel.state](../-lce-use-case/state.md) stream if [predicate](terminate-on-error.md#com.motorro.rxlcemodel.base$terminateOnError(io.reactivex.Observable((com.motorro.rxlcemodel.base.LceState((com.motorro.rxlcemodel.base.terminateOnError.DATA)))), kotlin.Function1((com.motorro.rxlcemodel.base.LceState.Error((com.motorro.rxlcemodel.base.terminateOnError.DATA)), kotlin.Boolean)))/predicate) returns true
 
 ### Parameters
 
