@@ -2,7 +2,7 @@
 
 # invalidate
 
-`fun invalidate(params: `[`P`](index.md#P)`): `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
+`fun invalidate(params: `[`P`](index.md#P)`): `[`Completable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html)
 
 Overrides [CacheService.invalidate](../-cache-service/invalidate.md)
 

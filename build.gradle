@@ -11,9 +11,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.18'
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.17'
         classpath 'org.ajoberstar.grgit:grgit-gradle:3.0.0'
-        classpath 'com.novoda:bintray-release:0.9.1'
+        classpath 'com.novoda:bintray-release:0.9.2'
         classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0'
     }
 }
@@ -127,32 +127,31 @@ Set<Project> findDokkaProjects() {
         !it.tasks.findAll { "dokka" == it.getName() }.isEmpty()
     }
 }
-//
-//task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
-//    outputDirectory = docDir
-//    outputFormat = "gfm"
-//    includes = ["${projectDir}/module.md"]
-//
-//    externalDocumentationLink {
-//        url = new URL ("http://reactivex.io/RxJava/2.x/javadoc/")
-//        packageListUrl = new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list")
-//    }
-//
-//    dependsOn {
-//        delete docDir
-//        findDokkaProjects().collect {
-//            it.tasks.getByName("dokka")
-//        }
-//    }
-//
-//    doFirst {
-//        def dokkaProjects = findDokkaProjects()
-//
-//        classpath = dokkaProjects.collect { project -> project.jar.outputs.files.getFiles() }.flatten()
-//        classpath += files(dokkaProjects.collect { project -> project.sourceSets.main.compileClasspath })
-//
-//        sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
-//    }
-//}
 
+task dokka (type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputDirectory = docDir
+    outputFormat = "gfm"
 
+    includes = ["${projectDir}/module.md"]
+    externalDocumentationLink {
+        url = new URL ("http://reactivex.io/RxJava/3.x/javadoc/")
+        packageListUrl = new URL ("http://reactivex.io/RxJava/3.x/javadoc/package-list")
+    }
+
+    dependsOn {
+        delete docDir
+        findDokkaProjects().collect {
+            it.tasks.getByName("dokka")
+        }
+    }
+
+    doFirst {
+
+        def dokkaProjects = findDokkaProjects()
+
+        classpath = dokkaProjects.collect { project -> project.jar.outputs.files.getFiles() }.flatten()
+        classpath += files(dokkaProjects.collect { project -> project.sourceSets.main.compileClasspath })
+
+        sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
+    }
+}

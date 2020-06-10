@@ -2,7 +2,7 @@
 
 # update
 
-`fun update(update: `[`UPDATE`](index.md#UPDATE)`): `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
+`fun update(update: `[`UPDATE`](index.md#UPDATE)`): `[`Completable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html)
 
 Overrides [UpdatingLceModel.update](../-updating-lce-model/update.md)
 

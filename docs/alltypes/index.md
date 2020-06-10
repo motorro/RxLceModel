@@ -1,9 +1,10 @@
 
 
-A reactive data loading for Android based on 
+A reactive data loading for Android based on
 [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
-[Android guide to app architecture](https://developer.android.com/jetpack/docs/guide) to load data and report an 
+[Android guide to app architecture](https://developer.android.com/jetpack/docs/guide) to load data and report an
 operation state (`Loading`/`Content`/`Error`).
+
 
 ### All Types
 
@@ -29,7 +30,7 @@ operation state (`Loading`/`Content`/`Error`).
 | [com.motorro.rxlcemodel.base.entity.LifespanValidatorFactory](../com.motorro.rxlcemodel.base.entity/-lifespan-validator-factory/index.md) | Creates [Lifespan](../com.motorro.rxlcemodel.base.entity/-entity-validator/-lifespan/index.md) as a cache-control |
 | [com.motorro.rxlcemodel.base.service.MemorySyncDelegate](../com.motorro.rxlcemodel.base.service/-memory-sync-delegate/index.md) | A simple memory cache for [SyncDelegateCacheService](../com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md). |
 | [com.motorro.rxlcemodel.base.service.NetService](../com.motorro.rxlcemodel.base.service/-net-service/index.md) | Interface to load an [com.motorro.rxlcemodel.base.entity.Entity](../com.motorro.rxlcemodel.base.entity/-entity/index.md) from network |
-| [io.reactivex.Observable](../com.motorro.rxlcemodel.base/io.reactivex.-observable/index.md) (extensions in package com.motorro.rxlcemodel.base) |  |
+| [io.reactivex.rxjava3.core.Observable](../com.motorro.rxlcemodel.base/io.reactivex.rxjava3.core.-observable/index.md) (extensions in package com.motorro.rxlcemodel.base) |  |
 | [com.motorro.rxlcemodel.base.service.ServiceSet](../com.motorro.rxlcemodel.base.service/-service-set/index.md) | Service-set for [com.motorro.rxlcemodel.base.LceModel](../com.motorro.rxlcemodel.base/-lce-model/index.md) |
 | [com.motorro.rxlcemodel.base.StrategyUpdateWrapper](../com.motorro.rxlcemodel.base/-strategy-update-wrapper/index.md) | Wraps [LceModel](../com.motorro.rxlcemodel.base/-lce-model/index.md) and mixes in a data update state Use to build models that patch some properties and load the whole data structure as a result Implement methods to update properties using [doUpdate](../com.motorro.rxlcemodel.base/-update-wrapper/do-update.md) template |
 | [com.motorro.rxlcemodel.base.service.SyncDelegateCacheService](../com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md) | Service implementation |

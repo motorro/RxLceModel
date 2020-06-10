@@ -2,7 +2,7 @@
 
 # invalidateAll
 
-`abstract val invalidateAll: `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
+`abstract val invalidateAll: `[`Completable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html)
 
 Invalidates all cached values
 

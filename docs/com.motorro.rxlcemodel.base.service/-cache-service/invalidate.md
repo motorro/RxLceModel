@@ -2,7 +2,7 @@
 
 # invalidate
 
-`abstract fun invalidate(params: `[`P`](index.md#P)`): `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
+`abstract fun invalidate(params: `[`P`](index.md#P)`): `[`Completable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html)
 
 Invalidates cached value
 

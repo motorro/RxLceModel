@@ -18,10 +18,10 @@
 
 | Name | Summary |
 |---|---|
-| [update](update.md) | `abstract fun update(params: `[`P`](index.md#P)`, update: `[`U`](index.md#U)`): `[`Single`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html)`<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>`<br>Updates data on server returning updated one |
+| [update](update.md) | `abstract fun update(params: `[`P`](index.md#P)`, update: `[`U`](index.md#U)`): `[`Single`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Single.html)`<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>`<br>Updates data on server returning updated one |
 
 ### Inherited Functions
 
 | Name | Summary |
 |---|---|
-| [get](../-net-service/get.md) | `abstract fun get(params: `[`P`](../-net-service/index.md#P)`): `[`Single`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html)`<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](../-net-service/index.md#D)`>>`<br>Gets entity from network or throws on error |
+| [get](../-net-service/get.md) | `abstract fun get(params: `[`P`](../-net-service/index.md#P)`): `[`Single`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Single.html)`<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](../-net-service/index.md#D)`>>`<br>Gets entity from network or throws on error |

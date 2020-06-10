@@ -2,7 +2,7 @@
 
 # data
 
-`val data: `[`DATA`](index.md#DATA)`?`
+`val data: `[`Nothing`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing/index.html)`?`
 
 Overrides [LceState.data](../data.md)
 

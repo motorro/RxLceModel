@@ -2,7 +2,7 @@
 
 # getData
 
-`fun getData(params: `[`P`](index.md#P)`): `[`Observable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)`<Optional<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>>`
+`fun getData(params: `[`P`](index.md#P)`): `[`Observable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Observable.html)`<Optional<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>>`
 
 Overrides [CacheService.getData](../-cache-service/get-data.md)
 

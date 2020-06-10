@@ -2,7 +2,7 @@
 
 # get
 
-`abstract fun get(params: `[`P`](index.md#P)`): `[`Single`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html)`<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>`
+`abstract fun get(params: `[`P`](index.md#P)`): `[`Single`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Single.html)`<`[`Entity`](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)`<`[`D`](index.md#D)`>>`
 
 Gets entity from network or throws on error
 

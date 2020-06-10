@@ -2,7 +2,7 @@
 
 # refresh
 
-`val refresh: `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
+`val refresh: `[`Completable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html)
 
 Overrides [LceUseCase.refresh](../-lce-use-case/refresh.md)
 

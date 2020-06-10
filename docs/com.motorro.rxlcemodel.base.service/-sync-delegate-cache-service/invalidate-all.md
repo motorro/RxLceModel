@@ -2,7 +2,7 @@
 
 # invalidateAll
 
-`val invalidateAll: `[`Completable`](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)
+`val invalidateAll: `[`Completable`](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html)
 
 Overrides [CacheService.invalidateAll](../-cache-service/invalidate-all.md)
 
