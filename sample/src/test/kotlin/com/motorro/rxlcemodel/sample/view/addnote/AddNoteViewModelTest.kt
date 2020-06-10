@@ -57,7 +57,7 @@ class AddNoteViewModelTest {
 
         verify(observer).onChanged(LceState.Content(Unit, true))
         verify(observer).onChanged(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
-        verify(observer).onChanged(LceState.Terminated())
+        verify(observer).onChanged(LceState.Terminated)
 
         verify(useCase)("Title", "Text")
     }

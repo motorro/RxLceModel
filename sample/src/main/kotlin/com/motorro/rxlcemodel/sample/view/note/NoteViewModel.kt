@@ -116,7 +116,7 @@ class NoteViewModel(
         scheduleDelete(noteId)
 
         // Terminate view
-        stateData.value = LceState.Terminated()
+        stateData.value = LceState.Terminated
     }
 
 

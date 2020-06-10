@@ -30,7 +30,7 @@ class BaseLceModelTest {
         var numOfSubscriptions = 0
         val state = Observable.fromCallable<LceState<String>> {
             ++numOfSubscriptions
-            LceState.Terminated()
+            LceState.Terminated
         }
 
         val model = createModel(state, Completable.complete())
@@ -41,7 +41,7 @@ class BaseLceModelTest {
 
     @Test
     fun transmitsState() {
-        val state = LceState.Terminated<String>()
+        val state = LceState.Terminated
 
         val observer: Observer<LceState<String>> = mock()
         val model = createModel(Observable.just(state), Completable.complete())

@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
+import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -56,7 +57,7 @@ class NoteViewModelTest {
 
     @Test
     fun subscribesLceModelAndTransfersState() {
-        val terminated = LceState.Terminated<Note>()
+        val terminated = LceState.Terminated
         val subject = PublishSubject.create<LceState<Note>>()
         whenever(noteLceModel.state).thenReturn(subject)
 
@@ -107,6 +108,6 @@ class NoteViewModelTest {
         val observer: Observer<LceState<Note>> = mock()
         model.state.observeForever(observer)
         model.delete()
-        verify(observer).onChanged(LceState.Terminated())
+        verify(observer).onChanged(LceState.Terminated)
     }
 }

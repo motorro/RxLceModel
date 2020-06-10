@@ -14,7 +14,11 @@
 package com.motorro.rxlcemodel.sample.service.usecase
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
+import androidx.work.rxjava3.RxWorker
+import androidx.work.workDataOf
 import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
 import io.reactivex.rxjava3.core.Single
 import timber.log.Timber
