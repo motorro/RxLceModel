@@ -24,7 +24,7 @@ group = "com.motorro.rxlcemodel"
 ext {
     // Android
     androidBuildToolsVersion = '29.0.2'
-    androidMinSdkVersion = 15
+    androidMinSdkVersion = 24
     androidTargetSdkVersion = 29
     androidCompileSdkVersion = 29
     versionName = project.version
@@ -43,7 +43,6 @@ allprojects {
         commonLibVersions = [
                 // Code
                 "rx_java": "3.0.4",
-                "koptional": "1.6.0",
 
                 // Tests
                 "junit": '4.13',

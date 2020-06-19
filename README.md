@@ -34,6 +34,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 
 ## Table of Contents
 * [Setting up the dependency](#setting-up-the-dependency)
+* [Enabling desugaring](#enabling-java8-desugaring-for-android)
 * [LceState](#lcestate)
 * [LceModel](#lcemodel)
 * [CacheThenNetLceModel](#cachethennetlcemodel)
@@ -71,6 +72,10 @@ dependencies {
     implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
 }
 ```
+
+### Enabling Java8 desugaring for Android
+**IMPORTANT** Version 3.x takes advantage of AGP 4.x Java8 desugaring. Follow [instructions](https://developer.android.com/studio/write/java8-support)
+to enable desugaring.
 
 ## LceState
 A modern approach to architecting the reactive application suggests packing the combined state of the application into a 
@@ -477,5 +482,5 @@ ships with some of the functions already implemented like:
     (`LceState.Error` with `null` for `data` property)
 *   `dataNoErrors` - emits data and ignores errors
 *   `validData` - emits data only if it is valid
-More information about them may be found in [documentation](docs/com.motorro.rxlcemodel.base/io.reactivex.-observable/index.md)
+More information about them may be found in [documentation](docs/com.motorro.rxlcemodel.base/io.reactivex.rxjava3.core.-observable/index.md)
 or in a source code.

@@ -13,9 +13,9 @@
 
 package com.motorro.rxlcemodel.sample.view
 
-import org.threeten.bp.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter
 
 /**
  * Formats time in UI
  */
-val TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss")
+val TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")

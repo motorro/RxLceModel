@@ -13,10 +13,10 @@
 
 package com.motorro.rxlcemodel.base.service
 
-import com.gojuno.koptional.Optional
 import com.motorro.rxlcemodel.base.entity.Entity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import java.util.*
 
 /**
  * Interface to cache an [com.motorro.rxlcemodel.base.entity.Entity] locally
@@ -52,7 +52,7 @@ interface CacheService<D: Any, in P: Any> {
 
     /**
      * Deletes cached value.
-     * The [getData] observable for the same key wil emit [com.gojuno.koptional.None]
+     * The [getData] observable for the same key will emit empty [java.util.Optional].
      * @param params Caching key
      */
     fun delete(params: P): Completable

@@ -14,7 +14,6 @@
 package com.motorro.rxlcemodel.sample
 
 import android.app.Application
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.motorro.rxlcemodel.sample.di.ApplicationComponent
 import com.motorro.rxlcemodel.sample.di.DaggerApplicationComponent
 import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
@@ -61,7 +60,6 @@ class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
         inject()
         setupLogger()
         Timber.d("Application started")

@@ -13,13 +13,13 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.gojuno.koptional.None
 import com.motorro.rxlcemodel.base.LceState.Content
 import com.motorro.rxlcemodel.base.LceState.Loading
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
+import java.util.*
 
 class UpdatingLceModelWrapperTest {
     companion object {
@@ -32,7 +32,7 @@ class UpdatingLceModelWrapperTest {
     fun integratesWithCacheThenNetModel() {
         val updatedEntity = VALID_ENTITY.copy(data = 2)
         val serviceSet = createServiceSet<Int, Int, String> {
-                cacheInitial = { None }
+                cacheInitial = { Optional.empty<Entity<Int>>() }
                 netGet = { VALID_ENTITY }
                 netUpdate = { updatedEntity }
             }

@@ -13,8 +13,6 @@
 
 package com.motorro.rxlcemodel.base.service
 
-import com.gojuno.koptional.Optional
-import com.gojuno.koptional.toOptional
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService.RefreshCommand.All
 import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService.RefreshCommand.Individual
@@ -22,6 +20,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
+import java.util.*
 
 /**
  * Service implementation
@@ -97,7 +96,7 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
      * @param params Params to notify of changes
      */
     override fun getData(params: P): Observable<Optional<Entity<D>>> {
-        val readFromCache = Observable.fromCallable { delegate.get(params).toOptional() }
+        val readFromCache = Observable.fromCallable { Optional.ofNullable(delegate.get(params)) }
         return Observable.concatEager(
                 listOf(
                     readFromCache,
@@ -137,7 +136,7 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
 
     /**
      * Deletes cached value.
-     * The [getData] observable for the same key wil emit [com.gojuno.koptional.None]
+     * The [getData] observable for the same key will emit empty [java.util.Optional].
      * @param params Caching key
      */
     override fun delete(params: P): Completable = Completable.fromAction {

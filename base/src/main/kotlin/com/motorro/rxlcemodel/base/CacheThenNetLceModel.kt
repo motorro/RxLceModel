@@ -26,7 +26,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 /**
  * A [LceModel] which uses cache subscription as a 'source of truth'.
  * When [state] is subscribed it loads cache data refreshing it if cache is stall or whenever cache
- * returns [com.gojuno.koptional.None].
+ * returns empty [java.util.Optional].
  * The model always returns cached data first - then network if data is stall
  * Cache service *must* notify of its data changes!
  * @param DATA Data type of data being held
@@ -68,7 +68,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
         Observable.concat(
                 startWith,
                 serviceSet.cache.getData(params).switchMap<LceState<DATA>> { fromCache ->
-                    val entity = fromCache.toNullable()
+                    val entity = fromCache.orElse(null)
 
                     val data = entity?.data
                     val isValid = true == entity?.isValid()

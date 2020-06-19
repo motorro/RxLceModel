@@ -13,8 +13,8 @@
 
 package com.motorro.rxlcemodel.sample.domain.data
 
-import org.threeten.bp.LocalTime
 import java.io.Serializable
+import java.time.LocalTime
 
 /**
  * A note
@@ -25,6 +25,6 @@ import java.io.Serializable
  */
 data class Note(val id: Int, val title: String, val text: String, val lastModified: LocalTime): Serializable {
     companion object {
-        private const val serialVersionUID: Long = 2
+        private const val serialVersionUID: Long = 3
     }
 }
