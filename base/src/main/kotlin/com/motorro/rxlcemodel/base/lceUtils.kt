@@ -184,7 +184,7 @@ fun <DATA_1: Any, DATA_2: Any, PARAMS: Any> LceModel<DATA_1, PARAMS>.map(mapper:
  * @param DATA Source model data type
  * @param refreshStream Whenever this stream emits a value, the model is refreshed
  */
-fun <DATA: Any> LceUseCase<DATA>.withRefresh(refreshStream: Observable<Int>): Observable<LceState<DATA>> = Observable.merge(
+fun <DATA: Any> LceUseCase<DATA>.withRefresh(refreshStream: Observable<in Nothing>): Observable<LceState<DATA>> = Observable.merge(
     this.state,
     refreshStream.flatMapCompletable { this.refresh }.toObservable()
 )
