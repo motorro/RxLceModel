@@ -7,7 +7,7 @@
 Overrides [CacheService.delete](../-cache-service/delete.md)
 
 Deletes cached value.
-The [getData](get-data.md) observable for the same key wil emit [com.gojuno.koptional.None](#)
+The [getData](get-data.md) observable for the same key will emit empty [java.util.Optional](http://docs.oracle.com/javase/6/docs/api/java/util/Optional.html).
 
 ### Parameters
 

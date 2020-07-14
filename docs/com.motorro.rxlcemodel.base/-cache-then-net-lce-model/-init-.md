@@ -6,7 +6,7 @@
 
 A [LceModel](../-lce-model/index.md) which uses cache subscription as a 'source of truth'.
 When [state](state.md) is subscribed it loads cache data refreshing it if cache is stall or whenever cache
-returns [com.gojuno.koptional.None](#).
+returns empty [java.util.Optional](http://docs.oracle.com/javase/6/docs/api/java/util/Optional.html).
 The model always returns cached data first - then network if data is stall
 Cache service *must* notify of its data changes!
 
