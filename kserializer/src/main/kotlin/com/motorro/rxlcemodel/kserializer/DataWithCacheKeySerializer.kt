@@ -16,6 +16,11 @@ package com.motorro.rxlcemodel.kserializer
 import com.motorro.rxlcemodel.base.service.DataWithCacheKey
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Serializer for [DataWithCacheKey]
@@ -23,7 +28,7 @@ import kotlinx.serialization.builtins.serializer
 @Serializer(forClass = DataWithCacheKey::class)
 data class DataWithCacheKeySerializer<D: Any>(val dataSerializer: KSerializer<D>):
     KSerializer<DataWithCacheKey<D>> {
-    override val descriptor: SerialDescriptor = SerialDescriptor("DataWithCacheKey") {
+    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("DataWithCacheKey") {
         element("data", dataSerializer.descriptor)
         element("cacheKey", String.serializer().descriptor)
     }
@@ -42,7 +47,7 @@ data class DataWithCacheKeySerializer<D: Any>(val dataSerializer: KSerializer<D>
 
         loop@ while (true) {
             when (val i = inp.decodeElementIndex(descriptor)) {
-                CompositeDecoder.READ_DONE -> break@loop
+                CompositeDecoder.DECODE_DONE -> break@loop
                 0 -> data = inp.decodeSerializableElement(descriptor, i, dataSerializer)
                 1 -> cacheKey = inp.decodeStringElement(descriptor, i)
                 else -> throw SerializationException("Unknown index $i")
