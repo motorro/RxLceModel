@@ -2,7 +2,7 @@
 
 # HEX_CHARS
 
-`val HEX_CHARS: `[`CharArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-array/index.html)
+`val HEX_CHARS: <ERROR CLASS>`
 
 Hex characters
 
