@@ -17,9 +17,7 @@ import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
-import kotlinx.serialization.BinaryFormat
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import kotlinx.serialization.cbor.Cbor
 import java.io.InputStream
 import java.io.OutputStream
@@ -68,7 +66,7 @@ class KotlinCacheDelegateSerializer<D: Any>(
      */
     override fun serialize(entity: Entity<D>, output: OutputStream) = output.use {
         it.write(
-            binaryFormat.dump(
+            binaryFormat.encodeToByteArray(
                 Storage.serializer(kSerializer),
                 Storage(entity)
             )
@@ -85,7 +83,7 @@ class KotlinCacheDelegateSerializer<D: Any>(
      */
     override fun deserializeSnapshot(input: InputStream, length: Long, invalidated: Boolean): Entity<D>? = kotlin.runCatching {
         input.use {
-            Cbor.load(
+            Cbor.decodeFromByteArray(
                 Storage.serializer(kSerializer),
                 it.readBytes()
             ).toEntity(invalidated)

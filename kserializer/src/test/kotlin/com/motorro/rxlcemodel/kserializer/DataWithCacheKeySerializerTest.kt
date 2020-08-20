@@ -10,27 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 @file:UseSerializers(DataWithCacheKeySerializer::class)
 
 package com.motorro.rxlcemodel.kserializer
 
 import com.motorro.rxlcemodel.base.service.DataWithCacheKey
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import org.junit.Test
 
 class DataWithCacheKeySerializerTest() {
-    private val json = Json(JsonConfiguration.Stable)
+    private val json = Json { allowStructuredMapKeys = true }
     private val serializer = DataWithCacheKeySerializer(String.serializer())
 
     @Test
     fun serializes() {
         val dataWithKey = DataWithCacheKey("string", "key")
-        val jsonData = json.stringify(serializer, dataWithKey)
-        val fromJson = json.parse(serializer, jsonData)
+        val jsonData = json.encodeToString(serializer, dataWithKey)
+        val fromJson = json.decodeFromString(serializer, jsonData)
         kotlin.test.assertEquals(dataWithKey, fromJson)
     }
 }
