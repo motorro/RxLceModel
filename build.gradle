@@ -128,31 +128,31 @@ Set<Project> findDokkaProjects() {
     }
 }
 
-task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
-    outputDirectory = docDir
-    outputFormat = "gfm"
-    includes = ["${projectDir}/module.md"]
-
-    externalDocumentationLink {
-        url = new URL ("http://reactivex.io/RxJava/2.x/javadoc/")
-        packageListUrl = new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list")
-    }
-
-    dependsOn {
-        delete docDir
-        findDokkaProjects().collect {
-            it.tasks.getByName("dokka")
-        }
-    }
-
-    doFirst {
-        def dokkaProjects = findDokkaProjects()
-
-        classpath = dokkaProjects.collect { project -> project.jar.outputs.files.getFiles() }.flatten()
-        classpath += files(dokkaProjects.collect { project -> project.sourceSets.main.compileClasspath })
-
-        sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
-    }
-}
+//task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
+//    outputDirectory = docDir
+//    outputFormat = "gfm"
+//    includes = ["${projectDir}/module.md"]
+//
+//    externalDocumentationLink {
+//        url = new URL ("http://reactivex.io/RxJava/2.x/javadoc/")
+//        packageListUrl = new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list")
+//    }
+//
+//    dependsOn {
+//        delete docDir
+//        findDokkaProjects().collect {
+//            it.tasks.getByName("dokka")
+//        }
+//    }
+//
+//    doFirst {
+//        def dokkaProjects = findDokkaProjects()
+//
+//        classpath = dokkaProjects.collect { project -> project.jar.outputs.files.getFiles() }.flatten()
+//        classpath += files(dokkaProjects.collect { project -> project.sourceSets.main.compileClasspath })
+//
+//        sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
+//    }
+//}
 
 
