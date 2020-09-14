@@ -1,25 +1,28 @@
-apply plugin: 'org.ajoberstar.grgit'
-apply from: 'gradle/versioning.gradle'
-
 buildscript {
-    ext.kotlin_version = '1.4.0'
+    ext.kotlin_version = '1.4.10'
+    ext.dokka_version = '1.4.0'
     repositories {
         google()
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.17'
-        classpath 'org.ajoberstar.grgit:grgit-gradle:3.0.0'
-        classpath 'com.novoda:bintray-release:0.9.2'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0'
     }
 }
 
+plugins {
+    id 'org.ajoberstar.grgit' version '3.0.0'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
+    id 'org.jetbrains.dokka' version "$dokka_version"
+}
+
+apply from: 'gradle/versioning.gradle'
+
 setVersion(buildVersionName())
 group = "com.motorro.rxlcemodel"
+setDescription("A reactive data loading for Android based on RxJava and `Loading`/`Content`/`Error` states.")
 
 ext {
     // Android
@@ -84,10 +87,20 @@ allprojects {
             }
         }
     }
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    tasks.withType(org.jetbrains.dokka.gradle.DokkaTask).configureEach {
+        outputDirectory.set(new File("$buildDir/javadoc"))
+        dokkaSourceSets {
+            named("main") {
+                noAndroidSdkLink.set(false)
+                includes.from ("${projectDir}/module.md")
+                externalDocumentationLink {
+					url.set(new URL ("http://reactivex.io/RxJava/2.x/javadoc/"))
+					packageListUrl.set(new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list"))
+				}
+            }
+        }
+    }
 }
 
 task runBaseUnitTests(type: Task, dependsOn: [':base:cleanTest', ':base:test'], group: 'verification') {
@@ -117,16 +130,10 @@ task displayVersion(type: Task, group: 'documentation') {
     }
 }
 
-/**
- * Finds sub-projects that need dokka generation
- * Place `apply plugin: 'org.jetbrains.dokka'` there
- * @return A set of projects that have dokka task
- */
-Set<Project> findDokkaProjects() {
-    subprojects.findAll {
-        !it.tasks.findAll { "dokka" == it.getName() }.isEmpty()
-    }
-}
+//dokkaGfmMultiModule.configure {
+//    outputDirectory.set(buildDir.resolve("dokkaCustomMultiModuleOutput"))
+//    documentationFileName.set("README.md")
+//}
 
 //task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
 //    outputDirectory = docDir
@@ -155,4 +162,10 @@ Set<Project> findDokkaProjects() {
 //    }
 //}
 
-
+dokkaGfmCollector.configure {
+    outputDirectory = new File(docDir)
+}
+dokkaGfmMultiModule.configure {
+    outputDirectory = new File(docDir)
+    documentationFileName.set("module.md")
+}

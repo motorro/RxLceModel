@@ -1,6 +1,5 @@
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'com.novoda.bintray-release'
 
 project.sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
@@ -18,15 +17,15 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-publish {
-    userOrg = bintrayUserOrg
-    repoName = bintrayRepoName
-    groupId = rootProject.group
-    publishVersion = rootProject.version
-    artifactId = 'base'
-    desc = "A reactive data loading with cache as a 'Single source of truth' for Android based on RxJava"
-    website = 'https://github.com/motorro/RxLceModel'
-}
+//publish {
+//    userOrg = bintrayUserOrg
+//    repoName = bintrayRepoName
+//    groupId = rootProject.group
+//    publishVersion = rootProject.version
+//    artifactId = 'base'
+//    desc = "A reactive data loading with cache as a 'Single source of truth' for Android based on RxJava"
+//    website = 'https://github.com/motorro/RxLceModel'
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -49,6 +48,3 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
-
-dokka.dependsOn assemble
-bintrayUpload.dependsOn assemble
