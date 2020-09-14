@@ -169,3 +169,7 @@ dokkaGfmMultiModule.configure {
     outputDirectory = new File(docDir)
     documentationFileName.set("module.md")
 }
+dokkaHtmlMultiModule.configure {
+    outputDirectory = new File(docDir)
+    documentationFileName.set("module.md")
+}
