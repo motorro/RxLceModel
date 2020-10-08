@@ -16,6 +16,7 @@ plugins {
     id 'org.ajoberstar.grgit' version '3.0.0'
     id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
     id 'org.jetbrains.dokka' version "$dokka_version"
+    id "com.jfrog.bintray" version "1.8.4"
 }
 
 apply from: 'gradle/versioning.gradle'
@@ -34,8 +35,15 @@ ext {
     versionCode = buildVersionCode()
 
     //Bin-tray
-    bintrayUserOrg="motorro"
-    bintrayRepoName="RxLceModel"
+    developerId = 'motorro'
+    developerName = 'Nikolai Kotchetkov'
+    developerEmail = 'motorro@gmail.com'
+
+    bintrayUserOrg = "motorro"
+    bintrayRepoName = "RxLceModel"
+
+    projectScm = 'https://github.com/motorro/RxLceModel.git'
+    projectUrl = 'https://github.com/motorro/RxLceModel'
 
     // Dokka
     docDir = "${projectDir}/docs"
