@@ -1,0 +1,7 @@
+$dokka.format:gfm-v1
+$dokka.linkExtension:md
+
+com.motorro.rxlcemodel.base
+com.motorro.rxlcemodel.base.entity
+com.motorro.rxlcemodel.base.service
+

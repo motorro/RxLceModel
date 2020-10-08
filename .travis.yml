@@ -55,7 +55,7 @@ jobs:
     - stage: test
       script: "./gradlew displayVersion build --no-daemon"
     - stage: docs
-      script: "./gradlew displayVersion dokka --no-daemon"
+      script: "./gradlew displayVersion dokkaGfmMultimodule --no-daemon"
       deploy:
         provider: pages
         target-branch: master
