@@ -38,6 +38,9 @@ project.sourceSets {
 //    desc = "Kotlin cross-platform serialization for disklrucache delegate"
 //    website = 'https://github.com/motorro/RxLceModel'
 //}
+project.ext {
+    KOTLINX_SERIALIZATION_VERSION = '1.0.0-RC2'
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -47,8 +50,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    api "org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC"
-    api "org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.0.0-RC"
+    api "org.jetbrains.kotlinx:kotlinx-serialization-core:${KOTLINX_SERIALIZATION_VERSION}"
+    api "org.jetbrains.kotlinx:kotlinx-serialization-json:${KOTLINX_SERIALIZATION_VERSION}"
+    api "org.jetbrains.kotlinx:kotlinx-serialization-cbor:${KOTLINX_SERIALIZATION_VERSION}"
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
