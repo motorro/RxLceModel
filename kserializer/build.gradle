@@ -33,7 +33,7 @@ project.sourceSets {
 }
 
 project.ext {
-    KOTLINX_SERIALIZATION_VERSION = '1.0.0-RC2'
+    KOTLINX_SERIALIZATION_VERSION = '1.0.0'
 }
 
 dependencies {
