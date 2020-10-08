@@ -55,7 +55,7 @@ jobs:
     - stage: test
       script: "./gradlew displayVersion build --no-daemon"
     - stage: docs
-      script: "./gradlew displayVersion dokka --no-daemon"
+      script: "./gradlew displayVersion dokkaGfmMultimodule --no-daemon"
       deploy:
         provider: pages
         target-branch: master
@@ -68,7 +68,7 @@ jobs:
       script: skip
       deploy:
         provider: script
-        script: "./gradlew generatePomFileForMavenPublication bintrayUpload -x publishMavenPublicationToMavenLocal -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false --no-daemon"
+        script: "./gradlew base:bintrayUpload disklrucache:bintrayUpload kserializer:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false --no-daemon"
         skip_cleanup: true
         verbose: true
         on:
