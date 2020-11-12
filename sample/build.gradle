@@ -30,8 +30,8 @@ android {
         applicationId "${project.group}.sample"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionName versionName
-        versionCode versionCode
+        versionName rootProject.versionName
+        versionCode rootProject.versionCode
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
