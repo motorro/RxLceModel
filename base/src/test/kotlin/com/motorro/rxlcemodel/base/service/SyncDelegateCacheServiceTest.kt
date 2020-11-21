@@ -102,6 +102,55 @@ class SyncDelegateCacheServiceTest {
     }
 
     @Test
+    fun refetchesDataFromDelegate() {
+        whenever(cacheDelegate.get(any())).thenReturn(null)
+
+        val s = service.getData(PARAMS_1).test()
+        s.assertNoErrors()
+        s.assertNotComplete()
+        s.assertValues(None)
+        verify(cacheDelegate).get(PARAMS_1)
+
+        service.refetch(PARAMS_1).test().assertComplete()
+        verify(cacheDelegate, times(2)).get(PARAMS_1)
+
+        s.assertNoErrors()
+        s.assertNotComplete()
+        s.assertValues(None)
+        verify(cacheDelegate, times(2)).get(PARAMS_1)
+    }
+
+    @Test
+    fun refetchesAllDataFromDelegate() {
+        whenever(cacheDelegate.get(any())).thenReturn(null)
+
+        val params = listOf(PARAMS_1, PARAMS_2)
+        val subscribers = params.map {
+            it to service.getData(it).test()
+        }
+
+        subscribers.forEach { (params, s) ->
+            s.assertNoErrors()
+            s.assertNotComplete()
+            s.assertValues(None)
+            verify(cacheDelegate).get(params)
+        }
+        verify(cacheDelegate).get(PARAMS_1)
+        verify(cacheDelegate).get(PARAMS_2)
+
+        service.refetchAll.test().assertComplete()
+        verify(cacheDelegate, times(2)).get(PARAMS_1)
+        verify(cacheDelegate, times(2)).get(PARAMS_2)
+
+        subscribers.forEach { (params, s) ->
+            s.assertNoErrors()
+            s.assertNotComplete()
+            s.assertValues(None)
+            verify(cacheDelegate, times(2)).get(params)
+        }
+    }
+
+    @Test
     fun invalidatesCacheAndAndUpdatesFromDelegate() {
         whenever(cacheDelegate.get(any())).thenReturn(null)
 
