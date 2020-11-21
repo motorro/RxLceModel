@@ -66,24 +66,24 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
     /**
      * Refresh command to send through [refreshChannel]
      */
-    private sealed class RefreshCommand<P: Any> {
+    private sealed class RefreshCommand<in P: Any> {
         /**
-         * Called by actor to check if the command conserns him
+         * Called by actor to check if the command concerns him
          */
         abstract fun isForMe(params: P): Boolean
 
         /**
          * Refreshes actor with bound [params]
          */
-        data class Individual<P: Any> (val params: P) : RefreshCommand<P>() {
+        data class Individual<in P: Any> (private val params: P) : RefreshCommand<P>() {
             override fun isForMe(params: P): Boolean = params == this.params
         }
 
         /**
          * Refreshes all actors
          */
-        class All<P: Any> : RefreshCommand<P>() {
-            override fun isForMe(params: P): Boolean = true
+        object All : RefreshCommand<Any>() {
+            override fun isForMe(params: Any): Boolean = true
         }
     }
 
@@ -119,6 +119,22 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
     }
 
     /**
+     * Makes cache service to refetch cached data updating subscribers with [params]
+     * @param params Params that identify entity
+     */
+    override fun refetch(params: P): Completable = Completable.fromAction {
+        refreshChannel.onNext(Individual(params))
+    }
+
+    /**
+     * Makes cache service to refetch cached data for all active subscribers
+     */
+    override val refetchAll: Completable
+        get() = Completable.fromAction {
+            refreshChannel.onNext(All)
+        }
+
+    /**
      * Clears cached value
      * @param params Params that identify entity
      */
@@ -132,7 +148,7 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
      */
     override val invalidateAll: Completable = Completable.fromAction {
         delegate.invalidateAll()
-        refreshChannel.onNext(All())
+        refreshChannel.onNext(All)
     }
 
     /**
