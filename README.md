@@ -42,6 +42,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Choosing EntityValidator](#choosing-entityvalidator)
 * [Displaying 'invalid' data and cache fall-back](#displaying-invalid-data-and-cache-fall-back)
 * [Cache invalidation and data updates](#cache-invalidation-and-data-updates)
+* [On-demand cache refetch](#on-demand-cache-refetch)
 * [Cache service implementation and DiskLruCache](#cache-service-implementation-and-disklrucache)
 * [A complete example of model setup](#a-complete-example-of-model-setup)
 * [Kotlin serialization](#kotlin-serialization)
@@ -266,6 +267,22 @@ fun delete(noteId: Int): Completable = connectionChecker.connectionCheck
     .andThen(noteCache.delete(noteId))
     .andThen(listCache.invalidateAll)
 ``` 
+## On-demand cache refetch
+Consider a cache service with complex internal structure that is updated by some internal logic.
+For example a database that saves entities and something that updates records directly.
+In case of Room you may observe a query and get updates if something changes underneath. But sometimes 
+you have a complex entity with relations that are not so easy to fetch as they need conditional processing 
+in synchronous way.
+In this case you may write an SQL delegate for sync-delegate service (see below) to implement reactive cache.
+When you get/put the whole entity the solution works. But as soon as you start to update entity parts 
+you need some way to notify subscribers of data change. 
+
+![Cache refetch](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_refetch.puml)
+
+[CacheService](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt)
+has two methods that when called makes it to refetch data and update its active clients:
+- `refetch(params: P): Completable` - makes cache service to refetch data for `params` and update corresponding clients
+- `refetchAll: Completable` - makes cache service to refetch data for all subscribers
 
 ## Cache service implementation and DiskLruCache
 While you can implement any cache-service you like the library comes with a simple [SyncDelegateCacheService](base/src/main/kotlin/com/motorro/rxlcemodel/base/service/SyncDelegateCacheService.kt)

@@ -1,0 +1,26 @@
+@startuml
+Actor Subscriber
+Participant InternalService
+Participant LceModel
+Participant CacheService
+Database Database
+
+== Subscribe to state changes ==
+Subscriber -> LceModel: subscribe state
+== Subscribe to cache events ==
+LceModel -> CacheService: subscribe getData(params)
+CacheService -> Database: SELECT
+CacheService <-- Database: "ORIGINAL"
+LceModel -> Subscriber: onNext(Content(data = "ORIGINAL"))
+
+== Internal Service changes some internal cache structure ==
+InternalService -> Database: UPDATE value="UPDATE"
+InternalService -> CacheService: refetch(PARAMS)
+note right
+    Internal service makes cache service to refetch changed data
+    and update subscribers
+end note
+CacheService -> Database: SELECT
+CacheService <-- Database: "UPDATE"
+LceModel -> Subscriber: onNext(Content(data = "UPDATE"))
+@enduml

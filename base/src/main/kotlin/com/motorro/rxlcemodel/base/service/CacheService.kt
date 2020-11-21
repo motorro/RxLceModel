@@ -40,6 +40,17 @@ interface CacheService<D: Any, in P: Any> {
     fun save(params: P, entity: Entity<D>): Completable
 
     /**
+     * Makes cache service to refetch cached data updating subscribers with [params]
+     * @param params Params that identify entity
+     */
+    fun refetch(params: P): Completable
+
+    /**
+     * Makes cache service to refetch cached data for all active subscribers
+     */
+    val refetchAll: Completable
+
+    /**
      * Invalidates cached value
      * @param params Params that identify entity
      */
