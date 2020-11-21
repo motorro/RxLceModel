@@ -37,6 +37,7 @@ jvm
 | [getData](get-data.md)| [jvm]  <br>Brief description  <br><br><br>Subscribes to cache data updates<br><br>  <br>Content  <br>abstract fun [getData](get-data.md)(params: [P](index.md)): [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<Optional<[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)<[D](index.md)>>>  <br><br><br>
 | [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/hash-code.html)| [jvm]  <br>Content  <br>open override fun [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/hash-code.html)(): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)  <br><br><br>
 | [invalidate](invalidate.md)| [jvm]  <br>Brief description  <br><br><br>Invalidates cached value<br><br>  <br>Content  <br>abstract fun [invalidate](invalidate.md)(params: [P](index.md)): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)  <br><br><br>
+| [refetch](refetch.md)| [jvm]  <br>Brief description  <br><br><br>Makes cache service to refetch cached data updating subscribers with params<br><br>  <br>Content  <br>abstract fun [refetch](refetch.md)(params: [P](index.md)): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)  <br><br><br>
 | [save](save.md)| [jvm]  <br>Brief description  <br><br><br>Saves entity in a cache<br><br>  <br>Content  <br>abstract fun [save](save.md)(params: [P](index.md), entity: [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)<[D](index.md)>): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)  <br><br><br>
 | [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/to-string.html)| [jvm]  <br>Content  <br>open override fun [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/to-string.html)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)  <br><br><br>
 
@@ -46,6 +47,7 @@ jvm
 |  Name|  Summary| 
 |---|---|
 | [invalidateAll](index.md#com.motorro.rxlcemodel.base.service/CacheService/invalidateAll/#/PointingToDeclaration/)|  [jvm] <br><br>Invalidates all cached values<br><br>abstract val [invalidateAll](index.md#com.motorro.rxlcemodel.base.service/CacheService/invalidateAll/#/PointingToDeclaration/): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)   <br>
+| [refetchAll](index.md#com.motorro.rxlcemodel.base.service/CacheService/refetchAll/#/PointingToDeclaration/)|  [jvm] <br><br>Makes cache service to refetch cached data for all active subscribers<br><br>abstract val [refetchAll](index.md#com.motorro.rxlcemodel.base.service/CacheService/refetchAll/#/PointingToDeclaration/): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)   <br>
 
 
 ## Inheritors  
