@@ -61,9 +61,9 @@ android {
 }
 
 dependencies {
-    def dagger_version = '2.29.1'
-    def nav_version = '2.3.1'
-    def work_version = '2.4.0'
+    def dagger_version = '2.31.2'
+    def nav_version = '2.3.3'
+    def work_version = '2.5.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':base')
@@ -73,7 +73,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.5.0-alpha05'
+    implementation 'androidx.core:core-ktx:1.5.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
