@@ -195,3 +195,14 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
         is LceState.Terminated -> LceState.Terminated
     }
 }
+
+/**
+ * Runs transformation [block] catching any error and wrapping it to [LceState.Error]:
+ * - The output data will be null
+ * - The data will be invalid
+ */
+inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.catchToLce(block: LceState<DATA_1>.() -> LceState<DATA_2>): LceState<DATA_2> = try {
+    block()
+} catch (e: Throwable) {
+    LceState.Error(null, false, e)
+}

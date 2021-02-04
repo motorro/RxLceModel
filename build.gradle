@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.4.20'
+    ext.kotlin_version = '1.4.30'
     ext.dokka_version = '1.4.0'
     repositories {
         google()
@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0'
     }
 }
