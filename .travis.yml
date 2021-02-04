@@ -34,6 +34,7 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
+  - $ANDROID_SDK_ROOT/.android/build-cache
 
 stages:
   - name: test
