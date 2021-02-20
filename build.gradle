@@ -57,7 +57,7 @@ allprojects {
                 "koptional": "1.6.0",
 
                 // Tests
-                "junit": '4.13.1',
+                "junit": '4.13.2',
                 "mockito_kotlin": "2.2.0"
         ]
     }
