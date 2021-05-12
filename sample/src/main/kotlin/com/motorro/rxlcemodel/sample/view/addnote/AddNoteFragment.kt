@@ -19,14 +19,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.sample.R
+import com.motorro.rxlcemodel.sample.databinding.FragmentAddNoteBinding
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_add_note.*
 import javax.inject.Inject
 
 class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
@@ -43,6 +41,11 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
     private val noteModel: AddNoteViewModel by viewModels { noteModelFactory }
 
     /**
+     * View-binding
+     */
+    private var binding: FragmentAddNoteBinding? = null
+
+    /**
      * Called by [processState] to process new data
      */
     override fun processStateData(data: Unit, isValid: Boolean, isUpdating: Boolean) = Unit
@@ -51,7 +54,9 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
      * Creates new note
      */
     private fun addNote() {
-        noteModel.add(note_title.text.toString(), note_text.text.toString())
+        binding?.run {
+            noteModel.add(noteTitle.text.toString(), noteText.text.toString())
+        }
     }
 
     /**
@@ -71,15 +76,23 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_add_note, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val binding = FragmentAddNoteBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        this.binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        noteModel.state.observe(viewLifecycleOwner, Observer<LceState<Unit>> { processState(it) })
+        noteModel.state.observe(viewLifecycleOwner, { processState(it) })
         noteModel.initialize()
 
-        add_note.setOnClickListener { addNote() }
+        binding?.addNote?.setOnClickListener { addNote() }
     }
 }

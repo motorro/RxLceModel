@@ -20,18 +20,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.sample.databinding.FragmentNoteListBinding
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_note_list.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -53,18 +52,25 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
     private val listAdapter = UserListAdapter(this::onNoteClicked)
 
     /**
+     * View-binding
+     */
+    private var binding: FragmentNoteListBinding? = null
+
+    /**
      * Called by [processState] to process new data
      */
     override fun processStateData(data: NoteList, isValid: Boolean, isUpdating: Boolean) {
-        loaded_at.text = TIME_FORMATTER.format(data.timeStamp)
-        is_valid_data.text = isValid.toString()
-        listAdapter.notes = data.notes
-        if (data.notes.isNotEmpty()) {
-            data_view.visibility = View.VISIBLE
-            no_data_view.visibility = View.GONE
-        } else {
-            data_view.visibility = View.GONE
-            no_data_view.visibility = View.VISIBLE
+        binding?.run {
+            loadedAt.text = TIME_FORMATTER.format(data.timeStamp)
+            isValidData.text = isValid.toString()
+            listAdapter.notes = data.notes
+            if (data.notes.isNotEmpty()) {
+                dataView.visibility = View.VISIBLE
+                noDataView.visibility = View.GONE
+            } else {
+                dataView.visibility = View.GONE
+                noDataView.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -75,7 +81,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
     override fun processStateView(state: LceState<NoteList>) {
         super.processStateView(state)
         if (state is LceState.Error || state is LceState.Content) {
-            swipe_refresh.isRefreshing = false
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
@@ -83,7 +89,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
      * Refresh
      */
     private fun setupRefresh() {
-        swipe_refresh.setOnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener {
             Timber.d("Refreshing note list...")
             noteListModel.refresh()
         }
@@ -99,31 +105,41 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(com.motorro.rxlcemodel.sample.R.layout.fragment_note_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val binding = FragmentNoteListBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupUserList()
         setupRefresh()
-        add_note.setOnClickListener { onAddClicked() }
+        binding?.addNote?.setOnClickListener { onAddClicked() }
 
         @Suppress("UNCHECKED_CAST")
-        noteListModel.state.observe(viewLifecycleOwner, Observer<LceState<NoteList>> { processState(it) })
+        noteListModel.state.observe(viewLifecycleOwner, { processState(it) })
         noteListModel.initialize()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        this.binding = null
     }
 
     private fun setupUserList() {
         val layoutManager = LinearLayoutManager(this.context)
-        note_list.layoutManager = layoutManager
-        note_list.adapter = listAdapter
-        note_list.setHasFixedSize(true)
-        val itemDecoration = DividerItemDecoration(
-            note_list.context,
-            layoutManager.orientation
-        )
-        note_list.addItemDecoration(itemDecoration)
+        binding?.run {
+            noteList.layoutManager = layoutManager
+            noteList.adapter = listAdapter
+            noteList.setHasFixedSize(true)
+            val itemDecoration = DividerItemDecoration(
+                noteList.context,
+                layoutManager.orientation
+            )
+            noteList.addItemDecoration(itemDecoration)
+        }
     }
 
     private fun onNoteClicked(id: Int, title: CharSequence) {

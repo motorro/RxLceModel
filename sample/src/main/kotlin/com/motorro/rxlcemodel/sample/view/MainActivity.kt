@@ -23,6 +23,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.motorro.rxlcemodel.sample.R
+import com.motorro.rxlcemodel.sample.databinding.ActivityMainBinding
 import com.motorro.rxlcemodel.sample.service.CacheManager
 import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
@@ -30,7 +31,6 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
     @Inject
     lateinit var connectionChecker: ConnectionChecker
+
+    private lateinit var binding: ActivityMainBinding
 
     /**
      * Returns an [AndroidInjector].
@@ -62,20 +64,21 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupConnectionSwitch()
         setupDeleteListener()
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         setupNavigation()
     }
 
     /**
      * A duct-tape to emulate network disconnection
      */
-    private fun setupConnectionSwitch() {
-        connection_state.isChecked = connectionChecker.getStatus()
-        connection_state.setOnCheckedChangeListener { _, isChecked ->  connectionChecker.setStatus(isChecked) }
+    private fun setupConnectionSwitch() = with(binding) {
+        connectionState.isChecked = connectionChecker.getStatus()
+        connectionState.setOnCheckedChangeListener { _, isChecked ->  connectionChecker.setStatus(isChecked) }
     }
 
     /**
@@ -104,6 +107,6 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 }
