@@ -3,8 +3,17 @@ buildscript {
     ext.dokka_version = '1.4.0'
     repositories {
         google()
-        jcenter()
         mavenCentral()
+        maven {
+            name = 'ajoberstar-backup'
+            url = 'https://ajoberstar.github.io/bintray-backup/'
+        }
+        maven {
+            url="https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url="https://dl.bintray.com/kotlin/dokka"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.0'
@@ -16,10 +25,11 @@ plugins {
     id 'org.ajoberstar.grgit' version '3.0.0'
     id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
     id 'org.jetbrains.dokka' version "$dokka_version"
-    id "com.jfrog.bintray" version "1.8.4"
+    id "io.github.gradle-nexus.publish-plugin" version "1.0.0"
 }
 
 apply from: 'gradle/versioning.gradle'
+apply from: 'gradle/maven-publish-config.gradle'
 
 setVersion(buildVersionName())
 group = "com.motorro.rxlcemodel"
@@ -54,7 +64,7 @@ allprojects {
         commonLibVersions = [
                 // Code
                 "rx_java": "2.2.21",
-                "koptional": "1.6.0",
+                "koptional": "1.7.0",
 
                 // Tests
                 "junit": '4.13.2',
@@ -64,6 +74,7 @@ allprojects {
 
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
 
@@ -146,3 +157,15 @@ dokkaHtmlMultiModule.configure {
     outputDirectory = new File(docDir)
     documentationFileName.set("module.md")
 }
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username = ossrhUsername
+            password = ossrhPassword
+        }
+    }
+}
+
