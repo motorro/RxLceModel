@@ -1,5 +1,5 @@
 # RxLceModel
-[![Build Status](https://travis-ci.com/motorro/RxLceModel.svg?token=ZyJexBWWUzhwyHdkocKJ&branch=master)](https://travis-ci.com/motorro/RxLceModel)
+[![Check](https://github.com/motorro/RxLceModel/actions/workflows/check.yml/badge.svg?branch=master)](https://github.com/motorro/AppUpdateWrapper/actions/workflows/check.yml) 
 
 A reactive data loading for Android based on 
 [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
@@ -51,21 +51,21 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Getting data-only stream](#getting-data-only-stream)
 
 ## Setting up the dependency
-Basic module [ ![Base](https://api.bintray.com/packages/motorro/RxLceModel/base/images/download.svg) ](https://bintray.com/motorro/RxLceModel/base/_latestVersion):
+Basic module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/base/):
 ```groovy
 dependencies {
     // Base model components
     implementation "com.motorro.rxlcemodel:base:x.x.x"
 }
 ```
-Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion):
+Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/disklrucache/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/disklrucache/):
 ```groovy
 dependencies {
     // Jake Wharton's DiskLruCache delegate for cache implementation
     implementation "com.motorro.rxlcemodel:disklrucache:x.x.x"
 }
 ```
-Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [ ![Kotlin serializer](https://api.bintray.com/packages/motorro/RxLceModel/kserializer/images/download.svg) ](https://bintray.com/motorro/RxLceModel/kserializer/_latestVersion):
+Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/kserializer/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/kserializer/):
 ```groovy
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
