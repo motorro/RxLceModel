@@ -1,0 +1,7 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+
+com.motorro.rxlcemodel.base
+com.motorro.rxlcemodel.base.entity
+com.motorro.rxlcemodel.base.service
+

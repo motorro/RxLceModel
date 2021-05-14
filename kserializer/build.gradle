@@ -3,12 +3,11 @@ apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'signing'
 
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -33,7 +32,7 @@ project.sourceSets {
 }
 
 project.ext {
-    KOTLINX_SERIALIZATION_VERSION = '1.2.0'
+    KOTLINX_SERIALIZATION_VERSION = '1.2.1'
 }
 
 dependencies {
@@ -71,29 +70,6 @@ def libId = 'kserializer'
 def libName = 'kserializer'
 def libDesc = "Kotlin cross-platform serialization for disklrucache delegate"
 
-def pomConfig = {
-    licenses {
-        license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
-        }
-    }
-    developers {
-        developer {
-            id developerId
-            name developerName
-            email developerEmail
-        }
-    }
-
-    scm {
-        connection projectScm
-        developerConnection projectScm
-        url projectUrl
-    }
-}
-
 publishing {
     publications {
         // Creates a Maven publication called "release".
@@ -104,38 +80,45 @@ publishing {
             groupId = rootProject.group
             artifactId = libId
             version = rootProject.version
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', libDesc)
-                root.appendNode('name', libName)
-                root.appendNode('url', projectUrl)
-                root.children().last() + pomConfig
+
+            pom {
+                name = libName
+                description = libDesc
+                url = projectUrl
+                licenses {
+                    license {
+                        name = 'Apache-2.0'
+                        url = 'https://apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+                developers {
+                    developer {
+                        id = developerId
+                        name = developerName
+                        email = developerEmail
+                    }
+                }
+                scm {
+                    connection = projectScm
+                    developerConnection = projectScm
+                    url = projectUrl
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "sonatype"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
             }
         }
     }
 }
 
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_API_KEY')
-    publications = ['release']
-    publish = true
-    override = true
-    dryRun = project.hasProperty('dryRun') ? project.property('dryRun').toBoolean() : true
-    pkg {
-        userOrg = bintrayUserOrg
-        repo = bintrayRepoName
-        name = libName
-        desc = libDesc
-        licenses = ['Apache-2.0']
-        websiteUrl = projectUrl
-        vcsUrl = projectScm
-        publicDownloadNumbers = true
-        version {
-            name = rootProject.version
-            released = new Date()
-        }
-    }
+signing {
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications
 }
-
-bintrayUpload.dependsOn(assemble, generatePomFileForReleasePublication)

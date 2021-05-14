@@ -24,7 +24,7 @@ import java.util.*
 /**
  * Default delegate prefix for type
  */
-fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.toLowerCase(Locale.getDefault())
+fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.lowercase(Locale.US)
 
 /**
  * Creates DiskLRU caching delegate for [SyncDelegateCacheService]
