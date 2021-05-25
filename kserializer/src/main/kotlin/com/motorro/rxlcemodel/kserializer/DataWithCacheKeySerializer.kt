@@ -26,6 +26,7 @@ import kotlinx.serialization.encoding.Encoder
  * Serializer for [DataWithCacheKey]
  */
 @Serializer(forClass = DataWithCacheKey::class)
+@ExperimentalSerializationApi
 data class DataWithCacheKeySerializer<D: Any>(val dataSerializer: KSerializer<D>):
     KSerializer<DataWithCacheKey<D>> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("DataWithCacheKey") {
