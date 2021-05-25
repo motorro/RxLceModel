@@ -23,6 +23,7 @@ import com.motorro.rxlcemodel.disklrucache.createDefaultDelegatePrefix
 import com.motorro.rxlcemodel.disklrucache.createDelegate
 import com.motorro.rxlcemodel.disklrucache.createNormalizedDelegate
 import kotlinx.serialization.BinaryFormat
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.cbor.Cbor
 
@@ -35,6 +36,7 @@ import kotlinx.serialization.cbor.Cbor
  * @param binaryFormat Binary format serializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  */
+@ExperimentalSerializationApi
 inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
@@ -61,6 +63,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
+@ExperimentalSerializationApi
 inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
@@ -87,6 +90,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
  * @param binaryFormat Binary format serializer
  * @param prefix Caching name prefix to distinguish cache files from other delegates within the same cache directory
  */
+@ExperimentalSerializationApi
 inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNormalized(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,
@@ -113,6 +117,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNorma
  * @param stringify As [DiskLruCacheSyncDelegate] uses string params to create cache keys we should substitute
  * data identifying parameters with string using [stringifyParams]
  */
+@ExperimentalSerializationApi
 inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlinNormalized(
     validatorFactory: EntityValidatorFactory,
     serializer: KSerializer<D>,

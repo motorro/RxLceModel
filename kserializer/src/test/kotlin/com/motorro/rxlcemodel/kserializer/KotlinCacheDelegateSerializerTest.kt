@@ -19,6 +19,7 @@ import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.cbor.Cbor
 import org.junit.Before
@@ -30,6 +31,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
+@ExperimentalSerializationApi
 class KotlinCacheDelegateSerializerTest {
 
     @Serializable
@@ -43,6 +45,7 @@ class KotlinCacheDelegateSerializerTest {
     private lateinit var kSerializer: KotlinCacheDelegateSerializer<TestData>
 
     @Before
+    @ExperimentalSerializationApi
     fun init() {
         validatorFactory = mock()
         whenever(validatorFactory.createSnapshot(any())).thenReturn(EntityValidator.Always)

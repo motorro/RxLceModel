@@ -27,6 +27,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import org.junit.Test
@@ -40,7 +41,7 @@ class UpdateWrapperTest {
         private val VALID_ENTITY = Entity.Impl(1, EntityValidator.Always)
     }
 
-    private class TestWrapper(upstream: LceModel<Int, String>, serviceSet: UpdatingServiceSet<Int, Int, String>): UpdateWrapper<Int, String>(upstream, serviceSet.cache) {
+    private class TestWrapper(upstream: LceModel<Int, String>, serviceSet: UpdatingServiceSet<Int, Int, String>): UpdateWrapper<Int, String>(upstream, serviceSet.cache, { _, _ -> }, Schedulers.trampoline()) {
         var updateCallCount = 0
         val callUpdate = doUpdate {
             Completable
@@ -300,7 +301,7 @@ class UpdateWrapperTest {
             netUpdate = { updatedEntity }
         }
 
-        val upstreamModel = LceModel.cacheThenNet(PARAMS, serviceSet)
+        val upstreamModel = LceModel.cacheThenNet(PARAMS, serviceSet, Observable.empty())
         wrapper = TestWrapper(upstreamModel, serviceSet)
 
         val s = wrapper.state.test()

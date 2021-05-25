@@ -13,15 +13,19 @@
 
 package com.motorro.rxlcemodel.base
 
+import com.gojuno.koptional.Optional
 import com.motorro.rxlcemodel.base.LceState.*
+import com.motorro.rxlcemodel.base.LogLevel.INFO
+import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdateOperationState
 import com.motorro.rxlcemodel.base.service.UpdateOperationState.*
 import com.motorro.rxlcemodel.base.service.buildUpdateOperation
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.functions.Function
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.ObservableTransformer
+import io.reactivex.Scheduler
+import io.reactivex.subjects.BehaviorSubject
 
 /**
  * A [LceModel] which uses cache subscription as a 'source of truth'.
@@ -34,16 +38,48 @@ import io.reactivex.subjects.PublishSubject
  * @param params Params that identify data being loaded
  * @param serviceSet Data service-set
  * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
+ * @param ioScheduler Scheduler to run IO operations
+ * @param logger Logging function
  */
 class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
     override val params: PARAMS,
     serviceSet: ServiceSet<DATA, PARAMS>,
-    startWith: Observable<LceState<DATA>>
+    startWith: Observable<LceState<DATA>>,
+    private val ioScheduler: Scheduler,
+    private val logger: Logger?
 ): LceModel<DATA, PARAMS> {
+    /**
+     * Model state. Subscription starts data load for the first subscriber.
+     * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
+     */
+    override val state: Observable<LceState<DATA>> by lazy {
+        Observable.concat(
+            startWith,
+            serviceSet.cache.getData(params).subscribeOn(ioScheduler).publish { upstream ->
+                Observable.merge(
+                    upstream.compose(createDataTransformer()),
+                    upstream.compose(createDataUpdater())
+                )
+            }
+        ).replay(1).refCount()
+    }
+
+    /**
+     * Requests a refresh of data.
+     * Data will be updated asynchronously
+     */
+    /**
+     * Requests a refresh of data.
+     * Data will be updated asynchronously
+     */
+    override val refresh: Completable by lazy {
+        loadAndCacheNetwork.ignoreElements()
+    }
+
     /**
      * Network operation state broadcast
      */
-    private val networkOperationState = PublishSubject.create<UpdateOperationState>()
+    private val networkOperationState = BehaviorSubject.createDefault<UpdateOperationState>(IDLE)
 
     /**
      * Loads network data and saves it to cache.
@@ -55,67 +91,109 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      */
     private val loadAndCacheNetwork: Observable<UpdateOperationState> by lazy {
         serviceSet.cache.buildUpdateOperation(params) { serviceSet.net.get(it) }
-                .doOnNext { networkOperationState.onNext(it) }
-                .doOnDispose { networkOperationState.onNext(IDLE) }
-                .share()
+            .subscribeOn(ioScheduler)
+            .doOnSubscribe {
+                withLogger { modelLog(INFO, "Subscribing network...") }
+            }
+            .doOnNext { state ->
+                withLogger {
+                    when (state) {
+                        IDLE -> modelLog(INFO, "Network idle")
+                        LOADING -> modelLog(INFO, "Network loading")
+                        is ERROR -> modelLog(LogLevel.WARNING, "Network error: ${state.error}")
+                    }
+                }
+                networkOperationState.onNext(state)
+            }
+            .doOnDispose {
+                withLogger { modelLog(INFO, "Network disposed") }
+                networkOperationState.onNext(IDLE)
+            }
     }
 
     /**
-     * Model data. Subscription starts data load for the first subscriber.
-     * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
+     * Mixes data emitted by cache with a network operation state
      */
-    override val state: Observable<LceState<DATA>> by lazy {
-        Observable.concat(
-                startWith,
-                serviceSet.cache.getData(params).switchMap<LceState<DATA>> { fromCache ->
-                    val entity = fromCache.toNullable()
-
-                    val data = entity?.data
-                    val isValid = true == entity?.isValid()
-
-                    // Transforms cache update operation status to [LceState]
-                    val updateStateTransformer = Function<UpdateOperationState, Observable<LceState<DATA>>> { updateStatus ->
-                        val loadingType = if(null != data) {
-                            // Cache has some content. Loads will refresh current data.
-                            Loading.Type.REFRESHING
-                        } else {
-                            // Cache is empty. Value should be loaded
-                            Loading.Type.LOADING
-                        }
-
-                        when(updateStatus) {
-                            LOADING -> Observable.just(Loading(data, isValid, loadingType))
-                            is ERROR -> Observable.just(Error(data, isValid, updateStatus.error))
-                            IDLE -> if (null != data) {
-                                // Emit same content if cache did not change or is late to emit upstream
-                                Observable.just<LceState<DATA>>(Content(data, isValid))
-                            } else {
-                                // Prevent content emission when has no data. Effectively this happens if
-                                // cache has not yet re-emitted loaded data
-                                Observable.empty()
-                            }
+    private fun createDataTransformer(): ObservableTransformer<Optional<Entity<DATA>>, LceState<DATA>> = ObservableTransformer { upstream ->
+        upstream.switchMap { optionalEntity ->
+            val entity = optionalEntity.toNullable()
+            val data = entity?.data
+            val dataIsValid = true == entity?.isValid()
+            withLogger { modelLog(INFO, "Data transformer. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid") }
+            networkOperationState.switchMap { updateOperationState ->
+                withLogger {
+                    modelLog(
+                        INFO,
+                        "Network status: $updateOperationState")
+                }
+                when (updateOperationState) {
+                    LOADING -> Observable.just(
+                        Loading(
+                            data = data,
+                            dataIsValid = dataIsValid,
+                            type = if (null == data) Loading.Type.LOADING else Loading.Type.REFRESHING
+                        )
+                    )
+                    is ERROR -> Observable.just(
+                        Error(
+                            data = data,
+                            dataIsValid = dataIsValid,
+                            error = updateOperationState.error
+                        )
+                    )
+                    IDLE -> when {
+                        null != data && dataIsValid -> Observable.just(
+                            Content(
+                                data = data,
+                                dataIsValid = true
+                            )
+                        )
+                        else -> {
+                            // No content emission for invalid data
+                            // The launched operation will update
+                            // status later
+                            Observable.empty()
                         }
                     }
-
-                    // Emit obtained content or start loading promptly if data is not valid
-                    // Subscribe to refresh operations state afterwards
-                    Observable.concat(
-                            if (null != data && isValid) {
-                                Observable.just(Content(data, isValid))
-                            } else {
-                                loadAndCacheNetwork.switchMap(updateStateTransformer)
-                            },
-                            networkOperationState.switchMap(updateStateTransformer)
-                    )
                 }
-        ).distinctUntilChanged()
+            }
+        }
     }
 
     /**
-     * Requests a refresh of data.
-     * Data will be updated asynchronously
+     * Checks for data validity and launches update operation if necessary
      */
-    override val refresh: Completable by lazy {
-        loadAndCacheNetwork.ignoreElements()
+    private fun createDataUpdater(): ObservableTransformer<Optional<Entity<DATA>>, LceState<DATA>> = ObservableTransformer { upstream ->
+        upstream.switchMap { optionalEntity ->
+            val entity = optionalEntity.toNullable()
+            val dataIsValid = true == entity?.isValid()
+            withLogger { modelLog(INFO, "Data updater. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid") }
+            when {
+                null == entity || false == dataIsValid -> {
+                    withLogger { modelLog(INFO, "Data updater. Running update...") }
+                    loadAndCacheNetwork.ignoreElements().toObservable()
+                }
+                else -> {
+                    withLogger { modelLog(INFO, "Data updater. No update needed") }
+                    Observable.empty()
+                }
+            }
+        }
+    }
+
+    /**
+     * Runs if logger present
+     */
+    private inline fun withLogger(block: Logger.() -> Unit) {
+        logger?.block()
+    }
+
+    /**
+     * Logs message to logger with model id
+     * @param level Log level
+     * @param message Log message
+     */
+    private fun Logger.modelLog(level: LogLevel, message: String) {
+        log(level, "CacheThanNetLceModel($params): $message")
     }
 }

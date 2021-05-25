@@ -15,11 +15,13 @@
 package com.motorro.rxlcemodel.kserializer
 
 import com.motorro.rxlcemodel.base.service.DataWithCacheKey
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import org.junit.Test
 
+@ExperimentalSerializationApi
 class DataWithCacheKeySerializerTest() {
     private val json = Json { allowStructuredMapKeys = true }
     private val serializer = DataWithCacheKeySerializer(String.serializer())

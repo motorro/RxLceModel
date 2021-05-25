@@ -169,7 +169,9 @@ To create new `CacheThenNet` model call a factory function:
 protected open fun createLceModel() = LceModel.cacheThenNet(
     params = "user_123",
     net = netService, // Gets original data
-    cache = cacheService // Caches it to local storage
+    cache = cacheService, // Caches it to local storage
+    ioScheduler = Schedulers.io(), // Optional scheduler to use for internal IO operations
+    logger = Logger { level, message -> }, // Optional adapter to your debug-logger
 )
 ``` 
 

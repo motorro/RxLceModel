@@ -32,6 +32,7 @@ import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
 import io.reactivex.Completable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -184,7 +185,7 @@ private class NoteUpdateWrapper(
     cacheService: CacheService<Note, Int>,
     private val patchNoteTitle: PatchNoteTitle,
     private val patchNoteText: PatchNoteText
-) : UpdateWrapper<Note, Int>(upstream, cacheService), NoteLceModel {
+) : UpdateWrapper<Note, Int>(upstream, cacheService, { _, _ -> }, Schedulers.trampoline()), NoteLceModel {
     /**
      * Updates note title
      */
