@@ -82,10 +82,24 @@ class ConcurrentInvalidateTest {
      */
     private fun createDoubleModel(): Observable<LceState<Pair<TestData, TestData>>> {
         val modelLog = Logger { level: LogLevel, message: String -> log("$level: $message") }
-        val model1 = LceModel.cacheThenNet(1, netService, cacheService, Observable.empty(), modelLog, Schedulers.io())
+        val model1 = LceModel.cacheThenNet(
+            1,
+            netService,
+            cacheService,
+            Observable.empty(),
+            Schedulers.io(),
+            modelLog
+        )
             .state
             .subscribeOn(Schedulers.io())
-        val model2 = LceModel.cacheThenNet(2, netService, cacheService, Observable.empty(), modelLog, Schedulers.io())
+        val model2 = LceModel.cacheThenNet(
+            2,
+            netService,
+            cacheService,
+            Observable.empty(),
+            Schedulers.io(),
+            modelLog
+        )
             .state
             .subscribeOn(Schedulers.io())
 

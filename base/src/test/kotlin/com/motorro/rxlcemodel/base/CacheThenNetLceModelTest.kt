@@ -56,8 +56,8 @@ class CacheThenNetLceModelTest {
             PARAMS,
             serviceSet,
             Observable.empty(),
-            { _, _ -> },
-            Schedulers.trampoline()
+            Schedulers.trampoline(),
+            { _, _ -> }
         )
     }
 
@@ -90,8 +90,8 @@ class CacheThenNetLceModelTest {
             PARAMS,
             serviceSet,
             Observable.just(LceState.Loading(null, false)),
-            { _, _ -> },
-            Schedulers.trampoline()
+            Schedulers.trampoline(),
+            { _, _ -> }
         )
 
         val s = model.state.test()
@@ -241,8 +241,8 @@ class CacheThenNetLceModelTest {
             PARAMS,
             serviceSet,
             Observable.just(LceState.Loading(null, false)),
-            { _, _ -> },
-            Schedulers.trampoline()
+            Schedulers.trampoline(),
+            { _, _ -> }
         )
         val s = model.state.test()
         s.assertNoErrors()
@@ -284,8 +284,8 @@ class CacheThenNetLceModelTest {
             PARAMS,
             serviceSet,
             Observable.empty(),
-            { _, _ -> },
-            Schedulers.trampoline()
+            Schedulers.trampoline(),
+            { _, _ -> }
         )
         val s1 = model.state.test()
         s1.assertNoErrors()

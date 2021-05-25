@@ -27,15 +27,15 @@ import io.reactivex.Scheduler
  * @param upstream LceModel that performs reading
  * @param serviceSet Data service-set. Note that cache service should update the
  * same cache as [upstream] uses for things to work correctly
- * @param logger Logging function
  * @param ioScheduler Scheduler to run IO operations
+ * @param logger Logging function
  * @see UpdateWrapper
  */
 class UpdatingLceModelWrapper<DATA: Any, in UPDATE: Any, PARAMS: Any>(
     private val upstream: LceModel<DATA, PARAMS>,
     private val serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>,
-    logger: Logger?,
-    ioScheduler: Scheduler
+    ioScheduler: Scheduler,
+    logger: Logger?
 ): UpdateWrapper<DATA, PARAMS>(upstream, serviceSet.cache, logger, ioScheduler), UpdatingLceModel<DATA, UPDATE, PARAMS> {
     /**
      * Updates data on server and refreshes local data

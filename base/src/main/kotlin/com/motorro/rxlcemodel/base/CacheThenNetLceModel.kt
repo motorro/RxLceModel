@@ -38,15 +38,15 @@ import io.reactivex.subjects.BehaviorSubject
  * @param params Params that identify data being loaded
  * @param serviceSet Data service-set
  * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
- * @param logger Logging function
  * @param ioScheduler Scheduler to run IO operations
+ * @param logger Logging function
  */
 class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
     override val params: PARAMS,
     serviceSet: ServiceSet<DATA, PARAMS>,
     startWith: Observable<LceState<DATA>>,
-    private val logger: Logger?,
-    private val ioScheduler: Scheduler
+    private val ioScheduler: Scheduler,
+    private val logger: Logger?
 ): LceModel<DATA, PARAMS> {
     /**
      * Model state. Subscription starts data load for the first subscriber.

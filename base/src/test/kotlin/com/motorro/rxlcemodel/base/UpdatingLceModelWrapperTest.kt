@@ -40,7 +40,11 @@ class UpdatingLceModelWrapperTest {
             }
 
         val upstream = LceModel.cacheThenNet(PARAMS, serviceSet, Observable.empty())
-        val model = UpdatingLceModelWrapper(upstream, serviceSet, { _, _ -> }, Schedulers.trampoline())
+        val model = UpdatingLceModelWrapper(
+            upstream,
+            serviceSet,
+            Schedulers.trampoline()
+        ) { _, _ -> }
 
         val s = model.state.test()
         s.assertNoErrors()
