@@ -22,9 +22,15 @@ import io.reactivex.Single
  * Cache update operation state
  */
 internal sealed class UpdateOperationState {
-    object IDLE: UpdateOperationState()
-    object LOADING: UpdateOperationState()
-    data class ERROR(val error: Throwable): UpdateOperationState()
+    object IDLE: UpdateOperationState() {
+        override fun toString(): String = "IDLE"
+    }
+    object LOADING: UpdateOperationState() {
+        override fun toString(): String = "LOADING"
+    }
+    data class ERROR(val error: Throwable): UpdateOperationState() {
+        override fun toString(): String = "ERROR: $error"
+    }
 }
 
 /**
@@ -38,11 +44,9 @@ internal sealed class UpdateOperationState {
  * @param dataSource Update operation data source factory
  */
 internal inline fun <D: Any, P: Any> CacheService<D, P>.buildUpdateOperation(params: P, dataSource: (params: P) -> Single<out Entity<D>>) =
-       Observable.concat<UpdateOperationState>(
+       Observable.concat(
             Observable.just(LOADING),
             dataSource(params).flatMapObservable<UpdateOperationState> { networkData ->
                 save(params, networkData).andThen(Observable.just(IDLE))
-            }.onErrorResumeNext { error: Throwable ->
-                Observable.just(ERROR(error))
             }
-       )
+       ).onErrorReturn(::ERROR)

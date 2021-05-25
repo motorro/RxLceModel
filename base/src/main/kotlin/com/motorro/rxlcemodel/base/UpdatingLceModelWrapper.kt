@@ -15,6 +15,7 @@ package com.motorro.rxlcemodel.base
 
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
 import io.reactivex.Completable
+import io.reactivex.Scheduler
 
 /**
  * Wraps an [LceModel] to enable simple data updates with the [UPDATE] structure
@@ -26,12 +27,16 @@ import io.reactivex.Completable
  * @param upstream LceModel that performs reading
  * @param serviceSet Data service-set. Note that cache service should update the
  * same cache as [upstream] uses for things to work correctly
+ * @param logger Logging function
+ * @param ioScheduler Scheduler to run IO operations
  * @see UpdateWrapper
  */
 class UpdatingLceModelWrapper<DATA: Any, in UPDATE: Any, PARAMS: Any>(
     private val upstream: LceModel<DATA, PARAMS>,
-    private val serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>
-): UpdateWrapper<DATA, PARAMS>(upstream, serviceSet.cache), UpdatingLceModel<DATA, UPDATE, PARAMS> {
+    private val serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>,
+    logger: Logger?,
+    ioScheduler: Scheduler
+): UpdateWrapper<DATA, PARAMS>(upstream, serviceSet.cache, logger, ioScheduler), UpdatingLceModel<DATA, UPDATE, PARAMS> {
     /**
      * Updates data on server and refreshes local data
      * @param update Data update

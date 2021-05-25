@@ -13,13 +13,14 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.motorro.rxlcemodel.base.LceState.Loading
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.schedulers.Schedulers
 
 /**
  * A model interface to load data and transmit it to subscribers along with loading operation state
@@ -35,15 +36,21 @@ interface LceModel<DATA: Any, PARAMS: Any>: LceUseCase<DATA> {
          * @param params Params that identify data being loaded
          * @param serviceSet Service-set to load data
          * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
+         * @param logger Logging function
+         * @param ioScheduler Scheduler to run IO operations
          */
         @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThenNet(
             params: PARAMS,
             serviceSet: ServiceSet<DATA, PARAMS>,
-            startWith: Observable<LceState<DATA>> = Observable.just(Loading(null, false))
+            startWith: Observable<LceState<DATA>> = Observable.empty(),
+            logger: Logger? = null,
+            ioScheduler: Scheduler = Schedulers.trampoline()
         ): LceModel<DATA, PARAMS> = CacheThenNetLceModel(
-                params = params,
-                serviceSet = serviceSet,
-                startWith = startWith
+            params = params,
+            serviceSet = serviceSet,
+            startWith = startWith,
+            logger = logger,
+            ioScheduler = ioScheduler
         )
 
         /**
@@ -54,19 +61,25 @@ interface LceModel<DATA: Any, PARAMS: Any>: LceUseCase<DATA> {
          * @param net Net-service
          * @param cache Cache-service
          * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
+         * @param logger Logging function
+         * @param ioScheduler Scheduler to run IO operations
          */
         @JvmOverloads fun <DATA: Any, PARAMS: Any> cacheThenNet(
             params: PARAMS,
             net: NetService<DATA, PARAMS>,
             cache: CacheService<DATA, PARAMS>,
-            startWith: Observable<LceState<DATA>> = Observable.just(Loading(null, false))
+            startWith: Observable<LceState<DATA>> = Observable.empty(),
+            logger: Logger? = null,
+            ioScheduler: Scheduler = Schedulers.trampoline()
         ): LceModel<DATA, PARAMS> = cacheThenNet(
-                params = params,
-                serviceSet = object : ServiceSet<DATA, PARAMS> {
-                    override val net: NetService<DATA, PARAMS> get() = net
-                    override val cache: CacheService<DATA, PARAMS> get() = cache
-                },
-                startWith = startWith
+            params = params,
+            serviceSet = object : ServiceSet<DATA, PARAMS> {
+                override val net: NetService<DATA, PARAMS> get() = net
+                override val cache: CacheService<DATA, PARAMS> get() = cache
+            },
+            startWith = startWith,
+            logger = logger,
+            ioScheduler = ioScheduler
         )
     }
 
@@ -97,9 +110,16 @@ interface UpdatingLceModel<DATA: Any, in UPDATE: Any, PARAMS: Any>: LceModel<DAT
  * @param PARAMS Params type that identify data being loaded
  * @receiver LceModel that performs reading
  * @param serviceSet Service-set to load data
+ * @param logger Logging function
+ * @param ioScheduler Scheduler to run IO operations
  */
-fun <DATA: Any, UPDATE: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withUpdates(serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>): UpdatingLceModel<DATA, UPDATE, PARAMS> =
-        UpdatingLceModelWrapper(
-                upstream = this,
-                serviceSet = serviceSet
-        )
+fun <DATA: Any, UPDATE: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withUpdates(
+    serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>,
+    logger: Logger? = null,
+    ioScheduler: Scheduler = Schedulers.trampoline()
+): UpdatingLceModel<DATA, UPDATE, PARAMS> = UpdatingLceModelWrapper(
+    upstream = this,
+    serviceSet = serviceSet,
+    logger = logger,
+    ioScheduler = ioScheduler
+)

@@ -3,6 +3,7 @@ package com.motorro.rxlcemodel.base
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.CacheService
 import io.reactivex.Completable
+import io.reactivex.Scheduler
 import io.reactivex.Single
 
 /**
@@ -13,11 +14,15 @@ import io.reactivex.Single
  * @param PARAMS Params type that identify data being loaded
  * @param upstream LceModel that performs reading
  * @param cacheService Data cache service that updates the same cache as [upstream] uses
+ * @param logger Logging function
+ * @param ioScheduler Scheduler to run IO operations
  */
 class StrategyUpdateWrapper<DATA: Any, PARAMS: Any>(
     upstream: LceModel<DATA, PARAMS>,
-    cacheService: CacheService<DATA, PARAMS>
-): UpdateWrapper<DATA, PARAMS>(upstream, cacheService) {
+    cacheService: CacheService<DATA, PARAMS>,
+    logger: Logger?,
+    ioScheduler: Scheduler
+): UpdateWrapper<DATA, PARAMS>(upstream, cacheService, logger, ioScheduler) {
     /**
      * Creates a cache-update operation that gets data from [dataSource] and saves to cache.
      * The completable updates [networkOperationState] to mix state to original [upstream]

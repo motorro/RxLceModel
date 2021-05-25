@@ -17,9 +17,7 @@ import android.app.Application
 import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.motorro.rxlcemodel.base.LceModel
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.combine
+import com.motorro.rxlcemodel.base.*
 import com.motorro.rxlcemodel.base.entity.*
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
@@ -83,10 +81,11 @@ class ConcurrentInvalidateTest {
      * Creates double model that is bound to the same cache service with different params
      */
     private fun createDoubleModel(): Observable<LceState<Pair<TestData, TestData>>> {
-        val model1 = LceModel.cacheThenNet(1, netService, cacheService, Observable.empty())
+        val modelLog = Logger { level: LogLevel, message: String -> log("$level: $message") }
+        val model1 = LceModel.cacheThenNet(1, netService, cacheService, Observable.empty(), modelLog, Schedulers.io())
             .state
             .subscribeOn(Schedulers.io())
-        val model2 = LceModel.cacheThenNet(2, netService, cacheService, Observable.empty())
+        val model2 = LceModel.cacheThenNet(2, netService, cacheService, Observable.empty(), modelLog, Schedulers.io())
             .state
             .subscribeOn(Schedulers.io())
 
@@ -122,12 +121,13 @@ class ConcurrentInvalidateTest {
             .observeOn(Schedulers.computation())
             .test()
             .awaitCount(3, TestWaitStrategy(1000))
-            .assertValues(
-                LceState.Loading(null, false),
-                LceState.Loading(null, false),
-                LceState.Content(
-                    TestData(1) to TestData(2),
-                    true
+            .assertValueSet(
+                setOf(
+                    LceState.Loading(null, false),
+                    LceState.Content(
+                        TestData(1) to TestData(2),
+                        true
+                    )
                 )
             )
 
@@ -146,20 +146,23 @@ class ConcurrentInvalidateTest {
             .observeOn(Schedulers.computation())
             .test()
             .awaitCount(4, TestWaitStrategy(3000))
-            .assertValues(
-                LceState.Loading(null, false),
-                LceState.Content(
-                    TestData(1) to TestData(2),
-                    true
-                ),
-                LceState.Loading(
-                    TestData(1) to TestData(2),
-                    false,
-                    LceState.Loading.Type.REFRESHING
-                ),
-                LceState.Content(
-                    TestData(1) to TestData(2),
-                    true
+            .assertValueSet(
+                setOf(
+                    LceState.Loading(null, false),
+                    LceState.Loading(
+                        null, // See how data is combined above
+                        false,
+                        LceState.Loading.Type.REFRESHING
+                    ),
+                    LceState.Loading(
+                        TestData(1) to TestData(2),
+                        false,
+                        LceState.Loading.Type.REFRESHING
+                    ),
+                    LceState.Content(
+                        TestData(1) to TestData(2),
+                        true
+                    )
                 )
             )
 
@@ -176,7 +179,7 @@ class ConcurrentInvalidateTest {
                 .subscribeOn(Schedulers.io())
                 .toObservable(),
             Completable.timer(1300, TimeUnit.MILLISECONDS)
-                .doOnComplete { log("Refreshing 1300...") }
+                .doOnComplete { log("Refreshing 1300 (concurrently)...") }
                 .andThen(cacheService.invalidateAll)
                 .toObservable(),
             Completable.timer(3000, TimeUnit.MILLISECONDS)
@@ -193,9 +196,28 @@ class ConcurrentInvalidateTest {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
             .test()
-            .awaitCount(100, TestWaitStrategy(6000))
+            .awaitCount(14, TestWaitStrategy(10000))
+            .assertValueSet(
+                setOf(
+                    LceState.Loading(null, false),
+                    LceState.Loading(
+                        TestData(1) to TestData(2),
+                        false,
+                        LceState.Loading.Type.REFRESHING
+                    ),
+                    LceState.Loading(
+                        TestData(1) to TestData(2),
+                        true,
+                        LceState.Loading.Type.REFRESHING
+                    ),
+                    LceState.Content(
+                        TestData(1) to TestData(2),
+                        true
+                    )
+                )
+            )
 
-        assertEquals(8, netService.calls.get())
+        assertEquals(10, netService.calls.get())
     }
 
     /**
