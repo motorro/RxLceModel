@@ -41,7 +41,11 @@ class UpdateWrapperTest {
         private val VALID_ENTITY = Entity.Impl(1, EntityValidator.Always)
     }
 
-    private class TestWrapper(upstream: LceModel<Int, String>, serviceSet: UpdatingServiceSet<Int, Int, String>): UpdateWrapper<Int, String>(upstream, serviceSet.cache, { _, _ -> }, Schedulers.trampoline()) {
+    private class TestWrapper(upstream: LceModel<Int, String>, serviceSet: UpdatingServiceSet<Int, Int, String>): UpdateWrapper<Int, String>(
+        upstream,
+        serviceSet.cache,
+        Schedulers.trampoline(),
+        { _, _ -> }) {
         var updateCallCount = 0
         val callUpdate = doUpdate {
             Completable

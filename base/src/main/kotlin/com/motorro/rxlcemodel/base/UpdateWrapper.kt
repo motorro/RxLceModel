@@ -35,14 +35,14 @@ import io.reactivex.subjects.PublishSubject
  * @param PARAMS Params type that identify data being loaded
  * @param upstream LceModel that performs reading
  * @param cacheService Data cache service that updates the same cache as [upstream] uses
- * @param logger Logging function
  * @param ioScheduler Scheduler to run IO operations
+ * @param logger Logging function
  */
 abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(
     private val upstream: LceModel<DATA, PARAMS>,
     private val cacheService: CacheService<DATA, PARAMS>,
-    private val logger: Logger?,
-    private val ioScheduler: Scheduler
+    private val ioScheduler: Scheduler,
+    private val logger: Logger?
 ): LceModel<DATA, PARAMS> by upstream {
     /**
      * Network operation state broadcast

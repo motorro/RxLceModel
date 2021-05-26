@@ -7,7 +7,7 @@
 
 Wraps [LceModel](../-lce-model/index.md) and mixes in a data update state Use to build models that patch some properties and load the whole data structure as a result Implement methods to update properties using doUpdate template
 
-class [StrategyUpdateWrapper](index.md)<[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)>(**upstream**: [LceModel](../-lce-model/index.md)<[DATA](index.md), [PARAMS](index.md)>, **cacheService**: [CacheService](../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)<[DATA](index.md), [PARAMS](index.md)>, **logger**: [Logger](../-logger/index.md)?, **ioScheduler**: [Scheduler](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Scheduler.html)) : [UpdateWrapper](../-update-wrapper/index.md)<[DATA](index.md), [PARAMS](index.md)>    
+class [StrategyUpdateWrapper](index.md)<[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)>(**upstream**: [LceModel](../-lce-model/index.md)<[DATA](index.md), [PARAMS](index.md)>, **cacheService**: [CacheService](../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)<[DATA](index.md), [PARAMS](index.md)>, **ioScheduler**: [Scheduler](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Scheduler.html), **logger**: [Logger](../-logger/index.md)?) : [UpdateWrapper](../-update-wrapper/index.md)<[DATA](index.md), [PARAMS](index.md)>    
 
 
 ## Parameters  
@@ -29,7 +29,7 @@ jvm
   
 |  Name|  Summary| 
 |---|---|
-| [StrategyUpdateWrapper](-strategy-update-wrapper.md)|  [jvm] <br><br>Data Type of data being held<br><br>fun <[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [StrategyUpdateWrapper](-strategy-update-wrapper.md)(upstream: [LceModel](../-lce-model/index.md)<[DATA](index.md), [PARAMS](index.md)>, cacheService: [CacheService](../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)<[DATA](index.md), [PARAMS](index.md)>, logger: [Logger](../-logger/index.md)?, ioScheduler: [Scheduler](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Scheduler.html))   <br>
+| [StrategyUpdateWrapper](-strategy-update-wrapper.md)|  [jvm] <br><br>Data Type of data being held<br><br>fun <[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [StrategyUpdateWrapper](-strategy-update-wrapper.md)(upstream: [LceModel](../-lce-model/index.md)<[DATA](index.md), [PARAMS](index.md)>, cacheService: [CacheService](../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)<[DATA](index.md), [PARAMS](index.md)>, ioScheduler: [Scheduler](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Scheduler.html), logger: [Logger](../-logger/index.md)?)   <br>
 
 
 ## Functions  

@@ -185,7 +185,7 @@ private class NoteUpdateWrapper(
     cacheService: CacheService<Note, Int>,
     private val patchNoteTitle: PatchNoteTitle,
     private val patchNoteText: PatchNoteText
-) : UpdateWrapper<Note, Int>(upstream, cacheService, { _, _ -> }, Schedulers.trampoline()), NoteLceModel {
+) : UpdateWrapper<Note, Int>(upstream, cacheService, Schedulers.trampoline(), { _, _ -> }), NoteLceModel {
     /**
      * Updates note title
      */

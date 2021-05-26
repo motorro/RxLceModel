@@ -195,7 +195,7 @@ public final class <span class="typeNameLabel"><a href=CacheThenNetLceModel.html
                                         
                                             <tr class="altColor">
                                                 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
-                                                        href="#CacheThenNetLceModel(PARAMS,ServiceSet,Observable)">CacheThenNetLceModel</a></span>(<a href=CacheThenNetLceModel.html>PARAMS</a> params, <a href=../com/motorro/rxlcemodel/base/service/ServiceSet.html>ServiceSet</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>, <a href=CacheThenNetLceModel.html>PARAMS</a>&gt; serviceSet, <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html>Observable</a>&lt;<a href=LceState.html>LceState</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>&gt;&gt; startWith)</code></th>
+                                                        href="#CacheThenNetLceModel(PARAMS,ServiceSet,Observable,Scheduler,Logger)">CacheThenNetLceModel</a></span>(<a href=CacheThenNetLceModel.html>PARAMS</a> params, <a href=../com/motorro/rxlcemodel/base/service/ServiceSet.html>ServiceSet</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>, <a href=CacheThenNetLceModel.html>PARAMS</a>&gt; serviceSet, <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html>Observable</a>&lt;<a href=LceState.html>LceState</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>&gt;&gt; startWith, <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Scheduler.html>Scheduler</a> ioScheduler, <a href=Logger.html>Logger</a> logger)</code></th>
                                                 <td class="colLast"></td>
                                             </tr>
                                         
@@ -235,7 +235,7 @@ public final class <span class="typeNameLabel"><a href=CacheThenNetLceModel.html
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=CacheThenNetLceModel.html#getState()>getState</a>() </code>
                                             </th>
-                                            <td class="colLast">Model data.</td>
+                                            <td class="colLast">Model state.</td>
                                         </tr>
                                         
                                         <tr id="i1" class="rowColor">
@@ -291,11 +291,11 @@ public final class <span class="typeNameLabel"><a href=CacheThenNetLceModel.html
                             </a>
                                 <h3>Constructor Detail</h3>
                                 
-                                <a name="CacheThenNetLceModel(PARAMS,ServiceSet,Observable)"></a>
+                                <a name="CacheThenNetLceModel(PARAMS,ServiceSet,Observable,Scheduler,Logger)"></a>
                                 <ul class="blockList">
                                     <li class="blockList">
                                         <h4>CacheThenNetLceModel</h4>
-                                        <pre>CacheThenNetLceModel(<a href=CacheThenNetLceModel.html>PARAMS</a> params, <a href=../com/motorro/rxlcemodel/base/service/ServiceSet.html>ServiceSet</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>, <a href=CacheThenNetLceModel.html>PARAMS</a>&gt; serviceSet, <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html>Observable</a>&lt;<a href=LceState.html>LceState</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>&gt;&gt; startWith)</pre>
+                                        <pre>CacheThenNetLceModel(<a href=CacheThenNetLceModel.html>PARAMS</a> params, <a href=../com/motorro/rxlcemodel/base/service/ServiceSet.html>ServiceSet</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>, <a href=CacheThenNetLceModel.html>PARAMS</a>&gt; serviceSet, <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html>Observable</a>&lt;<a href=LceState.html>LceState</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>&gt;&gt; startWith, <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Scheduler.html>Scheduler</a> ioScheduler, <a href=Logger.html>Logger</a> logger)</pre>
                                         <div class="block"></div>
                                         
                                         <dl>
@@ -311,6 +311,14 @@ public final class <span class="typeNameLabel"><a href=CacheThenNetLceModel.html
                                             
                                             
                                             <dd><code>startWith</code> - Observable that emits at loading start.</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>ioScheduler</code> - Scheduler to run IO operations</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>logger</code> - Logging function</dd>
                                             
                                             
                                         </dl>
@@ -340,7 +348,7 @@ public final class <span class="typeNameLabel"><a href=CacheThenNetLceModel.html
                                     <li class="blockList">
                                         <h4>getState</h4>
                                         <pre class="methodSignature"> <a href=http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html>Observable</a>&lt;<a href=LceState.html>LceState</a>&lt;<a href=CacheThenNetLceModel.html>DATA</a>&gt;&gt; <a href=CacheThenNetLceModel.html#getState()>getState</a>()</pre>
-                                        <div class="block"><p>Model data. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates</p></div>
+                                        <div class="block"><p>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates</p></div>
                                         
                                         <!-- TODO missing return annotation -->
                                     </li>

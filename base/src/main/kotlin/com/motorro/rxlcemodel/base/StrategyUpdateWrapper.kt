@@ -14,15 +14,15 @@ import io.reactivex.Single
  * @param PARAMS Params type that identify data being loaded
  * @param upstream LceModel that performs reading
  * @param cacheService Data cache service that updates the same cache as [upstream] uses
- * @param logger Logging function
  * @param ioScheduler Scheduler to run IO operations
+ * @param logger Logging function
  */
 class StrategyUpdateWrapper<DATA: Any, PARAMS: Any>(
     upstream: LceModel<DATA, PARAMS>,
     cacheService: CacheService<DATA, PARAMS>,
-    logger: Logger?,
-    ioScheduler: Scheduler
-): UpdateWrapper<DATA, PARAMS>(upstream, cacheService, logger, ioScheduler) {
+    ioScheduler: Scheduler,
+    logger: Logger?
+): UpdateWrapper<DATA, PARAMS>(upstream, cacheService, ioScheduler, logger) {
     /**
      * Creates a cache-update operation that gets data from [dataSource] and saves to cache.
      * The completable updates [networkOperationState] to mix state to original [upstream]

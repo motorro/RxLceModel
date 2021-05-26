@@ -36,7 +36,7 @@ class UpdatingLceModelWrapper<DATA: Any, in UPDATE: Any, PARAMS: Any>(
     private val serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>,
     ioScheduler: Scheduler,
     logger: Logger?
-): UpdateWrapper<DATA, PARAMS>(upstream, serviceSet.cache, logger, ioScheduler), UpdatingLceModel<DATA, UPDATE, PARAMS> {
+): UpdateWrapper<DATA, PARAMS>(upstream, serviceSet.cache, ioScheduler, logger), UpdatingLceModel<DATA, UPDATE, PARAMS> {
     /**
      * Updates data on server and refreshes local data
      * @param update Data update
