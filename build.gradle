@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.5.10'
+    ext.kotlin_version = '1.5.20'
     ext.dokka_version = '1.4.0'
     repositories {
         google()
@@ -16,7 +16,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0'
     }
 }
