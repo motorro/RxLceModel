@@ -66,8 +66,6 @@ android {
 
 dependencies {
     def dagger_version = '2.38.1'
-    def nav_version = '2.3.5'
-    def work_version = '2.6.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':base')
@@ -77,20 +75,21 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
 
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.1'
+    implementation "androidx.core:core-ktx:${commonLibVersions.core_ktx_version}"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:${commonLibVersions.lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${commonLibVersions.lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${commonLibVersions.lifecycle_version}"
 
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:${commonLibVersions.nav_version}"
+    implementation "androidx.navigation:navigation-ui-ktx:${commonLibVersions.nav_version}"
 
-    implementation "androidx.work:work-runtime-ktx:$work_version"
-    implementation "androidx.work:work-rxjava2:$work_version"
+    implementation "androidx.work:work-runtime-ktx:${commonLibVersions.work_version}"
+    implementation "androidx.work:work-rxjava2:${commonLibVersions.work_version}"
 
     implementation 'androidx.multidex:multidex:2.0.1'
 

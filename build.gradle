@@ -20,6 +20,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
         classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
     }
 }
 
@@ -67,6 +68,11 @@ allprojects {
                 // Code
                 "rx_java": "2.2.21",
                 "koptional": "1.7.0",
+                "core_ktx_version": "1.6.0",
+                "lifecycle_version": "2.3.1",
+                "arch_version": "2.1.0",
+                "nav_version": '2.3.5',
+                "work_version": '2.6.0',
 
                 // Tests
                 "junit": '4.13.2',
@@ -136,11 +142,24 @@ task runKserializerUnitTests(type: Task, dependsOn: [':kserializer:cleanTest', '
     description 'Run unit tests for KSerializer library.'
 }
 
+task runViewmodelUnitTests(type: Task, dependsOn: [':viewmodel:cleanTest', ':viewmodel:test'], group: 'verification') {
+    description 'Run unit tests for ViewModel library.'
+}
+
 task runSampleUnitTests(type: Task, dependsOn: [':sample:cleanTest', ':sample:test'], group: 'verification') {
     description 'Run unit tests for Sample application.'
 }
 
-task runUnitTests(type: Task, dependsOn: ['runBaseUnitTests', 'runDiskLruUnitTests', 'runKserializerUnitTests', 'runSampleUnitTests'], group: 'verification') {
+task runUnitTests(
+        type: Task,
+        dependsOn: [
+                'runBaseUnitTests',
+                'runDiskLruUnitTests',
+                'runKserializerUnitTests',
+                'runSampleUnitTests'
+        ],
+        group: 'verification'
+) {
     description 'Run unit tests for libraries.'
 }
 
