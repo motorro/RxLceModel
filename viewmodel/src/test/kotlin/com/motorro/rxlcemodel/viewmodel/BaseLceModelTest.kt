@@ -31,11 +31,7 @@ class BaseLceModelTest {
     private fun createModel(
         stateObservable: Observable<LceState<String>>,
         refresh: Completable
-    ): BaseLceModel<String> =
-            BaseLceModel.Impl.create(
-                    stateObservable,
-                    refresh
-            )
+    ): BaseLceModel<String> = BaseLceModel.create(stateObservable, refresh)
 
     @get:Rule
     var instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()

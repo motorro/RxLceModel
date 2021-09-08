@@ -33,6 +33,32 @@ import io.reactivex.subjects.BehaviorSubject
  * Base model with [state] and [refresh]
  */
 abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
+    companion object {
+        /**
+         * Creates LCE model
+         * @param stateObservable Observable of state changes
+         * @param refresh Refresh operation
+         */
+        @SuppressLint("StaticFieldLeak")
+        fun <DATA : Any> create(
+            stateObservable: Observable<LceState<DATA>>,
+            refresh: Completable
+        ): BaseLceModel<DATA> = object : Impl<DATA>() {
+            override val stateObservable: Observable<LceState<DATA>> = stateObservable
+            override val refresh: Completable = refresh
+        }
+
+        /**
+         * Creates LCE model
+         * @param useCase Data use-case
+         */
+        @SuppressLint("StaticFieldLeak")
+        fun <DATA : Any> create(useCase: LceUseCase<DATA>): BaseLceModel<DATA> = object : Impl<DATA>() {
+            override val stateObservable: Observable<LceState<DATA>> = useCase.state
+            override val refresh: Completable = useCase.refresh
+        }
+    }
+
     /**
      * LCE State
      */
@@ -85,22 +111,6 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
      * Basic ViewModel with LceModel inside
      */
     abstract class Impl<DATA : Any> : BaseLceModel<DATA>() {
-        companion object {
-            /**
-             * Creates LCE model
-             * @param stateObservable Observable of state changes
-             * @param refresh Refresh operation
-             */
-            @SuppressLint("StaticFieldLeak")
-            fun <DATA : Any> create(
-                stateObservable: Observable<LceState<DATA>>,
-                refresh: Completable
-            ): BaseLceModel<DATA> = object : Impl<DATA>() {
-                override val stateObservable: Observable<LceState<DATA>> = stateObservable
-                override val refresh: Completable = refresh
-            }
-        }
-
         /**
          * State observable
          */

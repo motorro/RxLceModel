@@ -73,7 +73,7 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
      * Creates [BaseLceModel] by default
      */
     protected open fun createModel(lceModel: LceModel<DATA, PARAMS>): ViewModel =
-        BaseLceModel.Impl.create(
+        BaseLceModel.create(
             lceModel.createStateData(),
             lceModel.setupRefresh()
         )
