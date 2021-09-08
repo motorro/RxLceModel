@@ -49,6 +49,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [ProGuard configuration](#proguard-configuration)
 * [Updating data on server](#updating-data-on-server)
 * [Getting data-only stream](#getting-data-only-stream)
+* [LCE ViewModel](#lce-viewmodel)
 
 ## Setting up the dependency
 Basic module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/base/):
@@ -70,6 +71,13 @@ Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
     implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
+}
+```
+Optional: LCE ViewModel ready to accept LCE use-case for your view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/viewmodel/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/viewmodel/):
+```groovy
+dependencies {
+    // Data serializer for DiskLruCache using Kotlin serialization
+    implementation "com.motorro.rxlcemodel:viewmodel:x.x.x"
 }
 ```
 
@@ -498,3 +506,20 @@ ships with some of the functions already implemented like:
 *   `validData` - emits data only if it is valid
 More information about them may be found in [documentation](docs/base/base/com.motorro.rxlcemodel.base/index.md)
 or in a source code.
+
+## LCE ViewModel
+You may also take a look at basic Android [ViewModels](https://developer.android.com/topic/libraries/architecture/viewmodel)
+provided as a separate package. Use them as-is or as a delegate in your own `ViewModel` system. 
+There are three main classes:
+*   `BaseLceModel` - a common frame for LCE view-model having a signature for all common tasks to:
+    *   Load data
+    *   Dismiss error    
+    *   Refresh data
+*   `BaseLceModel.Impl` - a common implementation to subclass if you need advanced logic
+*   `BaseLceModel.WithUpdates` - for those models that run some update operations on loaded data.
+    This model will mix loading and error states from an operation to main data state.
+    See usage example in a [sample application](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/addnote/AddNoteViewModel.kt). 
+    
+To create a model from an `LceUseCase` call `BaseLceModel.create` methods and pass your state 
+use-cases or `LCE` observables to `ViewModel`
+

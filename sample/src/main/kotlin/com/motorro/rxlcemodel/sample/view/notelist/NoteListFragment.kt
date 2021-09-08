@@ -27,9 +27,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.databinding.FragmentNoteListBinding
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
-import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
+import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 import dagger.android.support.AndroidSupportInjection
 import timber.log.Timber
 import javax.inject.Inject

@@ -16,10 +16,8 @@ package com.motorro.rxlcemodel.sample.view.addnote
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.motorro.rxlcemodel.base.LceState.Loading.Type.UPDATING
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Rule
@@ -55,9 +53,12 @@ class AddNoteViewModelTest {
         model.initialize()
         model.add("Title", "Text")
 
-        verify(observer).onChanged(LceState.Content(Unit, true))
-        verify(observer).onChanged(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
-        verify(observer).onChanged(LceState.Terminated())
+        inOrder(observer) {
+            verify(observer).onChanged(LceState.Content(Unit, true))
+            verify(observer).onChanged(LceState.Loading(Unit, true, UPDATING))
+            verify(observer).onChanged(LceState.Terminated())
+            verifyNoMoreInteractions()
+        }
 
         verify(useCase)("Title", "Text")
     }
@@ -70,9 +71,12 @@ class AddNoteViewModelTest {
         model.initialize()
         model.add("Title", "Text")
 
-        verify(observer).onChanged(LceState.Content(Unit, true))
-        verify(observer).onChanged(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
-        verify(observer).onChanged(LceState.Error(null, false, error))
+        inOrder(observer) {
+            verify(observer).onChanged(LceState.Content(Unit, true))
+            verify(observer).onChanged(LceState.Loading(Unit, true, UPDATING))
+            verify(observer).onChanged(LceState.Error(Unit, true, error))
+            verifyNoMoreInteractions()
+        }
 
         verify(useCase)("Title", "Text")
     }

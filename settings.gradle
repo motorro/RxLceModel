@@ -1,2 +1,3 @@
 rootProject.name = "RxLceModel"
 include ':sample', ':base', ':disklrucache', ':kserializer'
+include ':viewmodel'
