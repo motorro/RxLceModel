@@ -1,5 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 buildscript {
-    ext.kotlin_version = '1.5.20'
+    ext.kotlin_version = '1.5.30'
     ext.dokka_version = '1.4.0'
     repositories {
         google()
@@ -16,8 +18,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5'
     }
 }
 
@@ -39,8 +41,8 @@ ext {
     // Android
     androidBuildToolsVersion = '30.0.2'
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 29
-    androidCompileSdkVersion = 29
+    androidTargetSdkVersion = 30
+    androidCompileSdkVersion = 30
     versionName = project.version
     versionCode = buildVersionCode()
 
@@ -107,7 +109,7 @@ allprojects {
         }
     }
 
-    tasks.withType(org.jetbrains.dokka.gradle.DokkaTask).configureEach {
+    tasks.withType(DokkaTask).configureEach {
         outputDirectory.set(new File("$buildDir/javadoc"))
         dokkaSourceSets {
             named("main") {
