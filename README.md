@@ -517,6 +517,7 @@ There are three main classes:
     *   Refresh data
 *   `BaseLceModel.Impl` - a common implementation to subclass if you need advanced logic
 *   `BaseLceModel.WithUpdates` - for those models that run some update operations on loaded data.
+    This model will mix loading and error states from an operation to main data state.
     See usage example in a [sample application](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/addnote/AddNoteViewModel.kt). 
     
 To create a model from an `LceUseCase` call `BaseLceModel.create` methods and pass your state 
