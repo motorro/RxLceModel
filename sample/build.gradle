@@ -71,6 +71,7 @@ dependencies {
     implementation project(':base')
     implementation project(':disklrucache')
     implementation project(':kserializer')
+    implementation project(':viewmodel')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
