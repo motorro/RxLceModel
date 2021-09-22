@@ -1,28 +1,20 @@
-//[disklrucache](../../index.md)/[com.motorro.rxlcemodel.disklrucache](../index.md)/[DiskLruCacheSyncDelegate](index.md)/[DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)
+//[disklrucache](../../../index.md)/[com.motorro.rxlcemodel.disklrucache](../index.md)/[DiskLruCacheSyncDelegate](index.md)/[DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)
 
+# DiskLruCacheSyncDelegate
 
+[jvm]\
 
-# DiskLruCacheSyncDelegate  
-[jvm]  
-Brief description  
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
+fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: [CacheDelegateSerializerDeserializer](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../base/base/com.motorro.rxlcemodel.base.entity/-clock/index.md) = Clock.SYSTEM)
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+## Parameters
+
+jvm
+
+| | |
 |---|---|
-| cacheProvider| <br><br>Disk LRU cache provider. Opens cache with a proper entry config<br><br>
-| clock| <br><br>Provides timestamp for cache status marks<br><br>
-| prefix| <br><br>Cache file prefix to group cached files<br><br>
-| sd| <br><br>Entity serializer/deserializer<br><br>
-  
-  
-Content  
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)()  
-  
-fun <[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: CacheDelegateSerializerDeserializer<[D](index.md)>, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: Clock)  
-
-
-
+| prefix | Cache file prefix to group cached files |
+| sd | Entity serializer/deserializer |
+| cacheProvider | Disk LRU cache provider. Opens cache with a proper entry config |
+| clock | Provides timestamp for cache status marks |

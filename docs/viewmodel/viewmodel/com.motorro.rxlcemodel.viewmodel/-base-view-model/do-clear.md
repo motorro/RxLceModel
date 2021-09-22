@@ -1,17 +1,8 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseViewModel](index.md)/[doClear](do-clear.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseViewModel](index.md)/[doClear](do-clear.md)
 
+# doClear
 
-
-# doClear  
-[androidJvm]  
-Brief description  
-
+[androidJvm]\
+abstract fun [doClear](do-clear.md)()
 
 Disposes active operations when model is destroyed
-
-  
-Content  
-abstract fun [doClear](do-clear.md)()  
-
-
-

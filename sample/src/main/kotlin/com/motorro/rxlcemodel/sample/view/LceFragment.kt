@@ -21,16 +21,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.LceState.*
-import com.motorro.rxlcemodel.base.LceState.Loading.Type.LOADING
 import com.motorro.rxlcemodel.sample.R
+import com.motorro.rxlcemodel.view.LceStateView
 import timber.log.Timber
 
 /**
  * Fragment to display Loading/Content/Error and a non-fatal error in case there is a content to display
  */
-abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
+abstract class LceFragment<CV: View, DATA: Any>: Fragment(), LceStateView<DATA> {
     private var _loadingView: View? = null
     private var _contentView: CV? = null
     private var _errorView: TextView? = null
@@ -51,18 +52,17 @@ abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
     }
 
     /**
-     * Call to process view state and data whenever new state arrives from model
+     * Returns lifecycle owner
      */
-    protected fun processState(state: LceState<DATA>) {
-        state.data?.let { processStateData(it, state.dataIsValid, state is Loading && Loading.Type.UPDATING == state.type) }
-        processStateView(state)
-        updateStateDisplay(state)
-    }
+    override fun getLifecycleOwner(): LifecycleOwner = viewLifecycleOwner
 
     /**
-     * Called by [processState] to process new data
+     * Call to process view state and data whenever new state arrives from model
      */
-    protected abstract fun processStateData(data: DATA, isValid: Boolean, isUpdating: Boolean)
+    override fun processState(state: LceState<DATA>) {
+        super.processState(state)
+        updateStateDisplay(state)
+    }
 
     /**
      * Called when content is displayed
@@ -73,33 +73,6 @@ abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
      * Called when content is hidden
      */
     protected open fun onHideContent(): Unit = Unit
-
-    /**
-     * Updates view according to [state]
-     */
-    @CallSuper
-    protected open fun processStateView(state: LceState<DATA>) {
-        Timber.d("LceState change: %s", state.toString())
-        when(state) {
-            is Loading -> when(state.type) {
-                LOADING -> showLoading()
-                else -> {
-                    if (null != state.data) {
-                        showContent()
-                    }
-                    showRefreshing()
-                }
-            }
-            is Content -> showContent()
-            is Error -> if (null != state.data) {
-                showContent()
-                showNonFatalError(state.error)
-            } else {
-                showError(state.error)
-            }
-            is Terminated -> processTermination()
-        }
-    }
 
     /**
      * Displays current state for 
@@ -116,7 +89,7 @@ abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
     /**
      * Displays loading when no data available
      */
-    private fun showLoading() {
+    override fun showLoading() {
         Timber.d("Show `Loading`")
         _loadingView?.visibility = VISIBLE
         _contentView?.visibility = GONE
@@ -135,7 +108,7 @@ abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
     /**
      * Displays content
      */
-    private fun showContent() {
+    override fun showContent() {
         Timber.d("Show `Content`")
         _loadingView?.visibility = GONE
         _contentView?.visibility = VISIBLE
@@ -146,7 +119,7 @@ abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
     /**
      * Displays content when there is no data to display
      */
-    private fun showError(error: Throwable) {
+    override fun showError(error: Throwable) {
         Timber.w(error, "Show `Error`")
         _errorView?.run {
             text = error.message
@@ -165,15 +138,12 @@ abstract class LceFragment<CV: View, DATA: Any>: Fragment() {
     /**
      * Displays some error notification when the error is non-critical and some content may be displayed
      */
-    private fun showNonFatalError(error: Throwable) = activity?.let {
-        Timber.w(error, "Show `Non-fatal error`")
-        Toast.makeText(it, error.message, Toast.LENGTH_SHORT).show()
+    override fun showNonFatalError(error: Throwable) {
+        activity?.let {
+            Timber.w(error, "Show `Non-fatal error`")
+            Toast.makeText(it, error.message, Toast.LENGTH_SHORT).show()
+        }
     }
-
-    /**
-     * Process [LceState.Terminated]
-     */
-    protected open fun processTermination(): Unit = throw IllegalStateException("Unexpected `Terminated` state")
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,27 +1,16 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[CacheService](index.md)/[delete](delete.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[CacheService](index.md)/[delete](delete.md)
 
+# delete
 
-
-# delete  
-[jvm]  
-Brief description  
-
+[jvm]\
+abstract fun [delete](delete.md)(params: [P](index.md)): Completable
 
 Deletes cached value. The [getData](get-data.md) observable for the same key wil emit com.gojuno.koptional.None
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-abstract fun [delete](delete.md)(params: [P](index.md)): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)  
-
-
-
+| params | Caching key |

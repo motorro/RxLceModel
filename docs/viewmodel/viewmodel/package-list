@@ -1,6 +1,0 @@
-$dokka.format:gfm-v1
-$dokka.linkExtension:md
-
-com.motorro.rxlcemodel.viewmodel
-com.motorro.rxlcemodel.viewmodel.error
-

@@ -1,39 +1,29 @@
-//[base](../index.md)/[com.motorro.rxlcemodel.base](index.md)/[refreshed](refreshed.md)
+//[base](../../index.md)/[com.motorro.rxlcemodel.base](index.md)/[refreshed](refreshed.md)
 
+# refreshed
 
-
-# refreshed  
-[jvm]  
-Brief description  
-
+[jvm]\
+fun &lt;[DATA](refreshed.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](refreshed.md)&gt;&gt;.[refreshed](refreshed.md)(refresh: Completable): Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](refreshed.md)&gt;&gt;
 
 Refreshes data on subscription once
 
+#### Receiver
 
+Original stream
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+## Parameters
+
+jvm
+
+| | |
 |---|---|
-| <receiver>| <br><br>Original stream<br><br>
-| refresh| <br><br>Refresh operation<br><br>
-  
-  
-Content  
-fun <[DATA](refreshed.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<[LceState](-lce-state/index.md)<[DATA](refreshed.md)>>.[refreshed](refreshed.md)(refresh: [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)): [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<[LceState](-lce-state/index.md)<[DATA](refreshed.md)>>  
+| refresh | Refresh operation |
 
-
-[jvm]  
-Brief description  
-
+[jvm]\
+fun &lt;[DATA](refreshed.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [LceUseCase](-lce-use-case/index.md)&lt;[DATA](refreshed.md)&gt;.[refreshed](refreshed.md)(): [LceUseCase](-lce-use-case/index.md)&lt;[DATA](refreshed.md)&gt;
 
 Wraps use-case to refresh on each subscription
 
-  
-Content  
-fun <[DATA](refreshed.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [LceUseCase](-lce-use-case/index.md)<[DATA](refreshed.md)>.[refreshed](refreshed.md)(): [LceUseCase](-lce-use-case/index.md)<[DATA](refreshed.md)>  
+#### Receiver
 
-
-
+Original model

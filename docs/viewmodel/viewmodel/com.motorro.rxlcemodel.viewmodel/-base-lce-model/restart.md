@@ -1,17 +1,8 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[restart](restart.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[restart](restart.md)
 
+# restart
 
-
-# restart  
-[androidJvm]  
-Brief description  
-
+[androidJvm]\
+abstract fun [restart](restart.md)()
 
 Retries data subscription from scratch
-
-  
-Content  
-abstract fun [restart](restart.md)()  
-
-
-

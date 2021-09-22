@@ -1,17 +1,8 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[refresh](refresh.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[refresh](refresh.md)
 
+# refresh
 
-
-# refresh  
-[androidJvm]  
-Brief description  
-
+[androidJvm]\
+abstract fun [refresh](refresh.md)()
 
 Requests data refresh
-
-  
-Content  
-abstract fun [refresh](refresh.md)()  
-
-
-

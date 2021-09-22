@@ -1,25 +1,16 @@
-//[kserializer](../../index.md)/[com.motorro.rxlcemodel.kserializer](../index.md)/[KotlinCacheDelegateSerializer](index.md)/[KotlinCacheDelegateSerializer](-kotlin-cache-delegate-serializer.md)
+//[kserializer](../../../index.md)/[com.motorro.rxlcemodel.kserializer](../index.md)/[KotlinCacheDelegateSerializer](index.md)/[KotlinCacheDelegateSerializer](-kotlin-cache-delegate-serializer.md)
 
+# KotlinCacheDelegateSerializer
 
+[jvm]\
+fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [KotlinCacheDelegateSerializer](-kotlin-cache-delegate-serializer.md)(validatorFactory: [EntityValidatorFactory](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md), kSerializer: KSerializer&lt;[D](index.md)&gt;, binaryFormat: BinaryFormat)
 
-# KotlinCacheDelegateSerializer  
-[jvm]  
-Brief description  
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| binaryFormat| <br><br>Cbor serializer to use<br><br>
-| kSerializer| <br><br>Serializer to use with [D](index.md)<br><br>
-| validatorFactory| <br><br>Entity validator factory<br><br>
-  
-  
-Content  
-fun <[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [KotlinCacheDelegateSerializer](-kotlin-cache-delegate-serializer.md)(validatorFactory: EntityValidatorFactory, kSerializer: KSerializer<[D](index.md)>, binaryFormat: BinaryFormat)  
-
-
-
+| validatorFactory | [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md) validator factory |
+| kSerializer | Serializer to use with [D](index.md) |
+| binaryFormat | Cbor serializer to use |

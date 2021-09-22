@@ -1,27 +1,16 @@
-//[disklrucache](../../index.md)/[com.motorro.rxlcemodel.disklrucache](../index.md)/[DiskLruCacheSyncDelegate](index.md)/[get](get.md)
+//[disklrucache](../../../index.md)/[com.motorro.rxlcemodel.disklrucache](../index.md)/[DiskLruCacheSyncDelegate](index.md)/[get](get.md)
 
+# get
 
-
-# get  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [get](get.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;?
 
 Returns data if cached
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-open override fun [get](get.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): Entity<[D](index.md)>?  
-
-
-
+| params | Caching key |

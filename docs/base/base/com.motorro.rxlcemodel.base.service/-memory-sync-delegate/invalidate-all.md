@@ -1,17 +1,8 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[MemorySyncDelegate](index.md)/[invalidateAll](invalidate-all.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[MemorySyncDelegate](index.md)/[invalidateAll](invalidate-all.md)
 
+# invalidateAll
 
-
-# invalidateAll  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [invalidateAll](invalidate-all.md)()
 
 Invalidates all cached values
-
-  
-Content  
-open override fun [invalidateAll](invalidate-all.md)()  
-
-
-
