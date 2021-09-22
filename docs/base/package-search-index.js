@@ -1,1 +1,0 @@
-var packageSearchIndex = [{"l":"com.motorro.rxlcemodel.base","url":"com/motorro/rxlcemodel/base/package-summary.html"}, {"l":"com.motorro.rxlcemodel.base.entity","url":"com/motorro/rxlcemodel/base/entity/package-summary.html"}, {"l":"com.motorro.rxlcemodel.base.service","url":"com/motorro/rxlcemodel/base/service/package-summary.html"}, {"l":"All packages","url":"index.html"}]

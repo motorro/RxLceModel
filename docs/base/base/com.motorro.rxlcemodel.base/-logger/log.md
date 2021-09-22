@@ -1,28 +1,17 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base](../index.md)/[Logger](index.md)/[log](log.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base](../index.md)/[Logger](index.md)/[log](log.md)
 
+# log
 
-
-# log  
-[jvm]  
-Brief description  
-
+[jvm]\
+abstract fun [log](log.md)(level: [LogLevel](../-log-level/index.md), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))
 
 Logs something
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| level| <br><br>Log level<br><br>
-| message| <br><br>Log message<br><br>
-  
-  
-Content  
-abstract fun [log](log.md)(level: [LogLevel](../-log-level/index.md), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))  
-
-
-
+| level | Log level |
+| message | Log message |

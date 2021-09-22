@@ -2,7 +2,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
     ext.kotlin_version = '1.5.30'
-    ext.dokka_version = '1.4.0'
+    ext.dokka_version = '1.5.30'
     repositories {
         google()
         mavenCentral()
@@ -191,11 +191,11 @@ task displayVersion(type: Task, group: 'documentation') {
 
 dokkaGfmMultiModule.configure {
     outputDirectory = new File(docDir)
-    documentationFileName.set("module.md")
+    includes.from("module.md")
 }
 dokkaHtmlMultiModule.configure {
     outputDirectory = new File(docDir)
-    documentationFileName.set("module.md")
+    includes.from("module.md")
 }
 
 nexusPublishing {

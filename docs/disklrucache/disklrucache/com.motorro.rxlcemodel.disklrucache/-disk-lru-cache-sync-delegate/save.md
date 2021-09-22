@@ -1,28 +1,17 @@
-//[disklrucache](../../index.md)/[com.motorro.rxlcemodel.disklrucache](../index.md)/[DiskLruCacheSyncDelegate](index.md)/[save](save.md)
+//[disklrucache](../../../index.md)/[com.motorro.rxlcemodel.disklrucache](../index.md)/[DiskLruCacheSyncDelegate](index.md)/[save](save.md)
 
+# save
 
-
-# save  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [save](save.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), entity: [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;)
 
 Saves data to cache
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| entity| <br><br>Entity to cache<br><br>
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-open override fun [save](save.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), entity: Entity<[D](index.md)>)  
-
-
-
+| params | Caching key |
+| entity | Entity to cache |

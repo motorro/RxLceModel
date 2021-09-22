@@ -1,17 +1,8 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[dismissCurrentError](dismiss-current-error.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[dismissCurrentError](dismiss-current-error.md)
 
+# dismissCurrentError
 
-
-# dismissCurrentError  
-[androidJvm]  
-Brief description  
-
+[androidJvm]\
+fun [dismissCurrentError](dismiss-current-error.md)()
 
 Dismisses error set in state if it is error
-
-  
-Content  
-fun [dismissCurrentError](dismiss-current-error.md)()  
-
-
-

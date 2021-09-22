@@ -1,40 +1,23 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base](../index.md)/[LogLevel](index.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base](../index.md)/[LogLevel](index.md)
 
+# LogLevel
 
-
-# LogLevel  
- [jvm] 
+[jvm]\
+enum [LogLevel](index.md) : [Enum](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html)&lt;[LogLevel](index.md)&gt; 
 
 Log level
 
-enum [LogLevel](index.md) : [Enum](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html)<[LogLevel](index.md)>    
+## Entries
 
-
-## Entries  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| [INFO](-i-n-f-o/index.md)|  [jvm] [INFO](-i-n-f-o/index.md)()  <br>  <br>   <br>
-| [WARNING](-w-a-r-n-i-n-g/index.md)|  [jvm] [WARNING](-w-a-r-n-i-n-g/index.md)()  <br>  <br>   <br>
-| [ERROR](-e-r-r-o-r/index.md)|  [jvm] [ERROR](-e-r-r-o-r/index.md)()  <br>  <br>   <br>
+| [ERROR](-e-r-r-o-r/index.md) | [jvm]<br>[ERROR](-e-r-r-o-r/index.md)() |
+| [WARNING](-w-a-r-n-i-n-g/index.md) | [jvm]<br>[WARNING](-w-a-r-n-i-n-g/index.md)() |
+| [INFO](-i-n-f-o/index.md) | [jvm]<br>[INFO](-i-n-f-o/index.md)() |
 
+## Properties
 
-## Functions  
-  
-|  Name|  Summary| 
+| Name | Summary |
 |---|---|
-| [compareTo](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/compare-to.html)| [jvm]  <br>Content  <br>operator override fun [compareTo](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/compare-to.html)(other: [LogLevel](index.md)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)  <br><br><br>
-| [equals](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/equals.html)| [jvm]  <br>Content  <br>operator override fun [equals](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/equals.html)(other: [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)?): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)  <br><br><br>
-| [finalize](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/finalize.html)| [jvm]  <br>Content  <br>override fun [finalize](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/finalize.html)()  <br><br><br>
-| [getDeclaringClass](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/get-declaring-class.html)| [jvm]  <br>Content  <br>override fun [getDeclaringClass](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/get-declaring-class.html)(): [Class](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html)<[LogLevel](index.md)>  <br><br><br>
-| [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/hash-code.html)| [jvm]  <br>Content  <br>override fun [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/hash-code.html)(): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)  <br><br><br>
-| [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/to-string.html)| [jvm]  <br>Content  <br>open override fun [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/to-string.html)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)  <br><br><br>
-
-
-## Properties  
-  
-|  Name|  Summary| 
-|---|---|
-| [name](index.md#com.motorro.rxlcemodel.base/LogLevel/name/#/PointingToDeclaration/)|  [jvm] override val [name](index.md#com.motorro.rxlcemodel.base/LogLevel/name/#/PointingToDeclaration/): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)   <br>
-| [ordinal](index.md#com.motorro.rxlcemodel.base/LogLevel/ordinal/#/PointingToDeclaration/)|  [jvm] override val [ordinal](index.md#com.motorro.rxlcemodel.base/LogLevel/ordinal/#/PointingToDeclaration/): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)   <br>
-
+| [name](-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920) | [jvm]<br>val [name](-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [ordinal](-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920) | [jvm]<br>val [ordinal](-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |

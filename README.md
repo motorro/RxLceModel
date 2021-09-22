@@ -73,11 +73,18 @@ dependencies {
     implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
 }
 ```
-Optional: LCE ViewModel ready to accept LCE use-case for your view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/viewmodel/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/viewmodel/):
+Optional: LCE ViewModel and base view ready to accept LCE use-case for your view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/viewmodel/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/viewmodel/):
 ```groovy
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
     implementation "com.motorro.rxlcemodel:viewmodel:x.x.x"
+}
+```
+Optional: Compose LCE view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/composeview/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/composeview/):
+```groovy
+dependencies {
+    // Data serializer for DiskLruCache using Kotlin serialization
+    implementation "com.motorro.rxlcemodel:composeview:x.x.x"
 }
 ```
 
@@ -511,6 +518,7 @@ or in a source code.
 You may also take a look at basic Android [ViewModels](https://developer.android.com/topic/libraries/architecture/viewmodel)
 provided as a separate package. Use them as-is or as a delegate in your own `ViewModel` system. 
 There are three main classes:
+
 *   `BaseLceModel` - a common frame for LCE view-model having a signature for all common tasks to:
     *   Load data
     *   Dismiss error    
@@ -522,4 +530,11 @@ There are three main classes:
     
 To create a model from an `LceUseCase` call `BaseLceModel.create` methods and pass your state 
 use-cases or `LCE` observables to `ViewModel`
+
+You may also want to use basic views to switch your display according to LCE state:
+
+*   [LceStateView](viewmodel/src/main/kotlin/com/motorro/rxlcemodel/view/LceStateView.kt) - for Android 
+    view system.
+*   [LceStateView](composeview/src/main/kotlin/com/motorro/rxlcemodel/composeview/LceStateView.kt) - for Android
+    Compose view system.
 

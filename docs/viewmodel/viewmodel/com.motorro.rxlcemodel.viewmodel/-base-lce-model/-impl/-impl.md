@@ -1,11 +1,6 @@
-//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../../index.md)/[BaseLceModel](../index.md)/[Impl](index.md)/[Impl](-impl.md)
+//[viewmodel](../../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../../index.md)/[BaseLceModel](../index.md)/[Impl](index.md)/[Impl](-impl.md)
 
+# Impl
 
-
-# Impl  
-[androidJvm]  
-Content  
-fun [Impl](-impl.md)()  
-
-
-
+[androidJvm]\
+fun [Impl](-impl.md)()

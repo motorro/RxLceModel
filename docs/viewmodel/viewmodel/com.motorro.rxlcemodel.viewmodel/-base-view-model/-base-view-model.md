@@ -1,11 +1,6 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseViewModel](index.md)/[BaseViewModel](-base-view-model.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseViewModel](index.md)/[BaseViewModel](-base-view-model.md)
 
+# BaseViewModel
 
-
-# BaseViewModel  
-[androidJvm]  
-Content  
-fun [BaseViewModel](-base-view-model.md)()  
-
-
-
+[androidJvm]\
+fun [BaseViewModel](-base-view-model.md)()

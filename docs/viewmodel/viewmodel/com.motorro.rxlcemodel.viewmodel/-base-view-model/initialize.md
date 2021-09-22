@@ -1,17 +1,8 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseViewModel](index.md)/[initialize](initialize.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseViewModel](index.md)/[initialize](initialize.md)
 
+# initialize
 
-
-# initialize  
-[androidJvm]  
-Brief description  
-
+[androidJvm]\
+fun [initialize](initialize.md)()
 
 Call this function to initialize a new model and start receiving events
-
-  
-Content  
-fun [initialize](initialize.md)()  
-
-
-

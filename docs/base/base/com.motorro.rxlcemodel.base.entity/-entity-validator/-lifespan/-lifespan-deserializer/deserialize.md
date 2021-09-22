@@ -1,34 +1,20 @@
-//[base](../../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../../index.md)/[EntityValidator](../../index.md)/[Lifespan](../index.md)/[LifespanDeserializer](index.md)/[deserialize](deserialize.md)
+//[base](../../../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../../index.md)/[EntityValidator](../../index.md)/[Lifespan](../index.md)/[LifespanDeserializer](index.md)/[deserialize](deserialize.md)
 
+# deserialize
 
-
-# deserialize  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [deserialize](deserialize.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [EntityValidator](../../index.md)?
 
 Deserializes validator from string if string is recognized
 
-
-
-#### Return  
-
+#### Return
 
 Deserialized validator or null if not recognized
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| serialized| <br><br>Serialized validator<br><br>
-  
-  
-Content  
-open override fun [deserialize](deserialize.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [EntityValidator](../../index.md)?  
-
-
-
+| serialized | Serialized validator |

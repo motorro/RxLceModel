@@ -1,35 +1,26 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.entity](../index.md)/[Clock](index.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.entity](../index.md)/[Clock](index.md)
 
+# Clock
 
-
-# Clock  
- [jvm] 
+[jvm]\
+interface [Clock](index.md)
 
 Time provider
 
-interface [Clock](index.md)   
+## Types
 
-
-## Types  
-  
-|  Name|  Summary| 
+| Name | Summary |
 |---|---|
-| [SYSTEM](-s-y-s-t-e-m/index.md)| [jvm]  <br>Brief description  <br><br><br>System clock<br><br>  <br>Content  <br>object [SYSTEM](-s-y-s-t-e-m/index.md) : [Clock](index.md)  <br><br><br>
+| [SYSTEM](-s-y-s-t-e-m/index.md) | [jvm]<br>object [SYSTEM](-s-y-s-t-e-m/index.md) : [Clock](index.md)<br>System clock |
 
+## Functions
 
-## Functions  
-  
-|  Name|  Summary| 
+| Name | Summary |
 |---|---|
-| [equals](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html)| [jvm]  <br>Content  <br>open operator override fun [equals](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html)(other: [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)?): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)  <br><br><br>
-| [getMillis](get-millis.md)| [jvm]  <br>Brief description  <br><br><br>Current milliseconds value<br><br>  <br>Content  <br>abstract fun [getMillis](get-millis.md)(): [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)  <br><br><br>
-| [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/hash-code.html)| [jvm]  <br>Content  <br>open override fun [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/hash-code.html)(): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)  <br><br><br>
-| [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/to-string.html)| [jvm]  <br>Content  <br>open override fun [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/to-string.html)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)  <br><br><br>
+| [getMillis](get-millis.md) | [jvm]<br>abstract fun [getMillis](get-millis.md)(): [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)<br>Current milliseconds value |
 
+## Inheritors
 
-## Inheritors  
-  
-|  Name| 
+| Name |
 |---|
-| [Clock](-s-y-s-t-e-m/index.md)
-
+| [Clock](-s-y-s-t-e-m/index.md) |

@@ -1,27 +1,16 @@
-//[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[dismissError](dismiss-error.md)
+//[viewmodel](../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../index.md)/[BaseLceModel](index.md)/[dismissError](dismiss-error.md)
 
+# dismissError
 
-
-# dismissError  
-[androidJvm]  
-Brief description  
-
+[androidJvm]\
+open fun [dismissError](dismiss-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))
 
 Default action on critical error
 
+## Parameters
 
+androidJvm
 
-## Parameters  
-  
-androidJvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| error| <br><br>Error to dismiss<br><br>
-  
-  
-Content  
-open fun [dismissError](dismiss-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))  
-
-
-
+| error | Error to dismiss |
