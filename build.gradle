@@ -20,7 +20,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
         classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -40,10 +40,10 @@ setDescription("A reactive data loading for Android based on RxJava and `Loading
 
 ext {
     // Android
-    androidBuildToolsVersion = '30.0.2'
+    androidBuildToolsVersion = '31.0.0'
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 30
-    androidCompileSdkVersion = 30
+    androidTargetSdkVersion = 31
+    androidCompileSdkVersion = 31
     versionName = project.version
     versionCode = buildVersionCode()
 
@@ -76,7 +76,20 @@ allprojects {
 
                 // Tests
                 "junit": '4.13.2',
-                "mockito_kotlin": "2.2.0"
+                "mockito_kotlin": "2.2.0",
+
+                // Compose
+                "compose_compiler_version": "1.1.0-alpha04",
+                "compose_ui_version": "1.1.0-alpha04",
+                "compose_ui_tooling_version": "1.1.0-alpha04",
+                "compose_ui_foundation_version": "1.1.0-alpha04",
+                "compose_ui_material_version": "1.1.0-alpha04",
+                "compose_ui_activity_version": "1.3.0-beta02",
+                "compose_viewmodel_version": "2.4.0-beta01",
+                "compose_livedata_version": "1.1.0-alpha04",
+                "compose_accompanist_version": "0.12.0",
+                "compose_ui_test_manifest_version": "1.1.0-alpha04",
+                "compose_ui_test_vi_version": "1.1.0-alpha04"
         ]
     }
 
@@ -146,6 +159,10 @@ task runViewmodelUnitTests(type: Task, dependsOn: [':viewmodel:cleanTest', ':vie
     description 'Run unit tests for ViewModel library.'
 }
 
+task runComposeViewUnitTests(type: Task, dependsOn: [':composeview:cleanTest', ':composeview:test'], group: 'verification') {
+    description 'Run unit tests for Compose-view library.'
+}
+
 task runSampleUnitTests(type: Task, dependsOn: [':sample:cleanTest', ':sample:test'], group: 'verification') {
     description 'Run unit tests for Sample application.'
 }
@@ -156,6 +173,8 @@ task runUnitTests(
                 'runBaseUnitTests',
                 'runDiskLruUnitTests',
                 'runKserializerUnitTests',
+                'runViewmodelUnitTests',
+                'runComposeViewUnitTests',
                 'runSampleUnitTests'
         ],
         group: 'verification'
