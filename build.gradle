@@ -143,27 +143,27 @@ allprojects {
     }
 }
 
-task runBaseUnitTests(type: Task, dependsOn: [':base:cleanTest', ':base:test'], group: 'verification') {
+task runBaseUnitTests(type: Task, dependsOn: [':base:test'], group: 'verification') {
     description 'Run unit tests for Bbase library.'
 }
 
-task runDiskLruUnitTests(type: Task, dependsOn: [':disklrucache:cleanTest', ':disklrucache:test'], group: 'verification') {
+task runDiskLruUnitTests(type: Task, dependsOn: [':disklrucache:test'], group: 'verification') {
     description 'Run unit tests for DiskLruCache library.'
 }
 
-task runKserializerUnitTests(type: Task, dependsOn: [':kserializer:cleanTest', ':kserializer:test'], group: 'verification') {
+task runKserializerUnitTests(type: Task, dependsOn: [':kserializer:test'], group: 'verification') {
     description 'Run unit tests for KSerializer library.'
 }
 
-task runViewmodelUnitTests(type: Task, dependsOn: [':viewmodel:cleanTest', ':viewmodel:test'], group: 'verification') {
+task runViewmodelUnitTests(type: Task, dependsOn: [':viewmodel:testDebugUnitTest'], group: 'verification') {
     description 'Run unit tests for ViewModel library.'
 }
 
-task runComposeViewUnitTests(type: Task, dependsOn: [':composeview:cleanTest', ':composeview:test'], group: 'verification') {
+task runComposeViewUnitTests(type: Task, dependsOn: [':composeview:testDebugUnitTest'], group: 'verification') {
     description 'Run unit tests for Compose-view library.'
 }
 
-task runSampleUnitTests(type: Task, dependsOn: [':sample:cleanTest', ':sample:test'], group: 'verification') {
+task runSampleUnitTests(type: Task, dependsOn: [':sample:testDebugUnitTest'], group: 'verification') {
     description 'Run unit tests for Sample application.'
 }
 
