@@ -230,3 +230,16 @@ inline fun <DATA: Any> Observable<LceState<DATA>>.onEmptyLoadingReturn(crossinli
     }
 }
 
+/**
+ * Substitutes [LceState.Loading] empty data with data produced by [block]
+ * @receiver LCE stream
+ * @param block Item creation block
+ */
+inline fun <DATA: Any> Observable<LceState<DATA>>.onEmptyLoadingReturnItem(crossinline block: () -> DATA?): Observable<LceState<DATA>> = map {
+    if (it is LceState.Loading && null == it.data) {
+        LceState.Loading(block(), it.dataIsValid, it.type)
+    } else {
+        it
+    }
+}
+
