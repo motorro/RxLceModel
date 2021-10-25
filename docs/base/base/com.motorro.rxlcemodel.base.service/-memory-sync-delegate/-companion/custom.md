@@ -3,7 +3,7 @@
 # custom
 
 [jvm]\
-fun &lt;[D](custom.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](custom.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [custom](custom.md)(map: [MutableMap](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html)&lt;[P](custom.md), [Entity](../../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](custom.md)&gt;&gt;): [MemorySyncDelegate](../index.md)&lt;[D](custom.md), [P](custom.md)&gt;
+fun &lt;[D](custom.md) : Any, [P](custom.md) : Any&gt; [custom](custom.md)(map: MutableMap&lt;[P](custom.md), [Entity](../../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](custom.md)&gt;&gt;): [MemorySyncDelegate](../index.md)&lt;[D](custom.md), [P](custom.md)&gt;
 
 Creates an in-memory LRU cache with custom [map](custom.md) as a cache
 

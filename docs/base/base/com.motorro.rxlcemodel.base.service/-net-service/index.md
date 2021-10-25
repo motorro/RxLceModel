@@ -3,7 +3,7 @@
 # NetService
 
 [jvm]\
-interface [NetService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
+interface [NetService](index.md)&lt;[D](index.md) : Any, in [P](index.md) : Any&gt;
 
 Interface to load an [com.motorro.rxlcemodel.base.entity.Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md) from network
 

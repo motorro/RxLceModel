@@ -3,7 +3,7 @@
 # log
 
 [jvm]\
-abstract fun [log](log.md)(level: [LogLevel](../-log-level/index.md), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))
+abstract fun [log](log.md)(level: [LogLevel](../-log-level/index.md), message: String)
 
 Logs something
 

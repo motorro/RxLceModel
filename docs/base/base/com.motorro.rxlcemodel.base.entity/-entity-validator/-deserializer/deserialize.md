@@ -3,7 +3,7 @@
 # deserialize
 
 [jvm]\
-abstract fun [deserialize](deserialize.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [EntityValidator](../index.md)?
+abstract fun [deserialize](deserialize.md)(serialized: String): [EntityValidator](../index.md)?
 
 Deserializes validator from string if string is recognized
 

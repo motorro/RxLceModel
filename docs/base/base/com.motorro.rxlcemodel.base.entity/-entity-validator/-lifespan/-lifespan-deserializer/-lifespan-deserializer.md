@@ -4,6 +4,6 @@
 
 [jvm]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@JvmOverloads
 
 fun [LifespanDeserializer](-lifespan-deserializer.md)(clock: [Clock](../../../-clock/index.md) = Clock.SYSTEM)

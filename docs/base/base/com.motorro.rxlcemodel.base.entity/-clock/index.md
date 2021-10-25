@@ -17,7 +17,7 @@ Time provider
 
 | Name | Summary |
 |---|---|
-| [getMillis](get-millis.md) | [jvm]<br>abstract fun [getMillis](get-millis.md)(): [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)<br>Current milliseconds value |
+| [getMillis](get-millis.md) | [jvm]<br>abstract fun [getMillis](get-millis.md)(): Long<br>Current milliseconds value |
 
 ## Inheritors
 

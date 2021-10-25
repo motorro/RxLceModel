@@ -3,7 +3,7 @@
 # SyncDelegateCacheService
 
 [jvm]\
-class [SyncDelegateCacheService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [CacheService](../-cache-service/index.md)&lt;[D](index.md), [P](index.md)&gt; 
+class [SyncDelegateCacheService](index.md)&lt;[D](index.md) : Any, [P](index.md) : Any&gt; : [CacheService](../-cache-service/index.md)&lt;[D](index.md), [P](index.md)&gt; 
 
 Service implementation
 
@@ -19,7 +19,7 @@ jvm
 
 | Name | Summary |
 |---|---|
-| [Delegate](-delegate/index.md) | [jvm]<br>interface [Delegate](-delegate/index.md)&lt;[D](-delegate/index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](-delegate/index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;<br>Delegate that synchronously performs caching operations |
+| [Delegate](-delegate/index.md) | [jvm]<br>interface [Delegate](-delegate/index.md)&lt;[D](-delegate/index.md) : Any, [P](-delegate/index.md) : Any&gt;<br>Delegate that synchronously performs caching operations |
 
 ## Functions
 

@@ -3,7 +3,7 @@
 # CacheFriendDelegate
 
 [jvm]\
-class [CacheFriendDelegate](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [CacheFriend](../-cache-friend/index.md)&gt;(delegate: [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;, [P](index.md)&gt;) : [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[D](index.md), [P](index.md)&gt; 
+class [CacheFriendDelegate](index.md)&lt;[D](index.md) : Any, [P](index.md) : [CacheFriend](../-cache-friend/index.md)&gt;(delegate: [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;, [P](index.md)&gt;) : [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[D](index.md), [P](index.md)&gt; 
 
 Wraps [delegate](../../../../base/com.motorro.rxlcemodel.base.service/-cache-friend-delegate/delegate.md) adding unmodified [CacheFriend.cacheKey](../-cache-friend/cache-key.md) to the mix with data. Validates that key on [get](get.md) and returns null if it is not equals original. Helps to make sure the data returned is not a result of clashed cache key.
 
@@ -11,7 +11,7 @@ Wraps [delegate](../../../../base/com.motorro.rxlcemodel.base.service/-cache-fri
 
 | | |
 |---|---|
-| [CacheFriendDelegate](-cache-friend-delegate.md) | [jvm]<br>fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [CacheFriend](../-cache-friend/index.md)&gt; [CacheFriendDelegate](-cache-friend-delegate.md)(delegate: [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;, [P](index.md)&gt;) |
+| [CacheFriendDelegate](-cache-friend-delegate.md) | [jvm]<br>fun &lt;[D](index.md) : Any, [P](index.md) : [CacheFriend](../-cache-friend/index.md)&gt; [CacheFriendDelegate](-cache-friend-delegate.md)(delegate: [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;, [P](index.md)&gt;) |
 
 ## Functions
 

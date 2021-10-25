@@ -3,7 +3,7 @@
 # invalidate
 
 [jvm]\
-open override fun [invalidate](invalidate.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))
+open override fun [invalidate](invalidate.md)(params: String)
 
 Clears cached value
 

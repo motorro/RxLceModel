@@ -4,9 +4,9 @@
 
 [jvm]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@JvmOverloads
 
-fun [Lifespan](-lifespan.md)(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../-clock/index.md) = Clock.SYSTEM)
+fun [Lifespan](-lifespan.md)(ttl: Long, clock: [Clock](../../-clock/index.md) = Clock.SYSTEM)
 
 ## Parameters
 

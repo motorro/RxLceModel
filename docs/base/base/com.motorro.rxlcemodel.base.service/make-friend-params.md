@@ -3,7 +3,7 @@
 # makeFriendParams
 
 [jvm]\
-inline fun &lt;[D](make-friend-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](make-friend-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)&lt;[D](make-friend-params.md), [CacheFriend](-cache-friend/index.md)&gt;.[makeFriendParams](make-friend-params.md)(crossinline stringify: [P](make-friend-params.md).() -&gt; [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)&lt;[D](make-friend-params.md), [P](make-friend-params.md)&gt;
+inline fun &lt;[D](make-friend-params.md) : Any, [P](make-friend-params.md) : Any&gt; [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)&lt;[D](make-friend-params.md), [CacheFriend](-cache-friend/index.md)&gt;.[makeFriendParams](make-friend-params.md)(crossinline stringify: [P](make-friend-params.md).() -&gt; String): [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)&lt;[D](make-friend-params.md), [P](make-friend-params.md)&gt;
 
 Creates an adapter delegate that creates [CacheFriend](-cache-friend/index.md) params using [stringify](make-friend-params.md) function
 

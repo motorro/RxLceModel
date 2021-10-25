@@ -3,7 +3,7 @@
 # simple
 
 [jvm]\
-fun &lt;[D](simple.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](simple.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [simple](simple.md)(initialCapacity: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 16): [MemorySyncDelegate](../index.md)&lt;[D](simple.md), [P](simple.md)&gt;
+fun &lt;[D](simple.md) : Any, [P](simple.md) : Any&gt; [simple](simple.md)(initialCapacity: Int = 16): [MemorySyncDelegate](../index.md)&lt;[D](simple.md), [P](simple.md)&gt;
 
 Creates a simple in-memory cache without LRU strategy
 

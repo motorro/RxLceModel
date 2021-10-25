@@ -11,4 +11,4 @@ A logger
 
 | Name | Summary |
 |---|---|
-| [log](log.md) | [jvm]<br>abstract fun [log](log.md)(level: [LogLevel](../-log-level/index.md), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))<br>Logs something |
+| [log](log.md) | [jvm]<br>abstract fun [log](log.md)(level: [LogLevel](../-log-level/index.md), message: String)<br>Logs something |

@@ -3,6 +3,6 @@
 # getMillis
 
 [jvm]\
-open override fun [getMillis](get-millis.md)(): [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)
+open override fun [getMillis](get-millis.md)(): Long
 
 Current milliseconds value

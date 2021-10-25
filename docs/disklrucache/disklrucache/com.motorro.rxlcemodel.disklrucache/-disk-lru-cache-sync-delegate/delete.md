@@ -3,7 +3,7 @@
 # delete
 
 [jvm]\
-open override fun [delete](delete.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))
+open override fun [delete](delete.md)(params: String)
 
 Deletes cached value
 

@@ -9,4 +9,4 @@ object [Companion](index.md)
 
 | Name | Summary |
 |---|---|
-| [createSnapshot](create-snapshot.md) | [jvm]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [createSnapshot](create-snapshot.md)(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../../-clock/index.md) = Clock.SYSTEM): [EntityValidator.Lifespan](../index.md)<br>Creates a snapshot that may be serialized and deserialized back to dynamic [Lifespan](../index.md) |
+| [createSnapshot](create-snapshot.md) | [jvm]<br>@JvmOverloads<br>fun [createSnapshot](create-snapshot.md)(ttl: Long, clock: [Clock](../../../-clock/index.md) = Clock.SYSTEM): [EntityValidator.Lifespan](../index.md)<br>Creates a snapshot that may be serialized and deserialized back to dynamic [Lifespan](../index.md) |

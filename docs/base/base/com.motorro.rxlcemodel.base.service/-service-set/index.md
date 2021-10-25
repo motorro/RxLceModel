@@ -3,7 +3,7 @@
 # ServiceSet
 
 [jvm]\
-interface [ServiceSet](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
+interface [ServiceSet](index.md)&lt;[D](index.md) : Any, in [P](index.md) : Any&gt;
 
 Service-set for [com.motorro.rxlcemodel.base.LceModel](../../com.motorro.rxlcemodel.base/-lce-model/index.md)
 

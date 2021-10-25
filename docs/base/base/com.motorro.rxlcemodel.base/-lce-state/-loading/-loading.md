@@ -4,6 +4,6 @@
 
 [jvm]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@JvmOverloads
 
-fun &lt;out [DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [Loading](-loading.md)(data: [DATA](index.md)?, dataIsValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html), type: [LceState.Loading.Type](-type/index.md) = Type.LOADING)
+fun &lt;out [DATA](index.md) : Any&gt; [Loading](-loading.md)(data: [DATA](index.md)?, dataIsValid: Boolean, type: [LceState.Loading.Type](-type/index.md) = Type.LOADING)

@@ -3,7 +3,7 @@
 # DiskLruCacheProvider
 
 [jvm]\
-fun [DiskLruCacheProvider](-disk-lru-cache-provider.md)(directory: [File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html), appVersion: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), maxSize: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html))
+fun [DiskLruCacheProvider](-disk-lru-cache-provider.md)(directory: [File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html), appVersion: Int, maxSize: Long)
 
 ## Parameters
 

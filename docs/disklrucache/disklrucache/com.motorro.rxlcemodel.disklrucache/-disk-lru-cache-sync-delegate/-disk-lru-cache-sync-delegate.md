@@ -4,9 +4,9 @@
 
 [jvm]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@JvmOverloads
 
-fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: [CacheDelegateSerializerDeserializer](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../base/base/com.motorro.rxlcemodel.base.entity/-clock/index.md) = Clock.SYSTEM)
+fun &lt;[D](index.md) : Any&gt; [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)(prefix: String, sd: [CacheDelegateSerializerDeserializer](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../base/base/com.motorro.rxlcemodel.base.entity/-clock/index.md) = Clock.SYSTEM)
 
 ## Parameters
 
