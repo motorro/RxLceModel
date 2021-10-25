@@ -14,6 +14,7 @@
 package com.motorro.rxlcemodel.base
 
 import org.junit.Test
+import java.io.IOException
 import kotlin.test.assertEquals
 
 class LceStateCatchToLceTest {
@@ -35,6 +36,107 @@ class LceStateCatchToLceTest {
         assertEquals(
             LceState.Error(null, false, error),
             state2
+        )
+    }
+
+    @Test
+    fun substitutesEmptyLoading() {
+        val original = LceState.Loading<Int>(null, false)
+        val substitute = LceState.Content(10, true)
+        assertEquals(
+            substitute,
+            original.mapEmptyData { substitute }
+        )
+    }
+
+    @Test
+    fun substitutesEmptyError() {
+        val original = LceState.Error<Int>(null, false, IOException())
+        val substitute = LceState.Content(10, true)
+        assertEquals(
+            substitute,
+            original.mapEmptyData { substitute }
+        )
+    }
+
+    @Test
+    fun substitutesTermination() {
+        val original = LceState.Terminated<Int>()
+        val substitute = LceState.Content(10, true)
+        assertEquals(
+            substitute,
+            original.mapEmptyData { substitute }
+        )
+    }
+
+    @Test
+    fun passesNonEmptyLoading() {
+        val original = LceState.Loading(10, true)
+        val substitute = LceState.Content(10, true)
+        assertEquals(
+            original,
+            original.mapEmptyData { substitute }
+        )
+    }
+
+    @Test
+    fun passesNonEmptyError() {
+        val original = LceState.Error(10, true, IOException())
+        val substitute = LceState.Content(10, true)
+        assertEquals(
+            original,
+            original.mapEmptyData { substitute }
+        )
+    }
+
+    @Test
+    fun substitutesEmptyLoadingItem() {
+        val original = LceState.Loading<Int>(null, false)
+        val substitute = 10
+        assertEquals(
+            LceState.Loading(10, false),
+            original.mapEmptyDataItem { substitute }
+        )
+    }
+
+    @Test
+    fun substitutesEmptyErrorItem() {
+        val error = IOException()
+        val original = LceState.Error<Int>(null, false, error)
+        val substitute = 10
+        assertEquals(
+            LceState.Error(10, false, error),
+            original.mapEmptyDataItem { substitute }
+        )
+    }
+
+    @Test
+    fun passesNonEmptyLoadingItem() {
+        val original = LceState.Loading(10, true)
+        val substitute = 100
+        assertEquals(
+            original,
+            original.mapEmptyDataItem { substitute }
+        )
+    }
+
+    @Test
+    fun passesNonEmptyErrorItem() {
+        val original = LceState.Error(10, true, IOException())
+        val substitute = 100
+        assertEquals(
+            original,
+            original.mapEmptyDataItem { substitute }
+        )
+    }
+
+    @Test
+    fun passesTerminationItem() {
+        val original = LceState.Terminated<Int>()
+        val substitute = 100
+        assertEquals(
+            original,
+            original.mapEmptyDataItem { substitute }
         )
     }
 }
