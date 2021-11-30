@@ -68,7 +68,7 @@ class CacheModule {
         /**
          * Cache size
          */
-        private const val CACHE_SIZE: Long = 20 * 1024 * 1024
+        private const val CACHE_SIZE: Long = 20L * 1024L * 1024L
     }
 
     /**

@@ -86,5 +86,5 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
      * @return a newly created ViewModel
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = createModel(createLceModel()) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = createModel(createLceModel()) as T
 }

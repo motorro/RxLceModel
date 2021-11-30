@@ -53,6 +53,6 @@ class AddNoteViewModel(private val addNote: (String, String) -> Completable): Ba
         }
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T  = AddNoteViewModel(addNoteOperation) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T  = AddNoteViewModel(addNoteOperation) as T
     }
 }
