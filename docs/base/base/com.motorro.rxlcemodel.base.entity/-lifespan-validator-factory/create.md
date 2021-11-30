@@ -3,7 +3,7 @@
 # create
 
 [jvm]\
-open override fun [create](create.md)(serialized: String?): [EntityValidator](../-entity-validator/index.md)
+open override fun [create](create.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)?): [EntityValidator](../-entity-validator/index.md)
 
 Creates entity cache-control
 
@@ -19,4 +19,4 @@ jvm
 
 | | |
 |---|---|
-| kotlin.IllegalArgumentException | if serialized can't be deserialized |
+| [kotlin.IllegalArgumentException](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception/index.html) | if serialized can't be deserialized |

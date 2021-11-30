@@ -39,4 +39,4 @@ Basic ViewModel with LceModel inside
 
 | Name |
 |---|
-| [BaseLceModel](../-with-updates/index.md) |
+| [WithUpdates](../-with-updates/index.md) |

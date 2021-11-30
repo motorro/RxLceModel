@@ -3,7 +3,7 @@
 # map
 
 [jvm]\
-inline fun &lt;[DATA_1](map.md) : Any, [DATA_2](map.md) : Any&gt; [LceState](-lce-state/index.md)&lt;[DATA_1](map.md)&gt;.[map](map.md)(mapper: ([DATA_1](map.md)) -&gt; [DATA_2](map.md)): [LceState](-lce-state/index.md)&lt;[DATA_2](map.md)&gt;
+inline fun &lt;[DATA_1](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [DATA_2](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [LceState](-lce-state/index.md)&lt;[DATA_1](map.md)&gt;.[map](map.md)(mapper: ([DATA_1](map.md)) -&gt; [DATA_2](map.md)): [LceState](-lce-state/index.md)&lt;[DATA_2](map.md)&gt;
 
 Maps data in LceState
 
@@ -16,7 +16,7 @@ jvm
 | mapper | Data mapper |
 
 [jvm]\
-fun &lt;[DATA_1](map.md) : Any, [DATA_2](map.md) : Any&gt; [LceUseCase](-lce-use-case/index.md)&lt;[DATA_1](map.md)&gt;.[map](map.md)(mapper: ([DATA_1](map.md)) -&gt; [DATA_2](map.md)): [LceUseCase](-lce-use-case/index.md)&lt;[DATA_2](map.md)&gt;
+fun &lt;[DATA_1](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [DATA_2](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [LceUseCase](-lce-use-case/index.md)&lt;[DATA_1](map.md)&gt;.[map](map.md)(mapper: ([DATA_1](map.md)) -&gt; [DATA_2](map.md)): [LceUseCase](-lce-use-case/index.md)&lt;[DATA_2](map.md)&gt;
 
 Creates a use-case wrapper that converts [DATA_1](map.md) to [DATA_2](map.md)
 
@@ -35,7 +35,7 @@ jvm
 | mapper | Data mapper |
 
 [jvm]\
-fun &lt;[DATA_1](map.md) : Any, [DATA_2](map.md) : Any, [PARAMS](map.md) : Any&gt; [LceModel](-lce-model/index.md)&lt;[DATA_1](map.md), [PARAMS](map.md)&gt;.[map](map.md)(mapper: ([DATA_1](map.md)) -&gt; [DATA_2](map.md)): [LceModel](-lce-model/index.md)&lt;[DATA_2](map.md), [PARAMS](map.md)&gt;
+fun &lt;[DATA_1](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [DATA_2](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [LceModel](-lce-model/index.md)&lt;[DATA_1](map.md), [PARAMS](map.md)&gt;.[map](map.md)(mapper: ([DATA_1](map.md)) -&gt; [DATA_2](map.md)): [LceModel](-lce-model/index.md)&lt;[DATA_2](map.md), [PARAMS](map.md)&gt;
 
 Creates a model wrapper that converts [DATA_1](map.md) to [DATA_2](map.md)
 

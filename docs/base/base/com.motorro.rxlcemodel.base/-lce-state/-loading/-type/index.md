@@ -3,7 +3,7 @@
 # Type
 
 [jvm]\
-enum [Type](index.md) : Enum&lt;[LceState.Loading.Type](index.md)&gt; 
+enum [Type](index.md) : [Enum](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html)&lt;[LceState.Loading.Type](index.md)&gt; 
 
 Loading type
 
@@ -20,5 +20,5 @@ Loading type
 
 | Name | Summary |
 |---|---|
-| [name](../../../-log-level/-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920) | [jvm]<br>val [name](../../../-log-level/-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920): String |
-| [ordinal](../../../-log-level/-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920) | [jvm]<br>val [ordinal](../../../-log-level/-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920): Int |
+| [name](../../../-log-level/-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920) | [jvm]<br>val [name](../../../-log-level/-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [ordinal](../../../-log-level/-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920) | [jvm]<br>val [ordinal](../../../-log-level/-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |

@@ -3,7 +3,7 @@
 # save
 
 [jvm]\
-open override fun [save](save.md)(params: String, entity: [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;)
+open override fun [save](save.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), entity: [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;)
 
 Saves data to cache
 

@@ -3,7 +3,7 @@
 # create
 
 [jvm]\
-abstract fun [create](create.md)(serialized: String? = null): [EntityValidator](../-entity-validator/index.md)
+abstract fun [create](create.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)? = null): [EntityValidator](../-entity-validator/index.md)
 
 Creates entity cache-control
 
@@ -19,4 +19,4 @@ jvm
 
 | | |
 |---|---|
-| kotlin.IllegalArgumentException | if serialized can't be deserialized |
+| [kotlin.IllegalArgumentException](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception/index.html) | if serialized can't be deserialized |

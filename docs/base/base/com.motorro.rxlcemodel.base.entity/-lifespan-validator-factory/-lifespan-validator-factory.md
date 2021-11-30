@@ -4,9 +4,9 @@
 
 [jvm]\
 
-@JvmOverloads
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-fun [LifespanValidatorFactory](-lifespan-validator-factory.md)(cacheTtl: Long, clock: [Clock](../-clock/index.md) = Clock.SYSTEM)
+fun [LifespanValidatorFactory](-lifespan-validator-factory.md)(cacheTtl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../-clock/index.md) = Clock.SYSTEM)
 
 ## Parameters
 

@@ -3,7 +3,7 @@
 # CacheService
 
 [jvm]\
-interface [CacheService](index.md)&lt;[D](index.md) : Any, in [P](index.md) : Any&gt;
+interface [CacheService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
 
 Interface to cache an [com.motorro.rxlcemodel.base.entity.Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md) locally Cache should notify subscribers that data has been updated through [getData](get-data.md) channel
 

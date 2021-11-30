@@ -3,7 +3,7 @@
 # getData
 
 [jvm]\
-fun &lt;[DATA](get-data.md) : Any&gt; Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](get-data.md)&gt;&gt;.[getData](get-data.md)(terminateOnError: ([LceState.Error](-lce-state/-error/index.md)&lt;[DATA](get-data.md)&gt;) -&gt; Boolean): Observable&lt;[DATA](get-data.md)&gt;
+fun &lt;[DATA](get-data.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](get-data.md)&gt;&gt;.[getData](get-data.md)(terminateOnError: ([LceState.Error](-lce-state/-error/index.md)&lt;[DATA](get-data.md)&gt;) -&gt; [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)): Observable&lt;[DATA](get-data.md)&gt;
 
 Returns model's data stream dropping state information
 

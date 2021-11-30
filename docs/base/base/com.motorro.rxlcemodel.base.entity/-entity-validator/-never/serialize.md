@@ -3,6 +3,6 @@
 # serialize
 
 [jvm]\
-open override fun [serialize](serialize.md)(): String
+open override fun [serialize](serialize.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 A way to serialize entity

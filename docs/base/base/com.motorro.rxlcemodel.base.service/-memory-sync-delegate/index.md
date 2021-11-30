@@ -3,7 +3,7 @@
 # MemorySyncDelegate
 
 [jvm]\
-abstract class [MemorySyncDelegate](index.md)&lt;[D](index.md) : Any, [P](index.md) : Any&gt; : [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[D](index.md), [P](index.md)&gt; 
+abstract class [MemorySyncDelegate](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [SyncDelegateCacheService.Delegate](../-sync-delegate-cache-service/-delegate/index.md)&lt;[D](index.md), [P](index.md)&gt; 
 
 A simple memory cache for [SyncDelegateCacheService](../-sync-delegate-cache-service/index.md).
 

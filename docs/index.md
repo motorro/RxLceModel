@@ -6,7 +6,22 @@ A reactive data loading for Android based on  [RxJava](https://github.com/Reacti
 
 ##  Features
 
-<ul><li>Widely used design with Loading/Content/Error states.</li><li>Uses cache as a 'source of truth' with CacheThenNetLceModel.</li><li>Checks data is valid (up-to-date or whatever).</li><li>Falls back to invalid cache data if failed to refresh which allows offline application use.</li><li>Supports data *refresh* or *update* to implement reload or server data update operations.</li><li>Cache may be *invalidated* separately from loading to allow lazy data updates and complex data linking.</li><li>Extendable architecture on every level.</li><li>Thoroughly tested.</li></ul>
+- 
+   Widely used design with Loading/Content/Error states.
+- 
+   Uses cache as a 'source of truth' with CacheThenNetLceModel.
+- 
+   Checks data is valid (up-to-date or whatever).
+- 
+   Falls back to invalid cache data if failed to refresh which allows offline application use.
+- 
+   Supports data *refresh* or *update* to implement reload or server data update operations.
+- 
+   Cache may be *invalidated* separately from loading to allow lazy data updates and complex data linking.
+- 
+   Extendable architecture on every level.
+- 
+   Thoroughly tested.
 
 Please see a [github project](https://github.com/motorro/RxLceModel) for detailed description.
 

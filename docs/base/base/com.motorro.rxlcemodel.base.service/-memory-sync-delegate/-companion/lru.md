@@ -3,7 +3,7 @@
 # lru
 
 [jvm]\
-fun &lt;[D](lru.md) : Any, [P](lru.md) : Any&gt; [lru](lru.md)(maxEntries: Int, initialCapacity: Int = 16): [MemorySyncDelegate](../index.md)&lt;[D](lru.md), [P](lru.md)&gt;
+fun &lt;[D](lru.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](lru.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [lru](lru.md)(maxEntries: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), initialCapacity: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 16): [MemorySyncDelegate](../index.md)&lt;[D](lru.md), [P](lru.md)&gt;
 
 Creates an in-memory LRU cache with [maxEntries](lru.md) records maximum
 

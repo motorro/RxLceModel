@@ -47,4 +47,4 @@ Base model with [state](state.md) and [refresh](refresh.md)
 
 | Name |
 |---|
-| [BaseLceModel](-impl/index.md) |
+| [Impl](-impl/index.md) |
