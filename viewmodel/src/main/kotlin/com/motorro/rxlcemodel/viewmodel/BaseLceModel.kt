@@ -16,18 +16,16 @@ package com.motorro.rxlcemodel.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.gojuno.koptional.None
-import com.gojuno.koptional.Optional
-import com.gojuno.koptional.Some
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.LceUseCase
 import com.motorro.rxlcemodel.base.combine
 import com.motorro.rxlcemodel.viewmodel.error.UnhandledException
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import java.util.*
 
 /**
  * Base model with [state] and [refresh]
@@ -200,7 +198,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
          */
         override fun terminate() {
             disposables.clear()
-            stateData.value = LceState.Terminated()
+            stateData.value = LceState.Terminated
         }
 
         /**
@@ -219,7 +217,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
         /**
          * Card operation state to mix with main data loading
          */
-        private val operationStream = BehaviorSubject.createDefault<Optional<LceState<Unit>>>(None)
+        private val operationStream = BehaviorSubject.createDefault<Optional<LceState<Unit>>>(Optional.empty())
 
         /**
          * Mixes in running operation state
@@ -228,7 +226,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
             viewState: LceState<DATA>,
             operationState: Optional<LceState<Unit>>
         ): LceState<DATA> =
-            operationState.toNullable()
+            operationState.orElse(null)
                 ?.let { viewState.combine(it) { viewData, _ -> viewData } }
                 ?: viewState
 
@@ -243,7 +241,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
                 operation
                     .doOnSubscribe {
                         operationStream.onNext(
-                            Some(
+                            Optional.of(
                                 LceState.Loading(
                                     null,
                                     true,
@@ -254,7 +252,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
                     }
                     .doOnError { error ->
                         operationStream.onNext(
-                            Some(
+                            Optional.of(
                                 LceState.Error(
                                     null,
                                     true,
@@ -266,8 +264,8 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
                     .doOnComplete {
                         operationStream.onNext(
                             when {
-                                terminating -> Some(LceState.Terminated())
-                                else -> None
+                                terminating -> Optional.of(LceState.Terminated)
+                                else -> Optional.empty()
                             }
                         )
                     }
@@ -280,7 +278,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
          * Clears last operation status, e.g. on error dismissal
          */
         protected fun clearOperationStatus() {
-            operationStream.onNext(None)
+            operationStream.onNext(Optional.empty())
         }
 
         /**

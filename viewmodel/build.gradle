@@ -50,7 +50,6 @@ android {
 
     buildTypes {
         debug {
-            debuggable true
             minifyEnabled false
         }
         release {

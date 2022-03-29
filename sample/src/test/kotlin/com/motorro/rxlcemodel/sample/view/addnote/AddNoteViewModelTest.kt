@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.LceState.Loading.Type.UPDATING
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +56,7 @@ class AddNoteViewModelTest {
         inOrder(observer) {
             verify(observer).onChanged(LceState.Content(Unit, true))
             verify(observer).onChanged(LceState.Loading(Unit, true, UPDATING))
-            verify(observer).onChanged(LceState.Terminated())
+            verify(observer).onChanged(LceState.Terminated)
             verifyNoMoreInteractions()
         }
 

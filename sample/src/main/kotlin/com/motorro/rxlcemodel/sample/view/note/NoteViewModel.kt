@@ -29,11 +29,11 @@ import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -66,7 +66,7 @@ class NoteViewModel(
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.ui)
             .takeUntil(termination)
-            .concatWith(Single.just(LceState.Terminated()))
+            .concatWith(Single.just(LceState.Terminated))
             .distinctUntilChanged()
 
     /**

@@ -13,8 +13,6 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.gojuno.koptional.None
-import com.gojuno.koptional.Some
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.motorro.rxlcemodel.base.service.CacheService
@@ -24,14 +22,15 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
+import java.util.*
 import kotlin.test.assertEquals
 
 class UpdateWrapperTest {
@@ -75,7 +74,7 @@ class UpdateWrapperTest {
     @Test
     fun updatesServerAndCache() {
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { VALID_ENTITY }
         }
 
@@ -87,7 +86,7 @@ class UpdateWrapperTest {
     @Test
     fun transmitsUpstream() {
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { VALID_ENTITY }
         }
 
@@ -108,7 +107,7 @@ class UpdateWrapperTest {
     @Test
     fun combinesSuccessfulLoadingWithUpstreamLoading() {
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { VALID_ENTITY }
         }
 
@@ -131,7 +130,7 @@ class UpdateWrapperTest {
     fun combinesFaultyLoadingWithUpstreamLoading() {
         val error = IOException("Network error")
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { throw(error) }
         }
 
@@ -153,7 +152,7 @@ class UpdateWrapperTest {
     @Test
     fun combinesSuccessfulLoadingWithUpstreamContent() {
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { VALID_ENTITY }
         }
 
@@ -181,7 +180,7 @@ class UpdateWrapperTest {
     fun combinesFaultyLoadingWithUpstreamContent() {
         val error = IOException("Network error")
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { throw(error) }
         }
 
@@ -209,7 +208,7 @@ class UpdateWrapperTest {
     fun combinesSuccessfulLoadingWithUpstreamError() {
         val error = IOException("Network error")
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { VALID_ENTITY }
         }
 
@@ -238,7 +237,7 @@ class UpdateWrapperTest {
         val error1 = IOException("Network error 1")
         val error2 = IOException("Network error 2")
         createWrapper {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netUpdate = { throw(error2) }
         }
 
@@ -269,7 +268,7 @@ class UpdateWrapperTest {
             override val cache: CacheService<Int, String> = mock()
         }
         whenever(serviceSet.net.update(any(), any())).thenReturn(Single.create { /* Endless wait */ })
-        whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just(Some(VALID_ENTITY)))
+        whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just<Optional<Entity<Int>>>(Optional.of(VALID_ENTITY)))
         upstream = BehaviorSubject.createDefault(LceState.Loading(null, false))
         val upstreamModel = object : LceModel<Int, String> {
             override val state: Observable<LceState<Int>> = upstream
@@ -300,7 +299,7 @@ class UpdateWrapperTest {
     fun integratesWithCacheThenNetModel() {
         val updatedEntity = VALID_ENTITY.copy(data = 2)
         val serviceSet = createServiceSet<Int, Int, String> {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netGet = { VALID_ENTITY }
             netUpdate = { updatedEntity }
         }

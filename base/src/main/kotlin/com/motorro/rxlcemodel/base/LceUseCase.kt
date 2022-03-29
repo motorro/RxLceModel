@@ -13,8 +13,8 @@
 
 package com.motorro.rxlcemodel.base
 
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * Base LCE use-case with [state] and [refresh]

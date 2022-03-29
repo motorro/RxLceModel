@@ -14,8 +14,8 @@
 package com.motorro.rxlcemodel.base
 
 import com.motorro.rxlcemodel.base.service.UpdatingServiceSet
-import io.reactivex.Completable
-import io.reactivex.Scheduler
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 
 /**
  * Wraps an [LceModel] to enable simple data updates with the [UPDATE] structure

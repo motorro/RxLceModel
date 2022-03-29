@@ -22,11 +22,11 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.Completable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.CompletableSubject
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.CompletableSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -66,7 +66,7 @@ class NoteViewModelTest {
 
     @Test
     fun subscribesLceModelAndTransfersState() {
-        val terminated = LceState.Terminated<Note>()
+        val terminated = LceState.Terminated
 
         model.initialize()
         assertTrue(state.hasObservers())
@@ -109,6 +109,6 @@ class NoteViewModelTest {
         model.initialize()
         model.state.observeForever(observer)
         model.delete()
-        verify(observer).onChanged(LceState.Terminated())
+        verify(observer).onChanged(LceState.Terminated)
     }
 }

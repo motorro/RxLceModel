@@ -61,7 +61,7 @@ class LceStateCatchToLceTest {
 
     @Test
     fun substitutesTermination() {
-        val original = LceState.Terminated<Int>()
+        val original = LceState.Terminated
         val substitute = LceState.Content(10, true)
         assertEquals(
             substitute,
@@ -132,7 +132,7 @@ class LceStateCatchToLceTest {
 
     @Test
     fun passesTerminationItem() {
-        val original = LceState.Terminated<Int>()
+        val original = LceState.Terminated
         val substitute = 100
         assertEquals(
             original,

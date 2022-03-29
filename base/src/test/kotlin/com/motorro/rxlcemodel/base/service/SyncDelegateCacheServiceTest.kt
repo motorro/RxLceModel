@@ -13,15 +13,13 @@
 
 package com.motorro.rxlcemodel.base.service
 
-import com.gojuno.koptional.None
-import com.gojuno.koptional.Some
 import com.motorro.rxlcemodel.base.LceModel
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -50,7 +48,7 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate).get(PARAMS_1)
     }
 
@@ -73,13 +71,13 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate).get(PARAMS_1)
 
         service.save(PARAMS_1, VALID_ENTITY).test().assertComplete()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None, Some(VALID_ENTITY))
+        s.assertValues(Optional.empty(), Optional.of(VALID_ENTITY))
         verify(cacheDelegate).save(PARAMS_1, VALID_ENTITY)
         verify(cacheDelegate, times(2)).get(PARAMS_1)
     }
@@ -94,12 +92,12 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
 
         service.save(PARAMS_1, VALID_ENTITY).test().assertError(error)
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
     }
 
     @Test
@@ -109,7 +107,7 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate).get(PARAMS_1)
 
         service.refetch(PARAMS_1).test().assertComplete()
@@ -117,7 +115,7 @@ class SyncDelegateCacheServiceTest {
 
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate, times(2)).get(PARAMS_1)
     }
 
@@ -133,7 +131,7 @@ class SyncDelegateCacheServiceTest {
         subscribers.forEach { (params, s) ->
             s.assertNoErrors()
             s.assertNotComplete()
-            s.assertValues(None)
+            s.assertValues(Optional.empty())
             verify(cacheDelegate).get(params)
         }
         verify(cacheDelegate).get(PARAMS_1)
@@ -146,7 +144,7 @@ class SyncDelegateCacheServiceTest {
         subscribers.forEach { (params, s) ->
             s.assertNoErrors()
             s.assertNotComplete()
-            s.assertValues(None)
+            s.assertValues(Optional.empty())
             verify(cacheDelegate, times(2)).get(params)
         }
     }
@@ -158,7 +156,7 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate).get(PARAMS_1)
 
         service.invalidate(PARAMS_1).test().assertComplete()
@@ -166,7 +164,7 @@ class SyncDelegateCacheServiceTest {
 
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate, times(2)).get(PARAMS_1)
     }
 
@@ -180,12 +178,12 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
 
         service.invalidate(PARAMS_1).test().assertError(error)
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate, times(1)).get(PARAMS_1)
     }
 
@@ -201,7 +199,7 @@ class SyncDelegateCacheServiceTest {
         subscribers.forEach { (params, s) ->
             s.assertNoErrors()
             s.assertNotComplete()
-            s.assertValues(None)
+            s.assertValues(Optional.empty())
             verify(cacheDelegate).get(params)
         }
 
@@ -211,7 +209,7 @@ class SyncDelegateCacheServiceTest {
         subscribers.forEach { (params, s) ->
             s.assertNoErrors()
             s.assertNotComplete()
-            s.assertValues(None)
+            s.assertValues(Optional.empty())
             verify(cacheDelegate, times(2)).get(params)
         }
     }
@@ -231,7 +229,7 @@ class SyncDelegateCacheServiceTest {
         subscribers.forEach { (params, s) ->
             s.assertNoErrors()
             s.assertNotComplete()
-            s.assertValues(None)
+            s.assertValues(Optional.empty())
             verify(cacheDelegate).get(params)
         }
 
@@ -241,7 +239,7 @@ class SyncDelegateCacheServiceTest {
         subscribers.forEach { (params, s) ->
             s.assertNoErrors()
             s.assertNotComplete()
-            s.assertValues(None)
+            s.assertValues(Optional.empty())
             verify(cacheDelegate, times(1)).get(params)
         }
     }
@@ -253,7 +251,7 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate).get(PARAMS_1)
 
         service.delete(PARAMS_1).test().assertComplete()
@@ -261,7 +259,7 @@ class SyncDelegateCacheServiceTest {
 
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate, times(2)).get(PARAMS_1)
     }
 
@@ -275,12 +273,12 @@ class SyncDelegateCacheServiceTest {
         val s = service.getData(PARAMS_1).test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
 
         service.delete(PARAMS_1).test().assertError(error)
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(None)
+        s.assertValues(Optional.empty())
         verify(cacheDelegate, times(1)).get(PARAMS_1)
     }
 

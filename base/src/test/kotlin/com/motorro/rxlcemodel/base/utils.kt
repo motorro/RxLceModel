@@ -13,8 +13,6 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.gojuno.koptional.Optional
-import com.gojuno.koptional.Some
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.UpdatingNetService
@@ -23,10 +21,11 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
+import java.util.*
 
 /**
  * Service configuration
@@ -35,9 +34,9 @@ import io.reactivex.subjects.Subject
  * @property netUpdate Value returned from net update
  */
 data class ServiceConfig<D: Any>(
-        var cacheInitial: () -> Optional<Entity<D>> = { throw Exception("Cache get not defined") },
-        var netGet: () -> Entity<D> = { throw Exception("Net get not defined") },
-        var netUpdate: () -> Entity<D> = { throw Exception("Net update not defined") }
+    var cacheInitial: () -> Optional<Entity<D>> = { throw Exception("Cache get not defined") },
+    var netGet: () -> Entity<D> = { throw Exception("Net get not defined") },
+    var netUpdate: () -> Entity<D> = { throw Exception("Net update not defined") }
 )
 
 /**
@@ -65,7 +64,7 @@ inline fun <reified D: Any, reified U: Any, reified P: Any> createServiceSet(con
         on { getData(any()) } doReturn cacheData
         on { save(any(), any()) } doAnswer { mock ->
             Completable.fromAction {
-                cacheData.onNext(Some(mock.arguments[1] as Entity<D>))
+                cacheData.onNext(Optional.of(mock.arguments[1] as Entity<D>))
             }
         }
     }

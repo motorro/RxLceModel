@@ -19,9 +19,9 @@ import com.motorro.rxlcemodel.base.LceUseCase
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.inOrder
 import com.nhaarman.mockitokotlin2.mock
-import io.reactivex.Completable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -106,7 +106,7 @@ class WithUpdatesLceModelTest {
         inOrder(observer) {
             verify(observer).onChanged(LceState.Content(DATA, true))
             verify(observer).onChanged(LceState.Loading(DATA, true, LceState.Loading.Type.UPDATING))
-            verify(observer).onChanged(LceState.Terminated())
+            verify(observer).onChanged(LceState.Terminated)
             verifyNoMoreInteractions()
         }
         assertTrue(refreshed)

@@ -18,9 +18,9 @@ import androidx.lifecycle.Observer
 import com.motorro.rxlcemodel.base.LceState
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -41,7 +41,7 @@ class BaseLceModelTest {
         var numOfSubscriptions = 0
         val state = Observable.fromCallable<LceState<String>> {
             ++numOfSubscriptions
-            LceState.Terminated()
+            LceState.Terminated
         }
 
         val model = createModel(state, Completable.complete())
@@ -52,7 +52,7 @@ class BaseLceModelTest {
 
     @Test
     fun transmitsState() {
-        val state = LceState.Terminated<String>()
+        val state = LceState.Terminated
 
         val observer: Observer<LceState<String>> = mock()
         val model = createModel(Observable.just(state), Completable.complete())
@@ -80,7 +80,7 @@ class BaseLceModelTest {
         var numOfSubscriptions = 0
         val state = Observable.fromCallable<LceState<String>> {
             ++numOfSubscriptions
-            LceState.Terminated()
+            LceState.Terminated
         }
 
         val model = createModel(state, Completable.complete())
@@ -95,7 +95,7 @@ class BaseLceModelTest {
         var numOfSubscriptions = 0
         val state = Observable.fromCallable<LceState<String>> {
             ++numOfSubscriptions
-            LceState.Terminated()
+            LceState.Terminated
         }
         val model = createModel(state, Completable.complete())
         model.initialize()

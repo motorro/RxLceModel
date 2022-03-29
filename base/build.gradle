@@ -19,13 +19,15 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    api "io.reactivex.rxjava2:rxjava:${commonLibVersions.rx_java}"
-    api "com.gojuno.koptional:koptional:${commonLibVersions.koptional}"
+    api "io.reactivex.rxjava3:rxjava:${commonLibVersions.rx_java}"
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"

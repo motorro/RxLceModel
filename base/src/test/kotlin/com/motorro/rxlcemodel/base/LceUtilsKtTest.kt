@@ -13,12 +13,12 @@
 
 package com.motorro.rxlcemodel.base
 
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
 import kotlin.test.assertEquals
@@ -182,7 +182,7 @@ class LceUtilsKtTest {
             LceState.Content(2, true),
             LceState.Error(null, false, error),
             LceState.Error(3, true, error),
-            LceState.Terminated()
+            LceState.Terminated
         )
 
         source.flatMapSingleData(::mapper)
@@ -194,7 +194,7 @@ class LceUtilsKtTest {
                 LceState.Content("2", true),
                 LceState.Error(null, false, error),
                 LceState.Error("3", true, error),
-                LceState.Terminated()
+                LceState.Terminated
             )
     }
 
@@ -212,7 +212,7 @@ class LceUtilsKtTest {
             LceState.Content(2, true),
             LceState.Error(null, false, error1),
             LceState.Error(3, true, error1),
-            LceState.Terminated()
+            LceState.Terminated
         )
 
         source.flatMapSingleData(::mapper)
@@ -224,7 +224,7 @@ class LceUtilsKtTest {
                 LceState.Error(null, false, error2),
                 LceState.Error(null, false, error1),
                 LceState.Error(null, false, error2),
-                LceState.Terminated()
+                LceState.Terminated
             )
     }
 

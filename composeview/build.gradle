@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionName rootProject.versionName
         versionCode rootProject.versionCode
@@ -54,7 +54,6 @@ android {
 
     buildTypes {
         debug {
-            debuggable true
             minifyEnabled false
         }
         release {

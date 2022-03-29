@@ -14,7 +14,7 @@
 package com.motorro.rxlcemodel.sample
 
 import com.motorro.rxlcemodel.sample.domain.data.Note
-import org.threeten.bp.LocalTime
+import java.time.LocalTime
 
 val NOTE = Note(
     1,

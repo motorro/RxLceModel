@@ -14,7 +14,7 @@
 package com.motorro.rxlcemodel.base.service
 
 import com.motorro.rxlcemodel.base.entity.Entity
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Interface to load an [com.motorro.rxlcemodel.base.entity.Entity] from network

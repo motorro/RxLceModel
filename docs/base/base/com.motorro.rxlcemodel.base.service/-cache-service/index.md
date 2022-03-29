@@ -26,8 +26,8 @@ jvm
 
 | Name | Summary |
 |---|---|
-| [delete](delete.md) | [jvm]<br>abstract fun [delete](delete.md)(params: [P](index.md)): Completable<br>Deletes cached value. The [getData](get-data.md) observable for the same key wil emit com.gojuno.koptional.None |
-| [getData](get-data.md) | [jvm]<br>abstract fun [getData](get-data.md)(params: [P](index.md)): Observable&lt;Optional&lt;[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;&gt;&gt;<br>Subscribes to cache data updates |
+| [delete](delete.md) | [jvm]<br>abstract fun [delete](delete.md)(params: [P](index.md)): Completable<br>Deletes cached value. The [getData](get-data.md) observable for the same key will emit empty [java.util.Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html). |
+| [getData](get-data.md) | [jvm]<br>abstract fun [getData](get-data.md)(params: [P](index.md)): Observable&lt;[Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)&lt;[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;&gt;&gt;<br>Subscribes to cache data updates |
 | [invalidate](invalidate.md) | [jvm]<br>abstract fun [invalidate](invalidate.md)(params: [P](index.md)): Completable<br>Invalidates cached value |
 | [refetch](refetch.md) | [jvm]<br>abstract fun [refetch](refetch.md)(params: [P](index.md)): Completable<br>Makes cache service to refetch cached data updating subscribers with [params](refetch.md) |
 | [save](save.md) | [jvm]<br>abstract fun [save](save.md)(params: [P](index.md), entity: [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;): Completable<br>Saves entity in a cache |

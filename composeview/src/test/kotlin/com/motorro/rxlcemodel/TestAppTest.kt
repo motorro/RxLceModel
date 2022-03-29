@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
  */
 @Config(
         application = TestApplication::class,
-        sdk = [Build.VERSION_CODES.P]
+        sdk = [Build.VERSION_CODES.S]
 )
 open class TestAppTest {
     /**

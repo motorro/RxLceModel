@@ -13,8 +13,8 @@
 
 package com.motorro.rxlcemodel.sample.domain.data
 
-import org.threeten.bp.LocalTime
 import java.io.Serializable
+import java.time.LocalTime
 
 /**
  * A list of notes
@@ -23,7 +23,7 @@ import java.io.Serializable
  */
 data class NoteList(val notes: List<Child>, val timeStamp: LocalTime):Serializable {
     companion object {
-        private const val serialVersionUID: Long = 2
+        private const val serialVersionUID: Long = 3
     }
 
     /**
@@ -34,7 +34,7 @@ data class NoteList(val notes: List<Child>, val timeStamp: LocalTime):Serializab
      */
     data class Child(val id: Int, val title: String, val lastModified: LocalTime): Serializable {
         companion object {
-            private const val serialVersionUID: Long = 2
+            private const val serialVersionUID: Long = 3
         }
     }
 }

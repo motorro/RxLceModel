@@ -13,9 +13,9 @@
 
 package com.motorro.rxlcemodel.base
 
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 
 /**
@@ -145,7 +145,7 @@ fun <DATA_1: Any, DATA_2: Any> Observable<LceState<DATA_1>>.flatMapSingleData(ma
                     state.error
                 )
             }
-            is LceState.Terminated -> Single.just(LceState.Terminated())
+            is LceState.Terminated -> Single.just(LceState.Terminated)
         }
     }
 }

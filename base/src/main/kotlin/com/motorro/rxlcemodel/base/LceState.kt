@@ -109,11 +109,11 @@ sealed class LceState<out DATA: Any> {
      * does not emit completion and caches the latest emission. So converting stream to LiveData will loose Rx completion
      * logic.
      */
-    class Terminated<out DATA: Any>: LceState<DATA>() {
+    object Terminated: LceState<Nothing>() {
         /**
          * State data
          */
-        override val data: DATA? = null
+        override val data: Nothing? = null
 
         /**
          * A property that is evaluated internally and may mean that data being emitted is stall,
@@ -122,7 +122,7 @@ sealed class LceState<out DATA: Any> {
          */
         override val dataIsValid: Boolean = false
 
-        override fun equals(other: Any?): Boolean = this === other || other is Terminated<*>
+        override fun equals(other: Any?): Boolean = this === other || other is Terminated
 
         override fun hashCode(): Int = 0
     }
@@ -137,7 +137,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.map(mapper: (data: DATA_1
         is LceState.Loading -> LceState.Loading(data?.let(mapper), dataIsValid, type)
         is LceState.Content -> LceState.Content(mapper(data), dataIsValid)
         is LceState.Error -> LceState.Error(data?.let(mapper), dataIsValid, error)
-        is LceState.Terminated -> LceState.Terminated()
+        is LceState.Terminated -> LceState.Terminated
     }
 }
 
@@ -174,12 +174,12 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
     return when (this) {
         is LceState.Loading -> when (other) {
             is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
-            is LceState.Terminated -> LceState.Terminated()
+            is LceState.Terminated -> LceState.Terminated
             else -> LceState.Loading(data3, dataIsValid, this.type)
         }
         is LceState.Content -> when (other) {
             is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
-            is LceState.Terminated -> LceState.Terminated()
+            is LceState.Terminated -> LceState.Terminated
             is LceState.Loading -> LceState.Loading(data3, dataIsValid, other.type)
             is LceState.Content -> if (null == data3) {
                 LceState.Loading(null, false)
@@ -188,11 +188,11 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
             }
         }
         is LceState.Error -> if (other is LceState.Terminated) {
-            LceState.Terminated()
+            LceState.Terminated
         } else {
             LceState.Error(data3, dataIsValid, error)
         }
-        is LceState.Terminated -> LceState.Terminated()
+        is LceState.Terminated -> LceState.Terminated
     }
 }
 
@@ -212,7 +212,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.catchToLce(block: LceStat
  * @receiver LCE state
  * @param block transformation block
  */
-inline fun <DATA: Any> LceState<DATA>.mapEmptyData(crossinline block: (LceState<DATA>) -> LceState<DATA>): LceState<DATA> =
+inline fun <reified DATA: Any> LceState<DATA>.mapEmptyData(crossinline block: (LceState<DATA>) -> LceState<DATA>): LceState<DATA> =
     if (null == this.data) {
         block(this)
     } else {

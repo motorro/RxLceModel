@@ -13,9 +13,6 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.gojuno.koptional.None
-import com.gojuno.koptional.Optional
-import com.gojuno.koptional.Some
 import com.motorro.rxlcemodel.base.LceState.Loading.Type.REFRESHING
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
@@ -23,14 +20,15 @@ import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class CacheThenNetLceModelTest {
@@ -64,7 +62,7 @@ class CacheThenNetLceModelTest {
     @Test
     fun willLoadCachedDataAndWontLoadNetIfValid()  {
         createModel {
-            cacheInitial = { Some(VALID_ENTITY) }
+            cacheInitial = { Optional.of(VALID_ENTITY) }
         }
 
         val s = model.state.test()
@@ -82,7 +80,7 @@ class CacheThenNetLceModelTest {
     @Test
     fun willStartWithPassedInitialEmission()  {
         val testServiceSet = createServiceSet<Int, Unit, String> {
-            cacheInitial = { Some(VALID_ENTITY) }
+            cacheInitial = { Optional.of(VALID_ENTITY) }
         }
         serviceSet = testServiceSet
         cacheData = testServiceSet.cacheData
@@ -110,7 +108,7 @@ class CacheThenNetLceModelTest {
     @Test
     fun willLoadCachedDataAndLoadNetIfNoCachedData() {
         createModel {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netGet = { VALID_ENTITY }
         }
 
@@ -131,7 +129,7 @@ class CacheThenNetLceModelTest {
     @Test
     fun willLoadCachedDataAndLoadNetIfCacheIsOutdated() {
         createModel {
-            cacheInitial = { Some(INVALID_ENTITY) }
+            cacheInitial = { Optional.of(INVALID_ENTITY) }
             netGet = { VALID_ENTITY }
         }
 
@@ -152,7 +150,7 @@ class CacheThenNetLceModelTest {
     @Test
     fun willUpdateSubscriberWhenCacheChanges() {
         createModel {
-            cacheInitial = { Some(VALID_ENTITY) }
+            cacheInitial = { Optional.of(VALID_ENTITY) }
         }
 
         val s = model.state.test()
@@ -164,7 +162,7 @@ class CacheThenNetLceModelTest {
 
         val newData = 3
         val updatedEntity = VALID_ENTITY.copy(data = newData)
-        cacheData.onNext(Some(updatedEntity))
+        cacheData.onNext(Optional.of(updatedEntity))
         s.assertValues(
             LceState.Content(VALID_ENTITY.data, true),
             LceState.Content(updatedEntity.data, true)
@@ -175,7 +173,7 @@ class CacheThenNetLceModelTest {
     fun willExplicitlyRefreshData() {
         val updatedEntity = VALID_ENTITY.copy(data = 3)
         createModel {
-            cacheInitial = { Some(VALID_ENTITY) }
+            cacheInitial = { Optional.of(VALID_ENTITY) }
             netGet = { updatedEntity }
         }
         val s = model.state.test()
@@ -200,7 +198,7 @@ class CacheThenNetLceModelTest {
     fun willReportNetworkErrorOnNoData() {
         val error = IOException("Network error")
         createModel {
-            cacheInitial = { None }
+            cacheInitial = { Optional.empty<Entity<Int>>() }
             netGet = { throw(error) }
         }
         val s = model.state.test()
@@ -216,7 +214,7 @@ class CacheThenNetLceModelTest {
     fun willReportNetworkErrorOnRefresh() {
         val error = IOException("Network error")
         createModel {
-            cacheInitial = { Some(INVALID_ENTITY) }
+            cacheInitial = { Optional.of(INVALID_ENTITY) }
             netGet = { throw(error) }
         }
         val s = model.state.test()
@@ -235,7 +233,7 @@ class CacheThenNetLceModelTest {
             override val cache: CacheService<Int, String> = mock()
         }
         whenever(serviceSet.net.get(any())).thenReturn(Single.create { /* Endless wait */ })
-        whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just(Some(VALID_ENTITY)))
+        whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just<Optional<Entity<Int>>>(Optional.of(VALID_ENTITY)))
 
         model = CacheThenNetLceModel(
             PARAMS,
@@ -277,7 +275,7 @@ class CacheThenNetLceModelTest {
         whenever(serviceSet.net.get(any())).thenReturn(
                 netValue.firstOrError().map { Entity.Impl(it, EntityValidator.Always) }
         )
-        whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just(Some(INVALID_ENTITY)))
+        whenever(serviceSet.cache.getData(any())).thenReturn(Observable.just<Optional<Entity<Int>>>(Optional.of(INVALID_ENTITY)))
         whenever(serviceSet.cache.save(any(), any())).thenReturn(Completable.complete())
 
         model = CacheThenNetLceModel(

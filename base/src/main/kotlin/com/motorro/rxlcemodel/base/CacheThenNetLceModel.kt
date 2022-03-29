@@ -13,7 +13,6 @@
 
 package com.motorro.rxlcemodel.base
 
-import com.gojuno.koptional.Optional
 import com.motorro.rxlcemodel.base.LceState.*
 import com.motorro.rxlcemodel.base.LogLevel.INFO
 import com.motorro.rxlcemodel.base.entity.Entity
@@ -21,16 +20,17 @@ import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.base.service.UpdateOperationState
 import com.motorro.rxlcemodel.base.service.UpdateOperationState.*
 import com.motorro.rxlcemodel.base.service.buildUpdateOperation
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import java.util.*
 
 /**
  * A [LceModel] which uses cache subscription as a 'source of truth'.
  * When [state] is subscribed it loads cache data refreshing it if cache is stall or whenever cache
- * returns [com.gojuno.koptional.None].
+ * returns empty [java.util.Optional].
  * The model always returns cached data first - then network if data is stall
  * Cache service *must* notify of its data changes!
  * @param DATA Data type of data being held
@@ -116,7 +116,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      */
     private fun createDataTransformer(): ObservableTransformer<Optional<Entity<DATA>>, LceState<DATA>> = ObservableTransformer { upstream ->
         upstream.switchMap { optionalEntity ->
-            val entity = optionalEntity.toNullable()
+            val entity = optionalEntity.orElse(null)
             val data = entity?.data
             val dataIsValid = true == entity?.isValid()
             withLogger { modelLog(INFO, "Data transformer. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid") }
@@ -165,7 +165,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      */
     private fun createDataUpdater(): ObservableTransformer<Optional<Entity<DATA>>, LceState<DATA>> = ObservableTransformer { upstream ->
         upstream.switchMap { optionalEntity ->
-            val entity = optionalEntity.toNullable()
+            val entity = optionalEntity.orElse(null)
             val dataIsValid = true == entity?.isValid()
             withLogger { modelLog(INFO, "Data updater. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid") }
             when {

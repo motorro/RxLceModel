@@ -152,7 +152,7 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
     private fun onAddClicked() {
         Timber.d("Going to add a note...")
         view?.findNavController()?.navigate(
-            NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment()
+            NoteListFragmentDirections.actionNoteListFrnagmentToAddNoteFragment()
         )
     }
 }

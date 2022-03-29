@@ -3,6 +3,7 @@
 .idea
 .DS_Store
 .externalNativeBuild
+.log
 build
 release
 /local.properties

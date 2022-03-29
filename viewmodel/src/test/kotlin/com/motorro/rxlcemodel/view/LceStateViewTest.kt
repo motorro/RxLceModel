@@ -119,7 +119,7 @@ class LceStateViewTest {
 
     @Test
     fun processStateViewHandlesTermination() {
-        val content = LceState.Terminated<Int>()
+        val content = LceState.Terminated
         stateView.processStateView(content)
         verify(stateView).processTermination()
     }
