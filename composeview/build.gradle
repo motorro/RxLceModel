@@ -1,0 +1,187 @@
+/*
+ * Copyright 2021 Nikolai Kotchetkov.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'org.jetbrains.dokka'
+    id 'maven-publish'
+    id 'signing'
+}
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        ]
+    }
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionName rootProject.versionName
+        versionCode rootProject.versionCode
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = commonLibVersions.compose_compiler_version
+    }
+
+    testOptions.unitTests.includeAndroidResources = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':base')
+    implementation project(':viewmodel')
+
+    // Core
+    api "androidx.compose.ui:ui:${commonLibVersions.compose_ui_version}"
+    // Tooling support (Previews, etc.)
+    api "androidx.compose.ui:ui-tooling:${commonLibVersions.compose_ui_tooling_version}"
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    api "androidx.compose.foundation:foundation:${commonLibVersions.compose_ui_foundation_version}"
+    // Material Design
+    api "androidx.compose.material:material:${commonLibVersions.compose_ui_material_version}"
+    // Integration with ViewModels
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:${commonLibVersions.compose_viewmodel_version}"
+
+    // Accompanist widgets
+    // https://google.github.io/accompanist/
+    implementation "com.google.accompanist:accompanist-swiperefresh:${commonLibVersions.compose_accompanist_version}"
+
+    debugImplementation "androidx.compose.ui:ui-test-manifest:${commonLibVersions.compose_ui_test_manifest_version}"
+    debugImplementation "androidx.compose.ui:ui-tooling:$commonLibVersions.compose_ui_version"
+
+    testImplementation "junit:junit:${commonLibVersions.junit}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
+    testImplementation "androidx.test:core:1.4.0"
+    testImplementation "androidx.compose.ui:ui-test-junit4:${commonLibVersions.compose_ui_test_vi_version}"
+    testImplementation 'org.robolectric:robolectric:4.7.2'
+}
+
+dokkaJavadoc.configure {
+    outputDirectory.set(new File("$buildDir/javadoc"))
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+        }
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    archiveClassifier.set('javadoc')
+    from "$buildDir/javadoc"
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.source
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+def libId = 'composeview'
+def libName = 'composeview'
+def libDesc = 'Base composables to use with LCE use-cases'
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                artifact sourcesJar
+                artifact javadocJar
+                groupId = rootProject.group
+                artifactId = libId
+                version = rootProject.version
+
+                pom {
+                    name = libName
+                    description = libDesc
+                    url = projectUrl
+                    licenses {
+                        license {
+                            name = 'Apache-2.0'
+                            url = 'https://apache.org/licenses/LICENSE-2.0'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = developerId
+                            name = developerName
+                            email = developerEmail
+                        }
+                    }
+                    scm {
+                        connection = projectScm
+                        developerConnection = projectScm
+                        url = projectUrl
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "sonatype"
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                credentials {
+                    username ossrhUsername
+                    password ossrhPassword
+                }
+            }
+        }
+    }
+
+    signing {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications
+    }
+}

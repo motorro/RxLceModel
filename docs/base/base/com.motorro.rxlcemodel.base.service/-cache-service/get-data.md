@@ -1,27 +1,16 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[CacheService](index.md)/[getData](get-data.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[CacheService](index.md)/[getData](get-data.md)
 
+# getData
 
-
-# getData  
-[jvm]  
-Brief description  
-
+[jvm]\
+abstract fun [getData](get-data.md)(params: [P](index.md)): Observable&lt;Optional&lt;[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;&gt;&gt;
 
 Subscribes to cache data updates
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Params to notify of changes<br><br>
-  
-  
-Content  
-abstract fun [getData](get-data.md)(params: [P](index.md)): [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<Optional<[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)<[D](index.md)>>>  
-
-
-
+| params | Params to notify of changes |

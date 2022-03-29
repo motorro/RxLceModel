@@ -22,6 +22,7 @@ import com.motorro.rxlcemodel.base.service.NetService
 import com.motorro.rxlcemodel.base.service.ServiceSet
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import io.reactivex.rxjava3.core.Observable
+import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 
 /**
  * A basic functionality for ViewModel creation that exports state as live-data
@@ -54,7 +55,7 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
     /**
      * Creates state live-data
      */
-    protected open fun LceModel<DATA, PARAMS>.createStateLiveData(): Observable<LceState<DATA>> =
+    protected open fun LceModel<DATA, PARAMS>.createStateData(): Observable<LceState<DATA>> =
         state
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.ui)
@@ -72,8 +73,8 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
      * Creates [BaseLceModel] by default
      */
     protected open fun createModel(lceModel: LceModel<DATA, PARAMS>): ViewModel =
-        BaseLceModel.Impl(
-            lceModel.createStateLiveData(),
+        BaseLceModel.create(
+            lceModel.createStateData(),
             lceModel.setupRefresh()
         )
 
@@ -85,5 +86,5 @@ abstract class BaseLceModelFactory<DATA: Any, PARAMS: Any>(
      * @return a newly created ViewModel
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = createModel(createLceModel()) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = createModel(createLceModel()) as T
 }

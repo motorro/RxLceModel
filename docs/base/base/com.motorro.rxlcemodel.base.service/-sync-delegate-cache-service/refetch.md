@@ -1,27 +1,16 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[SyncDelegateCacheService](index.md)/[refetch](refetch.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[SyncDelegateCacheService](index.md)/[refetch](refetch.md)
 
+# refetch
 
+[jvm]\
+open override fun [refetch](refetch.md)(params: [P](index.md)): Completable
 
-# refetch  
-[jvm]  
-Brief description  
+Makes cache service to refetch cached data updating subscribers with [params](refetch.md)
 
+## Parameters
 
-Makes cache service to refetch cached data updating subscribers with params
+jvm
 
-
-
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Params that identify entity<br><br>
-  
-  
-Content  
-open override fun [refetch](refetch.md)(params: [P](index.md)): [Completable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Completable.html)  
-
-
-
+| params | Params that identify entity |

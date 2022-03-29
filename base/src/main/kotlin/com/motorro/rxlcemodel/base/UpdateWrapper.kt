@@ -13,12 +13,16 @@
 
 package com.motorro.rxlcemodel.base
 
+import com.motorro.rxlcemodel.base.LogLevel.INFO
+import com.motorro.rxlcemodel.base.LogLevel.WARNING
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.service.CacheService
 import com.motorro.rxlcemodel.base.service.UpdateOperationState
+import com.motorro.rxlcemodel.base.service.UpdateOperationState.*
 import com.motorro.rxlcemodel.base.service.buildUpdateOperation
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -31,8 +35,15 @@ import io.reactivex.rxjava3.subjects.PublishSubject
  * @param PARAMS Params type that identify data being loaded
  * @param upstream LceModel that performs reading
  * @param cacheService Data cache service that updates the same cache as [upstream] uses
+ * @param ioScheduler Scheduler to run IO operations
+ * @param logger Logging function
  */
-abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(private val upstream: LceModel<DATA, PARAMS>, private val cacheService: CacheService<DATA, PARAMS>): LceModel<DATA, PARAMS> by upstream {
+abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(
+    private val upstream: LceModel<DATA, PARAMS>,
+    private val cacheService: CacheService<DATA, PARAMS>,
+    private val ioScheduler: Scheduler,
+    private val logger: Logger?
+): LceModel<DATA, PARAMS> by upstream {
     /**
      * Network operation state broadcast
      */
@@ -45,9 +56,25 @@ abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(private val upstream: LceMo
      */
     protected fun doUpdate(dataSource: (params: PARAMS) -> Single<out Entity<DATA>>): Completable =
             cacheService.buildUpdateOperation(upstream.params, dataSource)
-                    .doOnNext { networkOperationState.onNext(it) }
-                    .doOnDispose { networkOperationState.onNext(UpdateOperationState.IDLE) }
-                    .ignoreElements()
+                .subscribeOn(ioScheduler)
+                .doOnSubscribe {
+                    withLogger { modelLog(INFO, "Subscribing network...") }
+                }
+                .doOnNext { state ->
+                    withLogger {
+                        when (state) {
+                            IDLE -> modelLog(INFO, "Network idle")
+                            LOADING -> modelLog(INFO, "Network loading")
+                            is ERROR -> modelLog(WARNING, "Network error: ${state.error}")
+                        }
+                    }
+                    networkOperationState.onNext(state)
+                }
+                .doOnDispose {
+                    withLogger { modelLog(INFO, "Network disposed") }
+                    networkOperationState.onNext(IDLE)
+                }
+                .ignoreElements()
 
     /**
      * Model state. Subscription starts data load for the first subscriber.
@@ -57,16 +84,32 @@ abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(private val upstream: LceMo
     override val state: Observable<LceState<DATA>> by lazy {
         val mapper = BiFunction<UpdateOperationState, LceState<DATA>, LceState<DATA>> { update, upstream ->
             when(update) {
-                UpdateOperationState.IDLE -> upstream
-                UpdateOperationState.LOADING -> upstream.toLoading(type = LceState.Loading.Type.UPDATING)
-                is UpdateOperationState.ERROR -> upstream.toError(update.error)
+                IDLE -> upstream
+                LOADING -> upstream.toLoading(type = LceState.Loading.Type.UPDATING)
+                is ERROR -> upstream.toError(update.error)
             }
         }
 
         Observable.combineLatest(
-                networkOperationState.startWithItem(UpdateOperationState.IDLE),
+                networkOperationState.startWithItem(IDLE),
                 upstream.state,
                 mapper
         )
+    }
+
+    /**
+     * Runs if logger present
+     */
+    private inline fun withLogger(block: Logger.() -> Unit) {
+        logger?.block()
+    }
+
+    /**
+     * Logs message to logger with model id
+     * @param level Log level
+     * @param message Log message
+     */
+    private fun Logger.modelLog(level: LogLevel, message: String) {
+        log(level, "UpdateWrapper($params): $message")
     }
 }

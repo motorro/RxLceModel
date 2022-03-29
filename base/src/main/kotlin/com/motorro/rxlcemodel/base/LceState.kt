@@ -206,3 +206,30 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.catchToLce(block: LceStat
 } catch (e: Throwable) {
     LceState.Error(null, false, e)
 }
+
+/**
+ * Substitutes a state with empty data with empty data with state produced by [block]
+ * @receiver LCE state
+ * @param block transformation block
+ */
+inline fun <reified DATA: Any> LceState<DATA>.mapEmptyData(crossinline block: (LceState<DATA>) -> LceState<DATA>): LceState<DATA> =
+    if (null == this.data) {
+        block(this)
+    } else {
+        this
+    }
+
+/**
+ * Substitutes an item in a state with empty data with item produced by [block]
+ * @receiver LCE stream
+ * @param block transformation block
+ */
+inline fun <DATA: Any> LceState<DATA>.mapEmptyDataItem(crossinline block: () -> DATA?): LceState<DATA> =
+    when {
+        null != data -> this
+        else -> when (this) {
+            is LceState.Loading -> LceState.Loading(block(), dataIsValid, type)
+            is LceState.Error -> LceState.Error(block(), dataIsValid, error)
+            else -> this
+        }
+    }

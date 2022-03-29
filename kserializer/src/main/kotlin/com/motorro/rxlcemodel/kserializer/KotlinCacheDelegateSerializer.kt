@@ -17,7 +17,10 @@ import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
-import kotlinx.serialization.*
+import kotlinx.serialization.BinaryFormat
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.cbor.Cbor
 import java.io.InputStream
 import java.io.OutputStream
@@ -28,6 +31,7 @@ import java.io.OutputStream
  * @param kSerializer Serializer to use with [D]
  * @param binaryFormat Cbor serializer to use
  */
+@ExperimentalSerializationApi
 class KotlinCacheDelegateSerializer<D: Any>(
     private val validatorFactory: EntityValidatorFactory,
     private val kSerializer: KSerializer<D>,

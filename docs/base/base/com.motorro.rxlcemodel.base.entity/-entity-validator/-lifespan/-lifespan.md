@@ -1,26 +1,18 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../index.md)/[EntityValidator](../index.md)/[Lifespan](index.md)/[Lifespan](-lifespan.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../index.md)/[EntityValidator](../index.md)/[Lifespan](index.md)/[Lifespan](-lifespan.md)
 
+# Lifespan
 
+[jvm]\
 
-# Lifespan  
-[jvm]  
-Brief description  
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
+fun [Lifespan](-lifespan.md)(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../-clock/index.md) = Clock.SYSTEM)
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+## Parameters
+
+jvm
+
+| | |
 |---|---|
-| clock| <br><br>Clock implementation<br><br>
-| ttl| <br><br>Time to live<br><br>
-  
-  
-Content  
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)()  
-  
-fun [Lifespan](-lifespan.md)(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../-clock/index.md))  
-
-
-
+| ttl | Time to live |
+| clock | Clock implementation |

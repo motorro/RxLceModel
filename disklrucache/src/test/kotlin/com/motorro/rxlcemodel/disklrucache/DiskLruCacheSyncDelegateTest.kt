@@ -28,6 +28,7 @@ import java.io.InputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.OutputStream
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -47,7 +48,9 @@ class DiskLruCacheSyncDelegateTest {
     /**
      * Detects Windows OS
      */
-    private fun isRunningWindows() = true == System.getProperty("os.name")?.toLowerCase()?.contains("windows")
+    private fun isRunningWindows() = true == System.getProperty("os.name")
+        .lowercase(Locale.US)
+        .contains("windows")
 
     @get:[Rule]
     var tempDir: TemporaryFolder = TemporaryFolder()

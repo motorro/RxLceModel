@@ -1,17 +1,8 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.entity](../index.md)/[EntityValidator](index.md)/[createSnapshot](create-snapshot.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.entity](../index.md)/[EntityValidator](index.md)/[createSnapshot](create-snapshot.md)
 
+# createSnapshot
 
-
-# createSnapshot  
-[jvm]  
-Brief description  
-
+[jvm]\
+open fun [createSnapshot](create-snapshot.md)(): [EntityValidator](index.md)
 
 Crates a snapshot of validator preserving it's current [EntityValidator.isValid](is-valid.md) value
-
-  
-Content  
-open fun [createSnapshot](create-snapshot.md)(): [EntityValidator](index.md)  
-
-
-

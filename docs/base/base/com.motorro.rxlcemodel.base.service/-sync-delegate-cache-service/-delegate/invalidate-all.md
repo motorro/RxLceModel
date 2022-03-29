@@ -1,17 +1,8 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../../index.md)/[SyncDelegateCacheService](../index.md)/[Delegate](index.md)/[invalidateAll](invalidate-all.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base.service](../../index.md)/[SyncDelegateCacheService](../index.md)/[Delegate](index.md)/[invalidateAll](invalidate-all.md)
 
+# invalidateAll
 
-
-# invalidateAll  
-[jvm]  
-Brief description  
-
+[jvm]\
+abstract fun [invalidateAll](invalidate-all.md)()
 
 Invalidates all cached values
-
-  
-Content  
-abstract fun [invalidateAll](invalidate-all.md)()  
-
-
-

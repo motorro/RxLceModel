@@ -18,6 +18,7 @@ import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.nhaarman.mockitokotlin2.*
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 import org.junit.Test
@@ -284,15 +285,16 @@ class SyncDelegateCacheServiceTest {
     @Test
     fun integratesWithCacheThenNetModelWhenNotCached() {
         val model = LceModel.cacheThenNet(
-                "key",
-                object : ServiceSet<String, String> {
-                    override val net: NetService<String, String> = object : NetService<String, String> {
-                        override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
-                    }
-                    override val cache: CacheService<String, String> = SyncDelegateCacheService(
-                            MemorySyncDelegate.custom(Collections.synchronizedMap(HashMap()))
-                    )
+            "key",
+            object : ServiceSet<String, String> {
+                override val net: NetService<String, String> = object : NetService<String, String> {
+                    override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
                 }
+                override val cache: CacheService<String, String> = SyncDelegateCacheService(
+                        MemorySyncDelegate.custom(Collections.synchronizedMap(HashMap()))
+                )
+            },
+            Observable.empty()
         )
 
         val s = model.state.test()
@@ -304,20 +306,20 @@ class SyncDelegateCacheServiceTest {
     @Test
     fun integratesWithCacheThenNetModelWhenCached() {
         val model = LceModel.cacheThenNet(
-                "key",
-                object : ServiceSet<String, String> {
-                    override val net: NetService<String, String> = object : NetService<String, String> {
-                        override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
-                    }
-                    override val cache: CacheService<String, String> = SyncDelegateCacheService(
-                            MemorySyncDelegate.custom(Collections.synchronizedMap(mutableMapOf<String, Entity<String>>("key" to VALID_ENTITY)))
-                    )
+            "key",
+            object : ServiceSet<String, String> {
+                override val net: NetService<String, String> = object : NetService<String, String> {
+                    override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
                 }
+                override val cache: CacheService<String, String> = SyncDelegateCacheService(
+                        MemorySyncDelegate.custom(Collections.synchronizedMap(mutableMapOf<String, Entity<String>>("key" to VALID_ENTITY)))
+                )
+            }
         )
 
         val s = model.state.test()
         s.assertNoErrors()
         s.assertNotComplete()
-        s.assertValues(LceState.Loading(null, false), LceState.Content(VALID_ENTITY.data, true))
+        s.assertValues(LceState.Content(VALID_ENTITY.data, true))
     }
 }

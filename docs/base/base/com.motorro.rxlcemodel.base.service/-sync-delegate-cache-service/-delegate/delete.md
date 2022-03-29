@@ -1,27 +1,16 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../../index.md)/[SyncDelegateCacheService](../index.md)/[Delegate](index.md)/[delete](delete.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base.service](../../index.md)/[SyncDelegateCacheService](../index.md)/[Delegate](index.md)/[delete](delete.md)
 
+# delete
 
-
-# delete  
-[jvm]  
-Brief description  
-
+[jvm]\
+abstract fun [delete](delete.md)(params: [P](index.md))
 
 Deletes cached value
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-abstract fun [delete](delete.md)(params: [P](index.md))  
-
-
-
+| params | Caching key |

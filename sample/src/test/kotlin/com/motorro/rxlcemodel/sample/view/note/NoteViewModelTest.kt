@@ -24,7 +24,9 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.CompletableSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +35,8 @@ import kotlin.test.assertTrue
 
 class NoteViewModelTest {
     private lateinit var schedulers: SchedulerRepository
+    private lateinit var state: Subject<LceState<Note>>
+    private lateinit var refresh: CompletableSubject
     private lateinit var noteLceModel: NoteLceModel
     private lateinit var deleteScheduler: (Int) -> Unit
     private lateinit var model: NoteViewModel
@@ -43,12 +47,17 @@ class NoteViewModelTest {
     @Before
     fun init() {
         schedulers = mock {
-            on { io } doReturn Schedulers.trampoline()
-            on { computation } doReturn Schedulers.trampoline()
-            on { ui } doReturn Schedulers.trampoline()
+            on { this.io } doReturn Schedulers.trampoline()
+            on { this.computation } doReturn Schedulers.trampoline()
+            on { this.ui } doReturn Schedulers.trampoline()
         }
 
-        noteLceModel = mock()
+        state = PublishSubject.create()
+        refresh = CompletableSubject.create()
+        noteLceModel = mock {
+            on { this.state } doReturn state
+            on { this.refresh } doReturn refresh
+        }
 
         deleteScheduler = mock()
 
@@ -58,25 +67,19 @@ class NoteViewModelTest {
     @Test
     fun subscribesLceModelAndTransfersState() {
         val terminated = LceState.Terminated
-        val subject = PublishSubject.create<LceState<Note>>()
-        whenever(noteLceModel.state).thenReturn(subject)
 
         model.initialize()
-        assertTrue(subject.hasObservers())
+        assertTrue(state.hasObservers())
 
         val observer: Observer<LceState<Note>> = mock()
         model.state.observeForever(observer)
 
-        subject.onNext(terminated)
+        state.onNext(terminated)
         verify(observer).onChanged(terminated)
     }
 
     @Test
     fun dataDelegatesMethodsToModelIgnoringErrors() {
-        whenever(noteLceModel.refresh).thenReturn(Completable.error(Exception()))
-        model.refresh()
-        verify(noteLceModel).refresh
-
         whenever(noteLceModel.setTitle("Title")).thenReturn(Completable.error(Exception()))
         model.setTitle("Title")
         verify(noteLceModel).setTitle("Title")
@@ -94,9 +97,6 @@ class NoteViewModelTest {
 
     @Test
     fun terminatesStateSubscriptionOnDelete() {
-        val state = PublishSubject.create<LceState<Note>>()
-        whenever(noteLceModel.state).thenReturn(state)
-
         model.initialize()
         assertTrue { state.hasObservers() }
         model.delete()
@@ -106,6 +106,7 @@ class NoteViewModelTest {
     @Test
     fun deletesTerminatesView() {
         val observer: Observer<LceState<Note>> = mock()
+        model.initialize()
         model.state.observeForever(observer)
         model.delete()
         verify(observer).onChanged(LceState.Terminated)

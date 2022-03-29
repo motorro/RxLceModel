@@ -1,51 +1,38 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../index.md)/[Entity](../index.md)/[Impl](index.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../index.md)/[Entity](../index.md)/[Impl](index.md)
 
+# Impl
 
-
-# Impl  
- [jvm] 
+[jvm]\
+data class [Impl](index.md)&lt;out [T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md)) : [Entity](../index.md)&lt;[T](index.md)&gt; , [EntityValidator](../../-entity-validator/index.md)
 
 Simple entity implementation
 
-data class [Impl](index.md)<[T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)>(**data**: [T](index.md), **validator**: [EntityValidator](../../-entity-validator/index.md)) : [Entity](../index.md)<[T](index.md)> , [EntityValidator](../../-entity-validator/index.md)   
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| data| <br><br>Stored data<br><br>
-| validator| <br><br>Entity validator<br><br>
-  
+| data | Stored data |
+| validator | Entity validator |
 
+## Constructors
 
-## Constructors  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| [Impl](-impl.md)|  [jvm] <br><br>Stored data<br><br>fun <[T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [Impl](-impl.md)(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md))   <br>
+| [Impl](-impl.md) | [jvm]<br>fun &lt;out [T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [Impl](-impl.md)(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md)) |
 
+## Functions
 
-## Functions  
-  
-|  Name|  Summary| 
+| Name | Summary |
 |---|---|
-| [component1](component1.md)| [jvm]  <br>Content  <br>operator fun [component1](component1.md)(): [T](index.md)  <br><br><br>
-| [copy](copy.md)| [jvm]  <br>Content  <br>fun [copy](copy.md)(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md)): [Entity.Impl](index.md)<[T](index.md)>  <br><br><br>
-| [createSnapshot](create-snapshot.md)| [jvm]  <br>Brief description  <br><br><br>Crates a snapshot of validator preserving it's current [EntityValidator.isValid](../../-entity-validator/is-valid.md) value<br><br>  <br>Content  <br>open override fun [createSnapshot](create-snapshot.md)(): [Entity](../index.md)<[T](index.md)>  <br><br><br>
-| [equals](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html)| [jvm]  <br>Content  <br>open operator override fun [equals](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html)(other: [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)?): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)  <br><br><br>
-| [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/hash-code.html)| [jvm]  <br>Content  <br>open override fun [hashCode](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/hash-code.html)(): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)  <br><br><br>
-| [isValid](../../-entity-validator/is-valid.md)| [jvm]  <br>Content  <br>open override fun [isValid](../../-entity-validator/is-valid.md)(): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)  <br><br><br>
-| [map](map.md)| [jvm]  <br>Brief description  <br><br><br>Transforms Entity [data](index.md#com.motorro.rxlcemodel.base.entity/Entity.Impl/data/#/PointingToDeclaration/) to another entity data with mapper Validation remains the same<br><br>  <br>Content  <br>open override fun <[R](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [map](map.md)(mapper: ([T](index.md)) -> [R](map.md)): [Entity](../index.md)<[R](map.md)>  <br><br><br>
-| [serialize](../../-entity-validator/serialize.md)| [jvm]  <br>Content  <br>open override fun [serialize](../../-entity-validator/serialize.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)  <br><br><br>
-| [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/to-string.html)| [jvm]  <br>Content  <br>open override fun [toString](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/to-string.html)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)  <br><br><br>
+| [createSnapshot](create-snapshot.md) | [jvm]<br>open override fun [createSnapshot](create-snapshot.md)(): [Entity](../index.md)&lt;[T](index.md)&gt;<br>Crates a snapshot of validator preserving it's current [EntityValidator.isValid](../../-entity-validator/is-valid.md) value |
+| [isValid](../../-entity-validator/is-valid.md) | [jvm]<br>open override fun [isValid](../../-entity-validator/is-valid.md)(): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>If true cached entity is valid. |
+| [map](map.md) | [jvm]<br>open override fun &lt;[R](map.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [map](map.md)(mapper: ([T](index.md)) -&gt; [R](map.md)): [Entity](../index.md)&lt;[R](map.md)&gt;<br>Transforms Entity [data](data.md) to another entity data with [mapper](map.md) Validation remains the same |
+| [serialize](../../-entity-validator/serialize.md) | [jvm]<br>open override fun [serialize](../../-entity-validator/serialize.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br>A way to serialize entity |
 
+## Properties
 
-## Properties  
-  
-|  Name|  Summary| 
+| Name | Summary |
 |---|---|
-| [data](index.md#com.motorro.rxlcemodel.base.entity/Entity.Impl/data/#/PointingToDeclaration/)|  [jvm] <br><br>Stored data<br><br>open override val [data](index.md#com.motorro.rxlcemodel.base.entity/Entity.Impl/data/#/PointingToDeclaration/): [T](index.md)   <br>
-
+| [data](data.md) | [jvm]<br>open override val [data](data.md): [T](index.md) |

@@ -18,18 +18,17 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.sample.R
+import com.motorro.rxlcemodel.sample.databinding.FragmentNoteBinding
 import com.motorro.rxlcemodel.sample.di.ProvidesNoteId
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_note.*
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -59,15 +58,22 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
     private val noteModel: NoteViewModel by viewModels { noteModelFactory }
 
     /**
+     * View-binding
+     */
+    private var binding: FragmentNoteBinding? = null
+
+    /**
      * Called by [processState] to process new data
      */
     override fun processStateData(data: Note, isValid: Boolean, isUpdating: Boolean) {
-        last_modified.text = TIME_FORMATTER.format(data.lastModified)
-        is_valid_data.text = isValid.toString()
-        if (!isUpdating) {
-            note_title.setText(data.title, TextView.BufferType.EDITABLE)
-            note_text.setText(data.text, TextView.BufferType.EDITABLE)
-            restoreButtons()
+        binding?.run {
+            lastModified.text = TIME_FORMATTER.format(data.lastModified)
+            isValidData.text = isValid.toString()
+            if (!isUpdating) {
+                noteTitle.setText(data.title, TextView.BufferType.EDITABLE)
+                noteText.setText(data.text, TextView.BufferType.EDITABLE)
+                restoreButtons()
+            }
         }
     }
 
@@ -78,7 +84,7 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
     override fun processStateView(state: LceState<Note>) {
         super.processStateView(state)
         if (state is LceState.Error || state is LceState.Content) {
-            swipe_refresh.isRefreshing = false
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
@@ -111,7 +117,7 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
      * Refresh
      */
     private fun setupRefresh() {
-        (swipe_refresh).setOnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener {
             Timber.d("Refreshing note...")
             noteModel.refresh()
         }
@@ -165,8 +171,16 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_note, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val binding = FragmentNoteBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        this.binding = null
+    }
 
     private fun Menu.setDeleteVisible() {
         findItem(R.id.action_delete)?.isVisible = isDeleteVisible
@@ -188,14 +202,16 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
 
         setupRefresh()
 
-        noteModel.state.observe(viewLifecycleOwner, Observer<LceState<Note>> { processState(it) })
+        noteModel.state.observe(viewLifecycleOwner, { processState(it) })
         noteModel.initialize()
 
-        patch_title.setOnClickListener {
-            patch(it, note_title) { title -> patchTitle(title) }
-        }
-        patch_text.setOnClickListener {
-            patch(it, note_text) { text -> patchText(text) }
+        binding?.run {
+            patchTitle.setOnClickListener {
+                patch(it, noteTitle) { title -> patchTitle(title) }
+            }
+            patchText.setOnClickListener {
+                patch(it, noteText) { text -> patchText(text) }
+            }
         }
     }
 
@@ -205,7 +221,9 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
     }
 
     private fun restoreButtons() {
-        patch_title.isEnabled = true
-        patch_text.isEnabled = true
+        binding?.run {
+            patchTitle.isEnabled = true
+            patchText.isEnabled = true
+        }
     }
 }

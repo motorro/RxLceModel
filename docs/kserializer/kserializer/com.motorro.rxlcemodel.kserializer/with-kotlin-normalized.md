@@ -1,57 +1,44 @@
-//[kserializer](../index.md)/[com.motorro.rxlcemodel.kserializer](index.md)/[withKotlinNormalized](with-kotlin-normalized.md)
+//[kserializer](../../index.md)/[com.motorro.rxlcemodel.kserializer](index.md)/[withKotlinNormalized](with-kotlin-normalized.md)
 
+# withKotlinNormalized
 
+[jvm]\
+inline fun &lt;[D](with-kotlin-normalized.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](with-kotlin-normalized.md) : [CacheFriend](../../../base/base/com.motorro.rxlcemodel.base.service/-cache-friend/index.md)&gt; [DiskLruCacheSyncDelegate.DiskLruCacheProvider](../../../disklrucache/disklrucache/com.motorro.rxlcemodel.disklrucache/-disk-lru-cache-sync-delegate/-disk-lru-cache-provider/index.md).[withKotlinNormalized](with-kotlin-normalized.md)(validatorFactory: [EntityValidatorFactory](../../../base/base/com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md), serializer: KSerializer&lt;[D](with-kotlin-normalized.md)&gt;, binaryFormat: BinaryFormat = Cbor, prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = createDefaultDelegatePrefix(D::class.java)): [SyncDelegateCacheService.Delegate](../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/-delegate/index.md)&lt;[D](with-kotlin-normalized.md), [P](with-kotlin-normalized.md)&gt;
 
-# withKotlinNormalized  
-[jvm]  
-Brief description  
+Creates DiskLRU caching delegate for [SyncDelegateCacheService](../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md) that accepts Kotlin-serializable data with cache key normalizing and check.
 
+#### Receiver
 
-Creates DiskLRU caching delegate for SyncDelegateCacheService that accepts Kotlin-serializable data with cache key normalizing and check.
+Cache provider
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| <receiver>| <br><br>Cache provider<br><br>
-| binaryFormat| <br><br>Binary format serializer<br><br>
-| prefix| <br><br>Caching name prefix to distinguish cache files from other delegates within the same cache directory<br><br>
-| serializer| <br><br>Data serializer/deserializer<br><br>
-| validatorFactory| <br><br>Entity validation factory (defines cache TTL)<br><br>
-  
-  
-Content  
-inline fun <[D](with-kotlin-normalized.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](with-kotlin-normalized.md) : CacheFriend> DiskLruCacheSyncDelegate.DiskLruCacheProvider.[withKotlinNormalized](with-kotlin-normalized.md)(validatorFactory: EntityValidatorFactory, serializer: KSerializer<[D](with-kotlin-normalized.md)>, binaryFormat: BinaryFormat, prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): SyncDelegateCacheService.Delegate<[D](with-kotlin-normalized.md), [P](with-kotlin-normalized.md)>  
+| validatorFactory | Entity validation factory (defines cache TTL) |
+| serializer | Data serializer/deserializer |
+| binaryFormat | Binary format serializer |
+| prefix | Caching name prefix to distinguish cache files from other delegates within the same cache directory |
 
+[jvm]\
+inline fun &lt;[D](with-kotlin-normalized.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](with-kotlin-normalized.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DiskLruCacheSyncDelegate.DiskLruCacheProvider](../../../disklrucache/disklrucache/com.motorro.rxlcemodel.disklrucache/-disk-lru-cache-sync-delegate/-disk-lru-cache-provider/index.md).[withKotlinNormalized](with-kotlin-normalized.md)(validatorFactory: [EntityValidatorFactory](../../../base/base/com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md), serializer: KSerializer&lt;[D](with-kotlin-normalized.md)&gt;, binaryFormat: BinaryFormat = Cbor, prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = createDefaultDelegatePrefix(D::class.java), crossinline stringify: [P](with-kotlin-normalized.md).() -&gt; [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [SyncDelegateCacheService.Delegate](../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/-delegate/index.md)&lt;[D](with-kotlin-normalized.md), [P](with-kotlin-normalized.md)&gt;
 
-[jvm]  
-Brief description  
+Creates DiskLRU caching delegate for [SyncDelegateCacheService](../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md) that accepts Kotlin-serializable data with cache key normalizing and check.
 
+#### Receiver
 
-Creates DiskLRU caching delegate for SyncDelegateCacheService that accepts Kotlin-serializable data with cache key normalizing and check.
+Cache provider
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| <receiver>| <br><br>Cache provider<br><br>
-| binaryFormat| <br><br>Binary format serializer<br><br>
-| prefix| <br><br>Caching name prefix to distinguish cache files from other delegates within the same cache directory<br><br>
-| serializer| <br><br>Data serializer/deserializer<br><br>
-| stringify| <br><br>As DiskLruCacheSyncDelegate uses string params to create cache keys we should substitute data identifying parameters with string using stringifyParams<br><br>
-| validatorFactory| <br><br>Entity validation factory (defines cache TTL)<br><br>
-  
-  
-Content  
-inline fun <[D](with-kotlin-normalized.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](with-kotlin-normalized.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> DiskLruCacheSyncDelegate.DiskLruCacheProvider.[withKotlinNormalized](with-kotlin-normalized.md)(validatorFactory: EntityValidatorFactory, serializer: KSerializer<[D](with-kotlin-normalized.md)>, binaryFormat: BinaryFormat, prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), crossinline stringify: [P](with-kotlin-normalized.md).() -> [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): SyncDelegateCacheService.Delegate<[D](with-kotlin-normalized.md), [P](with-kotlin-normalized.md)>  
-
-
-
+| validatorFactory | Entity validation factory (defines cache TTL) |
+| serializer | Data serializer/deserializer |
+| binaryFormat | Binary format serializer |
+| prefix | Caching name prefix to distinguish cache files from other delegates within the same cache directory |
+| stringify | As [DiskLruCacheSyncDelegate](../../../disklrucache/disklrucache/com.motorro.rxlcemodel.disklrucache/-disk-lru-cache-sync-delegate/index.md) uses string params to create cache keys we should substitute data identifying parameters with string using [stringifyParams](../../../base/base/com.motorro.rxlcemodel.base.service/stringify-params.md) |

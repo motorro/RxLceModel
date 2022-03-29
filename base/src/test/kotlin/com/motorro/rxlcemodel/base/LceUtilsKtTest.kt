@@ -18,8 +18,10 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
+import kotlin.test.assertEquals
 
 class LceUtilsKtTest {
     companion object {
@@ -256,6 +258,80 @@ class LceUtilsKtTest {
     }
 
     @Test
+    fun refreshedLceStreamRefreshesValidContentOnStartOnce() {
+        val value1: LceState<Int> = LceState.Content(1, true)
+        val value2: LceState<Int> = LceState.Content(2, true)
+
+        var refreshedTimes = 0
+        val refresh = Completable.fromAction { ++refreshedTimes }
+
+        Observable.just(value1, value2).refreshed(refresh).test()
+            .assertNoErrors()
+            .assertComplete()
+            .assertValues(value1, value2)
+
+        assertEquals(1, refreshedTimes)
+    }
+
+    @Test
+    fun refreshedLceStreamDoesNotRefreshIfLoading() {
+        val value1: LceState<Int> = LceState.Loading(null, false)
+        val value2: LceState<Int> = LceState.Content(2, true)
+
+        var refreshedTimes = 0
+        val refresh = Completable.fromAction { ++refreshedTimes }
+
+        Observable.just(value1, value2).refreshed(refresh).test()
+            .assertNoErrors()
+            .assertComplete()
+            .assertValues(value1, value2)
+
+        assertEquals(0, refreshedTimes)
+    }
+
+    @Test
+    fun refreshedLceStreamDoesNotRefreshIfError() {
+        val value1: LceState<Int> = LceState.Error(null, false, IOException())
+        val value2: LceState<Int> = LceState.Content(2, true)
+
+        var refreshedTimes = 0
+        val refresh = Completable.fromAction { ++refreshedTimes }
+
+        Observable.just(value1, value2).refreshed(refresh).test()
+            .assertNoErrors()
+            .assertComplete()
+            .assertValues(value1, value2)
+
+        assertEquals(0, refreshedTimes)
+    }
+
+    @Test
+    fun refreshedUseCaseRefreshesOnEachSubscribe() {
+        val value1: LceState<Int> = LceState.Content(1, true)
+        val value2: LceState<Int> = LceState.Content(2, true)
+        val source: Subject<LceState<Int>> = PublishSubject.create()
+        var refreshedTimes = 0
+
+        val useCase: LceUseCase<Int> = object : LceUseCase<Int> {
+            override val state: Observable<LceState<Int>> = source
+            override val refresh: Completable = Completable.fromAction { ++refreshedTimes }
+        }
+
+        val refreshed = useCase.refreshed()
+
+        val o1 = refreshed.state.test()
+        source.onNext(value1)
+        o1.assertNoErrors().assertValues(value1)
+        assertEquals(1, refreshedTimes)
+
+        val o2 = refreshed.state.test()
+        source.onNext(value2)
+        o1.assertNoErrors().assertValues(value1, value2)
+        o2.assertNoErrors().assertValue(value2)
+        assertEquals(2, refreshedTimes)
+    }
+
+    @Test
     fun substitutesEmptyLoading() {
         val original = LceState.Loading(null, false)
         val substitute = LceState.Content(10, true)
@@ -270,6 +346,24 @@ class LceUtilsKtTest {
         val substitute = LceState.Content(10, true)
         val source = Observable.just<LceState<Int>>(original)
         val modified = source.onEmptyLoadingReturn { substitute }
+        modified.test().assertComplete().assertNoErrors().assertValue(original)
+    }
+
+    @Test
+    fun substitutesEmptyLoadingData() {
+        val original = LceState.Loading(null, false)
+        val substitute = 10
+        val source = Observable.just<LceState<Int>>(original)
+        val modified = source.onEmptyLoadingReturnItem { substitute }
+        modified.test().assertComplete().assertNoErrors().assertValue(LceState.Loading(10, false))
+    }
+
+    @Test
+    fun passesNonEmptyLoadingData() {
+        val original = LceState.Loading(10, true)
+        val substitute = 10
+        val source = Observable.just<LceState<Int>>(original)
+        val modified = source.onEmptyLoadingReturnItem { substitute }
         modified.test().assertComplete().assertNoErrors().assertValue(original)
     }
 }

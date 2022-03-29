@@ -1,0 +1,30 @@
+//[viewmodel](../../../../index.md)/[com.motorro.rxlcemodel.viewmodel](../../index.md)/[BaseLceModel](../index.md)/[Companion](index.md)/[create](create.md)
+
+# create
+
+[androidJvm]\
+fun &lt;[DATA](create.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [create](create.md)(stateObservable: Observable&lt;[LceState](../../../../../base/base/com.motorro.rxlcemodel.base/-lce-state/index.md)&lt;[DATA](create.md)&gt;&gt;, refresh: Completable): [BaseLceModel](../index.md)&lt;[DATA](create.md)&gt;
+
+Creates LCE model
+
+## Parameters
+
+androidJvm
+
+| | |
+|---|---|
+| stateObservable | Observable of state changes |
+| refresh | Refresh operation |
+
+[androidJvm]\
+fun &lt;[DATA](create.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [create](create.md)(useCase: [LceUseCase](../../../../../base/base/com.motorro.rxlcemodel.base/-lce-use-case/index.md)&lt;[DATA](create.md)&gt;): [BaseLceModel](../index.md)&lt;[DATA](create.md)&gt;
+
+Creates LCE model
+
+## Parameters
+
+androidJvm
+
+| | |
+|---|---|
+| useCase | Data use-case |

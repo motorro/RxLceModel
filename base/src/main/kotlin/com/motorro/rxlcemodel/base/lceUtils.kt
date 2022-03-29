@@ -190,6 +190,34 @@ fun <DATA: Any> LceUseCase<DATA>.withRefresh(refreshStream: Observable<in Nothin
 )
 
 /**
+ * Refreshes data on subscription once
+ * @receiver Original stream
+ * @param refresh Refresh operation
+ */
+fun <DATA : Any> Observable<LceState<DATA>>.refreshed(refresh: Completable): Observable<LceState<DATA>> = publish { published ->
+    Observable.mergeArray(
+        // Original state stream
+        published,
+        // Take first emission. If it is a valid content - refresh
+        published
+            .take(1)
+            .ofType(LceState.Content::class.java)
+            .filter { it.dataIsValid }
+            .flatMapCompletable { refresh }
+            .toObservable()
+    )
+}
+
+/**
+ * Wraps use-case to refresh on each subscription
+ * @receiver Original model
+  */
+fun <DATA: Any> LceUseCase<DATA>.refreshed(): LceUseCase<DATA> = object : LceUseCase<DATA> {
+    override val state: Observable<LceState<DATA>> = this@refreshed.state.refreshed(this@refreshed.refresh)
+    override val refresh: Completable = this@refreshed.refresh
+}
+
+/**
  * Substitutes [LceState.Loading] with empty data with state produced by [block]
  * @receiver LCE stream
  * @param block transformation block
@@ -201,3 +229,17 @@ inline fun <DATA: Any> Observable<LceState<DATA>>.onEmptyLoadingReturn(crossinli
         it
     }
 }
+
+/**
+ * Substitutes [LceState.Loading] empty data with data produced by [block]
+ * @receiver LCE stream
+ * @param block Item creation block
+ */
+inline fun <DATA: Any> Observable<LceState<DATA>>.onEmptyLoadingReturnItem(crossinline block: () -> DATA?): Observable<LceState<DATA>> = map {
+    if (it is LceState.Loading && null == it.data) {
+        LceState.Loading(block(), it.dataIsValid, it.type)
+    } else {
+        it
+    }
+}
+

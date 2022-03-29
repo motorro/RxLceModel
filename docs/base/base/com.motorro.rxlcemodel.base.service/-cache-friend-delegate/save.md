@@ -1,28 +1,17 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[CacheFriendDelegate](index.md)/[save](save.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[CacheFriendDelegate](index.md)/[save](save.md)
 
+# save
 
-
-# save  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [save](save.md)(params: [P](index.md), entity: [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;)
 
 Saves data to cache
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| entity| <br><br>Entity to cache<br><br>
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-open override fun [save](save.md)(params: [P](index.md), entity: [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)<[D](index.md)>)  
-
-
-
+| params | Caching key |
+| entity | Entity to cache |

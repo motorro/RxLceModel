@@ -1,59 +1,48 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base](../../index.md)/[LceModel](../index.md)/[Companion](index.md)/[cacheThenNet](cache-then-net.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base](../../index.md)/[LceModel](../index.md)/[Companion](index.md)/[cacheThenNet](cache-then-net.md)
 
+# cacheThenNet
 
+[jvm]\
 
-# cacheThenNet  
-[jvm]  
-Brief description  
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
+fun &lt;[DATA](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [cacheThenNet](cache-then-net.md)(params: [PARAMS](cache-then-net.md), serviceSet: [ServiceSet](../../../com.motorro.rxlcemodel.base.service/-service-set/index.md)&lt;[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)&gt;, startWith: Observable&lt;[LceState](../../-lce-state/index.md)&lt;[DATA](cache-then-net.md)&gt;&gt; = Observable.empty(), ioScheduler: Scheduler = Schedulers.trampoline(), logger: [Logger](../../-logger/index.md)? = null): [LceModel](../index.md)&lt;[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)&gt;
 
 Creates a model that returns cached data first, then refreshes if stall
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| DATA| <br><br>Data type of data being held<br><br>
-| params| <br><br>Params that identify data being loaded<br><br>
-| serviceSet| <br><br>Service-set to load data<br><br>
-| startWith| <br><br>Observable that emits at loading start. Defaults to [LceState.Loading](../../-lce-state/-loading/index.md)<br><br>
-  
-  
-Content  
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)()  
-  
-fun <[DATA](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [cacheThenNet](cache-then-net.md)(params: [PARAMS](cache-then-net.md), serviceSet: [ServiceSet](../../../com.motorro.rxlcemodel.base.service/-service-set/index.md)<[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)>, startWith: [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<[LceState](../../-lce-state/index.md)<[DATA](cache-then-net.md)>>): [LceModel](../index.md)<[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)>  
+| DATA | Data type of data being held |
+| PARAMS | Params type that identify data being loaded |
+| params | Params that identify data being loaded |
+| serviceSet | Service-set to load data |
+| startWith | Observable that emits at loading start. Defaults to [LceState.Loading](../../-lce-state/-loading/index.md) |
+| ioScheduler | Scheduler to run IO operations |
+| logger | Logging function |
 
+[jvm]\
 
-[jvm]  
-Brief description  
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
+fun &lt;[DATA](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [cacheThenNet](cache-then-net.md)(params: [PARAMS](cache-then-net.md), net: [NetService](../../../com.motorro.rxlcemodel.base.service/-net-service/index.md)&lt;[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)&gt;, cache: [CacheService](../../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)&lt;[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)&gt;, startWith: Observable&lt;[LceState](../../-lce-state/index.md)&lt;[DATA](cache-then-net.md)&gt;&gt; = Observable.empty(), ioScheduler: Scheduler = Schedulers.trampoline(), logger: [Logger](../../-logger/index.md)? = null): [LceModel](../index.md)&lt;[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)&gt;
 
 Creates a model that returns cached data first, than refreshes if stall
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| cache| <br><br>Cache-service<br><br>
-| DATA| <br><br>Data type of data being held<br><br>
-| net| <br><br>Net-service<br><br>
-| params| <br><br>Params that identify data being loaded<br><br>
-| startWith| <br><br>Observable that emits at loading start. Defaults to [LceState.Loading](../../-lce-state/-loading/index.md)<br><br>
-  
-  
-Content  
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)()  
-  
-fun <[DATA](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](cache-then-net.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [cacheThenNet](cache-then-net.md)(params: [PARAMS](cache-then-net.md), net: [NetService](../../../com.motorro.rxlcemodel.base.service/-net-service/index.md)<[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)>, cache: [CacheService](../../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)<[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)>, startWith: [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<[LceState](../../-lce-state/index.md)<[DATA](cache-then-net.md)>>): [LceModel](../index.md)<[DATA](cache-then-net.md), [PARAMS](cache-then-net.md)>  
-
-
-
+| DATA | Data type of data being held |
+| PARAMS | Params type that identify data being loaded |
+| params | Params that identify data being loaded |
+| net | Net-service |
+| cache | Cache-service |
+| startWith | Observable that emits at loading start. Defaults to [LceState.Loading](../../-lce-state/-loading/index.md) |
+| ioScheduler | Scheduler to run IO operations |
+| logger | Logging function |

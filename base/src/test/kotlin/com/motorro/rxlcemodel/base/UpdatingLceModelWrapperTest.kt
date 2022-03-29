@@ -18,6 +18,8 @@ import com.motorro.rxlcemodel.base.LceState.Loading
 import com.motorro.rxlcemodel.base.entity.Entity
 import com.motorro.rxlcemodel.base.entity.EntityValidator
 import com.nhaarman.mockitokotlin2.verify
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Test
 import java.util.*
 
@@ -37,8 +39,12 @@ class UpdatingLceModelWrapperTest {
                 netUpdate = { updatedEntity }
             }
 
-        val upstream = LceModel.cacheThenNet(PARAMS, serviceSet)
-        val model = UpdatingLceModelWrapper(upstream, serviceSet)
+        val upstream = LceModel.cacheThenNet(PARAMS, serviceSet, Observable.empty())
+        val model = UpdatingLceModelWrapper(
+            upstream,
+            serviceSet,
+            Schedulers.trampoline()
+        ) { _, _ -> }
 
         val s = model.state.test()
         s.assertNoErrors()

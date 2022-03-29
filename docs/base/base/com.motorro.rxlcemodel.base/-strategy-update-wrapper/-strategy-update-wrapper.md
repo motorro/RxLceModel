@@ -1,26 +1,19 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base](../index.md)/[StrategyUpdateWrapper](index.md)/[StrategyUpdateWrapper](-strategy-update-wrapper.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base](../index.md)/[StrategyUpdateWrapper](index.md)/[StrategyUpdateWrapper](-strategy-update-wrapper.md)
 
+# StrategyUpdateWrapper
 
+[jvm]\
+fun &lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [StrategyUpdateWrapper](-strategy-update-wrapper.md)(upstream: [LceModel](../-lce-model/index.md)&lt;[DATA](index.md), [PARAMS](index.md)&gt;, cacheService: [CacheService](../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)&lt;[DATA](index.md), [PARAMS](index.md)&gt;, ioScheduler: Scheduler, logger: [Logger](../-logger/index.md)?)
 
-# StrategyUpdateWrapper  
-[jvm]  
-Brief description  
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| cacheService| <br><br>Data cache service that updates the same cache as [upstream](index.md#com.motorro.rxlcemodel.base/StrategyUpdateWrapper/upstream/#/PointingToDeclaration/) uses<br><br>
-| DATA| <br><br>Data Type of data being held<br><br>
-| PARAMS| <br><br>Params type that identify data being loaded<br><br>
-| upstream| <br><br>LceModel that performs reading<br><br>
-  
-  
-Content  
-fun <[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [StrategyUpdateWrapper](-strategy-update-wrapper.md)(upstream: [LceModel](../-lce-model/index.md)<[DATA](index.md), [PARAMS](index.md)>, cacheService: [CacheService](../../com.motorro.rxlcemodel.base.service/-cache-service/index.md)<[DATA](index.md), [PARAMS](index.md)>)  
-
-
-
+| DATA | Data Type of data being held |
+| PARAMS | Params type that identify data being loaded |
+| upstream | LceModel that performs reading |
+| cacheService | Data cache service that updates the same cache as [upstream](../../../../base/com.motorro.rxlcemodel.base/-strategy-update-wrapper/[60]init[62].md) uses |
+| ioScheduler | Scheduler to run IO operations |
+| logger | Logging function |

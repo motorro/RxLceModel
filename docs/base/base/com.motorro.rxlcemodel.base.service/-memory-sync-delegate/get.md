@@ -1,27 +1,16 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[MemorySyncDelegate](index.md)/[get](get.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[MemorySyncDelegate](index.md)/[get](get.md)
 
+# get
 
-
-# get  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [get](get.md)(params: [P](index.md)): [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;?
 
 Returns data if cached
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-open override fun [get](get.md)(params: [P](index.md)): [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)<[D](index.md)>?  
-
-
-
+| params | Caching key |

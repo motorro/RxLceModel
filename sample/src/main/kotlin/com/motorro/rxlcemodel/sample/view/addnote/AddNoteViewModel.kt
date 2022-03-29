@@ -13,15 +13,14 @@
 
 package com.motorro.rxlcemodel.sample.view.addnote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.base.LceUseCase
 import com.motorro.rxlcemodel.sample.di.FragmentScope
 import com.motorro.rxlcemodel.sample.service.usecase.AddNote
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import com.motorro.rxlcemodel.sample.view.BaseLceModel
+import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
@@ -29,45 +28,19 @@ import javax.inject.Inject
 /**
  * Adds notes manually generating [LceState] for UI
  */
-class AddNoteViewModel(private val addNote: (String, String) -> Completable): BaseLceModel<Unit>() {
-    /**
-     * State live-data
-     */
-    private val stateData = MutableLiveData<LceState<Unit>>()
-
-    /**
-     * LCE State
-     */
-    override val state: LiveData<LceState<Unit>>
-        get() = stateData
-
-    /**
-     * Call this function to initialize a new model and start receiving events
-     */
-    override fun doInitialize() {
-        stateData.value = LceState.Content(Unit, true)
+class AddNoteViewModel(private val addNote: (String, String) -> Completable): BaseLceModel.WithUpdates<Unit>(DUMMY_USE_CASE) {
+    private companion object {
+        val DUMMY_USE_CASE = object : LceUseCase<Unit> {
+            override val state: Observable<LceState<Unit>> = Observable.just(LceState.Content(Unit, true))
+            override val refresh: Completable = Completable.complete()
+        }
     }
-
-    /**
-     * Requests data refresh
-     */
-    override fun refresh() = Unit
 
     /**
      * Adds new Note
      */
     fun add(title: String, text: String) {
-        val subscription = addNote(title, text)
-            .toObservable<LceState<Unit>>()
-            .startWithItem(LceState.Loading(null, false, LceState.Loading.Type.LOADING))
-            .onErrorReturn { LceState.Error(null, false, it) }
-            .concatWith(Observable.just(LceState.Terminated))
-            .subscribe(
-                { state -> stateData.value = state},
-                { error -> throw error }
-            )
-
-        disposables.add(subscription)
+        runUpdate(addNote(title, text), true)
     }
 
     @FragmentScope
@@ -80,6 +53,6 @@ class AddNoteViewModel(private val addNote: (String, String) -> Completable): Ba
         }
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T  = AddNoteViewModel(addNoteOperation) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T  = AddNoteViewModel(addNoteOperation) as T
     }
 }

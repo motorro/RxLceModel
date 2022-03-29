@@ -1,11 +1,6 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base](../../index.md)/[LceState](../index.md)/[Terminated](index.md)/[Terminated](-terminated.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base](../../index.md)/[LceState](../index.md)/[Terminated](index.md)/[Terminated](-terminated.md)
 
+# Terminated
 
-
-# Terminated  
-[jvm]  
-Content  
-fun [Terminated](-terminated.md)()  
-
-
-
+[jvm]\
+fun [Terminated](-terminated.md)()

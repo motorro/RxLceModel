@@ -1,28 +1,20 @@
-//[base](../index.md)/[com.motorro.rxlcemodel.base.service](index.md)/[stringifyParams](stringify-params.md)
+//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](index.md)/[stringifyParams](stringify-params.md)
 
+# stringifyParams
 
-
-# stringifyParams  
-[jvm]  
-Brief description  
-
+[jvm]\
+inline fun &lt;[D](stringify-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](stringify-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)&lt;[D](stringify-params.md), [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt;.[stringifyParams](stringify-params.md)(crossinline stringify: [P](stringify-params.md).() -&gt; [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = { toString() }): [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)&lt;[D](stringify-params.md), [P](stringify-params.md)&gt;
 
 Creates an adapter delegate that [stringify](stringify-params.md) and uses result string as params to receiver
 
+#### Receiver
 
+Delegate with String params e.g. the one that saves data to files and uses params as file names
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+## Parameters
+
+jvm
+
+| | |
 |---|---|
-| <receiver>| <br><br>Delegate with String params e.g. the one that saves data to files and uses params as file names<br><br>
-| stringify| <br><br>Function to stringify [P](stringify-params.md)<br><br>
-  
-  
-Content  
-inline fun <[D](stringify-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](stringify-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)<[D](stringify-params.md), [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)>.[stringifyParams](stringify-params.md)(crossinline stringify: [P](stringify-params.md).() -> [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [SyncDelegateCacheService.Delegate](-sync-delegate-cache-service/-delegate/index.md)<[D](stringify-params.md), [P](stringify-params.md)>  
-
-
-
+| stringify | Function to stringify [P](stringify-params.md) |

@@ -1,27 +1,16 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[MemorySyncDelegate](index.md)/[invalidate](invalidate.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[MemorySyncDelegate](index.md)/[invalidate](invalidate.md)
 
+# invalidate
 
-
-# invalidate  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [invalidate](invalidate.md)(params: [P](index.md))
 
 Invalidates cached value
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Caching key<br><br>
-  
-  
-Content  
-open override fun [invalidate](invalidate.md)(params: [P](index.md))  
-
-
-
+| params | Caching key |

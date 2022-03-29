@@ -14,8 +14,6 @@
 package com.motorro.rxlcemodel.sample.view.note
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.motorro.rxlcemodel.base.LceModel
 import com.motorro.rxlcemodel.base.LceState
@@ -29,9 +27,13 @@ import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteText
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import com.motorro.rxlcemodel.sample.view.BaseLceModel
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
+import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -49,33 +51,29 @@ class NoteViewModel(
     private val lceModel: NoteLceModel,
     private val schedulers: SchedulerRepository,
     private val scheduleDelete: (Int) -> Unit
-): BaseLceModel<Note>() {
+): BaseLceModel.Impl<Note>() {
     /**
-     * State live-data
+     * Terminates model
+     * @see delete
      */
-    private val stateData = MutableLiveData<LceState<Note>>()
+    private val termination = PublishSubject.create<Unit>()
 
     /**
-     * LCE State
+     * State observable
      */
-    override val state: LiveData<LceState<Note>>
-        get() = stateData
-
-    /**
-     * Call this function to initialize a new model and start receiving events
-     */
-    override fun doInitialize() {
-        val subscription = lceModel
-            .state
+    override val stateObservable: Observable<LceState<Note>> =
+        lceModel.state
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.ui)
-            .subscribe(
-                { state -> stateData.value = state},
-                { error -> throw error }
-            )
+            .takeUntil(termination)
+            .concatWith(Single.just(LceState.Terminated))
+            .distinctUntilChanged()
 
-        disposables.add(subscription)
-    }
+    /**
+     * Refresh command
+     */
+    override val refresh: Completable =
+        lceModel.refresh.subscribeOn(schedulers.io).observeOn(schedulers.ui)
 
     /**
      * Applies schedulers and ignores errors - a common way to handle [lceModel] operations
@@ -84,39 +82,27 @@ class NoteViewModel(
         subscribeOn(schedulers.io).observeOn(schedulers.ui).onErrorComplete()
 
     /**
-     * Starts operation
-     */
-    private fun Completable.execute() {
-        disposables.add(this.prepare().subscribe())
-    }
-
-    /**
-     * Requests data refresh
-     */
-    override fun refresh() = lceModel.refresh.execute()
-
-    /**
      * Updates note title
      */
-    fun setTitle(title: String) = lceModel.setTitle(title).execute()
+    fun setTitle(title: String) {
+        addSubscription(lceModel.setTitle(title).prepare())
+    }
 
     /**
      * Updates note text
      */
-    fun setText(text: String) = lceModel.setText(text).execute()
+    fun setText(text: String) {
+        addSubscription(lceModel.setText(text).prepare())
+    }
 
     /**
      * Deletes note
      */
     fun delete() {
-        // Unsubscribe state updates
-        disposables.clear()
-
+        // Terminate model
+        termination.onNext(Unit)
         // Delete note
         scheduleDelete(noteId)
-
-        // Terminate view
-        stateData.value = LceState.Terminated
     }
 
 
@@ -184,7 +170,7 @@ private class NoteUpdateWrapper(
     cacheService: CacheService<Note, Int>,
     private val patchNoteTitle: PatchNoteTitle,
     private val patchNoteText: PatchNoteText
-) : UpdateWrapper<Note, Int>(upstream, cacheService), NoteLceModel {
+) : UpdateWrapper<Note, Int>(upstream, cacheService, Schedulers.trampoline(), { _, _ -> }), NoteLceModel {
     /**
      * Updates note title
      */

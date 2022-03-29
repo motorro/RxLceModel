@@ -1,28 +1,17 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[UpdatingNetService](index.md)/[update](update.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[UpdatingNetService](index.md)/[update](update.md)
 
+# update
 
-
-# update  
-[jvm]  
-Brief description  
-
+[jvm]\
+abstract fun [update](update.md)(params: [P](index.md), update: [U](index.md)): Single&lt;[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;&gt;
 
 Updates data on server returning updated one
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| params| <br><br>Params that distinguish entity<br><br>
-| update| <br><br>Entity update<br><br>
-  
-  
-Content  
-abstract fun [update](update.md)(params: [P](index.md), update: [U](index.md)): [Single](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Single.html)<[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md)<[D](index.md)>>  
-
-
-
+| params | Params that distinguish entity |
+| update | Entity update |

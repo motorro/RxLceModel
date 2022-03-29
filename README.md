@@ -1,5 +1,5 @@
 # RxLceModel
-[![Build Status](https://travis-ci.com/motorro/RxLceModel.svg?token=ZyJexBWWUzhwyHdkocKJ&branch=master)](https://travis-ci.com/motorro/RxLceModel)
+[![Check](https://github.com/motorro/RxLceModel/actions/workflows/check.yml/badge.svg?branch=master)](https://github.com/motorro/AppUpdateWrapper/actions/workflows/check.yml) 
 
 A reactive data loading for Android based on 
 [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
@@ -50,27 +50,42 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [ProGuard configuration](#proguard-configuration)
 * [Updating data on server](#updating-data-on-server)
 * [Getting data-only stream](#getting-data-only-stream)
+* [LCE ViewModel](#lce-viewmodel)
 
 ## Setting up the dependency
-Basic module [ ![Base](https://api.bintray.com/packages/motorro/RxLceModel/base/images/download.svg) ](https://bintray.com/motorro/RxLceModel/base/_latestVersion):
+Basic module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/base/):
 ```groovy
 dependencies {
     // Base model components
     implementation "com.motorro.rxlcemodel:base:x.x.x"
 }
 ```
-Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [ ![DiskLruCache delegate](https://api.bintray.com/packages/motorro/RxLceModel/disklrucache/images/download.svg) ](https://bintray.com/motorro/RxLceModel/disklrucache/_latestVersion):
+Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/disklrucache/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/disklrucache/):
 ```groovy
 dependencies {
     // Jake Wharton's DiskLruCache delegate for cache implementation
     implementation "com.motorro.rxlcemodel:disklrucache:x.x.x"
 }
 ```
-Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [ ![Kotlin serializer](https://api.bintray.com/packages/motorro/RxLceModel/kserializer/images/download.svg) ](https://bintray.com/motorro/RxLceModel/kserializer/_latestVersion):
+Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/kserializer/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/kserializer/):
 ```groovy
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
     implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
+}
+```
+Optional: LCE ViewModel and base view ready to accept LCE use-case for your view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/viewmodel/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/viewmodel/):
+```groovy
+dependencies {
+    // Data serializer for DiskLruCache using Kotlin serialization
+    implementation "com.motorro.rxlcemodel:viewmodel:x.x.x"
+}
+```
+Optional: Compose LCE view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/composeview/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/composeview/):
+```groovy
+dependencies {
+    // Data serializer for DiskLruCache using Kotlin serialization
+    implementation "com.motorro.rxlcemodel:composeview:x.x.x"
 }
 ```
 
@@ -174,7 +189,9 @@ To create new `CacheThenNet` model call a factory function:
 protected open fun createLceModel() = LceModel.cacheThenNet(
     params = "user_123",
     net = netService, // Gets original data
-    cache = cacheService // Caches it to local storage
+    cache = cacheService, // Caches it to local storage
+    ioScheduler = Schedulers.io(), // Optional scheduler to use for internal IO operations
+    logger = Logger { level, message -> }, // Optional adapter to your debug-logger
 )
 ``` 
 
@@ -501,3 +518,28 @@ ships with some of the functions already implemented like:
 *   `validData` - emits data only if it is valid
 More information about them may be found in [documentation](docs/com.motorro.rxlcemodel.base/io.reactivex.rxjava3.core.-observable/index.md)
 or in a source code.
+
+## LCE ViewModel
+You may also take a look at basic Android [ViewModels](https://developer.android.com/topic/libraries/architecture/viewmodel)
+provided as a separate package. Use them as-is or as a delegate in your own `ViewModel` system. 
+There are three main classes:
+
+*   `BaseLceModel` - a common frame for LCE view-model having a signature for all common tasks to:
+    *   Load data
+    *   Dismiss error    
+    *   Refresh data
+*   `BaseLceModel.Impl` - a common implementation to subclass if you need advanced logic
+*   `BaseLceModel.WithUpdates` - for those models that run some update operations on loaded data.
+    This model will mix loading and error states from an operation to main data state.
+    See usage example in a [sample application](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/addnote/AddNoteViewModel.kt). 
+    
+To create a model from an `LceUseCase` call `BaseLceModel.create` methods and pass your state 
+use-cases or `LCE` observables to `ViewModel`
+
+You may also want to use basic views to switch your display according to LCE state:
+
+*   [LceStateView](viewmodel/src/main/kotlin/com/motorro/rxlcemodel/view/LceStateView.kt) - for Android 
+    view system.
+*   [LceStateView](composeview/src/main/kotlin/com/motorro/rxlcemodel/composeview/LceStateView.kt) - for Android
+    Compose view system.
+

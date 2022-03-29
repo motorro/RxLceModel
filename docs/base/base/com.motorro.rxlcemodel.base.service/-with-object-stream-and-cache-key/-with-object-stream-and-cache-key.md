@@ -1,24 +1,15 @@
-//[base](../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[WithObjectStreamAndCacheKey](index.md)/[WithObjectStreamAndCacheKey](-with-object-stream-and-cache-key.md)
+//[base](../../../index.md)/[com.motorro.rxlcemodel.base.service](../index.md)/[WithObjectStreamAndCacheKey](index.md)/[WithObjectStreamAndCacheKey](-with-object-stream-and-cache-key.md)
 
+# WithObjectStreamAndCacheKey
 
+[jvm]\
+fun &lt;[D](index.md) : [Serializable](https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html)&gt; [WithObjectStreamAndCacheKey](-with-object-stream-and-cache-key.md)(validatorFactory: [EntityValidatorFactory](../../com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md), dataClass: [Class](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html)&lt;[D](index.md)&gt;)
 
-# WithObjectStreamAndCacheKey  
-[jvm]  
-Brief description  
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| dataClass| <br><br>Class type to cast result to<br><br>
-| validatorFactory| <br><br>[Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md) validator factory<br><br>
-  
-  
-Content  
-fun <[D](index.md) : [Serializable](https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html)> [WithObjectStreamAndCacheKey](-with-object-stream-and-cache-key.md)(validatorFactory: [EntityValidatorFactory](../../com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md), dataClass: [Class](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html)<[D](index.md)>)  
-
-
-
+| validatorFactory | [Entity](../../com.motorro.rxlcemodel.base.entity/-entity/index.md) validator factory |
+| dataClass | Class type to cast result to |

@@ -1,17 +1,8 @@
-//[base](../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../index.md)/[EntityValidator](../index.md)/[Lifespan](index.md)/[toString](to-string.md)
+//[base](../../../../index.md)/[com.motorro.rxlcemodel.base.entity](../../index.md)/[EntityValidator](../index.md)/[Lifespan](index.md)/[toString](to-string.md)
 
+# toString
 
-
-# toString  
-[jvm]  
-Brief description  
-
+[jvm]\
+open override fun [toString](to-string.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 Display string
-
-  
-Content  
-open override fun [toString](to-string.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)  
-
-
-

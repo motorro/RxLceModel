@@ -1,28 +1,20 @@
-//[base](../index.md)/[com.motorro.rxlcemodel.base](index.md)/[onEmptyLoadingReturn](on-empty-loading-return.md)
+//[base](../../index.md)/[com.motorro.rxlcemodel.base](index.md)/[onEmptyLoadingReturn](on-empty-loading-return.md)
 
+# onEmptyLoadingReturn
 
+[jvm]\
+inline fun &lt;[DATA](on-empty-loading-return.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](on-empty-loading-return.md)&gt;&gt;.[onEmptyLoadingReturn](on-empty-loading-return.md)(crossinline block: ([LceState.Loading](-lce-state/-loading/index.md)&lt;[DATA](on-empty-loading-return.md)&gt;) -&gt; [LceState](-lce-state/index.md)&lt;[DATA](on-empty-loading-return.md)&gt;): Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](on-empty-loading-return.md)&gt;&gt;
 
-# onEmptyLoadingReturn  
-[jvm]  
-Brief description  
+Substitutes [LceState.Loading](-lce-state/-loading/index.md) with empty data with state produced by [block](on-empty-loading-return.md)
 
+#### Receiver
 
-Substitutes [LceState.Loading](-lce-state/-loading/index.md) with empty data with state produced by block
+LCE stream
 
+## Parameters
 
+jvm
 
-## Parameters  
-  
-jvm  
-  
-|  Name|  Summary| 
+| | |
 |---|---|
-| <receiver>| <br><br>LCE stream<br><br>
-| block| <br><br>transformation block<br><br>
-  
-  
-Content  
-inline fun <[DATA](on-empty-loading-return.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)> [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<[LceState](-lce-state/index.md)<[DATA](on-empty-loading-return.md)>>.[onEmptyLoadingReturn](on-empty-loading-return.md)(crossinline block: ([LceState.Loading](-lce-state/-loading/index.md)<[DATA](on-empty-loading-return.md)>) -> [LceState](-lce-state/index.md)<[DATA](on-empty-loading-return.md)>): [Observable](http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Observable.html)<[LceState](-lce-state/index.md)<[DATA](on-empty-loading-return.md)>>  
-
-
-
+| block | transformation block |
