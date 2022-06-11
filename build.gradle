@@ -1,7 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.7.0'
     ext.dokka_version = '1.6.0'
     repositories {
         google()
@@ -18,8 +18,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1'
+        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -66,11 +66,11 @@ allprojects {
     ext {
         commonLibVersions = [
                 // Code
-                "rx_java": "3.1.4",
-                "core_ktx_version": '1.7.0',
+                "rx_java": '3.1.5',
+                "core_ktx_version": '1.8.0',
                 "lifecycle_version": '2.4.1',
                 "arch_version": "2.1.0",
-                "nav_version": '2.4.1',
+                "nav_version": '2.4.2',
                 "work_version": '2.7.1',
 
                 // Tests
@@ -86,7 +86,7 @@ allprojects {
                 "compose_ui_activity_version": "1.4.0",
                 "compose_viewmodel_version": '2.4.1',
                 "compose_livedata_version": "1.1.1",
-                "compose_accompanist_version": "0.24.3-alpha",
+                "compose_accompanist_version": '0.24.10-beta',
                 "compose_ui_test_manifest_version": '1.1.1',
                 "compose_ui_test_vi_version": '1.1.1'
         ]

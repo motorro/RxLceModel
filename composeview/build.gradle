@@ -45,8 +45,6 @@ android {
     defaultConfig {
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionName rootProject.versionName
-        versionCode rootProject.versionCode
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -101,7 +99,7 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
     testImplementation "androidx.test:core:1.4.0"
     testImplementation "androidx.compose.ui:ui-test-junit4:${commonLibVersions.compose_ui_test_vi_version}"
-    testImplementation 'org.robolectric:robolectric:4.7.2'
+    testImplementation 'org.robolectric:robolectric:4.8.1'
 }
 
 dokkaJavadoc.configure {

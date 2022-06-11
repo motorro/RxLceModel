@@ -46,7 +46,7 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-serialization-core:${KOTLINX_SERIALIZATION_VERSION}"
-    api "org.jetbrains.kotlinx:kotlinx-serialization-cbor:${KOTLINX_SERIALIZATION_VERSION}"
+    api "org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.3.3"
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"

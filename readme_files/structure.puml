@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide empty members
+
+interface Entity<D> {
+    +data: D
+    +isValid(): boolean
+}
+Entity o-right- EntityValidator
+
+interface EntityValidator
+
+interface ReactiveCache<P, D> {
+    +get(p: P): D?
+    +save(p: P, data: D)
+    +invalidate()
+}
+ReactiveCache "1" -right- "*" Entity
+
+interface NetworkService
+
+interface LceUsecase<P, D> {
+    +state: Observable<LceState<D>>
+    +refresh
+}
+LceUsecase "updates" <-up-> "publishes" ReactiveCache
+NetworkService -right-> LceUsecase: loads data
+
+interface View<D> {
+    +processState(state: LceState<D>)
+}
+View -up-> LceUsecase: listens
+
+object SomeProducer
+SomeProducer -up-> ReactiveCache: updates, invalidates
+
+
+@enduml
