@@ -3,6 +3,8 @@
 # KotlinCacheDelegateSerializer
 
 [jvm]\
+@ExperimentalSerializationApi
+
 class [KotlinCacheDelegateSerializer](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(validatorFactory: [EntityValidatorFactory](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity-validator-factory/index.md), kSerializer: KSerializer&lt;[D](index.md)&gt;, binaryFormat: BinaryFormat) : [CacheDelegateSerializerDeserializer](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt; 
 
 Serializes and deserializes objects with kotlinx.serialization.KSerializer
