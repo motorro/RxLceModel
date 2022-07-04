@@ -1,7 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
-    ext.kotlin_version = '1.7.0'
+    ext.kotlin_version = '1.6.10'
     ext.dokka_version = '1.6.0'
     repositories {
         google()
@@ -84,7 +84,7 @@ allprojects {
                 "compose_ui_foundation_version": '1.1.1',
                 "compose_ui_material_version": '1.1.1',
                 "compose_ui_activity_version": "1.4.0",
-                "compose_viewmodel_version": '2.4.1',
+                "compose_viewmodel_version": '2.5.0',
                 "compose_livedata_version": "1.1.1",
                 "compose_accompanist_version": '0.24.10-beta',
                 "compose_ui_test_manifest_version": '1.1.1',
