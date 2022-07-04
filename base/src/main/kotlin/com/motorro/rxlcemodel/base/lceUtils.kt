@@ -112,40 +112,17 @@ val <DATA: Any> Observable<LceState<DATA>>.validData: Observable<DATA>
  */
 fun <DATA_1: Any, DATA_2: Any> Observable<LceState<DATA_1>>.flatMapSingleData(mapper: (data: DATA_1) -> Single<DATA_2>): Observable<LceState<DATA_2>> {
 
-    fun dataMapper(data1: DATA_1, block: (DATA_2) -> LceState<DATA_2>) = mapper(data1)
-        .map { block(it) }
-        .onErrorReturn { LceState.Error(null, false, it) }
-
-    fun nullableMapper(data1: DATA_1?, block: (DATA_2?) -> LceState<DATA_2>) = if (null == data1) {
-        Single.just(block(null))
-    } else {
-        dataMapper(data1, block)
+    fun stateMapper(data1: DATA_1?): Observable<LceState<DATA_2>> = when(data1) {
+        null -> Observable.just(LceState.Loading(null, false))
+        else -> mapper(data1)
+            .map<LceState<DATA_2>>{ LceState.Content(it, true) }
+            .toObservable()
+            .errorToLce()
     }
 
-    @Suppress("RemoveExplicitTypeArguments")
-    return flatMapSingle<LceState<DATA_2>> { state ->
-        when (state) {
-            is LceState.Loading -> nullableMapper(state.data) {
-                LceState.Loading(
-                    it,
-                    state.dataIsValid,
-                    state.type
-                )
-            }
-            is LceState.Content -> dataMapper(state.data) {
-                LceState.Content(
-                    it,
-                    state.dataIsValid
-                )
-            }
-            is LceState.Error -> nullableMapper(state.data) {
-                LceState.Error(
-                    it,
-                    state.dataIsValid,
-                    state.error
-                )
-            }
-            is LceState.Terminated -> Single.just(LceState.Terminated)
+    return switchMap { data1State ->
+        stateMapper(data1State.data).map { data2State ->
+            data1State.combine(data2State) { _, data2 -> data2 }
         }
     }
 }
@@ -242,4 +219,13 @@ inline fun <DATA: Any> Observable<LceState<DATA>>.onEmptyLoadingReturnItem(cross
         it
     }
 }
+
+/**
+ * Maps an upstream error to LceError
+ * @param errorData Evaluates data for error state
+ */
+inline fun <T : Any> Observable<LceState<T>>.errorToLce(crossinline errorData: (Throwable) -> T? = { null }): Observable<LceState<T>> = onErrorReturn {
+    LceState.Error(errorData(it), false, it)
+}
+
 

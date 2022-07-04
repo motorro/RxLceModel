@@ -223,7 +223,7 @@ class LceUtilsKtTest {
                 LceState.Error(null, false, error2),
                 LceState.Error(null, false, error2),
                 LceState.Error(null, false, error1),
-                LceState.Error(null, false, error2),
+                LceState.Error(null, false, error1),
                 LceState.Terminated
             )
     }
