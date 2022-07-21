@@ -14,6 +14,7 @@
 package com.motorro.rxlcemodel.view
 
 import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.motorro.rxlcemodel.base.LceState
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 import com.nhaarman.mockitokotlin2.*
@@ -132,7 +133,7 @@ class LceStateViewTest {
             on { state } doReturn liveData
         }
         val factory: ViewModelProvider.Factory = mock {
-            onGeneric { create<BaseLceModel<Int>>(any()) } doReturn model
+            onGeneric { create<BaseLceModel<Int>>(any(), any()) } doReturn model
         }
         val lceView: LceStateView<Int> = mock {
             on { getLifecycleOwner() } doReturn lifecycleOwner
@@ -140,6 +141,7 @@ class LceStateViewTest {
         val storeOwner: ModelHost = mock {
             on { viewModelStore } doReturn ViewModelStore()
             on { defaultViewModelProviderFactory } doReturn factory
+            on { defaultViewModelCreationExtras } doReturn CreationExtras.Empty
         }
 
         assertEquals(model, lceView.initializeModel(storeOwner))

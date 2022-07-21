@@ -117,7 +117,7 @@ inline fun <reified DATA : Any, reified MODEL : BaseLceModel<DATA>> LceStateView
     init: MODEL.() -> Unit = { initialize() }
 ): MODEL {
     val model = ViewModelProvider(modelStoreOwner).get(MODEL::class.java)
-    model.state.observe(getLifecycleOwner(), { processState(it) })
+    model.state.observe(getLifecycleOwner()) { processState(it) }
     model.init()
     return model
 }
