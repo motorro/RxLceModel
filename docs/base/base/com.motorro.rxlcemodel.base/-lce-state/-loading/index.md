@@ -3,7 +3,7 @@
 # Loading
 
 [jvm]\
-data class [Loading](index.md)&lt;out [DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(data: [DATA](index.md)?, dataIsValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html), type: [LceState.Loading.Type](-type/index.md)) : [LceState](../index.md)&lt;[DATA](index.md)&gt; 
+data class [Loading](index.md)&lt;out [DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(val data: [DATA](index.md)?, val dataIsValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html), val type: [LceState.Loading.Type](-type/index.md) = Type.LOADING) : [LceState](../index.md)&lt;[DATA](index.md)&gt; 
 
 View is loading
 

@@ -25,15 +25,13 @@ Base model with [state](state.md) and [refresh](refresh.md)
 
 | Name | Summary |
 |---|---|
-| [clear](../-base-view-model/index.md#-1936886459%2FFunctions%2F1456247564) | [androidJvm]<br>@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)<br>fun [clear](../-base-view-model/index.md#-1936886459%2FFunctions%2F1456247564)() |
+| [addCloseable](../-base-view-model/index.md#264516373%2FFunctions%2F1456247564) | [androidJvm]<br>open fun [addCloseable](../-base-view-model/index.md#264516373%2FFunctions%2F1456247564)(@[NonNull](https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html)p0: [Closeable](https://developer.android.com/reference/kotlin/java/io/Closeable.html)) |
 | [dismissCurrentError](dismiss-current-error.md) | [androidJvm]<br>fun [dismissCurrentError](dismiss-current-error.md)()<br>Dismisses error set in state if it is error |
 | [dismissError](dismiss-error.md) | [androidJvm]<br>open fun [dismissError](dismiss-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))<br>Default action on critical error |
 | [doClear](../-base-view-model/do-clear.md) | [androidJvm]<br>abstract fun [doClear](../-base-view-model/do-clear.md)()<br>Disposes active operations when model is destroyed |
-| [getTag](../-base-view-model/index.md#-215894976%2FFunctions%2F1456247564) | [androidJvm]<br>open fun &lt;[T](../-base-view-model/index.md#-215894976%2FFunctions%2F1456247564) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [getTag](../-base-view-model/index.md#-215894976%2FFunctions%2F1456247564)(p0: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [T](../-base-view-model/index.md#-215894976%2FFunctions%2F1456247564) |
 | [initialize](../-base-view-model/initialize.md) | [androidJvm]<br>fun [initialize](../-base-view-model/initialize.md)()<br>Call this function to initialize a new model and start receiving events |
 | [refresh](refresh.md) | [androidJvm]<br>abstract fun [refresh](refresh.md)()<br>Requests data refresh |
 | [restart](restart.md) | [androidJvm]<br>abstract fun [restart](restart.md)()<br>Retries data subscription from scratch |
-| [setTagIfAbsent](../-base-view-model/index.md#-1567230750%2FFunctions%2F1456247564) | [androidJvm]<br>open fun &lt;[T](../-base-view-model/index.md#-1567230750%2FFunctions%2F1456247564) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [setTagIfAbsent](../-base-view-model/index.md#-1567230750%2FFunctions%2F1456247564)(p0: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), p1: [T](../-base-view-model/index.md#-1567230750%2FFunctions%2F1456247564)): [T](../-base-view-model/index.md#-1567230750%2FFunctions%2F1456247564) |
 
 ## Properties
 

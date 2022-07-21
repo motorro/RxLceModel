@@ -3,7 +3,7 @@
 # Content
 
 [jvm]\
-data class [Content](index.md)&lt;out [DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(data: [DATA](index.md), dataIsValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)) : [LceState](../index.md)&lt;[DATA](index.md)&gt; 
+data class [Content](index.md)&lt;out [DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val data: [DATA](index.md), val dataIsValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)) : [LceState](../index.md)&lt;[DATA](index.md)&gt; 
 
 Data is loaded and content is displayed
 

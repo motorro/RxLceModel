@@ -17,11 +17,9 @@ Base view model with [initialize](initialize.md) and [doClear](do-clear.md) meth
 
 | Name | Summary |
 |---|---|
-| [clear](index.md#-1936886459%2FFunctions%2F1456247564) | [androidJvm]<br>@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)<br>fun [clear](index.md#-1936886459%2FFunctions%2F1456247564)() |
+| [addCloseable](index.md#264516373%2FFunctions%2F1456247564) | [androidJvm]<br>open fun [addCloseable](index.md#264516373%2FFunctions%2F1456247564)(@[NonNull](https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html)p0: [Closeable](https://developer.android.com/reference/kotlin/java/io/Closeable.html)) |
 | [doClear](do-clear.md) | [androidJvm]<br>abstract fun [doClear](do-clear.md)()<br>Disposes active operations when model is destroyed |
-| [getTag](index.md#-215894976%2FFunctions%2F1456247564) | [androidJvm]<br>open fun &lt;[T](index.md#-215894976%2FFunctions%2F1456247564) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [getTag](index.md#-215894976%2FFunctions%2F1456247564)(p0: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [T](index.md#-215894976%2FFunctions%2F1456247564) |
 | [initialize](initialize.md) | [androidJvm]<br>fun [initialize](initialize.md)()<br>Call this function to initialize a new model and start receiving events |
-| [setTagIfAbsent](index.md#-1567230750%2FFunctions%2F1456247564) | [androidJvm]<br>open fun &lt;[T](index.md#-1567230750%2FFunctions%2F1456247564) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [setTagIfAbsent](index.md#-1567230750%2FFunctions%2F1456247564)(p0: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), p1: [T](index.md#-1567230750%2FFunctions%2F1456247564)): [T](index.md#-1567230750%2FFunctions%2F1456247564) |
 
 ## Properties
 

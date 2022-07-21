@@ -4,3 +4,11 @@
 
 [jvm]\
 open override val [data](data.md): [T](index.md)
+
+## Parameters
+
+jvm
+
+| | |
+|---|---|
+| data | Stored data |

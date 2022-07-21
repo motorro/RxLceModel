@@ -6,3 +6,11 @@
 val &lt;[DATA](valid-data.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; Observable&lt;[LceState](-lce-state/index.md)&lt;[DATA](valid-data.md)&gt;&gt;.[validData](valid-data.md): Observable&lt;[DATA](valid-data.md)&gt;
 
 Model's valid data stream with state information dropped. Will terminate on any error
+
+## Parameters
+
+jvm
+
+| | |
+|---|---|
+| DATA | Source model data type |

@@ -5,7 +5,7 @@
 [jvm]\
 @ExperimentalSerializationApi
 
-data class [DataWithCacheKeySerializer](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(dataSerializer: KSerializer&lt;[D](index.md)&gt;) : KSerializer&lt;[DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;&gt; 
+data class [DataWithCacheKeySerializer](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val dataSerializer: KSerializer&lt;[D](index.md)&gt;) : KSerializer&lt;[DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;&gt; 
 
 Serializer for [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)
 

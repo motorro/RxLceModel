@@ -3,7 +3,7 @@
 # UnhandledException
 
 [androidJvm]\
-class [UnhandledException](index.md)(cause: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)?) : [RuntimeException](https://developer.android.com/reference/kotlin/java/lang/RuntimeException.html)
+class [UnhandledException](index.md)(cause: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)? = null) : [RuntimeException](https://developer.android.com/reference/kotlin/java/lang/RuntimeException.html)
 
 Exception to re-throw in LCE subscription if it was not routed through Error state
 

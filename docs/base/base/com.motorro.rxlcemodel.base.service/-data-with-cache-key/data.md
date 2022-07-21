@@ -4,3 +4,11 @@
 
 [jvm]\
 val [data](data.md): [D](index.md)
+
+## Parameters
+
+jvm
+
+| | |
+|---|---|
+| data | Original data |

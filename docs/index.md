@@ -2,14 +2,14 @@
 
 # Module base
 
-A reactive data loading for Android based on  [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official [Android guide to app architecture](https://developer.android.com/jetpack/docs/guide) to load data and report an  operation state (Loading/Content/Error). 
+A reactive data loading for Android based on  [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official [Android guide to app architecture](https://developer.android.com/jetpack/docs/guide) to load data and report an  operation state (`Loading`/`Content`/`Error`). 
 
 ##  Features
 
 - 
-   Widely used design with Loading/Content/Error states.
+   Widely used design with `Loading`/`Content`/`Error` states.
 - 
-   Uses cache as a 'source of truth' with CacheThenNetLceModel.
+   Uses cache as a 'source of truth' with `CacheThenNetLceModel`.
 - 
    Checks data is valid (up-to-date or whatever).
 - 

@@ -11,7 +11,7 @@ Cache-controlling entity for [com.motorro.rxlcemodel.base.entity.Entity](index.m
 
 | Name | Summary |
 |---|---|
-| [Impl](-impl/index.md) | [jvm]<br>data class [Impl](-impl/index.md)&lt;out [T](-impl/index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(data: [T](-impl/index.md), validator: [EntityValidator](../-entity-validator/index.md)) : [Entity](index.md)&lt;[T](-impl/index.md)&gt; , [EntityValidator](../-entity-validator/index.md)<br>Simple entity implementation |
+| [Impl](-impl/index.md) | [jvm]<br>data class [Impl](-impl/index.md)&lt;out [T](-impl/index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val data: [T](-impl/index.md), validator: [EntityValidator](../-entity-validator/index.md)) : [Entity](index.md)&lt;[T](-impl/index.md)&gt; , [EntityValidator](../-entity-validator/index.md)<br>Simple entity implementation |
 
 ## Functions
 

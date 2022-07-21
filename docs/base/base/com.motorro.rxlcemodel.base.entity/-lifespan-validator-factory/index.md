@@ -3,7 +3,7 @@
 # LifespanValidatorFactory
 
 [jvm]\
-class [LifespanValidatorFactory](index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(cacheTtl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../-clock/index.md)) : [EntityValidatorFactory](../-entity-validator-factory/index.md)
+class [LifespanValidatorFactory](index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(cacheTtl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../-clock/index.md) = Clock.SYSTEM) : [EntityValidatorFactory](../-entity-validator-factory/index.md)
 
 Creates [Lifespan](../-entity-validator/-lifespan/index.md) as a cache-control
 

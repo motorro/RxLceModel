@@ -3,7 +3,7 @@
 # Impl
 
 [jvm]\
-data class [Impl](index.md)&lt;out [T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md)) : [Entity](../index.md)&lt;[T](index.md)&gt; , [EntityValidator](../../-entity-validator/index.md)
+data class [Impl](index.md)&lt;out [T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md)) : [Entity](../index.md)&lt;[T](index.md)&gt; , [EntityValidator](../../-entity-validator/index.md)
 
 Simple entity implementation
 

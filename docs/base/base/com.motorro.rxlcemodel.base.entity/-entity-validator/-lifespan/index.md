@@ -28,7 +28,7 @@ jvm
 | Name | Summary |
 |---|---|
 | [Companion](-companion/index.md) | [jvm]<br>object [Companion](-companion/index.md) |
-| [LifespanDeserializer](-lifespan-deserializer/index.md) | [jvm]<br>class [LifespanDeserializer](-lifespan-deserializer/index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(clock: [Clock](../../-clock/index.md)) : [EntityValidator.Deserializer](../-deserializer/index.md)<br>Deserializes validator from string |
+| [LifespanDeserializer](-lifespan-deserializer/index.md) | [jvm]<br>class [LifespanDeserializer](-lifespan-deserializer/index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(clock: [Clock](../../-clock/index.md) = Clock.SYSTEM) : [EntityValidator.Deserializer](../-deserializer/index.md)<br>Deserializes validator from string |
 
 ## Functions
 

@@ -3,7 +3,7 @@
 # LifespanDeserializer
 
 [jvm]\
-class [LifespanDeserializer](index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(clock: [Clock](../../../-clock/index.md)) : [EntityValidator.Deserializer](../../-deserializer/index.md)
+class [LifespanDeserializer](index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(clock: [Clock](../../../-clock/index.md) = Clock.SYSTEM) : [EntityValidator.Deserializer](../../-deserializer/index.md)
 
 Deserializes validator from string
 

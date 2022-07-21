@@ -3,7 +3,7 @@
 # UPDATING
 
 [jvm]\
-[UPDATING](index.md)()
+[UPDATING](index.md)
 
 Updating data on server
 
@@ -11,5 +11,5 @@ Updating data on server
 
 | Name | Summary |
 |---|---|
-| [name](../../../../-log-level/-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920) | [jvm]<br>val [name](../../../../-log-level/-i-n-f-o/index.md#-372974862%2FProperties%2F-553753920): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
-| [ordinal](../../../../-log-level/-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920) | [jvm]<br>val [ordinal](../../../../-log-level/-i-n-f-o/index.md#-739389684%2FProperties%2F-553753920): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+| [name](../../../../-log-level/-e-r-r-o-r/index.md#-372974862%2FProperties%2F-553753920) | [jvm]<br>val [name](../../../../-log-level/-e-r-r-o-r/index.md#-372974862%2FProperties%2F-553753920): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [ordinal](../../../../-log-level/-e-r-r-o-r/index.md#-739389684%2FProperties%2F-553753920) | [jvm]<br>val [ordinal](../../../../-log-level/-e-r-r-o-r/index.md#-739389684%2FProperties%2F-553753920): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
