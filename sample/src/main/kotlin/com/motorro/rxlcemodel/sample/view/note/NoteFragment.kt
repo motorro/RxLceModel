@@ -21,7 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.databinding.FragmentNoteBinding
 import com.motorro.rxlcemodel.sample.di.ProvidesNoteId

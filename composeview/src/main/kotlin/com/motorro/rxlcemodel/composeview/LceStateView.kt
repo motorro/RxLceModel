@@ -15,7 +15,7 @@ package com.motorro.rxlcemodel.composeview
 
 import androidx.compose.runtime.Composable
 import com.motorro.rxlcemodel.composeview.view.SwipeRefresh
-import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.lce.LceState
 
 /**
  * Attaches composable view to view-model

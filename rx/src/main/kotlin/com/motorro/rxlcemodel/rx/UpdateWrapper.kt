@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx
 
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.rx.LogLevel.INFO
 import com.motorro.rxlcemodel.rx.LogLevel.WARNING
 import com.motorro.rxlcemodel.rx.entity.Entity

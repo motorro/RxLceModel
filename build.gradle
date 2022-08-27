@@ -151,6 +151,10 @@ allprojects {
     }
 }
 
+task runLceUnitTests(type: Task, dependsOn: [':lce:test'], group: 'verification') {
+    description 'Run unit tests for Lce library.'
+}
+
 task runRxUnitTests(type: Task, dependsOn: [':rx:test'], group: 'verification') {
     description 'Run unit tests for Rx library.'
 }
@@ -178,6 +182,7 @@ task runSampleUnitTests(type: Task, dependsOn: [':sample:testDebugUnitTest'], gr
 task runUnitTests(
         type: Task,
         dependsOn: [
+                'runLceUnitTests',
                 'runRxUnitTests',
                 'runDiskLruUnitTests',
                 'runKserializerUnitTests',

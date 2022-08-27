@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx
 
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.rx.service.NetService
 import com.motorro.rxlcemodel.rx.service.ServiceSet

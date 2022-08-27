@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,9 +11,9 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx
+package com.motorro.rxlcemodel.lce
 
-import com.motorro.rxlcemodel.rx.LceState.Loading.Type
+import com.motorro.rxlcemodel.lce.LceState.Loading.Type
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

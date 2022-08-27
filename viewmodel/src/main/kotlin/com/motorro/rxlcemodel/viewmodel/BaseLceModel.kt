@@ -16,9 +16,9 @@ package com.motorro.rxlcemodel.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.lce.LceState
+import com.motorro.rxlcemodel.lce.combine
 import com.motorro.rxlcemodel.rx.LceUseCase
-import com.motorro.rxlcemodel.rx.combine
 import com.motorro.rxlcemodel.viewmodel.error.UnhandledException
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable

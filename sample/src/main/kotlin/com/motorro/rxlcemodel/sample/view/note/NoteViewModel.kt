@@ -15,8 +15,8 @@ package com.motorro.rxlcemodel.sample.view.note
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.rx.LceModel
-import com.motorro.rxlcemodel.rx.LceState
 import com.motorro.rxlcemodel.rx.UpdateWrapper
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.rx.service.NetService

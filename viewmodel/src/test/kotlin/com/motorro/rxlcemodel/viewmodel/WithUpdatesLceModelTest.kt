@@ -14,7 +14,7 @@ package com.motorro.rxlcemodel.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.rx.LceUseCase
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.inOrder

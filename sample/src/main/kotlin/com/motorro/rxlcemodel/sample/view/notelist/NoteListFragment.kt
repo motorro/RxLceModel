@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.sample.databinding.FragmentNoteListBinding
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.view.LceFragment

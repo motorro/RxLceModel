@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx
 
+import com.motorro.rxlcemodel.lce.LceState
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 
