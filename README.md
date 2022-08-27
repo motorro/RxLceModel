@@ -143,7 +143,7 @@ override fun processTermination() {
 The sample fragment that demonstrates the use of LCE state to update it's view may be found [here](sample/src/main/kotlin/com/motorro/rxlcemodel/sample/view/note/NoteFragment.kt).
 
 ## LceModel
-`LceState<DATA, PARAMS>` in this library is being produced by a simple model [interface](rx/src/main/kotlin/com/motorro/rxlcemodel/base/LceModel.kt): 
+`LceState<DATA, PARAMS>` in this library is being produced by a simple model [interface](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/LceModel.kt): 
 ```kotlin
 interface LceModel<DATA: Any, PARAMS: Any> {
     val state: Observable<LceState<DATA, PARAMS>>
@@ -173,9 +173,9 @@ nothing found. It goes along with current [Android guide to app architecture](ht
 
 ![CacheThenNet loading sequence](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/loading.puml)
 
-The model creates a data observable for given `PARAMS` in a [cache-service](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt) 
+The model creates a data observable for given `PARAMS` in a [cache-service](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/CacheService.kt) 
 and transmits it to subscriber. If cache does not contain any data or data is not valid (more on validation later) the 
-model subscribes a [net-service](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/NetService.kt) to download 
+model subscribes a [net-service](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/NetService.kt) to download 
 data from network and saves it to cache for a later use.
 
 It is worth nothing that `cache` and `net` here is just a common use-case of data-sources: locally stored  data (`cache`) 
@@ -198,15 +198,15 @@ protected open fun createLceModel() = LceModel.cacheThenNet(
 ## Getting and caching data
 As already mentioned above caching model uses two services to get data from network and to store it locally.
 
-*   [NetService](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/NetService.kt) - loads data from network.
-*   [CacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt) - saves data locally.
+*   [NetService](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/NetService.kt) - loads data from network.
+*   [CacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/CacheService.kt) - saves data locally.
 
 Caching data always brings up a problem of cache updates and invalidation. Be it a caching policy of your backend team
 or some internal logic of your application the data validity evaluation may be easily implemented: 
 
 ![Entity and validation](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/entity.puml)
 
-The `NetService` retrieved data and packages it to [Entity](rx/src/main/kotlin/com/motorro/rxlcemodel/base/entity/Entity.kt) 
+The `NetService` retrieved data and packages it to [Entity](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/entity/Entity.kt) 
 wrapper - effectively the data itself and some `EntityValidator` to provide information when data expires.
 Validator is a simple interface with only three essential methods:
 *   `isValid(): Boolean` - being used by loading pipeline to determine if data is still valid
@@ -249,7 +249,7 @@ To create a `LifeSpan` validator, there is a helper-factory that takes a single 
 val validatorFactory = LifespanValidatorFactory(5000L)
 ``` 
 
-The `LifespanValidatorFactory` is an implementation of [EntityValidatorFactory](rx/src/main/kotlin/com/motorro/rxlcemodel/base/entity/EntityValidatorFactory.kt)
+The `LifespanValidatorFactory` is an implementation of [EntityValidatorFactory](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/entity/EntityValidatorFactory.kt)
 that you may implement in case you need your own custom validator.
 
 ## Displaying 'invalid' data and cache fall-back
@@ -271,7 +271,7 @@ With reactive cache-service the library provides such an invalidation is made in
 ![Cache invalidation](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_invalidation.puml)
 
 If the push-message brings a pyload that is enough to display data change you could simply save the new data to cash 
-with `save` method or delete it with `delete` method of [CacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt) interface:
+with `save` method or delete it with `delete` method of [CacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/CacheService.kt) interface:
 
 The sample application demonstrates cache invalidation with notes CRUD. Here is how the delete use-case invalidates 
 notes list and removes a note from cache if successfully deleted on server:
@@ -296,13 +296,13 @@ you need some way to notify subscribers of data change.
 
 ![Cache refetch](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_refetch.puml)
 
-[CacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheService.kt)
+[CacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/CacheService.kt)
 has two methods that when called makes it to refetch data and update its active clients:
 - `refetch(params: P): Completable` - makes cache service to refetch data for `params` and update corresponding clients
 - `refetchAll: Completable` - makes cache service to refetch data for all subscribers
 
 ## Cache service implementation and DiskLruCache
-While you can implement any cache-service you like the library comes with a simple [SyncDelegateCacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/SyncDelegateCacheService.kt)
+While you can implement any cache-service you like the library comes with a simple [SyncDelegateCacheService](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/SyncDelegateCacheService.kt)
 which uses the following delegate for data IO:
 
 ![Cache delegate](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/motorro/RxLceModel/master/readme_files/cache_delegate.puml)
@@ -312,7 +312,7 @@ The library comes with a delegate that uses famous [Jake Wharton's DiskLruCache]
 cache delegate to store cache in files. The delegate is to be plugged-in as a separate dependency as described in 
 [Setting up the dependency](#setting-up-the-dependency).
 
-The delegate requires a [CacheDelegateSerializerDeserializer](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheSerializersDeserealizers.kt)
+The delegate requires a [CacheDelegateSerializerDeserializer](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/CacheSerializersDeserealizers.kt)
 to save/restore data from file streams. The implemented serializer that comes with the library uses `ObjectStream` and
 requires cached data to be `Serializable`.
 
@@ -429,7 +429,7 @@ val cacheService: CacheService<Data, Int> = CacheService.withSyncDelegateNormali
     diskCache.withKotlinNormalized(validatorFactory, Data.serializer()) { toString() }
 )
 ```
-These functions create a wrapping [CacheFriendDelegate](rx/src/main/kotlin/com/motorro/rxlcemodel/base/service/CacheFriendDelegate.kt)
+These functions create a wrapping [CacheFriendDelegate](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/service/CacheFriendDelegate.kt)
 which stores data along with original key to be able to compare it to the one used when reading data.
 If original keys do not match - `null` is returned. 
 Besides that the key is normalized before going to `DiskLruCache` - if it is considered invalid then
@@ -458,7 +458,7 @@ in the official guide.
 
 ## Updating data on server
 With `LceModel` you can update data easily with update operation state being transmitted through a `state` property just
-as with data loading. The updates are made with descendants of [UpdateWrapper](rx/src/main/kotlin/com/motorro/rxlcemodel/base/UpdateWrapper.kt).
+as with data loading. The updates are made with descendants of [UpdateWrapper](rx/src/main/kotlin/com/motorro/rxlcemodel/rx/UpdateWrapper.kt).
 The idea behind is to wrap an existing `LceModel` and to mix the update status to the existing state stream.
 The selection of ready-to use wrappers is:
 *   `UpdatingLceModelWrapper<DATA, UPDATE, PARAMS>` - the wrapper that updates the whole `DATA` using the `UPDATE` class.

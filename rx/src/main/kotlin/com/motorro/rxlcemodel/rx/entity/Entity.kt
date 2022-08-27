@@ -107,7 +107,7 @@ interface EntityValidator {
     /**
      * Crates a snapshot of validator preserving it's current [EntityValidator.isValid] value
      */
-    fun createSnapshot(): EntityValidator = EntityValidator.Simple(isValid())
+    fun createSnapshot(): EntityValidator = Simple(isValid())
 
     /**
      * A simple validator which state is defined on creation

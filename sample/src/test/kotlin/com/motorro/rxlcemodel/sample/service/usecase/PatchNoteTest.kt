@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.sample.service.usecase
 
+import com.motorro.rxlcemodel.rx.entity.EntityValidator
 import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.sample.NOTE

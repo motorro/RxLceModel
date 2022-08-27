@@ -21,6 +21,7 @@ import com.motorro.rxlcemodel.rx.LceUseCase
 import com.motorro.rxlcemodel.rx.combine
 import com.motorro.rxlcemodel.viewmodel.error.UnhandledException
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
