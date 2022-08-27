@@ -13,9 +13,9 @@
 
 package com.motorro.rxlcemodel.kserializer
 
-import com.motorro.rxlcemodel.base.entity.Entity
-import com.motorro.rxlcemodel.base.entity.EntityValidator
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.rx.entity.EntityValidator
+import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever

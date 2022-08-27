@@ -21,7 +21,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.rx.LceState
 import com.motorro.rxlcemodel.sample.databinding.FragmentAddNoteBinding
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import dagger.android.support.AndroidSupportInjection

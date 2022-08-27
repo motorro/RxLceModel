@@ -15,14 +15,14 @@ package com.motorro.rxlcemodel.sample.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.motorro.rxlcemodel.base.LceModel
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.base.service.NetService
-import com.motorro.rxlcemodel.base.service.ServiceSet
+import com.motorro.rxlcemodel.rx.LceModel
+import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.rx.service.CacheService
+import com.motorro.rxlcemodel.rx.service.NetService
+import com.motorro.rxlcemodel.rx.service.ServiceSet
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import io.reactivex.rxjava3.core.Observable
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * A basic functionality for ViewModel creation that exports state as live-data

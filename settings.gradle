@@ -1,4 +1,4 @@
 rootProject.name = "RxLceModel"
-include ':sample', ':base', ':disklrucache', ':kserializer'
+include ':sample', ':rx', ':disklrucache', ':kserializer'
 include ':viewmodel'
 include ':composeview'

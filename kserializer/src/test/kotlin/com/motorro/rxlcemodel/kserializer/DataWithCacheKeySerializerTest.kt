@@ -14,7 +14,7 @@
 
 package com.motorro.rxlcemodel.kserializer
 
-import com.motorro.rxlcemodel.base.service.DataWithCacheKey
+import com.motorro.rxlcemodel.rx.service.DataWithCacheKey
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.builtins.serializer

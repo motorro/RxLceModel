@@ -13,10 +13,10 @@
 
 package com.motorro.rxlcemodel.kserializer
 
-import com.motorro.rxlcemodel.base.entity.Entity
-import com.motorro.rxlcemodel.base.entity.EntityValidator
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
-import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
+import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.rx.entity.EntityValidator
+import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.rx.service.CacheDelegateSerializerDeserializer
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer

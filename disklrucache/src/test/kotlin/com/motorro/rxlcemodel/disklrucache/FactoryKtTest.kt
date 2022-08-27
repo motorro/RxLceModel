@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.disklrucache
 
-import com.motorro.rxlcemodel.base.service.CacheFriend
+import com.motorro.rxlcemodel.rx.service.CacheFriend
 import org.junit.Test
 import kotlin.test.assertEquals
 

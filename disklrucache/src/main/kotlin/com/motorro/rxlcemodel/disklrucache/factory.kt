@@ -13,10 +13,10 @@
 
 package com.motorro.rxlcemodel.disklrucache
 
-import com.motorro.rxlcemodel.base.entity.Entity
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
-import com.motorro.rxlcemodel.base.service.*
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
+import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.rx.service.*
 import java.io.Serializable
 import java.security.MessageDigest
 import java.util.*

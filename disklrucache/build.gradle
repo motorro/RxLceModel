@@ -24,7 +24,7 @@ project.sourceSets {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':base')
+    implementation project(':rx')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 

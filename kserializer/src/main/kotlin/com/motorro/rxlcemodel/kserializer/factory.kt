@@ -13,15 +13,15 @@
 
 package com.motorro.rxlcemodel.kserializer
 
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
-import com.motorro.rxlcemodel.base.service.CacheFriend
-import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService
-import com.motorro.rxlcemodel.base.service.stringifyParams
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import com.motorro.rxlcemodel.disklrucache.createDefaultDelegatePrefix
 import com.motorro.rxlcemodel.disklrucache.createDelegate
 import com.motorro.rxlcemodel.disklrucache.createNormalizedDelegate
+import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.rx.service.CacheFriend
+import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService
+import com.motorro.rxlcemodel.rx.service.stringifyParams
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer

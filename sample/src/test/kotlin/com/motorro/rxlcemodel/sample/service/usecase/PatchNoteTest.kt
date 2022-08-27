@@ -13,9 +13,8 @@
 
 package com.motorro.rxlcemodel.sample.service.usecase
 
-import com.motorro.rxlcemodel.base.entity.EntityValidator
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
-import com.motorro.rxlcemodel.base.service.CacheService
+import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.sample.NOTE
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.NetRepository

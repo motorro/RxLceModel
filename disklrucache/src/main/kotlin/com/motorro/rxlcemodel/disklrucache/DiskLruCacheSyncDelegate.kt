@@ -14,11 +14,11 @@
 package com.motorro.rxlcemodel.disklrucache
 
 import com.jakewharton.disklrucache.DiskLruCache
-import com.motorro.rxlcemodel.base.entity.Clock
-import com.motorro.rxlcemodel.base.entity.Entity
-import com.motorro.rxlcemodel.base.service.CacheDelegateSerializerDeserializer
-import com.motorro.rxlcemodel.base.service.SyncDelegateCacheService
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
+import com.motorro.rxlcemodel.rx.entity.Clock
+import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.rx.service.CacheDelegateSerializerDeserializer
+import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService
 import java.io.*
 
 /**

@@ -98,6 +98,15 @@ allprojects {
         jcenter()
     }
 
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += [
+                    "-opt-in=kotlin.RequiresOptIn",
+                    "-Xinline-classes"
+            ]
+        }
+    }
+
     // Test Logging
     tasks.withType(Test) {
         testLogging {
@@ -142,8 +151,8 @@ allprojects {
     }
 }
 
-task runBaseUnitTests(type: Task, dependsOn: [':base:test'], group: 'verification') {
-    description 'Run unit tests for Bbase library.'
+task runRxUnitTests(type: Task, dependsOn: [':rx:test'], group: 'verification') {
+    description 'Run unit tests for Rx library.'
 }
 
 task runDiskLruUnitTests(type: Task, dependsOn: [':disklrucache:test'], group: 'verification') {
@@ -169,7 +178,7 @@ task runSampleUnitTests(type: Task, dependsOn: [':sample:testDebugUnitTest'], gr
 task runUnitTests(
         type: Task,
         dependsOn: [
-                'runBaseUnitTests',
+                'runRxUnitTests',
                 'runDiskLruUnitTests',
                 'runKserializerUnitTests',
                 'runViewmodelUnitTests',

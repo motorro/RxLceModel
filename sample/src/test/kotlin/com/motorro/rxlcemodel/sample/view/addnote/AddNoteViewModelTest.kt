@@ -15,8 +15,8 @@ package com.motorro.rxlcemodel.sample.view.addnote
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.LceState.Loading.Type.UPDATING
+import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.rx.LceState.Loading.Type.UPDATING
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.rxjava3.core.Completable
 import org.junit.Before

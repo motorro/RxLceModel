@@ -16,12 +16,11 @@ package com.motorro.rxlcemodel.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.LceUseCase
-import com.motorro.rxlcemodel.base.combine
+import com.motorro.rxlcemodel.rx.LceState
+import com.motorro.rxlcemodel.rx.LceUseCase
+import com.motorro.rxlcemodel.rx.combine
 import com.motorro.rxlcemodel.viewmodel.error.UnhandledException
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject

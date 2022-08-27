@@ -20,7 +20,7 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.motorro.rxlcemodel.TestAppTest
-import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.rx.LceState
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
