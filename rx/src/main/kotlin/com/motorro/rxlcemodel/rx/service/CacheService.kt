@@ -13,13 +13,13 @@
 
 package com.motorro.rxlcemodel.rx.service
 
-import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.Entity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import java.util.*
 
 /**
- * Interface to cache an [com.motorro.rxlcemodel.rx.entity.Entity] locally
+ * Interface to cache an [com.motorro.rxlcemodel.cache.entity.Entity] locally
  * Cache should notify subscribers that data has been updated through [getData] channel
  * @param D Data type
  * @param P Params that identify data type

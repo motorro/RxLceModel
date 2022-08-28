@@ -13,11 +13,11 @@
 
 package com.motorro.rxlcemodel.rx.service
 
-import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.Entity
 import io.reactivex.rxjava3.core.Single
 
 /**
- * Interface to load an [com.motorro.rxlcemodel.rx.entity.Entity] from network
+ * Interface to load an [com.motorro.rxlcemodel.cache.entity.Entity] from network
  * @param D Data type
  * @param P Params that identify data type
  */

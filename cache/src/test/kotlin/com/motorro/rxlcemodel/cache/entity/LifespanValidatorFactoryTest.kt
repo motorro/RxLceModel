@@ -11,9 +11,9 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.entity
+package com.motorro.rxlcemodel.cache.entity
 
-import com.motorro.rxlcemodel.rx.entity.EntityValidator.Lifespan
+import com.motorro.rxlcemodel.cache.entity.EntityValidator.Lifespan
 import com.motorro.rxlcemodel.utils.Clock
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever

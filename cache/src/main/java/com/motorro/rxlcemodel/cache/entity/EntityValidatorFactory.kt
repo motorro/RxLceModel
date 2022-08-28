@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,9 +11,9 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.entity
+package com.motorro.rxlcemodel.cache.entity
 
-import com.motorro.rxlcemodel.rx.entity.EntityValidator.Lifespan
+import com.motorro.rxlcemodel.cache.entity.EntityValidator.Lifespan
 import com.motorro.rxlcemodel.utils.Clock
 
 /**

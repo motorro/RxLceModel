@@ -14,10 +14,10 @@
 package com.motorro.rxlcemodel.sample.di
 
 import android.content.Context
+import com.motorro.rxlcemodel.cache.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.cache.entity.LifespanValidatorFactory
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import com.motorro.rxlcemodel.disklrucache.withObjectStream
-import com.motorro.rxlcemodel.rx.entity.EntityValidatorFactory
-import com.motorro.rxlcemodel.rx.entity.LifespanValidatorFactory
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.sample.BuildConfig
 import com.motorro.rxlcemodel.sample.di.CacheConfigModule.Companion.NOTE

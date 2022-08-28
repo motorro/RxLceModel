@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.entity
+package com.motorro.rxlcemodel.cache.entity
 
 import com.motorro.rxlcemodel.utils.Clock
 import java.text.SimpleDateFormat
@@ -19,7 +19,7 @@ import java.util.*
 import java.util.regex.Pattern
 
 /**
- * Cache-controlling entity for [com.motorro.rxlcemodel.rx.entity.Entity]
+ * Cache-controlling entity for [com.motorro.rxlcemodel.cache.entity.Entity]
  * implement this interface for cache control
  */
 interface Entity<out T: Any>: EntityValidator {
@@ -67,8 +67,6 @@ interface Entity<out T: Any>: EntityValidator {
 /**
  * Converts [T] to [Entity] to use with services
  * @param validator Entity validator
- * @see com.motorro.rxlcemodel.rx.service.NetService
- * @see com.motorro.rxlcemodel.rx.service.CacheService
  */
 fun <T: Any> T.toEntity(validator: EntityValidator) = Entity.Impl(this, validator)
 
@@ -251,7 +249,8 @@ interface EntityValidator {
         /**
          * Deserializes validator from string
          */
-        class LifespanDeserializer @JvmOverloads constructor (private val clock: Clock = Clock.SYSTEM) : Deserializer {
+        class LifespanDeserializer @JvmOverloads constructor (private val clock: Clock = Clock.SYSTEM) :
+            Deserializer {
             companion object {
                 /**
                  * Pattern to deserialize

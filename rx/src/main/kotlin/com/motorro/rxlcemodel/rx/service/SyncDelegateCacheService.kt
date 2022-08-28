@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.rx.service
 
-import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService.RefreshCommand.All
 import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService.RefreshCommand.Individual
 import io.reactivex.rxjava3.core.Completable

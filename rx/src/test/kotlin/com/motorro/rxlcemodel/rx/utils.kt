@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.rx
 
-import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.rx.service.UpdatingNetService
 import com.motorro.rxlcemodel.rx.service.UpdatingServiceSet

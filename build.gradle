@@ -155,6 +155,10 @@ task runLceUnitTests(type: Task, dependsOn: [':lce:test'], group: 'verification'
     description 'Run unit tests for Lce library.'
 }
 
+task runCacheUnitTests(type: Task, dependsOn: [':cache:test'], group: 'verification') {
+    description 'Run unit tests for Cache library.'
+}
+
 task runRxUnitTests(type: Task, dependsOn: [':rx:test'], group: 'verification') {
     description 'Run unit tests for Rx library.'
 }
@@ -183,6 +187,7 @@ task runUnitTests(
         type: Task,
         dependsOn: [
                 'runLceUnitTests',
+                'runCacheUnitTests',
                 'runRxUnitTests',
                 'runDiskLruUnitTests',
                 'runKserializerUnitTests',

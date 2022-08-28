@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.rx.service
 
-import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.Entity
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 

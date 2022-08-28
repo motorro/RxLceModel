@@ -38,12 +38,9 @@ targetCompatibility = JavaVersion.VERSION_1_8
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation project(':utils')
 
-    api project(':lce')
-    api project(':cache')
-    api project(':utils')
-    api "io.reactivex.rxjava3:rxjava:${commonLibVersions.rx_java}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
@@ -64,9 +61,9 @@ artifacts {
     archives sourcesJar, javadocJar
 }
 
-def libId = 'rx'
-def libName = 'rx'
-def libDesc = "A reactive data loading with cache as a 'Single source of truth' for Android based on RxJava"
+def libId = 'cache'
+def libName = 'cache'
+def libDesc = "Cache components for RxLceModel"
 
 publishing {
     publications {

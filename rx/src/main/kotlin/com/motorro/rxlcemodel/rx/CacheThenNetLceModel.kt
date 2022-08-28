@@ -13,9 +13,9 @@
 
 package com.motorro.rxlcemodel.rx
 
+import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.LceState.*
-import com.motorro.rxlcemodel.rx.entity.Entity
 import com.motorro.rxlcemodel.rx.service.ServiceSet
 import com.motorro.rxlcemodel.rx.service.UpdateOperationState
 import com.motorro.rxlcemodel.rx.service.UpdateOperationState.*

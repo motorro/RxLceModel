@@ -13,10 +13,10 @@
 
 package com.motorro.rxlcemodel.rx.service
 
+import com.motorro.rxlcemodel.cache.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.EntityValidator
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.rx.LceModel
-import com.motorro.rxlcemodel.rx.entity.Entity
-import com.motorro.rxlcemodel.rx.entity.EntityValidator
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

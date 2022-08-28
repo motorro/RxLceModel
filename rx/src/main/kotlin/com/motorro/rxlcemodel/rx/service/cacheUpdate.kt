@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.rx.service
 
-import com.motorro.rxlcemodel.rx.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.rx.service.UpdateOperationState.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
