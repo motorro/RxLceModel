@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.cache
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator
@@ -35,8 +35,8 @@ class CacheFriendDelegateTest {
         private val VALID_ENTITY_WITH_KEY = Entity.Impl(DataWithCacheKey("data", PARAMS.cacheKey), EntityValidator.Always)
     }
 
-    private lateinit var cacheDelegate: SyncDelegateCacheService.Delegate<DataWithCacheKey<String>, CacheFriend>
-    private lateinit var friendDelegate: SyncDelegateCacheService.Delegate<String, CacheFriend>
+    private lateinit var cacheDelegate: CacheDelegate<DataWithCacheKey<String>, CacheFriend>
+    private lateinit var friendDelegate: CacheDelegate<String, CacheFriend>
     private lateinit var validatorFactory: EntityValidatorFactory
     private lateinit var objectStream: CacheDelegateSerializerDeserializer<DataWithCacheKey<String>>
 
@@ -123,7 +123,7 @@ class CacheFriendDelegateTest {
     @Test
     fun createsFriendWrapper() {
         friendDelegate = mock()
-        val wrapper: SyncDelegateCacheService.Delegate<String, String> = friendDelegate.makeFriendParams { this }
+        val wrapper: CacheDelegate<String, String> = friendDelegate.makeFriendParams { this }
 
         wrapper.get("params")
         verify(friendDelegate).get(argThat { "params" == cacheKey })

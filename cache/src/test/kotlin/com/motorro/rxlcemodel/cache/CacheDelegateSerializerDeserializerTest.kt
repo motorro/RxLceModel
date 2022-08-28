@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.cache
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator

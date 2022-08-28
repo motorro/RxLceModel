@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2020 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,21 +11,14 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
-
-import io.reactivex.rxjava3.core.Completable
+package com.motorro.rxlcemodel.cache
 
 /**
- * Closes and deletes cache
- * May be used to close or delete all scoped cache at once e.g. for current user
+ * Generates a cache-friendly key value for parameters
  */
-interface CacheManager {
+interface CacheFriend {
     /**
-     * Closes cache
+     * A cache key
      */
-    val close: Completable
-    /**
-     * Closes cache and deletes data
-     */
-    val delete: Completable
+    val cacheKey: String get() = toString()
 }

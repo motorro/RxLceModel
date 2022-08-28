@@ -13,22 +13,22 @@
 
 package com.motorro.rxlcemodel.kserializer
 
+import com.motorro.rxlcemodel.cache.CacheDelegate
+import com.motorro.rxlcemodel.cache.CacheFriend
 import com.motorro.rxlcemodel.cache.entity.EntityValidatorFactory
+import com.motorro.rxlcemodel.cache.stringifyParams
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import com.motorro.rxlcemodel.disklrucache.createDefaultDelegatePrefix
 import com.motorro.rxlcemodel.disklrucache.createDelegate
 import com.motorro.rxlcemodel.disklrucache.createNormalizedDelegate
-import com.motorro.rxlcemodel.rx.service.CacheFriend
-import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService
-import com.motorro.rxlcemodel.rx.service.stringifyParams
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.cbor.Cbor
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts Kotlin-serializable data
+ * Creates DiskLRU caching delegate for cache-service that accepts Kotlin-serializable data
  *
  * @receiver Cache provider
  * @param validatorFactory Entity validation factory (defines cache TTL)
@@ -42,7 +42,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
     serializer: KSerializer<D>,
     binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java)
-) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
+) : CacheDelegate<D, P> = createDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
@@ -53,7 +53,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlin(
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts Kotlin-serializable data
+ * Creates DiskLRU caching delegate for cache-service that accepts Kotlin-serializable data
  *
  * @receiver Cache provider
  * @param validatorFactory Entity validation factory (defines cache TTL)
@@ -70,7 +70,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
     binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String
-) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
+) : CacheDelegate<D, P> = createDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
@@ -81,7 +81,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlin(
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts Kotlin-serializable data
+ * Creates DiskLRU caching delegate for cache-service that accepts Kotlin-serializable data
  * with cache key normalizing and check.
  *
  * @receiver Cache provider
@@ -96,7 +96,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNorma
     serializer: KSerializer<D>,
     binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java)
-) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
+) : CacheDelegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,
@@ -106,7 +106,7 @@ inline fun <reified D: Any, P: CacheFriend> DiskLruCacheProvider.withKotlinNorma
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts Kotlin-serializable data
+ * Creates DiskLRU caching delegate for cache-service that accepts Kotlin-serializable data
  * with cache key normalizing and check.
  *
  * @receiver Cache provider
@@ -124,7 +124,7 @@ inline fun <reified D: Any, P: Any> DiskLruCacheProvider.withKotlinNormalized(
     binaryFormat: BinaryFormat = Cbor,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String
-) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
+) : CacheDelegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = KotlinCacheDelegateSerializer(
         validatorFactory = validatorFactory,

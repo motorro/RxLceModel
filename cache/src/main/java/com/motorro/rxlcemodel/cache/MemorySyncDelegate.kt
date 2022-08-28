@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.cache
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import java.util.*
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @param D Data type
  * @param P Params type
  */
-abstract class MemorySyncDelegate<D: Any, P: Any>: SyncDelegateCacheService.Delegate<D, P> {
+abstract class MemorySyncDelegate<D: Any, P: Any>: CacheDelegate<D, P> {
     companion object {
         /**
          * Creates a simple in-memory cache without LRU strategy

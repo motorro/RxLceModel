@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,14 +11,20 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.cache
 
 /**
- * Generates a cache-friendly key value for parameters
+ * Closes and deletes cache
+ * May be used to close or delete all scoped cache at once e.g. for current user
  */
-interface CacheFriend {
+interface CacheManager {
     /**
-     * A cache key
+     * Closes cache
      */
-    val cacheKey: String get() = toString()
+    fun close()
+
+    /**
+     * Closes cache and deletes data
+     */
+    fun delete()
 }

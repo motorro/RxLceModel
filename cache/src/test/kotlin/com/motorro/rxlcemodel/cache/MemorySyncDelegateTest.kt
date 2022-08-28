@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.cache
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator.Lifespan
@@ -25,7 +25,7 @@ import kotlin.test.assertTrue
 
 class MemorySyncDelegateTest {
     private lateinit var clock: Clock
-    private lateinit var delegate: SyncDelegateCacheService.Delegate<String, Int>
+    private lateinit var delegate: CacheDelegate<String, Int>
 
     @Before
     fun init() {

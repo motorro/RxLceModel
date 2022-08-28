@@ -39,7 +39,8 @@ project.ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':rx')
+    implementation project(':cache')
+    implementation project(':utils')
     implementation project(':disklrucache')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.cache
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator
@@ -34,7 +34,9 @@ data class DataWithCacheKey<D: Any>(val data: D, val cacheKey: String): Serializ
  * Validates that key on [get] and returns null if it is not equals original.
  * Helps to make sure the data returned is not a result of clashed cache key.
  */
-class CacheFriendDelegate<D: Any, P: CacheFriend>(private val delegate: SyncDelegateCacheService.Delegate<DataWithCacheKey<D>, P>): SyncDelegateCacheService.Delegate<D, P> {
+class CacheFriendDelegate<D: Any, P: CacheFriend>(
+    private val delegate: CacheDelegate<DataWithCacheKey<D>, P>
+): CacheDelegate<D, P> {
     /**
      * Returns data if cached
      * @param params Caching key
@@ -136,7 +138,8 @@ class WithObjectStreamAndCacheKey<D: Serializable>(
  * @param stringify Function to stringify [P]
  * @receiver Delegate with [CacheFriend] params e.g. the one that saves data to files and uses params as file names
  */
-inline fun <D: Any, P: Any> SyncDelegateCacheService.Delegate<D, CacheFriend>.makeFriendParams(crossinline stringify: P.() -> String) = object : SyncDelegateCacheService.Delegate<D, P> {
+inline fun <D: Any, P: Any> CacheDelegate<D, CacheFriend>.makeFriendParams(crossinline stringify: P.() -> String) = object :
+    CacheDelegate<D, P> {
     private fun createFriend(params: P) = object : CacheFriend {
         override val cacheKey: String = params.stringify()
     }

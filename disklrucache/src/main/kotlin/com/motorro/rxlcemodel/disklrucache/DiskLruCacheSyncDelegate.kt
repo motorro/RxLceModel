@@ -14,15 +14,15 @@
 package com.motorro.rxlcemodel.disklrucache
 
 import com.jakewharton.disklrucache.DiskLruCache
+import com.motorro.rxlcemodel.cache.CacheDelegate
+import com.motorro.rxlcemodel.cache.CacheDelegateSerializerDeserializer
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
-import com.motorro.rxlcemodel.rx.service.CacheDelegateSerializerDeserializer
-import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService
 import com.motorro.rxlcemodel.utils.Clock
 import java.io.*
 
 /**
- * [DiskLruCache] caching delegate for [SyncDelegateCacheService]
+ * [DiskLruCache] caching delegate for cache services
  * Designed to operate common [cacheProvider] instance together with other delegates to be able to clean-up all
  * cache all-together - say delete user's cache when user logs out
  * Each entry contains:
@@ -40,7 +40,7 @@ class DiskLruCacheSyncDelegate<D: Any> @JvmOverloads constructor (
     private val sd: CacheDelegateSerializerDeserializer<D>,
     private val cacheProvider: DiskLruCacheProvider,
     private val clock: Clock = Clock.SYSTEM
-): SyncDelegateCacheService.Delegate<D, String> {
+): CacheDelegate<D, String> {
     /**
      * Provides properly configured [DiskLruCache] with required entry config
      * @param directory a writable directory

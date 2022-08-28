@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx.service
 
+import com.motorro.rxlcemodel.cache.CacheDelegate
 import com.motorro.rxlcemodel.cache.entity.Entity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -70,10 +71,10 @@ interface CacheService<D: Any, in P: Any> {
 
     companion object {
         /**
-         * Creates synchronous [SyncDelegateCacheService.Delegate] cache service
+         * Creates synchronous [CacheDelegate] cache service
          * @param delegate Delegate that synchronously performs caching actions
          */
-        fun <D: Any, P: Any> withSyncDelegate(delegate: SyncDelegateCacheService.Delegate<D, P>) =
+        fun <D: Any, P: Any> withSyncDelegate(delegate: CacheDelegate<D, P>) =
                 SyncDelegateCacheService(delegate)
     }
 }

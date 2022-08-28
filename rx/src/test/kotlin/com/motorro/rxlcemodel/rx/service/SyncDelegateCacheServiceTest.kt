@@ -13,6 +13,8 @@
 
 package com.motorro.rxlcemodel.rx.service
 
+import com.motorro.rxlcemodel.cache.CacheDelegate
+import com.motorro.rxlcemodel.cache.MemorySyncDelegate
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator
 import com.motorro.rxlcemodel.lce.LceState
@@ -31,7 +33,7 @@ class SyncDelegateCacheServiceTest {
         private val VALID_ENTITY = Entity.Impl("data", EntityValidator.Always)
     }
     
-    private lateinit var cacheDelegate: SyncDelegateCacheService.Delegate<String, String>
+    private lateinit var cacheDelegate: CacheDelegate<String, String>
     private lateinit var service: SyncDelegateCacheService<String, String>
 
     @Before

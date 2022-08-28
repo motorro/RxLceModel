@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx.service
 
+import com.motorro.rxlcemodel.cache.CacheDelegate
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService.RefreshCommand.All
 import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService.RefreshCommand.Individual
@@ -26,42 +27,7 @@ import java.util.*
  * Service implementation
  * @param delegate Delegate to perform concrete caching operations
  */
-class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val delegate: Delegate<D, P>): CacheService<D, P> {
-    /**
-     * Delegate that synchronously performs caching operations
-     */
-    interface Delegate<D: Any, P: Any> {
-        /**
-         * Returns data if cached
-         * @param params Caching key
-         */
-        fun get(params: P): Entity<D>?
-
-        /**
-         * Saves data to cache
-         * @param params Caching key
-         * @param entity Entity to cache
-         */
-        fun save(params: P, entity: Entity<D>)
-
-        /**
-         * Invalidates cached value
-         * @param params Caching key
-         */
-        fun invalidate(params: P)
-
-        /**
-         * Invalidates all cached values
-         */
-        fun invalidateAll()
-
-        /**
-         * Deletes cached value
-         * @param params Caching key
-         */
-        fun delete(params: P)
-    }
-
+class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val delegate: CacheDelegate<D, P>): CacheService<D, P> {
     /**
      * Refresh command to send through [refreshChannel]
      */
@@ -161,15 +127,3 @@ class SyncDelegateCacheService<D: Any, P: Any> internal constructor (private val
     }
 }
 
-/**
- * Creates an adapter delegate that [stringify] [P] and uses result string as params to receiver
- * @receiver Delegate with String params e.g. the one that saves data to files and uses params as file names
- * @param stringify Function to stringify [P]
- */
-inline fun <D: Any, P: Any> SyncDelegateCacheService.Delegate<D, String>.stringifyParams(crossinline stringify: P.() -> String = { toString() }) = object : SyncDelegateCacheService.Delegate<D, P> {
-    override fun get(params: P): Entity<D>? = this@stringifyParams.get(params.stringify())
-    override fun save(params: P, entity: Entity<D>) = this@stringifyParams.save(params.stringify(), entity)
-    override fun invalidate(params: P) = this@stringifyParams.invalidate(params.stringify())
-    override fun invalidateAll() = this@stringifyParams.invalidateAll()
-    override fun delete(params: P) = this@stringifyParams.delete(params.stringify())
-}
