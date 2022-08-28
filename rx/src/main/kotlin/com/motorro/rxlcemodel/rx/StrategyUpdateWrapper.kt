@@ -2,6 +2,7 @@ package com.motorro.rxlcemodel.rx
 
 import com.motorro.rxlcemodel.rx.entity.Entity
 import com.motorro.rxlcemodel.rx.service.CacheService
+import com.motorro.rxlcemodel.utils.Logger
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single

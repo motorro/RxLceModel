@@ -13,10 +13,10 @@
 
 package com.motorro.rxlcemodel.disklrucache
 
-import com.motorro.rxlcemodel.rx.entity.Clock
 import com.motorro.rxlcemodel.rx.entity.Entity
 import com.motorro.rxlcemodel.rx.entity.EntityValidator
 import com.motorro.rxlcemodel.rx.service.CacheDelegateSerializerDeserializer
+import com.motorro.rxlcemodel.utils.Clock
 import com.nhaarman.mockitokotlin2.*
 import org.junit.After
 import org.junit.Assume.assumeFalse

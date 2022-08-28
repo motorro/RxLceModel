@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,25 +11,21 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx
+package com.motorro.rxlcemodel.utils
 
 /**
- * A logger
+ * Time provider
  */
-fun interface Logger {
+interface Clock {
     /**
-     * Logs something
-     * @param level Log level
-     * @param message Log message
+     * Current milliseconds value
      */
-    fun log(level: LogLevel, message: String)
-}
+    fun getMillis(): Long
 
-/**
- * Log level
- */
-enum class LogLevel {
-    INFO,
-    WARNING,
-    ERROR
+    /**
+     * System clock
+     */
+    object SYSTEM: Clock {
+        override fun getMillis(): Long = System.currentTimeMillis()
+    }
 }

@@ -14,13 +14,15 @@
 package com.motorro.rxlcemodel.rx
 
 import com.motorro.rxlcemodel.lce.LceState
-import com.motorro.rxlcemodel.rx.LogLevel.INFO
-import com.motorro.rxlcemodel.rx.LogLevel.WARNING
 import com.motorro.rxlcemodel.rx.entity.Entity
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.rx.service.UpdateOperationState
 import com.motorro.rxlcemodel.rx.service.UpdateOperationState.*
 import com.motorro.rxlcemodel.rx.service.buildUpdateOperation
+import com.motorro.rxlcemodel.utils.LogLevel
+import com.motorro.rxlcemodel.utils.LogLevel.INFO
+import com.motorro.rxlcemodel.utils.LogLevel.WARNING
+import com.motorro.rxlcemodel.utils.Logger
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler

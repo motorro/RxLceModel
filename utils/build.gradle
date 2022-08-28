@@ -40,10 +40,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    api project(':lce')
-    api project(':utils')
-    api "io.reactivex.rxjava3:rxjava:${commonLibVersions.rx_java}"
-
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
@@ -63,9 +59,9 @@ artifacts {
     archives sourcesJar, javadocJar
 }
 
-def libId = 'rx'
-def libName = 'rx'
-def libDesc = "A reactive data loading with cache as a 'Single source of truth' for Android based on RxJava"
+def libId = 'utils'
+def libName = 'utils'
+def libDesc = "Common utils for RxLceModel"
 
 publishing {
     publications {

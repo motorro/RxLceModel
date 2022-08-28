@@ -15,10 +15,10 @@ package com.motorro.rxlcemodel.disklrucache
 
 import com.jakewharton.disklrucache.DiskLruCache
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
-import com.motorro.rxlcemodel.rx.entity.Clock
 import com.motorro.rxlcemodel.rx.entity.Entity
 import com.motorro.rxlcemodel.rx.service.CacheDelegateSerializerDeserializer
 import com.motorro.rxlcemodel.rx.service.SyncDelegateCacheService
+import com.motorro.rxlcemodel.utils.Clock
 import java.io.*
 
 /**

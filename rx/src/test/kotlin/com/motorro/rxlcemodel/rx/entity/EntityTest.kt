@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,6 +14,7 @@
 package com.motorro.rxlcemodel.rx.entity
 
 import com.motorro.rxlcemodel.rx.entity.EntityValidator.*
+import com.motorro.rxlcemodel.utils.Clock
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before

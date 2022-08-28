@@ -2,7 +2,8 @@
 
 # Imports
 
-| Artefact                            | Old package                 | New package                |
-| ----------------------------------- | --------------------------- | -------------------------- |
-| LceState and extensions             | com.motorro.rxlcemodel.base | com.motorro.rxlcemodel.lce |
-| LceUseCase, LceModel and extensions | com.motorro.rxlcemodel.base | com.motorro.rxlcemodel.rx  |
+| Artefact                            | Old package                 | New package                  |
+| ----------------------------------- | --------------------------- | ---------------------------- |
+| LceState and extensions             | com.motorro.rxlcemodel.base | com.motorro.rxlcemodel.lce   |
+| LceUseCase, LceModel and extensions | com.motorro.rxlcemodel.base | com.motorro.rxlcemodel.rx    |
+| Clock, Logger                       | com.motorro.rxlcemodel.base | com.motorro.rxlcemodel.utils |

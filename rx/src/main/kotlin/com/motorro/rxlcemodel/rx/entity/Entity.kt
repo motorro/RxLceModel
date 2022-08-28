@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx.entity
 
+import com.motorro.rxlcemodel.utils.Clock
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
