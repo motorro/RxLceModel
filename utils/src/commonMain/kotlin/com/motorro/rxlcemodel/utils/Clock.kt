@@ -22,10 +22,15 @@ interface Clock {
      */
     fun getMillis(): Long
 
-    /**
-     * System clock
-     */
-    object SYSTEM: Clock {
-        override fun getMillis(): Long = System.currentTimeMillis()
+    companion object {
+        /**
+         * System clock
+         */
+        val SYSTEM: Clock = SystemClock
     }
 }
+
+/**
+ * System clock
+ */
+internal expect object SystemClock: Clock

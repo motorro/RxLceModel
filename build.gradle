@@ -1,15 +1,9 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-
 buildscript {
     ext.kotlin_version = '1.7.10'
-    ext.dokka_version = '1.7.0'
+    ext.dokka_version = '1.7.10'
     repositories {
         google()
         mavenCentral()
-        maven {
-            name = 'ajoberstar-backup'
-            url = 'https://ajoberstar.github.io/bintray-backup/'
-        }
         maven {
             url="https://plugins.gradle.org/m2/"
         }
@@ -132,20 +126,6 @@ allprojects {
                     def repeatLength = startItem.length() + output.length() + endItem.length()
                     println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
                 }
-            }
-        }
-    }
-
-    tasks.withType(DokkaTask).configureEach {
-        outputDirectory.set(new File("$buildDir/javadoc"))
-        dokkaSourceSets {
-            named("main") {
-                noAndroidSdkLink.set(false)
-                includes.from ("${projectDir}/module.md")
-                externalDocumentationLink {
-					url.set(new URL ("http://reactivex.io/RxJava/2.x/javadoc/"))
-					packageListUrl.set(new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list"))
-				}
             }
         }
     }
