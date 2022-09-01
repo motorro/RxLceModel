@@ -14,11 +14,7 @@
 package com.motorro.rxlcemodel.lce
 
 import com.motorro.rxlcemodel.lce.LceState.Loading.Type
-import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class LceStateCombineKtTest {
     @Test

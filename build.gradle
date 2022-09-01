@@ -132,7 +132,7 @@ allprojects {
     }
 }
 
-task runLceUnitTests(type: Task, dependsOn: [':lce:test'], group: 'verification') {
+task runLceUnitTests(type: Task, dependsOn: [':lce:check'], group: 'verification') {
     description 'Run unit tests for Lce library.'
 }
 

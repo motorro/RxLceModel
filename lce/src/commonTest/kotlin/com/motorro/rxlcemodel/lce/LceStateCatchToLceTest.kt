@@ -13,8 +13,7 @@
 
 package com.motorro.rxlcemodel.lce
 
-import org.junit.Test
-import java.io.IOException
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class LceStateCatchToLceTest {
@@ -51,7 +50,7 @@ class LceStateCatchToLceTest {
 
     @Test
     fun substitutesEmptyError() {
-        val original = LceState.Error<Int>(null, false, IOException())
+        val original = LceState.Error<Int>(null, false, RuntimeException())
         val substitute = LceState.Content(10, true)
         assertEquals(
             substitute,
@@ -81,7 +80,7 @@ class LceStateCatchToLceTest {
 
     @Test
     fun passesNonEmptyError() {
-        val original = LceState.Error(10, true, IOException())
+        val original = LceState.Error(10, true, RuntimeException())
         val substitute = LceState.Content(10, true)
         assertEquals(
             original,
@@ -101,7 +100,7 @@ class LceStateCatchToLceTest {
 
     @Test
     fun substitutesEmptyErrorItem() {
-        val error = IOException()
+        val error = RuntimeException()
         val original = LceState.Error<Int>(null, false, error)
         val substitute = 10
         assertEquals(
@@ -122,7 +121,7 @@ class LceStateCatchToLceTest {
 
     @Test
     fun passesNonEmptyErrorItem() {
-        val original = LceState.Error(10, true, IOException())
+        val original = LceState.Error(10, true, RuntimeException())
         val substitute = 100
         assertEquals(
             original,

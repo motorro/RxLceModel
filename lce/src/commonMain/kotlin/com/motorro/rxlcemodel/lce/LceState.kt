@@ -48,7 +48,7 @@ sealed class LceState<out DATA: Any> {
      * @property dataIsValid Data validity at the time of emission
      * @property type Loading type
      */
-    data class Loading<out DATA: Any> @JvmOverloads constructor (
+    data class Loading<out DATA: Any>(
             override val data: DATA?,
             override val dataIsValid: Boolean,
             val type: Type = Type.LOADING
