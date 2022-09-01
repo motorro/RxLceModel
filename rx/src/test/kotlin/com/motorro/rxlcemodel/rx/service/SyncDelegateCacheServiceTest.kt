@@ -285,15 +285,14 @@ class SyncDelegateCacheServiceTest {
 
     @Test
     fun integratesWithCacheThenNetModelWhenNotCached() {
+        val delegate = MemorySyncDelegate.create<String, String>(1)
         val model = LceModel.cacheThenNet(
             "key",
             object : ServiceSet<String, String> {
                 override val net: NetService<String, String> = object : NetService<String, String> {
                     override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
                 }
-                override val cache: CacheService<String, String> = SyncDelegateCacheService(
-                        MemorySyncDelegate.custom(Collections.synchronizedMap(HashMap()))
-                )
+                override val cache: CacheService<String, String> = SyncDelegateCacheService(delegate)
             },
             Observable.empty()
         )
@@ -306,15 +305,17 @@ class SyncDelegateCacheServiceTest {
 
     @Test
     fun integratesWithCacheThenNetModelWhenCached() {
+        val delegate = MemorySyncDelegate.create<String, String>(1).apply {
+            save("key", VALID_ENTITY)
+        }
+
         val model = LceModel.cacheThenNet(
             "key",
             object : ServiceSet<String, String> {
                 override val net: NetService<String, String> = object : NetService<String, String> {
                     override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
                 }
-                override val cache: CacheService<String, String> = SyncDelegateCacheService(
-                        MemorySyncDelegate.custom(Collections.synchronizedMap(mutableMapOf<String, Entity<String>>("key" to VALID_ENTITY)))
-                )
+                override val cache: CacheService<String, String> = SyncDelegateCacheService(delegate)
             }
         )
 

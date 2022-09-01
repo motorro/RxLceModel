@@ -210,12 +210,12 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
     }
 
     /**
-     * View model with operations that mix with main state
+     * View model with operations that mix with commonMain state
      * @param dataUseCase Main data use-case
      */
     open class WithUpdates<DATA : Any>(dataUseCase: LceUseCase<DATA>) : Impl<DATA>() {
         /**
-         * Card operation state to mix with main data loading
+         * Card operation state to mix with commonMain data loading
          */
         private val operationStream = BehaviorSubject.createDefault<Optional<LceState<Unit>>>(Optional.empty())
 

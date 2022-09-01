@@ -16,6 +16,10 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URI
 
+repositories {
+    mavenCentral()
+}
+
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.dokka")
@@ -27,6 +31,9 @@ val versionName: String by project.extra
 
 group = rootProject.group
 version = rootProject.version
+
+@Suppress("UNCHECKED_CAST")
+val versions: Map<String, String> = rootProject.extra["commonLibVersions"] as Map<String, String>
 
 kotlin {
 
@@ -64,14 +71,24 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":utils"))
+                implementation("io.github.reactivecircus.cache4k:cache4k:0.7.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
             }
         }
         val jvmMain by getting
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation("junit:junit:${versions["junit"]}")
+                implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${versions["mockito_kotlin"]}")
+            }
+        }
         val jsMain by getting
         val jsTest by getting
     }
@@ -86,9 +103,9 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.dokkaHtml)
 }
 
-val libId = "utils"
-val libName = "utils"
-val libDesc = "Common utils for RxLceModel"
+val libId = "cache"
+val libName = "cache"
+val libDesc = "Cache components for RxLceModel"
 val projectUrl: String by rootProject.extra
 val projectScm: String by rootProject.extra
 val ossrhUsername: String? by rootProject.extra

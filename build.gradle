@@ -70,6 +70,7 @@ allprojects {
                 // Tests
                 "junit": '4.13.2',
                 "mockito_kotlin": "2.2.0",
+                "mockative": "1.2.6",
 
                 // Compose
                 "compose_compiler_version": "1.3.0",
@@ -135,7 +136,7 @@ task runLceUnitTests(type: Task, dependsOn: [':lce:test'], group: 'verification'
     description 'Run unit tests for Lce library.'
 }
 
-task runCacheUnitTests(type: Task, dependsOn: [':cache:test'], group: 'verification') {
+task runCacheUnitTests(type: Task, dependsOn: [':cache:check'], group: 'verification') {
     description 'Run unit tests for Cache library.'
 }
 

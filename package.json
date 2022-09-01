@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "dukat": "^0.5.8-rc.4"
+  }
+}

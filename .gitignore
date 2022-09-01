@@ -4,6 +4,7 @@
 .DS_Store
 .externalNativeBuild
 .log
+node_modules
 build
 release
 /local.properties
