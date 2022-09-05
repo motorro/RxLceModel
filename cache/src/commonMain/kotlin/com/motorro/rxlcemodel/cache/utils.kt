@@ -28,20 +28,3 @@ inline fun <D: Any, P: Any> CacheDelegate<D, String>.stringifyParams(crossinline
     override fun invalidateAll() = this@stringifyParams.invalidateAll()
     override fun delete(params: P) = this@stringifyParams.delete(params.stringify())
 }
-
-/**
- * Creates an adapter delegate that creates [CacheFriend] params using [stringify] function
- * @param stringify Function to stringify [P]
- * @receiver Delegate with [CacheFriend] params e.g. the one that saves data to files and uses params as file names
- */
-inline fun <D: Any, P: Any> CacheDelegate<D, CacheFriend>.makeFriendParams(crossinline stringify: P.() -> String) = object :
-    CacheDelegate<D, P> {
-    private fun createFriend(params: P) = object : CacheFriend {
-        override val cacheKey: String = params.stringify()
-    }
-    override fun get(params: P): Entity<D>? = this@makeFriendParams.get(createFriend(params))
-    override fun save(params: P, entity: Entity<D>) = this@makeFriendParams.save(createFriend(params), entity)
-    override fun invalidate(params: P) = this@makeFriendParams.invalidate(createFriend(params))
-    override fun invalidateAll() = this@makeFriendParams.invalidateAll()
-    override fun delete(params: P) = this@makeFriendParams.delete(createFriend(params))
-}

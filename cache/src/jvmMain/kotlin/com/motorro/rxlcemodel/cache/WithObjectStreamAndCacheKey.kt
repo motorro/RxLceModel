@@ -19,61 +19,6 @@ import com.motorro.rxlcemodel.cache.entity.EntityValidatorFactory
 import java.io.*
 
 /**
- * Data combined with full cached key to validate we get exactly what we are looking for
- * For example, DiskLruCache has strict requirements and limited length of a cache key and
- * hashing of keys may be required to fit into requirements - thus there is a possibility of key
- * clash.
- * @param data Original data
- * @param cacheKey Full unmodified cache key
- * @see CacheFriendDelegate
- */
-data class DataWithCacheKey<D: Any>(val data: D, val cacheKey: String): Serializable
-
-/**
- * Wraps [delegate] adding unmodified [CacheFriend.cacheKey] to the mix with data.
- * Validates that key on [get] and returns null if it is not equals original.
- * Helps to make sure the data returned is not a result of clashed cache key.
- */
-class CacheFriendDelegate<D: Any, P: CacheFriend>(
-    private val delegate: CacheDelegate<DataWithCacheKey<D>, P>
-): CacheDelegate<D, P> {
-    /**
-     * Returns data if cached
-     * @param params Caching key
-     */
-    override fun get(params: P): Entity<D>? = delegate.get(params)
-            ?.takeIf { params.cacheKey == it.data.cacheKey }
-            ?.map { it.data }
-
-    /**
-     * Saves data to cache
-     * @param params Caching key
-     * @param entity Entity to cache
-     */
-    override fun save(params: P, entity: Entity<D>) = delegate.save(
-            params,
-            entity.map { DataWithCacheKey(it, params.cacheKey) }
-    )
-
-    /**
-     * Invalidates cached value
-     * @param params Caching key
-     */
-    override fun invalidate(params: P) = delegate.invalidate(params)
-
-    /**
-     * Invalidates all cached values
-     */
-    override fun invalidateAll() = delegate.invalidateAll()
-
-    /**
-     * Deletes cached value
-     * @param params Caching key
-     */
-    override fun delete(params: P) = delegate.delete(params)
-}
-
-/**
  * Serializes and deserializes [Serializable] objects along with their caching key
  * @param validatorFactory [Entity] validator factory
  * @param dataClass Class type to cast result to
@@ -88,7 +33,8 @@ class WithObjectStreamAndCacheKey<D: Serializable>(
      * @property cacheKey Cache key to store along with data
      * @property serializedValidator Serialized entity validator
      */
-    private data class Storage<D: Serializable>(val data: D, val cacheKey: String, val serializedValidator: String): Serializable {
+    private data class Storage<D: Serializable>(val data: D, val cacheKey: String, val serializedValidator: String):
+        Serializable {
         companion object {
             private const val serialVersionUID: Long = 1
         }
@@ -107,17 +53,22 @@ class WithObjectStreamAndCacheKey<D: Serializable>(
     /**
      * Creates [Entity] from serialized data
      */
-    private fun Storage<*>.toEntity(invalidated: Boolean): Entity<DataWithCacheKey<D>> = Entity.Impl(
-        DataWithCacheKey(dataClass.cast(data), cacheKey),
-        if (invalidated) EntityValidator.Never else validatorFactory.createSnapshot(serializedValidator)
-    )
+    private fun Storage<*>.toEntity(invalidated: Boolean): Entity<DataWithCacheKey<D>> =
+        Entity.Impl(
+            DataWithCacheKey(dataClass.cast(data), cacheKey),
+            if (invalidated) EntityValidator.Never else validatorFactory.createSnapshot(
+                serializedValidator
+            )
+        )
 
     /**
      * Serializes [entity] to [output] stream
      * @param entity Entity to serialize
      * @param output Output stream
      */
-    override fun serialize(entity: Entity<DataWithCacheKey<D>>, output: OutputStream) = ObjectOutputStream(output).use {
+    override fun serialize(entity: Entity<DataWithCacheKey<D>>, output: OutputStream) = ObjectOutputStream(
+        output
+    ).use {
         it.writeObject(Storage(entity))
     }
 
@@ -132,4 +83,3 @@ class WithObjectStreamAndCacheKey<D: Serializable>(
         }
     }.getOrNull()
 }
-
