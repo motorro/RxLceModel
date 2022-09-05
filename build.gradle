@@ -61,6 +61,7 @@ allprojects {
         commonLibVersions = [
                 // Code
                 "rx_java": '3.1.5',
+                "coroutines": '1.6.4',
                 "core_ktx_version": '1.8.0',
                 "lifecycle_version": '2.5.1',
                 "arch_version": "2.1.0",

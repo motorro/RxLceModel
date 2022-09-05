@@ -16,6 +16,10 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URI
 
+repositories {
+    mavenCentral()
+}
+
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.dokka")
@@ -70,20 +74,20 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":utils"))
+                implementation(project(":lce"))
+                implementation(project(":cache"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions["coroutines"]}")
             }
         }
         val commonTest by getting {
             dependencies {
+                implementation(project(":commonMock"))
                 implementation("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions["coroutines"]}")
             }
         }
         val jvmMain by getting
-        val jvmTest by getting {
-            dependencies {
-                implementation("junit:junit:${versions["junit"]}")
-                implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${versions["mockito_kotlin"]}")
-            }
-        }
+        val jvmTest by getting
         val jsMain by getting
         val jsTest by getting
     }
@@ -98,9 +102,9 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.dokkaHtml)
 }
 
-val libId = "lce"
-val libName = "lce"
-val libDesc = "Load/Content/Error state for data-sources"
+val libId = "coroutines"
+val libName = "coroutines"
+val libDesc = "A reactive data loading with cache as a 'Single source of truth' for Android based on Coroutines"
 val projectUrl: String by rootProject.extra
 val projectScm: String by rootProject.extra
 val ossrhUsername: String? by rootProject.extra

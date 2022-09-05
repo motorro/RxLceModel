@@ -13,8 +13,8 @@
 
 package com.motorro.rxlcemodel.cache.entity
 
-import com.motorro.rxlcemodel.cache.ClockMock
 import com.motorro.rxlcemodel.cache.entity.EntityValidator.*
+import com.motorro.rxlcemodel.utils.ClockMock
 import kotlin.test.*
 
 class EntityTest {

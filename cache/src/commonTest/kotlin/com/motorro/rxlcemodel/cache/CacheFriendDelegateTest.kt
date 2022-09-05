@@ -75,7 +75,7 @@ class CacheFriendDelegateTest {
         delegate.assertInvalidated { "params" == cacheKey }
 
         wrapper.invalidateAll()
-        delegate.assertInvalidated()
+        delegate.assertAllInvalidated()
 
         wrapper.delete("params")
         delegate.assertDeleted { "params" == cacheKey }

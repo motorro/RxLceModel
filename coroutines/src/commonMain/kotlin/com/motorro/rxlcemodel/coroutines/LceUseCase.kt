@@ -11,20 +11,25 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.cache
+package com.motorro.rxlcemodel.coroutines
 
-import com.motorro.rxlcemodel.utils.Clock
+import com.motorro.rxlcemodel.lce.LceState
+import kotlinx.coroutines.flow.SharedFlow
 
-class ClockMock(private vararg val values: Long) : Clock {
-
-    private val iterator = values.iterator()
+/**
+ * Base LCE use-case with [state] and [refresh]
+ * @param DATA Data type of data being loaded
+ */
+interface LceUseCase<DATA: Any> {
+    /**
+     * Model state. Subscription starts data load for the first subscriber.
+     * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
+     */
+    val state: SharedFlow<LceState<DATA>>
 
     /**
-     * Current milliseconds value
+     * Requests a refresh of data.
+     * Data will be updated asynchronously
      */
-    override fun getMillis(): Long = if (iterator.hasNext()) {
-        iterator.nextLong()
-    } else {
-        values.last()
-    }
+    suspend fun refresh()
 }

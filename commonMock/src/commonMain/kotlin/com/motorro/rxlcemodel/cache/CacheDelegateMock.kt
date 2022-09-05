@@ -16,8 +16,12 @@ package com.motorro.rxlcemodel.cache
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator
 import com.motorro.rxlcemodel.cache.entity.toEntity
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+/**
+ * Cache delegate mock
+ */
 class CacheDelegateMock<D: Any, P: Any> : CacheDelegate<D, P> {
 
     private var cached: MutableMap<P, Entity<D>> = mutableMapOf()
@@ -29,6 +33,9 @@ class CacheDelegateMock<D: Any, P: Any> : CacheDelegate<D, P> {
     }
     fun assertGet(params: P.() -> Boolean) {
         assertTrue { got.any { it.params() } }
+    }
+    fun assertGet(count: Int, params: P.() -> Boolean) {
+        assertEquals(count, got.count { it.params() })
     }
 
     private val saved: MutableList<Pair<P, Entity<D>>> = mutableListOf()
@@ -70,7 +77,7 @@ class CacheDelegateMock<D: Any, P: Any> : CacheDelegate<D, P> {
         }
         ++allInvalidated
     }
-    fun assertInvalidated() {
+    fun assertAllInvalidated() {
         assertTrue { allInvalidated > 0 }
     }
 
@@ -81,5 +88,59 @@ class CacheDelegateMock<D: Any, P: Any> : CacheDelegate<D, P> {
     }
     fun assertDeleted(params: P.() -> Boolean) {
         assertTrue { deleted.any { it.params() } }
+    }
+}
+
+/**
+ * Cache delegate that fails [get] request
+ */
+@Suppress("MemberVisibilityCanBePrivate")
+class FailingGetDelegateMock<D: Any, P: Any>(
+    val error: Throwable,
+    val parent: CacheDelegateMock<D, P> = CacheDelegateMock()
+) : CacheDelegate<D, P> by parent {
+    override fun get(params: P): Entity<D> = throw(error)
+}
+
+/**
+ * Cache delegate that fails [save] request
+ */
+@Suppress("MemberVisibilityCanBePrivate")
+class FailingSaveDelegateMock<D: Any, P: Any>(
+    val error: Throwable,
+    val parent: CacheDelegateMock<D, P> = CacheDelegateMock()
+) : CacheDelegate<D, P> by parent {
+    override fun save(params: P, entity: Entity<D>) {
+        throw error
+    }
+}
+
+/**
+ * Cache delegate that fails [invalidate] request
+ */
+@Suppress("MemberVisibilityCanBePrivate")
+class FailingInvalidateDelegateMock<D: Any, P: Any>(
+    val error: Throwable,
+    val parent: CacheDelegateMock<D, P> = CacheDelegateMock()
+) : CacheDelegate<D, P> by parent {
+    override fun invalidate(params: P) {
+        throw error
+    }
+
+    override fun invalidateAll() {
+        throw error
+    }
+}
+
+/**
+ * Cache delegate that fails [delete] request
+ */
+@Suppress("MemberVisibilityCanBePrivate")
+class FailingDeleteDelegateMock<D: Any, P: Any>(
+    val error: Throwable,
+    val parent: CacheDelegateMock<D, P> = CacheDelegateMock()
+) : CacheDelegate<D, P> by parent {
+    override fun delete(params: P) {
+        throw error
     }
 }

@@ -16,10 +16,6 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import java.net.URI
 
-repositories {
-    mavenCentral()
-}
-
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.dokka")
@@ -79,6 +75,7 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation(project(":commonMock"))
                 implementation("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
             }
         }
