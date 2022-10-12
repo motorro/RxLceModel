@@ -21,7 +21,6 @@ import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.cbor.Cbor
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -29,7 +28,7 @@ import java.io.OutputStream
  * Serializes and deserializes objects with [kotlinx.serialization.KSerializer]
  * @param validatorFactory [Entity] validator factory
  * @param kSerializer Serializer to use with [D]
- * @param binaryFormat Cbor serializer to use
+ * @param binaryFormat Serializer to use
  */
 @ExperimentalSerializationApi
 class KotlinCacheDelegateSerializer<D: Any>(
@@ -87,7 +86,7 @@ class KotlinCacheDelegateSerializer<D: Any>(
      */
     override fun deserializeSnapshot(input: InputStream, length: Long, invalidated: Boolean): Entity<D>? = kotlin.runCatching {
         input.use {
-            Cbor.decodeFromByteArray(
+            binaryFormat.decodeFromByteArray(
                 Storage.serializer(kSerializer),
                 it.readBytes()
             ).toEntity(invalidated)
