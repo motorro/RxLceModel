@@ -7,6 +7,7 @@ A reactive data loading for Android based on
 operation state (`Loading`/`Content`/`Error`). 
 
 A compiled javadoc is available at [Github Pages](https://motorro.github.io/RxLceModel/)
+
 Dart/Flutter port of the library is available: [DartLceModel](https://github.com/motorro/DartLceModel)
 
 ## Features
