@@ -57,6 +57,7 @@ android {
     }
 
     testOptions.unitTests.includeAndroidResources = true
+    namespace 'com.motorro.rxlcemodel.viewmodel'
 }
 
 dependencies {
