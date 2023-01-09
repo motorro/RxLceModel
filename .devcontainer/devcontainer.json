@@ -36,7 +36,15 @@
         }
     },
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
+    "forwardPorts": [5037],
+	"portsAttributes": {
+		"5037": {
+			"label": "ADB",
+            "onAutoForward": "silent",
+            "requireLocalPort": true
+		}
+	},
 
-    "updateContentCommand": "./gradlew runUnitTests :sample:assemble"
+    "updateContentCommand": "./gradlew runUnitTests :sample:assemble",
+	"postStartCommand": "adb nodaemon server start",
 }
