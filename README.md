@@ -8,6 +8,8 @@ operation state (`Loading`/`Content`/`Error`).
 
 A compiled javadoc is available at [Github Pages](https://motorro.github.io/RxLceModel/)
 
+Dart/Flutter port of the library is available: [DartLceModel](https://github.com/motorro/DartLceModel)
+
 ## Features
 - Widely used design with `Loading`/`Content`/`Error` states
 - Uses cache as a 'source of truth' with [CacheThenNetLceModel](#cachethennetlcemodel).

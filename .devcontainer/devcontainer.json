@@ -1,0 +1,53 @@
+{
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "context": "."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/sshd:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "none",
+            "installGradle": "true",
+            "installMaven": "true"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": "false"
+        }
+    },
+    "containerEnv": {
+        "JAVA_HOME": "/usr/lib/jvm/msopenjdk-current"
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": {},
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "vscjava.vscode-java-pack"
+            ]
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [5037],
+	"portsAttributes": {
+		"5037": {
+			"label": "ADB Server",
+            "onAutoForward": "silent",
+            "requireLocalPort": true
+		}
+	},
+
+    "updateContentCommand": "./gradlew runUnitTests :sample:assemble",
+    "hostRequirements":{
+        "cpus": 8,
+        "memory": "16gb"
+    }
+}
