@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.utils
+package com.motorro.rxlcemodel.common
 
 class ClockMock(private vararg val values: Long) : Clock {
 

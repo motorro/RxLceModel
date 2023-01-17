@@ -11,9 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.utils
-
-import kotlin.js.Date
+package com.motorro.rxlcemodel.common
 
 /**
  * System clock
@@ -22,5 +20,5 @@ internal actual object SystemClock : Clock {
     /**
      * Current milliseconds value
      */
-    override fun getMillis(): Long = Date.now().toLong()
+    override fun getMillis(): Long = System.currentTimeMillis()
 }

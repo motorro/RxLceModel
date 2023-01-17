@@ -11,14 +11,26 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.utils
+package com.motorro.rxlcemodel.common
+
+/**
+ * Time provider
+ */
+interface Clock {
+    /**
+     * Current milliseconds value
+     */
+    fun getMillis(): Long
+
+    companion object {
+        /**
+         * System clock
+         */
+        val SYSTEM: Clock = SystemClock
+    }
+}
 
 /**
  * System clock
  */
-internal actual object SystemClock : Clock {
-    /**
-     * Current milliseconds value
-     */
-    override fun getMillis(): Long = System.currentTimeMillis()
-}
+internal expect object SystemClock: Clock

@@ -14,8 +14,8 @@
 package com.motorro.rxlcemodel.cache.entity
 
 import com.motorro.rxlcemodel.cache.entity.EntityValidator.Lifespan
-import com.motorro.rxlcemodel.utils.Clock
-import com.motorro.rxlcemodel.utils.ClockMock
+import com.motorro.rxlcemodel.common.Clock
+import com.motorro.rxlcemodel.common.ClockMock
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse

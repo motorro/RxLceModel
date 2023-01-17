@@ -13,7 +13,7 @@
 
 package com.motorro.rxlcemodel.cache.entity
 
-import com.motorro.rxlcemodel.utils.Clock
+import com.motorro.rxlcemodel.common.Clock
 
 /**
  * Cache-controlling entity for [com.motorro.rxlcemodel.cache.entity.Entity]

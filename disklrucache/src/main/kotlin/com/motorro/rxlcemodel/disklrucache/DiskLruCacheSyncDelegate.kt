@@ -17,8 +17,8 @@ import com.jakewharton.disklrucache.DiskLruCache
 import com.motorro.rxlcemodel.cache.CacheDelegate
 import com.motorro.rxlcemodel.cache.CacheDelegateSerializerDeserializer
 import com.motorro.rxlcemodel.cache.entity.Entity
+import com.motorro.rxlcemodel.common.Clock
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
-import com.motorro.rxlcemodel.utils.Clock
 import java.io.*
 
 /**

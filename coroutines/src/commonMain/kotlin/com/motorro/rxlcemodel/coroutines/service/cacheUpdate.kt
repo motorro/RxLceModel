@@ -11,13 +11,11 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.rx.service
+package com.motorro.rxlcemodel.coroutines.service
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.common.UpdateOperationState
-import com.motorro.rxlcemodel.common.UpdateOperationState.*
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.flow
 
 /**
  * Creates a cache-update operation that gets data from [dataSource] and saves to cache.
@@ -29,12 +27,16 @@ import io.reactivex.rxjava3.core.Single
  * @param params Params to build [dataSource]
  * @param dataSource Update operation data source factory
  */
-internal inline fun <D: Any, P: Any> CacheService<D, P>.buildUpdateOperation(
+internal suspend inline fun <D: Any, P: Any> CacheService<D, P>.buildUpdateOperation(
     params: P,
-    dataSource: (params: P) -> Single<out Entity<D>>
-) = Observable.concat(
-    Observable.just(LOADING),
-    dataSource(params).flatMapObservable<UpdateOperationState> { networkData ->
-        save(params, networkData).andThen(Observable.just(IDLE))
+    crossinline dataSource: (params: P) -> Entity<D>
+) = flow {
+    emit(UpdateOperationState.LOADING)
+    try {
+        val data = dataSource(params)
+        save(params, data)
+        emit(UpdateOperationState.IDLE)
+    } catch(e: Throwable) {
+        emit(UpdateOperationState.ERROR(e))
     }
-).onErrorReturn(::ERROR)
+}

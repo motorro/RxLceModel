@@ -15,7 +15,7 @@ package com.motorro.rxlcemodel.rx.service
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator
-import com.motorro.rxlcemodel.rx.service.UpdateOperationState.*
+import com.motorro.rxlcemodel.common.UpdateOperationState.*
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single

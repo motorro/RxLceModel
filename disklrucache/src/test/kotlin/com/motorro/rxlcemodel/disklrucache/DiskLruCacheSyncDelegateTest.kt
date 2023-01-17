@@ -16,7 +16,7 @@ package com.motorro.rxlcemodel.disklrucache
 import com.motorro.rxlcemodel.cache.CacheDelegateSerializerDeserializer
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.cache.entity.EntityValidator
-import com.motorro.rxlcemodel.utils.Clock
+import com.motorro.rxlcemodel.common.Clock
 import com.nhaarman.mockitokotlin2.*
 import org.junit.After
 import org.junit.Assume.assumeFalse

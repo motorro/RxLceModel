@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package com.motorro.rxlcemodel.utils
+package com.motorro.rxlcemodel.common
 
 /**
  * A logger

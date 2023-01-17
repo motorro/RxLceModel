@@ -14,7 +14,7 @@
 package com.motorro.rxlcemodel.cache.entity
 
 import com.motorro.rxlcemodel.cache.entity.EntityValidator.Lifespan
-import com.motorro.rxlcemodel.utils.Clock
+import com.motorro.rxlcemodel.common.Clock
 
 /**
  * Cache-control [EntityValidator] factory for operations

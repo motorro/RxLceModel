@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
 import kotlin.test.*
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SyncDelegateCacheServiceTest {
     companion object {
         private const val PARAMS_1 = "params1"
