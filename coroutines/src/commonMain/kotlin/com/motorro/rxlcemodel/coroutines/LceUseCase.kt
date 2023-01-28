@@ -14,7 +14,7 @@
 package com.motorro.rxlcemodel.coroutines
 
 import com.motorro.rxlcemodel.lce.LceState
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Base LCE use-case with [state] and [refresh]
@@ -25,7 +25,7 @@ interface LceUseCase<DATA: Any> {
      * Model state. Subscription starts data load for the first subscriber.
      * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
      */
-    val state: SharedFlow<LceState<DATA>>
+    val state: Flow<LceState<DATA>>
 
     /**
      * Requests a refresh of data.
