@@ -15,6 +15,7 @@ package com.motorro.rxlcemodel.coroutines.service
 
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.common.UpdateOperationState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
@@ -27,10 +28,10 @@ import kotlinx.coroutines.flow.flow
  * @param params Params to build [dataSource]
  * @param dataSource Update operation data source factory
  */
-internal suspend inline fun <D: Any, P: Any> CacheService<D, P>.buildUpdateOperation(
+internal inline fun <D: Any, P: Any> CacheService<D, P>.buildUpdateOperation(
     params: P,
-    crossinline dataSource: (params: P) -> Entity<D>
-) = flow {
+    crossinline dataSource: suspend (params: P) -> Entity<D>
+): Flow<UpdateOperationState> = flow {
     emit(UpdateOperationState.LOADING)
     try {
         val data = dataSource(params)

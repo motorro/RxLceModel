@@ -52,8 +52,8 @@ class LceUtilsKtTest {
     fun stopOnErrorWillStopOnAnyError() = runTest {
         val error = Exception("error")
         val models = listOf(
-                createStateModel(LceState.Error(null, false, error)),
-                createStateModel(LceState.Error(1, true, error))
+            createStateModel(LceState.Error(null, false, error)),
+            createStateModel(LceState.Error(1, true, error))
         )
         models.forEach {
             assertFailsWith<Exception> { it.state.stopOnErrors.collect() }
@@ -250,6 +250,9 @@ class LceUtilsKtTest {
     @Test
     fun mapsUseCaseData() = runTest {
         val error = Exception()
+
+
+
         val source: LceUseCase<Int>  = createStateModel(
             LceState.Loading(null, false),
             LceState.Content(10, true),
