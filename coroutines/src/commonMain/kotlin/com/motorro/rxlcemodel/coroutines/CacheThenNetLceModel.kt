@@ -16,15 +16,13 @@ package com.motorro.rxlcemodel.coroutines
 import com.motorro.rxlcemodel.cache.entity.Entity
 import com.motorro.rxlcemodel.common.LogLevel
 import com.motorro.rxlcemodel.common.LogLevel.INFO
+import com.motorro.rxlcemodel.common.LogLevel.WARNING
 import com.motorro.rxlcemodel.common.Logger
-import com.motorro.rxlcemodel.common.UpdateOperationState
-import com.motorro.rxlcemodel.common.UpdateOperationState.*
 import com.motorro.rxlcemodel.coroutines.service.ServiceSet
-import com.motorro.rxlcemodel.coroutines.service.buildUpdateOperation
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.LceState.*
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 
@@ -53,13 +51,11 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      * Model state. Subscription starts data load for the first subscriber.
      * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
     override val state: Flow<LceState<DATA>> = flow {
         emitAll(startWith)
         emitAll(
-            serviceSet.cache.getData(params).flowOn(ioDispatcher).transformLatest { entity ->
-                checkForUpdate(entity)
-                emitAll(createDataFlow(entity))
+            serviceSet.cache.getData(params).flowOn(ioDispatcher).transformLatest {
+                processCachedData(it)
             }
         )
     }
@@ -69,102 +65,76 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      * Data will be updated asynchronously
      */
     override suspend fun refresh() {
-        loadAndCacheNetwork()
-    }
-
-    /**
-     * Network operation state broadcast
-     */
-    private val networkOperationState = MutableStateFlow<UpdateOperationState>(IDLE)
-
-    /**
-     * Loads network data and saves it to cache.
-     * Cache will update subscribers through its own subscription
-     * Will share active subscription to perform net->cache only once at a time
-     * Same operation is used when refreshing data - that is why we update [networkOperationState]
-     * to send [LceState.Loading] with [LceState.Loading.Type.REFRESHING] type to all state
-     * subscribers.
-     */
-    private suspend fun loadAndCacheNetwork() {
-        withContext(ioDispatcher) {
-            serviceSet.cache.buildUpdateOperation(params) { serviceSet.net.get(it) }
-                .onStart {
-                    withLogger { modelLog(INFO, "Subscribing network...") }
-                }
-                .onEach { state ->
-                    withLogger {
-                        when (state) {
-                            IDLE -> modelLog(INFO, "Network idle")
-                            LOADING -> modelLog(INFO, "Network loading")
-                            is ERROR -> modelLog(LogLevel.WARNING, "Network error: ${state.error}")
-                        }
-                    }
-                    networkOperationState.emit(state)
-                }
-                .onCompletion {
-                    withLogger { modelLog(INFO, "Network disposed") }
-                    networkOperationState.emit(IDLE)
-                }
-                .collect()
+        withLogger {
+            modelLog(INFO, "Invalidating cache to launch refresh...")
+            withContext(ioDispatcher) {
+                serviceSet.cache.invalidate(params)
+            }
         }
     }
 
     /**
-     * Mixes data emitted by cache with a network operation state
+     * Processes cached data if available and updates clients
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private fun createDataFlow(entity: Entity<DATA>?): Flow<LceState<DATA>> {
+    private suspend fun FlowCollector<LceState<DATA>>.processCachedData(entity: Entity<DATA>?) {
         val data = entity?.data
         val dataIsValid = true == entity?.isValid()
-        withLogger { modelLog(INFO, "Data transformer. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid") }
-        return networkOperationState.transformLatest { updateOperationState ->
-            withLogger {
-                modelLog(
-                    INFO,
-                    "Network status: $updateOperationState")
-            }
-            when (updateOperationState) {
-                LOADING -> emit(
-                    Loading(
-                        data = data,
-                        dataIsValid = dataIsValid,
-                        type = if (null == data) Loading.Type.LOADING else Loading.Type.REFRESHING
-                    )
-                )
-                is ERROR -> emit(
-                    Error(
-                        data = data,
-                        dataIsValid = dataIsValid,
-                        error = updateOperationState.error
-                    )
-                )
-                // No content emission for invalid data
-                // The launched operation will update
-                // status later
-                IDLE -> if (null != data && dataIsValid) emit(
+        withLogger {
+            modelLog(INFO, "Data transformer. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid")
+        }
+        when {
+            null != data && dataIsValid -> {
+                withLogger {
+                    modelLog(INFO, "Cache emitted valid data - CONTENT")
+                }
+                emit(
                     Content(
                         data = data,
                         dataIsValid = true
                     )
                 )
             }
+            else -> {
+                withLogger {
+                    modelLog(INFO, "Cache emitted valid data - CONTENT")
+                }
+                emit(
+                    Loading(
+                        data,
+                        dataIsValid,
+                        type = if (null == data) Loading.Type.LOADING else Loading.Type.REFRESHING
+                    )
+                )
+                try {
+                    loadAndCacheNetwork()
+                } catch(c: CancellationException) {
+                    // Ignored due to `transformLatest` used in cache subscription
+                } catch(error: Throwable) {
+                    withLogger {
+                        modelLog(WARNING, "Error getting data from network - ERROR: $error")
+                    }
+                    emit(
+                        Error(
+                            data,
+                            dataIsValid,
+                            error
+                        )
+                    )
+                }
+            }
         }
     }
 
     /**
-     * Checks for data validity and launches update operation if necessary
+     * Loads network data and saves it to cache.
+     * Cache will update subscribers through its own subscription.
      */
-    private suspend fun checkForUpdate(entity: Entity<DATA>?) {
-        val dataIsValid = true == entity?.isValid()
-        withLogger { modelLog(INFO, "Data updater. Update from cache: ${if (null == entity) "no data" else "has data"}, valid: $dataIsValid") }
-        when {
-            null == entity || dataIsValid.not() -> {
-                withLogger { modelLog(INFO, "Data updater. Running update...") }
-                loadAndCacheNetwork()
-            }
-            else -> {
-                withLogger { modelLog(INFO, "Data updater. No update needed") }
-            }
+    private suspend fun loadAndCacheNetwork() {
+        withContext(ioDispatcher) {
+            withLogger { modelLog(INFO, "Subscribing network...") }
+            val data = serviceSet.net.get(params)
+            withLogger { modelLog(INFO, "Saving to cache...") }
+            serviceSet.cache.save(params, data)
         }
     }
 
