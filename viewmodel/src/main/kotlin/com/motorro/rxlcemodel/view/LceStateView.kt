@@ -3,10 +3,10 @@ package com.motorro.rxlcemodel.view
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.LceState.*
-import com.motorro.rxlcemodel.base.LceState.Loading.Type.LOADING
-import com.motorro.rxlcemodel.base.LceState.Loading.Type.UPDATING
+import com.motorro.rxlcemodel.lce.LceState
+import com.motorro.rxlcemodel.lce.LceState.*
+import com.motorro.rxlcemodel.lce.LceState.Loading.Type.LOADING
+import com.motorro.rxlcemodel.lce.LceState.Loading.Type.UPDATING
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 
 /**

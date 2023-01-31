@@ -16,9 +16,9 @@ package com.motorro.rxlcemodel.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.LceUseCase
-import com.motorro.rxlcemodel.base.combine
+import com.motorro.rxlcemodel.lce.LceState
+import com.motorro.rxlcemodel.lce.combine
+import com.motorro.rxlcemodel.rx.LceUseCase
 import com.motorro.rxlcemodel.viewmodel.error.UnhandledException
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -210,12 +210,12 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
     }
 
     /**
-     * View model with operations that mix with main state
+     * View model with operations that mix with commonMain state
      * @param dataUseCase Main data use-case
      */
     open class WithUpdates<DATA : Any>(dataUseCase: LceUseCase<DATA>) : Impl<DATA>() {
         /**
-         * Card operation state to mix with main data loading
+         * Card operation state to mix with commonMain data loading
          */
         private val operationStream = BehaviorSubject.createDefault<Optional<LceState<Unit>>>(Optional.empty())
 

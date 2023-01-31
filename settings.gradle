@@ -1,4 +1,10 @@
 rootProject.name = "RxLceModel"
-include ':sample', ':base', ':disklrucache', ':kserializer'
+include ':sample', ':rx', ':disklrucache', ':kserializer'
 include ':viewmodel'
 include ':composeview'
+include ':lce'
+include ':utils'
+include ':cache'
+include ':coroutines'
+include ':common'
+include ':commonMock'

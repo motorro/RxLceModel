@@ -13,14 +13,15 @@
 
 package com.motorro.rxlcemodel.composeview
 
+import androidx.activity.ComponentActivity
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.motorro.rxlcemodel.TestAppTest
-import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.lce.LceState
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,7 +41,7 @@ class LceStateViewTest : TestAppTest() {
     }
 
     @get:Rule
-    val composeTestRule: ComposeContentTestRule = createComposeRule()
+    val composeTestRule: ComposeContentTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Composable
     private fun TestLoading() {

@@ -13,9 +13,9 @@
 
 package com.motorro.rxlcemodel.disklrucache
 
-import com.motorro.rxlcemodel.base.entity.Entity
-import com.motorro.rxlcemodel.base.entity.EntityValidatorFactory
-import com.motorro.rxlcemodel.base.service.*
+import com.motorro.rxlcemodel.cache.*
+import com.motorro.rxlcemodel.cache.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.EntityValidatorFactory
 import com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider
 import java.io.Serializable
 import java.security.MessageDigest
@@ -27,7 +27,7 @@ import java.util.*
 fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.lowercase(Locale.US)
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService]
+ * Creates DiskLRU caching delegate for cache-service
  * Delegate uses cache directory provided by [DiskLruCacheProvider]. This directory is designed to be shared
  * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
  * to not to mix data with other delegates.
@@ -40,14 +40,14 @@ fun <T: Any> createDefaultDelegatePrefix(cls: Class<T>) = cls.simpleName.lowerca
 fun <D: Any, P: CacheFriend> DiskLruCacheProvider.createDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<D>
-) : SyncDelegateCacheService.Delegate<D, P> = DiskLruCacheSyncDelegate(
+) : CacheDelegate<D, P> = DiskLruCacheSyncDelegate(
     prefix = prefix,
     sd = sd,
     cacheProvider = this
 ).stringifyParams { cacheKey }
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService]
+ * Creates DiskLRU caching delegate for cache-service
  * Delegate uses cache directory provided by [DiskLruCacheProvider]. This directory is designed to be shared
  * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
  * to not to mix data with other delegates.
@@ -63,14 +63,14 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<D>,
     crossinline stringify: P.() -> String
-) : SyncDelegateCacheService.Delegate<D, P> = DiskLruCacheSyncDelegate(
+) : CacheDelegate<D, P> = DiskLruCacheSyncDelegate(
     prefix = prefix,
     sd = sd,
     cacheProvider = this
 ).stringifyParams(stringify)
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] with cache key normalizing and check.
+ * Creates DiskLRU caching delegate for cache-service with cache key normalizing and check.
  * Delegate uses cache directory provided by [DiskLruCacheProvider]. This directory is designed to be shared
  * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
  * to not to mix data with other delegates.
@@ -84,7 +84,7 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createDelegate(
 fun <D: Any, P: CacheFriend> DiskLruCacheProvider.createNormalizedDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<DataWithCacheKey<D>>
-) : SyncDelegateCacheService.Delegate<D, P> = CacheFriendDelegate(
+) : CacheDelegate<D, P> = CacheFriendDelegate(
     DiskLruCacheSyncDelegate(
         prefix = prefix,
         sd = sd,
@@ -93,7 +93,7 @@ fun <D: Any, P: CacheFriend> DiskLruCacheProvider.createNormalizedDelegate(
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] with cache key normalizing and check
+ * Creates DiskLRU caching delegate for cache-service with cache key normalizing and check
  * Delegate uses cache directory provided by [DiskLruCacheProvider]. This directory is designed to be shared
  * between several delegates. Thus we need to provide each delegate an unique [DiskLruCacheSyncDelegate.prefix]
  * to not to mix data with other delegates.
@@ -109,10 +109,10 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createNormalizedDelegate(
     prefix: String,
     sd: CacheDelegateSerializerDeserializer<DataWithCacheKey<D>>,
     crossinline stringify: P.() -> String
-) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate<D, CacheFriend>(prefix,sd).makeFriendParams(stringify)
+) : CacheDelegate<D, P> = createNormalizedDelegate<D, CacheFriend>(prefix,sd).makeFriendParams(stringify)
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
+ * Creates DiskLRU caching delegate for cache-service that accepts [Serializable] data
  * with cache key normalizing and check
  *
  * @receiver Cache provider
@@ -122,7 +122,7 @@ inline fun <D: Any, P: Any> DiskLruCacheProvider.createNormalizedDelegate(
 inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withObjectStream(
     validatorFactory: EntityValidatorFactory,
     prefix: String = createDefaultDelegatePrefix(D::class.java)
-) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
+) : CacheDelegate<D, P> = createDelegate(
     prefix = prefix,
     sd = CacheDelegateSerializerDeserializer.WithObjectStream(
         validatorFactory = validatorFactory,
@@ -131,7 +131,7 @@ inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withOb
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
+ * Creates DiskLRU caching delegate for cache-service that accepts [Serializable] data
  * with cache key normalizing and check
  *
  * @receiver Cache provider
@@ -144,7 +144,7 @@ inline fun <reified D: Serializable, P: Any> DiskLruCacheProvider.withObjectStre
     validatorFactory: EntityValidatorFactory,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String
-) : SyncDelegateCacheService.Delegate<D, P> = createDelegate(
+) : CacheDelegate<D, P> = createDelegate(
     prefix = prefix,
     sd = CacheDelegateSerializerDeserializer.WithObjectStream(
         validatorFactory = validatorFactory,
@@ -154,7 +154,7 @@ inline fun <reified D: Serializable, P: Any> DiskLruCacheProvider.withObjectStre
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
+ * Creates DiskLRU caching delegate for cache-service that accepts [Serializable] data
  * with cache key normalizing and check.
  *
  * @receiver Cache provider
@@ -165,7 +165,7 @@ inline fun <reified D: Serializable, P: Any> DiskLruCacheProvider.withObjectStre
 inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withObjectStreamNormalized(
     validatorFactory: EntityValidatorFactory,
     prefix: String = createDefaultDelegatePrefix(D::class.java)
-) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
+) : CacheDelegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = WithObjectStreamAndCacheKey(
         validatorFactory = validatorFactory,
@@ -174,7 +174,7 @@ inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withOb
 )
 
 /**
- * Creates DiskLRU caching delegate for [SyncDelegateCacheService] that accepts [Serializable] data
+ * Creates DiskLRU caching delegate for cache-service that accepts [Serializable] data
  * with cache key normalizing and check.
  *
  * @receiver Cache provider
@@ -187,7 +187,7 @@ inline fun <reified D: Serializable, P: CacheFriend> DiskLruCacheProvider.withOb
     validatorFactory: EntityValidatorFactory,
     prefix: String = createDefaultDelegatePrefix(D::class.java),
     crossinline stringify: P.() -> String
-) : SyncDelegateCacheService.Delegate<D, P> = createNormalizedDelegate(
+) : CacheDelegate<D, P> = createNormalizedDelegate(
     prefix = prefix,
     sd = WithObjectStreamAndCacheKey(
         validatorFactory = validatorFactory,
@@ -239,7 +239,8 @@ fun CacheFriend.getNormalizedKey(prefix: String): String = when {
  * Creates an adapter delegate that normalizes [CacheFriend.cacheKey] to fit into DiskLruCache requirements of 64 a-zA-Z0-9 symbols
  * @receiver DiskLruCacheSyncDelegate
  */
-fun <D: Any, P: CacheFriend> DiskLruCacheSyncDelegate<D>.normalizeParams(prefix: String) = object : SyncDelegateCacheService.Delegate<D, P> {
+fun <D: Any, P: CacheFriend> DiskLruCacheSyncDelegate<D>.normalizeParams(prefix: String) = object :
+    CacheDelegate<D, P> {
     override fun get(params: P): Entity<D>? = this@normalizeParams.get(params.getNormalizedKey(prefix))
     override fun save(params: P, entity: Entity<D>) = this@normalizeParams.save(params.getNormalizedKey(prefix), entity)
     override fun invalidate(params: P) = this@normalizeParams.invalidate(params.getNormalizedKey(prefix))

@@ -22,8 +22,8 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.LceState.*
+import com.motorro.rxlcemodel.lce.LceState
+import com.motorro.rxlcemodel.lce.LceState.*
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.view.LceStateView
 import timber.log.Timber

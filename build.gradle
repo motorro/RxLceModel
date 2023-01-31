@@ -1,15 +1,9 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-
 buildscript {
     ext.kotlin_version = '1.7.20'
     ext.dokka_version = '1.7.20'
     repositories {
         google()
         mavenCentral()
-        maven {
-            name = 'ajoberstar-backup'
-            url = 'https://ajoberstar.github.io/bintray-backup/'
-        }
         maven {
             url="https://plugins.gradle.org/m2/"
         }
@@ -18,7 +12,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.android.tools.build:gradle:7.4.0'
         classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -40,10 +34,10 @@ setDescription("A reactive data loading for Android based on RxJava and `Loading
 
 ext {
     // Android
-    androidBuildToolsVersion = '32.0.0'
+    androidBuildToolsVersion = '33.0.0'
     androidMinSdkVersion = 24
-    androidTargetSdkVersion = 32
-    androidCompileSdkVersion = 32
+    androidTargetSdkVersion = 33
+    androidCompileSdkVersion = 33
     versionName = project.version
     versionCode = buildVersionCode()
 
@@ -67,6 +61,7 @@ allprojects {
         commonLibVersions = [
                 // Code
                 "rx_java": '3.1.5',
+                "coroutines": '1.6.4',
                 "core_ktx_version": '1.8.0',
                 "lifecycle_version": '2.5.1',
                 "arch_version": "2.1.0",
@@ -76,19 +71,20 @@ allprojects {
                 // Tests
                 "junit": '4.13.2',
                 "mockito_kotlin": "2.2.0",
+                "mockative": "1.2.6",
 
                 // Compose
                 "compose_compiler_version": "1.3.2",
-                "compose_ui_version": '1.2.1',
-                "compose_ui_tooling_version": '1.2.1',
-                "compose_ui_foundation_version": '1.2.1',
-                "compose_ui_material_version": '1.2.1',
+                "compose_ui_version": '1.3.3',
+                "compose_ui_tooling_version": '1.3.3',
+                "compose_ui_foundation_version": '1.3.1',
+                "compose_ui_material_version": '1.3.1',
                 "compose_ui_activity_version": "1.4.0",
                 "compose_viewmodel_version": '2.5.1',
                 "compose_livedata_version": "1.2.0",
                 "compose_accompanist_version": '0.25.1',
-                "compose_ui_test_manifest_version": '1.2.1',
-                "compose_ui_test_vi_version": '1.2.1'
+                "compose_ui_test_manifest_version": '1.3.3',
+                "compose_ui_test_vi_version": '1.3.3'
         ]
     }
 
@@ -96,6 +92,15 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += [
+                    "-opt-in=kotlin.RequiresOptIn",
+                    "-Xinline-classes"
+            ]
+        }
     }
 
     // Test Logging
@@ -126,62 +131,79 @@ allprojects {
             }
         }
     }
-
-    tasks.withType(DokkaTask).configureEach {
-        outputDirectory.set(new File("$buildDir/javadoc"))
-        dokkaSourceSets {
-            named("main") {
-                noAndroidSdkLink.set(false)
-                includes.from ("${projectDir}/module.md")
-                externalDocumentationLink {
-					url.set(new URL ("http://reactivex.io/RxJava/2.x/javadoc/"))
-					packageListUrl.set(new URL ("http://reactivex.io/RxJava/2.x/javadoc/package-list"))
-				}
-            }
-        }
-    }
 }
 
-task runBaseUnitTests(type: Task, dependsOn: [':base:test'], group: 'verification') {
-    description 'Run unit tests for Bbase library.'
+tasks.register('runLceUnitTests') {
+    dependsOn(':lce:check')
+    group('verification')
+    description 'Run unit tests for Lce library.'
 }
 
-task runDiskLruUnitTests(type: Task, dependsOn: [':disklrucache:test'], group: 'verification') {
+tasks.register('runCacheUnitTests') {
+    dependsOn(':cache:check')
+    group('verification')
+    description 'Run unit tests for Cache library.'
+}
+
+tasks.register('runRxUnitTests') {
+    dependsOn(':rx:check')
+    group('verification')
+    description 'Run unit tests for Rx library.'
+}
+
+tasks.register('runCoroutinesUnitTests') {
+    dependsOn(':coroutines:check')
+    group('verification')
+    description 'Run unit tests for Rx library.'
+}
+
+tasks.register('runDiskLruUnitTests') {
+    dependsOn(':disklrucache:check')
+    group('verification')
     description 'Run unit tests for DiskLruCache library.'
 }
 
-task runKserializerUnitTests(type: Task, dependsOn: [':kserializer:test'], group: 'verification') {
+tasks.register('runKserializerUnitTests') {
+    dependsOn(':kserializer:check')
+    group('verification')
     description 'Run unit tests for KSerializer library.'
 }
 
-task runViewmodelUnitTests(type: Task, dependsOn: [':viewmodel:testDebugUnitTest'], group: 'verification') {
+tasks.register('runViewmodelUnitTests') {
+    dependsOn(':viewmodel:testDebugUnitTest')
+    group('verification')
     description 'Run unit tests for ViewModel library.'
 }
 
-task runComposeViewUnitTests(type: Task, dependsOn: [':composeview:testDebugUnitTest'], group: 'verification') {
+tasks.register('runComposeViewUnitTests') {
+    dependsOn(':composeview:testDebugUnitTest')
+    group('verification')
     description 'Run unit tests for Compose-view library.'
 }
 
-task runSampleUnitTests(type: Task, dependsOn: [':sample:testDebugUnitTest'], group: 'verification') {
+tasks.register('runSampleUnitTests') {
+    dependsOn(':sample:check')
+    group('verification')
     description 'Run unit tests for Sample application.'
 }
 
-task runUnitTests(
-        type: Task,
-        dependsOn: [
-                'runBaseUnitTests',
-                'runDiskLruUnitTests',
-                'runKserializerUnitTests',
-                'runViewmodelUnitTests',
-                'runComposeViewUnitTests',
-                'runSampleUnitTests'
-        ],
-        group: 'verification'
-) {
+tasks.register('runUnitTests') {
+    dependsOn(
+            'runLceUnitTests',
+            'runCacheUnitTests',
+            'runRxUnitTests',
+            'runCoroutinesUnitTests',
+            'runDiskLruUnitTests',
+            'runKserializerUnitTests',
+            'runViewmodelUnitTests',
+            'runComposeViewUnitTests',
+            'runSampleUnitTests'
+    )
+    group('verification')
     description 'Run unit tests for libraries.'
 }
 
-task displayVersion(type: Task, group: 'documentation') {
+tasks.register('displayVersion') {
     description 'Display application version name'
     doLast {
         println("Project version: ${project.version}")

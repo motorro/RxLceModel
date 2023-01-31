@@ -15,11 +15,11 @@ package com.motorro.rxlcemodel.sample.view.note
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.motorro.rxlcemodel.base.LceModel
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.UpdateWrapper
-import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.base.service.NetService
+import com.motorro.rxlcemodel.lce.LceState
+import com.motorro.rxlcemodel.rx.LceModel
+import com.motorro.rxlcemodel.rx.UpdateWrapper
+import com.motorro.rxlcemodel.rx.service.CacheService
+import com.motorro.rxlcemodel.rx.service.NetService
 import com.motorro.rxlcemodel.sample.di.FragmentScope
 import com.motorro.rxlcemodel.sample.di.NoteFragmentModule.Companion.NOTE_ID
 import com.motorro.rxlcemodel.sample.domain.data.Note
@@ -44,7 +44,7 @@ import javax.inject.Named
  * - Deletes notes using work manager to demonstrate data updates from non-visual components
  * Model uses [NoteUpdateWrapper] descendant to demonstrate several update operations for data
  * (like PATCHing requests in HTTP APIs). If PUTing a whole data structure on server is enough
- * [com.motorro.rxlcemodel.base.UpdatingLceModel] is a simpler choice
+ * [com.motorro.rxlcemodel.rx.UpdatingLceModel] is a simpler choice
  */
 class NoteViewModel(
     private val noteId: Int,

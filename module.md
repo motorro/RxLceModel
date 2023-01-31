@@ -16,11 +16,11 @@ operation state (`Loading`/`Content`/`Error`).
 
 Please see a [github project](https://github.com/motorro/RxLceModel) for detailed description.
 
-# Package com.motorro.rxlcemodel.base
+# Package com.motorro.rxlcemodel.rx
 Basic LceModel classes
-# Package com.motorro.rxlcemodel.base.entity
+# Package com.motorro.rxlcemodel.rx.entity
 Contains tools to maintain data validity
-# Package com.motorro.rxlcemodel.base.service
+# Package com.motorro.rxlcemodel.rx.service
 Contains tools to load and store data
 # Package com.motorro.rxlcemodel.disklrucache
 [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel

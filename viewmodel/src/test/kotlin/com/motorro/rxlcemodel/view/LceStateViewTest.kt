@@ -15,7 +15,7 @@ package com.motorro.rxlcemodel.view
 
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Before

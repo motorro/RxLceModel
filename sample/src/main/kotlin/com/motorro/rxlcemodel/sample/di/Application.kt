@@ -14,7 +14,7 @@
 package com.motorro.rxlcemodel.sample.di
 
 import android.content.Context
-import com.motorro.rxlcemodel.base.service.NetService
+import com.motorro.rxlcemodel.rx.service.NetService
 import com.motorro.rxlcemodel.sample.App
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList

@@ -15,8 +15,8 @@ package com.motorro.rxlcemodel.sample.view.addnote
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.motorro.rxlcemodel.base.LceState
-import com.motorro.rxlcemodel.base.LceUseCase
+import com.motorro.rxlcemodel.lce.LceState
+import com.motorro.rxlcemodel.rx.LceUseCase
 import com.motorro.rxlcemodel.sample.di.FragmentScope
 import com.motorro.rxlcemodel.sample.service.usecase.AddNote
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository

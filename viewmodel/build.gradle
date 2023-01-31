@@ -62,7 +62,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':base')
+    implementation project(':rx')
 
     implementation "androidx.core:core-ktx:${commonLibVersions.core_ktx_version}"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:${commonLibVersions.lifecycle_version}"

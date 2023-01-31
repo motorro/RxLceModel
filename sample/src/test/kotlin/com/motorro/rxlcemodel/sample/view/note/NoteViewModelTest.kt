@@ -15,7 +15,7 @@ package com.motorro.rxlcemodel.sample.view.note
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.motorro.rxlcemodel.base.LceState
+import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.nhaarman.mockitokotlin2.doReturn

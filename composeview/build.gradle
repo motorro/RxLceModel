@@ -74,7 +74,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':base')
+    implementation project(':rx')
     implementation project(':viewmodel')
 
     // Core
@@ -98,9 +98,9 @@ dependencies {
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
-    testImplementation "androidx.test:core:1.4.0"
+    testImplementation "androidx.test:core:1.5.0"
     testImplementation "androidx.compose.ui:ui-test-junit4:${commonLibVersions.compose_ui_test_vi_version}"
-    testImplementation 'org.robolectric:robolectric:4.8.1'
+    testImplementation 'org.robolectric:robolectric:4.9.2'
 }
 
 dokkaJavadoc.configure {

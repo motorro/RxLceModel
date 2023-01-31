@@ -14,8 +14,8 @@
 package com.motorro.rxlcemodel.sample.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.motorro.rxlcemodel.base.service.CacheService
-import com.motorro.rxlcemodel.base.service.NetService
+import com.motorro.rxlcemodel.rx.service.CacheService
+import com.motorro.rxlcemodel.rx.service.NetService
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
