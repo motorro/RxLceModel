@@ -131,7 +131,27 @@ class NetServiceMock<D: Any, U: Any, P: Any>(
         assertTrue { got.any { it.params() } }
     }
 
-    override suspend fun update(params: P, update: U): Entity<D> = netUpdate()
+    private val saved: MutableList<Pair<P, U>> = mutableListOf()
+    override suspend fun update(params: P, update: U): Entity<D> {
+        saved.add(params to update)
+        return netUpdate()
+    }
+
+    fun assertUpdated(params: P, update: U, count: Int = 0) {
+        assertTrue {
+            saved.any { (p, u) ->
+                p == params && u == update
+            }
+        }
+        if (count > 0) {
+            assertEquals(
+                count,
+                saved.count { (p, u) ->
+                    p == params && u == update
+                }
+            )
+        }
+    }
 }
 
 /**

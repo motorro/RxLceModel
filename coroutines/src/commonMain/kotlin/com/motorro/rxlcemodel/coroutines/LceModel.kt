@@ -13,7 +13,17 @@
 
 package com.motorro.rxlcemodel.coroutines
 
+import com.motorro.rxlcemodel.common.Logger
+import com.motorro.rxlcemodel.coroutines.service.CacheService
+import com.motorro.rxlcemodel.coroutines.service.NetService
+import com.motorro.rxlcemodel.coroutines.service.ServiceSet
+import com.motorro.rxlcemodel.coroutines.service.UpdatingServiceSet
 import com.motorro.rxlcemodel.lce.LceState
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlin.jvm.JvmOverloads
 
 /**
  * A model interface to load data and transmit it to subscribers along with loading operation state
@@ -29,23 +39,23 @@ interface LceModel<DATA: Any, PARAMS: Any>: LceUseCase<DATA> {
          * @param params Params that identify data being loaded
          * @param serviceSet Service-set to load data
          * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
-         * @param ioScheduler Scheduler to run IO operations
+         * @param ioDispatcher Scheduler to run IO operations
          * @param logger Logging function
          */
-//        @JvmOverloads
-//        fun <DATA: Any, PARAMS: Any> cacheThenNet(
-//            params: PARAMS,
-//            serviceSet: ServiceSet<DATA, PARAMS>,
-//            startWith: Observable<LceState<DATA>> = Observable.empty(),
-//            ioScheduler: Scheduler = Schedulers.trampoline(),
-//            logger: Logger? = null
-//        ): LceModel<DATA, PARAMS> = CacheThenNetLceModel(
-//            params = params,
-//            serviceSet = serviceSet,
-//            startWith = startWith,
-//            ioScheduler = ioScheduler,
-//            logger = logger
-//        )
+        @JvmOverloads
+        fun <DATA: Any, PARAMS: Any> cacheThenNet(
+            params: PARAMS,
+            serviceSet: ServiceSet<DATA, PARAMS>,
+            startWith: Flow<LceState<DATA>> = emptyFlow(),
+            ioDispatcher: CoroutineDispatcher = Dispatchers.Unconfined,
+            logger: Logger? = null
+        ): LceModel<DATA, PARAMS> = CacheThenNetLceModel(
+            params = params,
+            serviceSet = serviceSet,
+            startWith = startWith,
+            ioDispatcher = ioDispatcher,
+            logger = logger
+        )
 
         /**
          * Creates a model that returns cached data first, than refreshes if stall
@@ -55,27 +65,27 @@ interface LceModel<DATA: Any, PARAMS: Any>: LceUseCase<DATA> {
          * @param net Net-service
          * @param cache Cache-service
          * @param startWith Observable that emits at loading start. Defaults to [LceState.Loading]
-         * @param ioScheduler Scheduler to run IO operations
+         * @param ioDispatcher Scheduler to run IO operations
          * @param logger Logging function
          */
-//        @JvmOverloads
-//        fun <DATA: Any, PARAMS: Any> cacheThenNet(
-//            params: PARAMS,
-//            net: NetService<DATA, PARAMS>,
-//            cache: CacheService<DATA, PARAMS>,
-//            startWith: Observable<LceState<DATA>> = Observable.empty(),
-//            ioScheduler: Scheduler = Schedulers.trampoline(),
-//            logger: Logger? = null
-//        ): LceModel<DATA, PARAMS> = cacheThenNet(
-//            params = params,
-//            serviceSet = object : ServiceSet<DATA, PARAMS> {
-//                override val net: NetService<DATA, PARAMS> get() = net
-//                override val cache: CacheService<DATA, PARAMS> get() = cache
-//            },
-//            startWith = startWith,
-//            ioScheduler = ioScheduler,
-//            logger = logger
-//        )
+        @JvmOverloads
+        fun <DATA: Any, PARAMS: Any> cacheThenNet(
+            params: PARAMS,
+            net: NetService<DATA, PARAMS>,
+            cache: CacheService<DATA, PARAMS>,
+            startWith: Flow<LceState<DATA>> = emptyFlow(),
+            ioDispatcher: CoroutineDispatcher = Dispatchers.Unconfined,
+            logger: Logger? = null
+        ): LceModel<DATA, PARAMS> = cacheThenNet(
+            params = params,
+            serviceSet = object : ServiceSet<DATA, PARAMS> {
+                override val net: NetService<DATA, PARAMS> get() = net
+                override val cache: CacheService<DATA, PARAMS> get() = cache
+            },
+            startWith = startWith,
+            ioDispatcher = ioDispatcher,
+            logger = logger
+        )
     }
 
     /**
@@ -105,16 +115,16 @@ interface UpdatingLceModel<DATA: Any, in UPDATE: Any, PARAMS: Any>: LceModel<DAT
  * @param PARAMS Params type that identify data being loaded
  * @receiver LceModel that performs reading
  * @param serviceSet Service-set to load data
- * @param ioScheduler Scheduler to run IO operations
+ * @param ioDispatcher Scheduler to run IO operations
  * @param logger Logging function
  */
-//fun <DATA: Any, UPDATE: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withUpdates(
-//    serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>,
-//    ioScheduler: Scheduler = Schedulers.trampoline(),
-//    logger: Logger? = null
-//): UpdatingLceModel<DATA, UPDATE, PARAMS> = UpdatingLceModelWrapper(
-//    upstream = this,
-//    serviceSet = serviceSet,
-//    ioScheduler = ioScheduler,
-//    logger = logger
-//)
+fun <DATA: Any, UPDATE: Any, PARAMS: Any> LceModel<DATA, PARAMS>.withUpdates(
+    serviceSet: UpdatingServiceSet<DATA, UPDATE, PARAMS>,
+    ioDispatcher: CoroutineDispatcher = Dispatchers.Unconfined,
+    logger: Logger? = null
+): UpdatingLceModel<DATA, UPDATE, PARAMS> = UpdatingLceModelWrapper(
+    upstream = this,
+    serviceSet = serviceSet,
+    ioDispatcher = ioDispatcher,
+    logger = logger
+)
