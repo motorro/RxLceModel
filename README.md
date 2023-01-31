@@ -35,6 +35,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Navigation Architecture Component for the Rest of Us](https://proandroiddev.com/navigation-architecture-component-for-the-rest-of-us-faafa890e5)
 
 ## Table of Contents
+* [Coroutines](#v5x)
 * [Setting up the dependency](#setting-up-the-dependency)
 * [Enabling desugaring](#enabling-java8-desugaring-for-android)
 * [LceState](#lcestate)
@@ -54,12 +55,24 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Getting data-only stream](#getting-data-only-stream)
 * [LCE ViewModel](#lce-viewmodel)
 
+## v5.x
+Originally written for RxJava, the version `5.x` introduces the experimental coroutines port.
+To upgrade the version you need to change the dependency as described in the [migration guide](MIGRATION_5.md).
+Different artifacts for the main use-cases are to be required depending on which library you choose.
+
 ## Setting up the dependency
-Basic module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/base/):
+`Rx` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/):
 ```groovy
 dependencies {
     // Base model components
-    implementation "com.motorro.rxlcemodel:base:x.x.x"
+    implementation "com.motorro.rxlcemodel:rx:x.x.x"
+}
+```
+`Coroutines` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/coroutines/):
+```groovy
+dependencies {
+    // Base model components
+    implementation "com.motorro.rxlcemodel:coroutines:x.x.x"
 }
 ```
 Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/disklrucache/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/disklrucache/):

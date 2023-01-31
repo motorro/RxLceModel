@@ -73,10 +73,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":common"))
-                implementation(project(":utils"))
-                implementation(project(":lce"))
-                implementation(project(":cache"))
+                api(project(":common"))
+                api(project(":utils"))
+                api(project(":lce"))
+                api(project(":cache"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions["coroutines"]}")
             }
         }
