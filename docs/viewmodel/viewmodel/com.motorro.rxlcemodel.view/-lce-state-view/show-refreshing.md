@@ -3,6 +3,6 @@
 # showRefreshing
 
 [androidJvm]\
-open fun [showRefreshing](show-refreshing.md)(type: [LceState.Loading.Type](../../../../base/base/com.motorro.rxlcemodel.base/-lce-state/-loading/-type/index.md))
+open fun [showRefreshing](show-refreshing.md)(type: [LceState.Loading.Type](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/-loading/-type/index.md))
 
 Displays data refresh on top of current state.

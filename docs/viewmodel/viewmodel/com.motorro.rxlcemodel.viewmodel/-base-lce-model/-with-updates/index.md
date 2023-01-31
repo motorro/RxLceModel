@@ -3,11 +3,11 @@
 # WithUpdates
 
 [androidJvm]\
-open class [WithUpdates](index.md)&lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(dataUseCase: [LceUseCase](../../../../../base/base/com.motorro.rxlcemodel.base/-lce-use-case/index.md)&lt;[DATA](index.md)&gt;) : [BaseLceModel.Impl](../-impl/index.md)&lt;[DATA](index.md)&gt; 
+open class [WithUpdates](index.md)&lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(dataUseCase: [LceUseCase](../../../../../rx/rx/com.motorro.rxlcemodel.rx/-lce-use-case/index.md)&lt;[DATA](index.md)&gt;) : [BaseLceModel.Impl](../-impl/index.md)&lt;[DATA](index.md)&gt; 
 
-View model with operations that mix with main state
+View model with operations that mix with commonMain state
 
-## Parameters
+#### Parameters
 
 androidJvm
 
@@ -19,7 +19,7 @@ androidJvm
 
 | | |
 |---|---|
-| [WithUpdates](-with-updates.md) | [androidJvm]<br>fun &lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [WithUpdates](-with-updates.md)(dataUseCase: [LceUseCase](../../../../../base/base/com.motorro.rxlcemodel.base/-lce-use-case/index.md)&lt;[DATA](index.md)&gt;) |
+| [WithUpdates](-with-updates.md) | [androidJvm]<br>fun &lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [WithUpdates](-with-updates.md)(dataUseCase: [LceUseCase](../../../../../rx/rx/com.motorro.rxlcemodel.rx/-lce-use-case/index.md)&lt;[DATA](index.md)&gt;) |
 
 ## Functions
 
@@ -39,4 +39,4 @@ androidJvm
 |---|---|
 | [cleared](../../-base-view-model/cleared.md) | [androidJvm]<br>var [cleared](../../-base-view-model/cleared.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>Is model cleared |
 | [initialized](../../-base-view-model/initialized.md) | [androidJvm]<br>var [initialized](../../-base-view-model/initialized.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>Is model initialized |
-| [state](../-impl/state.md) | [androidJvm]<br>open override val [state](../-impl/state.md): [LiveData](https://developer.android.com/reference/kotlin/androidx/lifecycle/LiveData.html)&lt;[LceState](../../../../../base/base/com.motorro.rxlcemodel.base/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>LCE State |
+| [state](../-impl/state.md) | [androidJvm]<br>open override val [state](../-impl/state.md): [LiveData](https://developer.android.com/reference/kotlin/androidx/lifecycle/LiveData.html)&lt;[LceState](../../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>LCE State |

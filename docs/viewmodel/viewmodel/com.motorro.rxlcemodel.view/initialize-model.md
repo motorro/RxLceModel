@@ -7,7 +7,7 @@ inline fun &lt;[DATA](initialize-model.md) : [Any](https://kotlinlang.org/api/la
 
 Creates and initializes LCE view-model subscribing to state updates.
 
-## Parameters
+#### Parameters
 
 androidJvm
 

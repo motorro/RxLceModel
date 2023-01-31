@@ -3,4 +3,4 @@
 # serialize
 
 [jvm]\
-open override fun [serialize](serialize.md)(encoder: Encoder, value: [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;)
+open override fun [serialize](serialize.md)(encoder: Encoder, value: [DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;)

@@ -7,7 +7,7 @@ open override fun [delete](delete.md)(params: [String](https://kotlinlang.org/ap
 
 Deletes cached value
 
-## Parameters
+#### Parameters
 
 jvm
 

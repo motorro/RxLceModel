@@ -25,15 +25,15 @@ A reactive data loading for Android based on  [RxJava](https://github.com/Reacti
 
 Please see a [github project](https://github.com/motorro/RxLceModel) for detailed description.
 
-#  Package com.motorro.rxlcemodel.base
+#  Package com.motorro.rxlcemodel.rx
 
 Basic LceModel classes
 
-#  Package com.motorro.rxlcemodel.base.entity
+#  Package com.motorro.rxlcemodel.rx.entity
 
 Contains tools to maintain data validity
 
-#  Package com.motorro.rxlcemodel.base.service
+#  Package com.motorro.rxlcemodel.rx.service
 
 Contains tools to load and store data
 
@@ -49,8 +49,13 @@ DiskLruCache serialization delegate using [Kotlin serialization](https://github.
 
 | Name |
 |---|
-| [base](base/index.md) |  |
+| [cache](cache/index.md) |  |
+| [common](common/index.md) |  |
 | [composeview](composeview/index.md) |  |
+| [coroutines](coroutines/index.md) |  |
 | [disklrucache](disklrucache/index.md) |  |
 | [kserializer](kserializer/index.md) |  |
+| [lce](lce/index.md) |  |
+| [rx](rx/index.md) |  |
+| [utils](utils/index.md) |  |
 | [viewmodel](viewmodel/index.md) |  |

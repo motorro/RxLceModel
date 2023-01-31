@@ -3,11 +3,11 @@
 # get
 
 [jvm]\
-open override fun [get](get.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;?
+open override fun [get](get.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;?
 
 Returns data if cached
 
-## Parameters
+#### Parameters
 
 jvm
 

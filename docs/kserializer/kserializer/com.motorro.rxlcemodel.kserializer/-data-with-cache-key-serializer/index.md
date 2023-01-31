@@ -5,9 +5,9 @@
 [jvm]\
 @ExperimentalSerializationApi
 
-data class [DataWithCacheKeySerializer](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val dataSerializer: KSerializer&lt;[D](index.md)&gt;) : KSerializer&lt;[DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;&gt; 
+data class [DataWithCacheKeySerializer](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val dataSerializer: KSerializer&lt;[D](index.md)&gt;) : KSerializer&lt;[DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;&gt; 
 
-Serializer for [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)
+Serializer for [DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)
 
 ## Constructors
 
@@ -19,8 +19,8 @@ Serializer for [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.b
 
 | Name | Summary |
 |---|---|
-| [deserialize](deserialize.md) | [jvm]<br>open override fun [deserialize](deserialize.md)(decoder: Decoder): [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt; |
-| [serialize](serialize.md) | [jvm]<br>open override fun [serialize](serialize.md)(encoder: Encoder, value: [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;) |
+| [deserialize](deserialize.md) | [jvm]<br>open override fun [deserialize](deserialize.md)(decoder: Decoder): [DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)&lt;[D](index.md)&gt; |
+| [serialize](serialize.md) | [jvm]<br>open override fun [serialize](serialize.md)(encoder: Encoder, value: [DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;) |
 
 ## Properties
 

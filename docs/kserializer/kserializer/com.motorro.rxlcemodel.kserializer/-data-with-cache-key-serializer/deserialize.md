@@ -3,4 +3,4 @@
 # deserialize
 
 [jvm]\
-open override fun [deserialize](deserialize.md)(decoder: Decoder): [DataWithCacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;
+open override fun [deserialize](deserialize.md)(decoder: Decoder): [DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;

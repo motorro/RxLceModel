@@ -1,6 +1,6 @@
 //[viewmodel](../../index.md)/[com.motorro.rxlcemodel.viewmodel](index.md)
 
-# Package com.motorro.rxlcemodel.viewmodel
+# Package-level declarations
 
 ## Types
 

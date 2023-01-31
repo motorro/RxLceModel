@@ -7,7 +7,7 @@ open override fun [invalidate](invalidate.md)(params: [String](https://kotlinlan
 
 Clears cached value
 
-## Parameters
+#### Parameters
 
 jvm
 

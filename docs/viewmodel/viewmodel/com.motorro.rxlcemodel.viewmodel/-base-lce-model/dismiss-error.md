@@ -7,7 +7,7 @@ open fun [dismissError](dismiss-error.md)(error: [Throwable](https://kotlinlang.
 
 Default action on critical error
 
-## Parameters
+#### Parameters
 
 androidJvm
 

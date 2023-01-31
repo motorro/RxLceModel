@@ -5,4 +5,4 @@
 [androidJvm]\
 open fun [processTermination](process-termination.md)()
 
-Process [LceState.Terminated](../../../../base/base/com.motorro.rxlcemodel.base/-lce-state/-terminated/index.md).
+Process [LceState.Terminated](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/-terminated/index.md).

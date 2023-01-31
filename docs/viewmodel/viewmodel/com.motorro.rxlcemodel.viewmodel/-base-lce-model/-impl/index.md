@@ -31,7 +31,7 @@ Basic ViewModel with LceModel inside
 |---|---|
 | [cleared](../../-base-view-model/cleared.md) | [androidJvm]<br>var [cleared](../../-base-view-model/cleared.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>Is model cleared |
 | [initialized](../../-base-view-model/initialized.md) | [androidJvm]<br>var [initialized](../../-base-view-model/initialized.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>Is model initialized |
-| [state](state.md) | [androidJvm]<br>open override val [state](state.md): [LiveData](https://developer.android.com/reference/kotlin/androidx/lifecycle/LiveData.html)&lt;[LceState](../../../../../base/base/com.motorro.rxlcemodel.base/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>LCE State |
+| [state](state.md) | [androidJvm]<br>open override val [state](state.md): [LiveData](https://developer.android.com/reference/kotlin/androidx/lifecycle/LiveData.html)&lt;[LceState](../../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>LCE State |
 
 ## Inheritors
 

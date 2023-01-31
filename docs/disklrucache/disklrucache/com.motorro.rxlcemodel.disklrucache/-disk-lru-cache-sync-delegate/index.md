@@ -3,19 +3,19 @@
 # DiskLruCacheSyncDelegate
 
 [jvm]\
-class [DiskLruCacheSyncDelegate](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: [CacheDelegateSerializerDeserializer](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../base/base/com.motorro.rxlcemodel.base.entity/-clock/index.md) = Clock.SYSTEM) : [SyncDelegateCacheService.Delegate](../../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/-delegate/index.md)&lt;[D](index.md), [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt; 
+class [DiskLruCacheSyncDelegate](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: [CacheDelegateSerializerDeserializer](../../../../cache/cache/com.motorro.rxlcemodel.cache/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM) : [CacheDelegate](../../../../cache/cache/com.motorro.rxlcemodel.cache/-cache-delegate/index.md)&lt;[D](index.md), [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt; 
 
-DiskLruCache caching delegate for [SyncDelegateCacheService](../../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/index.md) Designed to operate common [cacheProvider](../../../../disklrucache/com.motorro.rxlcemodel.disklrucache/-disk-lru-cache-sync-delegate/cache-provider.md) instance together with other delegates to be able to clean-up all cache all-together - say delete user's cache when user logs out Each entry contains: 0 - saved entity 1 - timestamp entity was last updated with `save` 2 - timestamp entity was invalidated with `invalidate`
+DiskLruCache caching delegate for cache services Designed to operate common [cacheProvider](../../../../disklrucache/com.motorro.rxlcemodel.disklrucache/-disk-lru-cache-sync-delegate/cache-provider.md) instance together with other delegates to be able to clean-up all cache all-together - say delete user's cache when user logs out Each entry contains: 0 - saved entity 1 - timestamp entity was last updated with `save` 2 - timestamp entity was invalidated with `invalidate`
 
-## See also
+#### See also
 
 jvm
 
-| | |
-|---|---|
-| [com.motorro.rxlcemodel.disklrucache.DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md) |  |
+| |
+|---|
+| [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md) |
 
-## Parameters
+#### Parameters
 
 jvm
 
@@ -30,7 +30,7 @@ jvm
 
 | | |
 |---|---|
-| [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md) | [jvm]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: [CacheDelegateSerializerDeserializer](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../base/base/com.motorro.rxlcemodel.base.entity/-clock/index.md) = Clock.SYSTEM) |
+| [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md) | [jvm]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DiskLruCacheSyncDelegate](-disk-lru-cache-sync-delegate.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), sd: [CacheDelegateSerializerDeserializer](../../../../cache/cache/com.motorro.rxlcemodel.cache/-cache-delegate-serializer-deserializer/index.md)&lt;[D](index.md)&gt;, cacheProvider: [DiskLruCacheSyncDelegate.DiskLruCacheProvider](-disk-lru-cache-provider/index.md), clock: [Clock](../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM) |
 
 ## Types
 
@@ -44,13 +44,13 @@ jvm
 | Name | Summary |
 |---|---|
 | [delete](delete.md) | [jvm]<br>open override fun [delete](delete.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))<br>Deletes cached value |
-| [get](get.md) | [jvm]<br>open override fun [get](get.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;?<br>Returns data if cached |
+| [get](get.md) | [jvm]<br>open override fun [get](get.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;?<br>Returns data if cached |
 | [invalidate](invalidate.md) | [jvm]<br>open override fun [invalidate](invalidate.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))<br>Clears cached value |
 | [invalidateAll](invalidate-all.md) | [jvm]<br>open override fun [invalidateAll](invalidate-all.md)()<br>Invalidates all cached values |
-| [save](save.md) | [jvm]<br>open override fun [save](save.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), entity: [Entity](../../../../base/base/com.motorro.rxlcemodel.base.entity/-entity/index.md)&lt;[D](index.md)&gt;)<br>Saves data to cache |
+| [save](save.md) | [jvm]<br>open override fun [save](save.md)(params: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), entity: [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;)<br>Saves data to cache |
 
 ## Extensions
 
 | Name | Summary |
 |---|---|
-| [normalizeParams](../normalize-params.md) | [jvm]<br>fun &lt;[D](../normalize-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](../normalize-params.md) : [CacheFriend](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-friend/index.md)&gt; [DiskLruCacheSyncDelegate](index.md)&lt;[D](../normalize-params.md)&gt;.[normalizeParams](../normalize-params.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [SyncDelegateCacheService.Delegate](../../../../base/base/com.motorro.rxlcemodel.base.service/-sync-delegate-cache-service/-delegate/index.md)&lt;[D](../normalize-params.md), [P](../normalize-params.md)&gt;<br>Creates an adapter delegate that normalizes [CacheFriend.cacheKey](../../../../base/base/com.motorro.rxlcemodel.base.service/-cache-friend/cache-key.md) to fit into DiskLruCache requirements of 64 a-zA-Z0-9 symbols |
+| [normalizeParams](../normalize-params.md) | [jvm]<br>fun &lt;[D](../normalize-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](../normalize-params.md) : [CacheFriend](../../../../cache/cache/com.motorro.rxlcemodel.cache/-cache-friend/index.md)&gt; [DiskLruCacheSyncDelegate](index.md)&lt;[D](../normalize-params.md)&gt;.[normalizeParams](../normalize-params.md)(prefix: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [CacheDelegate](../../../../cache/cache/com.motorro.rxlcemodel.cache/-cache-delegate/index.md)&lt;[D](../normalize-params.md), [P](../normalize-params.md)&gt;<br>Creates an adapter delegate that normalizes [CacheFriend.cacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-cache-friend/cache-key.md) to fit into DiskLruCache requirements of 64 a-zA-Z0-9 symbols |

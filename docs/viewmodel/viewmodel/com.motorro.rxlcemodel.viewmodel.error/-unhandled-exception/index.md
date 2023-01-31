@@ -7,7 +7,7 @@ class [UnhandledException](index.md)(cause: [Throwable](https://kotlinlang.org/a
 
 Exception to re-throw in LCE subscription if it was not routed through Error state
 
-## Parameters
+#### Parameters
 
 androidJvm
 

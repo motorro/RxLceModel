@@ -7,7 +7,7 @@ open fun [showNonFatalError](show-non-fatal-error.md)(error: [Throwable](https:/
 
 Displays some error notification when the error is non-critical and some content may be displayed.
 
-## Parameters
+#### Parameters
 
 androidJvm
 
