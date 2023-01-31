@@ -42,17 +42,17 @@ class CacheThenNetLceModelTest {
     private lateinit var cacheData: MutableSharedFlow<Entity<Int>?>
     private lateinit var model: CacheThenNetLceModel<Int, String>
 
-    private inline fun TestScope.withCollectingState(crossinline block: (values: List<LceState<Int>>) -> Unit) {
-        val values = mutableListOf<LceState<Int>>()
-        val collectJob = launch(UnconfinedTestDispatcher()) {
-            model.state.collect {
-                values.add(it)
+    private suspend inline fun withCollectingState(crossinline block: suspend (values: List<LceState<Int>>) -> Unit) {
+        coroutineScope {
+            val values = mutableListOf<LceState<Int>>()
+            val collectJob = launch(UnconfinedTestDispatcher()) {
+                model.state.collect {
+                    values.add(it)
+                }
             }
+            block(values)
+            collectJob.cancelAndJoin()
         }
-
-        block(values)
-
-        collectJob.cancel()
     }
 
 
@@ -193,7 +193,7 @@ class CacheThenNetLceModelTest {
                 )
             }
 
-            updateJob.cancel()
+            updateJob.cancelAndJoin()
         }
     }
 
@@ -231,7 +231,7 @@ class CacheThenNetLceModelTest {
                 }
             }
 
-            updateJob.cancel()
+            updateJob.cancelAndJoin()
         }
     }
 
@@ -272,14 +272,15 @@ class CacheThenNetLceModelTest {
     }
 
     @Test
-    fun willResetNetworkStateOnDispose() = runTest {
+    fun willResetNetworkStateOnDispose() = runTest(StandardTestDispatcher()) {
+        val net = MutableSharedFlow<Entity<Int>>()
         val serviceSet = object: ServiceSet<Int, String> {
             override val net: NetService<Int, String> = object : NetService<Int, String> {
                 override suspend fun get(params: String): Entity<Int> {
-                    return flow<Entity<Int>> { /* Wait forever */ }.first()
+                    return net.first()
                 }
             }
-            override val cache: CacheService<Int, String> = CacheServiceMock { VALID_ENTITY }
+            override val cache: CacheService<Int, String> = CacheServiceMock { INVALID_ENTITY }
         }
 
         model = CacheThenNetLceModel(
@@ -297,27 +298,20 @@ class CacheThenNetLceModelTest {
             }
         }
 
-        assertEquals(
-            listOf(
-                LceState.Loading(null, false),
-                LceState.Content(VALID_ENTITY.data, true)
-            ),
-            values
-        )
-
-        val refreshJob = launch {
-            model.refresh()
+        var subscriptions = 0
+        val subscriptionJob = launch(UnconfinedTestDispatcher()) {
+            net.subscriptionCount.collect { subscriptions = it }
         }
 
-        refreshJob.cancel()
-        collectJob.cancel()
+        assertEquals(1, subscriptions)
+        collectJob.cancelAndJoin()
+        assertEquals(0, subscriptions)
+        subscriptionJob.cancelAndJoin()
 
         assertEquals(
-            listOf(
+            listOf<LceState<Int>>(
                 LceState.Loading(null, false),
-                LceState.Content(VALID_ENTITY.data, true),
-                LceState.Loading(VALID_ENTITY.data, true, REFRESHING),
-                LceState.Content(VALID_ENTITY.data, true)
+                LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)
             ),
             values
         )
@@ -379,8 +373,8 @@ class CacheThenNetLceModelTest {
                 (cache as CacheServiceMock).assertSaved(PARAMS, VALID_ENTITY, 1)
             }
 
-            collect1.cancel()
-            collect2.cancel()
+            collect1.cancelAndJoin()
+            collect2.cancelAndJoin()
             cancel() // Cancel sharing
         }
     }
