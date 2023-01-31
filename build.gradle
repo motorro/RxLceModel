@@ -192,6 +192,7 @@ tasks.register('runUnitTests') {
             'runLceUnitTests',
             'runCacheUnitTests',
             'runRxUnitTests',
+            'runCoroutinesUnitTests',
             'runDiskLruUnitTests',
             'runKserializerUnitTests',
             'runViewmodelUnitTests',
