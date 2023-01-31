@@ -21,9 +21,8 @@ import com.motorro.rxlcemodel.coroutines.service.NetService
 import com.motorro.rxlcemodel.coroutines.service.ServiceSet
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.LceState.Loading.Type.REFRESHING
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -325,144 +324,64 @@ class CacheThenNetLceModelTest {
     }
 
     @Test
-    fun severalSubscribersShareNetworkOperation() = runTest(StandardTestDispatcher()) {
-        val updatedEntity = VALID_ENTITY.copy(data = 3)
-        createModel {
-            cacheInitial = { VALID_ENTITY }
-            netGet = { updatedEntity }
+    fun severalSubscribersShareNetworkOperation() = runTest(StandardTestDispatcher(), dispatchTimeoutMs = 1000) {
+        val netValue = MutableSharedFlow<Entity<Int>>()
+        val serviceSet = object: ServiceSet<Int, String> {
+            override val net: NetService<Int, String> = object : NetService<Int, String> {
+                override suspend fun get(params: String): Entity<Int> {
+                    return netValue.first()
+                }
+            }
+            override val cache: CacheService<Int, String> = CacheServiceMock { INVALID_ENTITY }
         }
+        model = CacheThenNetLceModel(
+            params = PARAMS,
+            serviceSet = serviceSet,
+            startWith = emptyFlow(),
+            ioDispatcher = UnconfinedTestDispatcher(),
+            logger = { _, _ -> }
+        )
 
-        val job = launch {
+        launch {
             val values1 = mutableListOf<LceState<Int>>()
             val values2 = mutableListOf<LceState<Int>>()
             val shared = model.state.shareIn(this, SharingStarted.Lazily, 1)
-            launch {
+            val collect1 = launch {
                 shared.collect {
                     values1.add(it)
                 }
             }
-            launch {
+            val collect2 = launch {
                 shared.collect {
                     values2.add(it)
                 }
             }
             advanceUntilIdle()
 
+            netValue.emit(VALID_ENTITY)
+            advanceUntilIdle()
+
             assertEquals(
-                listOf<LceState<Int>>(
+                listOf(
+                    LceState.Loading(INVALID_ENTITY.data, false, REFRESHING),
                     LceState.Content(VALID_ENTITY.data, true)
                 ),
                 values1
             )
             assertEquals(
-                listOf<LceState<Int>>(
+                listOf(
+                    LceState.Loading(INVALID_ENTITY.data, false, REFRESHING),
                     LceState.Content(VALID_ENTITY.data, true)
                 ),
                 values2
             )
+            with (serviceSet) {
+                (cache as CacheServiceMock).assertSaved(PARAMS, VALID_ENTITY, 1)
+            }
+
+            collect1.cancel()
+            collect2.cancel()
+            cancel() // Cancel sharing
         }
-
-//        val values2 = mutableListOf<LceState<Int>>()
-//        val collectJob2 = launch(UnconfinedTestDispatcher()) {
-//            model.state.shareIn(this, SharingStarted.Lazily, 1).collect {
-//                values2.add(it)
-//            }
-//        }
-
-
-        job.cancel()
-//        collectJob2.cancel()
-//
-//        withCollectingState { values ->
-//            assertEquals(
-//                listOf(
-//                    LceState.Content(VALID_ENTITY.data, true)
-//                ),
-//                values
-//            )
-//
-//            val updateJob = launch {
-//                model..shareIn(this, SharingStarted.Lazily, 1)
-//
-//                assertEquals(
-//                    listOf(
-//                        LceState.Content(VALID_ENTITY.data, true),
-//                        LceState.Loading(VALID_ENTITY.data, true, REFRESHING),
-//                        LceState.Loading(updatedEntity.data, true, REFRESHING),
-//                        LceState.Content(updatedEntity.data, true)
-//                    ),
-//                    values
-//                )
-//
-//                with (serviceSet) {
-//                    cache.assertSaved(PARAMS, updatedEntity)
-//                }
-//            }
-//
-//            updateJob.cancel()
-//        }
-
-//        val netValue = MutableSharedFlow<Int>()
-
-//        val serviceSet = object: ServiceSet<Int, String> {
-//            override val net: NetService<Int, String> = object : NetService<Int, String> {
-//                override suspend fun get(params: String): Entity<Int> {
-//                    return netValue.map { Entity.Impl(it, EntityValidator.Always) }.first()
-//                }
-//            }
-//            override val cache: CacheService<Int, String> = CacheServiceMock { INVALID_ENTITY }
-//        }
-
-//        model = CacheThenNetLceModel(
-//            params = PARAMS,
-//            serviceSet = serviceSet,
-//            startWith = emptyFlow(),
-//            ioDispatcher = UnconfinedTestDispatcher(),
-//            logger = { _, _ -> }
-//        )
-
-//        createModel {
-//            cacheInitial = { null }
-//            netGet = { throw ERROR }
-//        }
-//
-//        val shareJob = launch(UnconfinedTestDispatcher()) {
-//            val values1 = mutableListOf<LceState<Int>>()
-//            val values2 = mutableListOf<LceState<Int>>()
-//
-//            val shared = model.state//.shareIn(this, SharingStarted.Lazily, 1)
-//            netValue.emit(VALID_ENTITY.data)
-//
-//            launch(UnconfinedTestDispatcher()) {
-//                model.state.collect {
-//                    values1.add(it)
-//                }
-//            }
-//
-//            launch(UnconfinedTestDispatcher()) {
-//                shared.collect { values1.add(it) }
-//            }
-////            launch(UnconfinedTestDispatcher()) {
-////                shared.collect { values2.add(it) }
-////            }
-//
-//            assertEquals(
-//                listOf<LceState<Int>>(LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)),
-//                values1
-//            )
-////
-////            assertEquals(
-////                listOf<LceState<Int>>(LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)),
-////                values2
-////            )
-//
-//            netValue.emit(VALID_ENTITY.data)
-//
-//            with (serviceSet) {
-//                (cache as CacheServiceMock).assertSaved(PARAMS, VALID_ENTITY, 1)
-//            }
-//        }
-//
-//        shareJob.cancel()
     }
 }

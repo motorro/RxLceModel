@@ -21,10 +21,8 @@ import com.motorro.rxlcemodel.common.Logger
 import com.motorro.rxlcemodel.coroutines.service.ServiceSet
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.LceState.*
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 
 /**
  * A [LceModel] which uses cache subscription as a 'source of truth'.
@@ -51,6 +49,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
      * Model state. Subscription starts data load for the first subscriber.
      * Whenever last subscriber cancels, the model unsubscribes internal components for data updates
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     override val state: Flow<LceState<DATA>> = flow {
         emitAll(startWith)
         emitAll(
@@ -105,21 +104,19 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
                         type = if (null == data) Loading.Type.LOADING else Loading.Type.REFRESHING
                     )
                 )
-                try {
-                    loadAndCacheNetwork()
-                } catch(c: CancellationException) {
-                    // Ignored due to `transformLatest` used in cache subscription
-                } catch(error: Throwable) {
-                    withLogger {
-                        modelLog(WARNING, "Error getting data from network - ERROR: $error")
-                    }
-                    emit(
-                        Error(
-                            data,
-                            dataIsValid,
-                            error
+                runCatching { loadAndCacheNetwork() }.onFailure { error ->
+                    if (error !is CancellationException) {
+                        withLogger {
+                            modelLog(WARNING, "Error getting data from network - ERROR: $error")
+                        }
+                        emit(
+                            Error(
+                                data,
+                                dataIsValid,
+                                error
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
