@@ -35,7 +35,7 @@ articles by [James Shvarts](https://github.com/jshvarts):
 * [Navigation Architecture Component for the Rest of Us](https://proandroiddev.com/navigation-architecture-component-for-the-rest-of-us-faafa890e5)
 
 ## Table of Contents
-* [Coroutines](#v5x)
+* [v5.x](#v5x)
 * [Setting up the dependency](#setting-up-the-dependency)
 * [Enabling desugaring](#enabling-java8-desugaring-for-android)
 * [LceState](#lcestate)
