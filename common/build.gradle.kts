@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Nikolai Kotchetkov.
+ * Copyright 2022 Nikolai Kotchetkov.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,16 +14,26 @@
 @file:Suppress("UNUSED_VARIABLE", "DSL_SCOPE_VIOLATION")
 
 import org.jetbrains.dokka.gradle.DokkaTask
+import java.net.URI
+
+repositories {
+    mavenCentral()
+}
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.dokka")
+    id("maven-publish")
+    id("signing")
 }
 
 val versionName: String by project.extra
 
 group = rootProject.group
 version = rootProject.version
+
+@Suppress("UNCHECKED_CAST")
+val versions: Map<String, String> = rootProject.extra["commonLibVersions"] as Map<String, String>
 
 kotlin {
 
@@ -81,4 +91,61 @@ val javadocJar by tasks.creating(Jar::class) {
     group = "documentation"
     archiveClassifier.set("javadoc")
     from(tasks.dokkaHtml)
+}
+
+val libId = "common"
+val libName = "common"
+val libDesc = "Common dependencies for RxLceModel"
+val projectUrl: String by rootProject.extra
+val projectScm: String by rootProject.extra
+val ossrhUsername: String? by rootProject.extra
+val ossrhPassword: String? by rootProject.extra
+val developerId: String by rootProject.extra
+val developerName: String by rootProject.extra
+val developerEmail: String by rootProject.extra
+val signingKey: String? by rootProject.extra
+val signingPassword: String? by rootProject.extra
+
+publishing {
+    repositories {
+        maven {
+            name = "sonatype"
+            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+    publications.withType<MavenPublication> {
+        artifact(javadocJar)
+        pom {
+            name.set(libName)
+            description.set(libDesc)
+            url.set(projectUrl)
+            licenses {
+                license {
+                    name.set("Apache-2.0")
+                    url.set("https://apache.org/licenses/LICENSE-2.0")
+                }
+            }
+            developers {
+                developer {
+                    id.set(developerId)
+                    name.set(developerName)
+                    email.set(developerEmail)
+                }
+            }
+            scm {
+                connection.set(projectScm)
+                developerConnection.set(projectScm)
+                url.set(projectUrl)
+            }
+        }
+    }
+
+    signing {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign(publishing.publications)
+    }
 }
