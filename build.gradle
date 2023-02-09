@@ -60,12 +60,12 @@ allprojects {
     ext {
         commonLibVersions = [
                 // Code
-                "rx_java": '3.1.5',
+                "rx_java": '3.1.6',
                 "coroutines": '1.6.4',
-                "core_ktx_version": '1.8.0',
+                "core_ktx_version": '1.9.0',
                 "lifecycle_version": '2.5.1',
                 "arch_version": "2.1.0",
-                "nav_version": '2.5.1',
+                "nav_version": '2.5.3',
                 "work_version": '2.7.1',
 
                 // Tests

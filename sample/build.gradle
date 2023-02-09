@@ -60,9 +60,9 @@ android {
 }
 
 dependencies {
-    def dagger_version = '2.43.2'
+    def dagger_version = '2.44.2'
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':rx')
@@ -72,11 +72,11 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
 
     implementation "androidx.core:core-ktx:${commonLibVersions.core_ktx_version}"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:${commonLibVersions.lifecycle_version}"
@@ -99,9 +99,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
     implementation "io.reactivex.rxjava3:rxjava:${commonLibVersions.rx_java}"
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
 
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.0'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.4'
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
@@ -109,11 +109,11 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation 'org.threeten:threetenbp:1.6.1'
+    testImplementation 'org.threeten:threetenbp:1.6.5'
 
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:core:1.4.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
