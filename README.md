@@ -61,14 +61,14 @@ To upgrade the version you need to change the dependency as described in the [mi
 Different artifacts for the main use-cases are to be required depending on which library you choose.
 
 ## Setting up the dependency
-`Rx` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/):
+`Rx` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/rx/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/):
 ```groovy
 dependencies {
     // Base model components
     implementation "com.motorro.rxlcemodel:rx:x.x.x"
 }
 ```
-`Coroutines` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/base/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/coroutines/):
+`Coroutines` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/coroutines/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/coroutines/):
 ```groovy
 dependencies {
     // Base model components
