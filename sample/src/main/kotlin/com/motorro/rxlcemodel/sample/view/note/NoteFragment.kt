@@ -145,6 +145,7 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
     /**
      * Delete note...
      */
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_delete -> {
             Timber.d("Deleting note...")
@@ -186,12 +187,14 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
         findItem(R.id.action_delete)?.isVisible = isDeleteVisible
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu,inflater)
         inflater.inflate(R.menu.menu_fragment_note, menu)
         menu.setDeleteVisible()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.setDeleteVisible()
