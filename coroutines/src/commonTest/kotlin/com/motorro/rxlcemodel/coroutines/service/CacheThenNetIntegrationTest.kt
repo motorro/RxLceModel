@@ -13,47 +13,89 @@
 
 package com.motorro.rxlcemodel.coroutines.service
 
+import com.motorro.rxlcemodel.cache.MemorySyncDelegate
+import com.motorro.rxlcemodel.cache.entity.Entity
+import com.motorro.rxlcemodel.cache.entity.EntityValidator
+import com.motorro.rxlcemodel.coroutines.LceModel
+import com.motorro.rxlcemodel.lce.LceState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+@OptIn(ExperimentalCoroutinesApi::class)
 class CacheThenNetIntegrationTest {
-//
-//    @Test
-//    fun integratesWithCacheThenNetModelWhenNotCached() {
-//        val delegate = MemorySyncDelegate.create<String, String>(1)
-//        val model = LceModel.cacheThenNet(
-//            "key",
-//            object : ServiceSet<String, String> {
-//                override val net: NetService<String, String> = object : NetService<String, String> {
-//                    override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
-//                }
-//                override val cache: CacheService<String, String> = SyncDelegateCacheService(delegate)
-//            },
-//            Observable.empty()
-//        )
-//
-//        val s = model.state.test()
-//        s.assertNoErrors()
-//        s.assertNotComplete()
-//        s.assertValues(LceState.Loading(null, false), LceState.Content(VALID_ENTITY.data, true))
-//    }
-//
-//    @Test
-//    fun integratesWithCacheThenNetModelWhenCached() {
-//        val delegate = MemorySyncDelegate.create<String, String>(1).apply {
-//            save("key", VALID_ENTITY)
-//        }
-//
-//        val model = LceModel.cacheThenNet(
-//            "key",
-//            object : ServiceSet<String, String> {
-//                override val net: NetService<String, String> = object : NetService<String, String> {
-//                    override fun get(params: String): Single<Entity<String>> = Single.fromCallable { VALID_ENTITY }
-//                }
-//                override val cache: CacheService<String, String> = SyncDelegateCacheService(delegate)
-//            }
-//        )
-//
-//        val s = model.state.test()
-//        s.assertNoErrors()
-//        s.assertNotComplete()
-//        s.assertValues(LceState.Content(VALID_ENTITY.data, true))
-//    }
+    companion object {
+        private val VALID_ENTITY = Entity.Impl("data", EntityValidator.Always)
+    }
+
+    @Test
+    fun integratesWithCacheThenNetModelWhenNotCached() = runTest {
+        val delegate = MemorySyncDelegate.create<String, String>(1)
+        val model = LceModel.cacheThenNet(
+            "key",
+            object : ServiceSet<String, String> {
+                override val net: NetService<String, String> = object : NetService<String, String> {
+                    override suspend fun get(params: String): Entity<String> = VALID_ENTITY
+                }
+                override val cache: CacheService<String, String> = SyncDelegateCacheService(delegate)
+            },
+            emptyFlow()
+        )
+
+        val values = mutableListOf<LceState<String>>()
+        val collectJob = launch(UnconfinedTestDispatcher()) {
+            model.state.collect {
+                values.add(it)
+            }
+        }
+
+        collectJob.cancelAndJoin()
+
+        assertEquals(
+            listOf(
+                LceState.Loading(null, false),
+                LceState.Content(VALID_ENTITY.data, true)
+            ),
+            values
+        )
+    }
+
+    @Test
+    fun integratesWithCacheThenNetModelWhenCached() = runTest {
+        val delegate = MemorySyncDelegate.create<String, String>(1).apply {
+            save("key", VALID_ENTITY)
+        }
+
+        val model = LceModel.cacheThenNet(
+            "key",
+            object : ServiceSet<String, String> {
+                override val net: NetService<String, String> = object : NetService<String, String> {
+                    override suspend fun get(params: String): Entity<String> = VALID_ENTITY
+                }
+                override val cache: CacheService<String, String> = SyncDelegateCacheService(delegate)
+            }
+        )
+
+
+        val values = mutableListOf<LceState<String>>()
+        val collectJob = launch(UnconfinedTestDispatcher()) {
+            model.state.collect {
+                values.add(it)
+            }
+        }
+
+        collectJob.cancelAndJoin()
+
+        assertEquals(
+            listOf<LceState<String>>(
+                LceState.Content(VALID_ENTITY.data, true)
+            ),
+            values
+        )
+    }
 }
