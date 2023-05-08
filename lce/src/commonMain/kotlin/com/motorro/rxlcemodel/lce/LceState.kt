@@ -197,6 +197,74 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
 }
 
 /**
+ * Flat-maps Lce states with the result of other
+ * Here is the result state matrix
+ * | Receiver   | mapper     | Result     |
+ * |------------|------------|------------|
+ * | Loading    | Loading    | Loading    |
+ * | Loading    | Content    | Loading    |
+ * | Loading    | Error      | Error      |
+ * | Loading    | Terminated | Terminated |
+ * | Content    | Loading    | Loading    |
+ * | Content    | Content    | Content*   |
+ * | Content    | Error      | Error      |
+ * | Content    | Terminated | Terminated |
+ * | Error      | Loading    | Error      |
+ * | Error      | Content    | Error      |
+ * | Error      | Error      | Error      |
+ * | Error      | Terminated | Terminated |
+ * | Terminated | Loading    | Terminated |
+ * | Terminated | Content    | Terminated |
+ * | Terminated | Error      | Terminated |
+ * | Terminated | Terminated | Terminated |
+ * @receiver An Lce state that has a priority in final state resolution
+ * @param mapper Returns a new [LceState] as a product of receiver data
+ */
+inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.flatMap(mapper: (data1: DATA_1) -> LceState<DATA_2>): LceState<DATA_2> = when (this) {
+    is LceState.Loading -> {
+        val other = data?.let(mapper)
+        val data3 = other?.data
+        val dataIsValid = dataIsValid && true == other?.dataIsValid
+
+        when (other) {
+            is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
+            is LceState.Terminated -> LceState.Terminated
+            else -> LceState.Loading(data3, dataIsValid, this.type)
+        }
+    }
+    is LceState.Content -> {
+        val other = mapper(data)
+        val data3 = other.data
+        val dataIsValid = dataIsValid && other.dataIsValid
+
+        when (other) {
+            is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
+            is LceState.Terminated -> LceState.Terminated
+            is LceState.Loading -> LceState.Loading(data3, dataIsValid, other.type)
+            is LceState.Content -> if (null == data3) {
+                LceState.Loading(null, false)
+            } else {
+                LceState.Content(data3, dataIsValid)
+            }
+        }
+    }
+    is LceState.Error -> {
+        val other = data?.let(mapper)
+        val data3 = other?.data
+        val dataIsValid = dataIsValid && true == other?.dataIsValid
+
+        if (other is LceState.Terminated) {
+            LceState.Terminated
+        } else {
+            LceState.Error(data3, dataIsValid, error)
+        }
+    }
+    is LceState.Terminated -> {
+        LceState.Terminated
+    }
+}
+
+/**
  * Runs transformation [block] catching any error and wrapping it to [LceState.Error]:
  * - The output data will be null
  * - The data will be invalid
