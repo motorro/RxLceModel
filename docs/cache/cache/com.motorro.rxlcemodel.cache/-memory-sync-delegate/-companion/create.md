@@ -3,7 +3,7 @@
 # create
 
 [common]\
-fun &lt;[D](create.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](create.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [create](create.md)(maxEntries: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)): [MemorySyncDelegate](../index.md)&lt;[D](create.md), [P](create.md)&gt;
+fun &lt;[D](create.md) : Any, [P](create.md) : Any&gt; [create](create.md)(maxEntries: Long): [MemorySyncDelegate](../index.md)&lt;[D](create.md), [P](create.md)&gt;
 
 Creates an in-memory LRU cache with [maxEntries](create.md) records maximum to accommodate this many elements.
 

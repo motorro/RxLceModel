@@ -3,6 +3,6 @@
 # isFatal
 
 [androidJvm]\
-open fun [isFatal](is-fatal.md)(error: [LceState.Error](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/-error/index.md)&lt;[DATA](index.md)&gt;): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)
+open fun [isFatal](is-fatal.md)(error: [LceState.Error](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/-error/index.md)&lt;[DATA](index.md)&gt;): Boolean
 
 Checks if error is fatal for this view

@@ -3,7 +3,7 @@
 # LifespanValidatorFactory
 
 [common]\
-fun [LifespanValidatorFactory](-lifespan-validator-factory.md)(cacheTtl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM)
+fun [LifespanValidatorFactory](-lifespan-validator-factory.md)(cacheTtl: Long, clock: [Clock](../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM)
 
 #### Parameters
 

@@ -3,7 +3,7 @@
 # createSnapshot
 
 [common]\
-fun [createSnapshot](create-snapshot.md)(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM): [EntityValidator.Lifespan](../index.md)
+fun [createSnapshot](create-snapshot.md)(ttl: Long, clock: [Clock](../../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM): [EntityValidator.Lifespan](../index.md)
 
 Creates a snapshot that may be serialized and deserialized back to dynamic [Lifespan](../index.md)
 

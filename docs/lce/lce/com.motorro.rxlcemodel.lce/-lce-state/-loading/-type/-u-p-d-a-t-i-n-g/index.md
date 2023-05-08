@@ -11,5 +11,5 @@ Updating data on server
 
 | Name | Summary |
 |---|---|
-| [name](index.md#-372974862%2FProperties%2F-702262346) | [common]<br>val [name](index.md#-372974862%2FProperties%2F-702262346): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
-| [ordinal](index.md#-739389684%2FProperties%2F-702262346) | [common]<br>val [ordinal](index.md#-739389684%2FProperties%2F-702262346): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+| [name](index.md#-372974862%2FProperties%2F-702262346) | [common]<br>val [name](index.md#-372974862%2FProperties%2F-702262346): String |
+| [ordinal](index.md#-739389684%2FProperties%2F-702262346) | [common]<br>val [ordinal](index.md#-739389684%2FProperties%2F-702262346): Int |

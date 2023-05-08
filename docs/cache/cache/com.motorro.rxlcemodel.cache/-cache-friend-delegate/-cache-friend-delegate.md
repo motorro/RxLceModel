@@ -3,4 +3,4 @@
 # CacheFriendDelegate
 
 [common]\
-fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [CacheFriend](../-cache-friend/index.md)&gt; [CacheFriendDelegate](-cache-friend-delegate.md)(delegate: [CacheDelegate](../-cache-delegate/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;, [P](index.md)&gt;)
+fun &lt;[D](index.md) : Any, [P](index.md) : [CacheFriend](../-cache-friend/index.md)&gt; [CacheFriendDelegate](-cache-friend-delegate.md)(delegate: [CacheDelegate](../-cache-delegate/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;, [P](index.md)&gt;)

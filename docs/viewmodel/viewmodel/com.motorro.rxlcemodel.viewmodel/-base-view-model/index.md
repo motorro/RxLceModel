@@ -25,8 +25,8 @@ Base view model with [initialize](initialize.md) and [doClear](do-clear.md) meth
 
 | Name | Summary |
 |---|---|
-| [cleared](cleared.md) | [androidJvm]<br>var [cleared](cleared.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = false<br>Is model cleared |
-| [initialized](initialized.md) | [androidJvm]<br>var [initialized](initialized.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = false<br>Is model initialized |
+| [cleared](cleared.md) | [androidJvm]<br>var [cleared](cleared.md): Boolean = false<br>Is model cleared |
+| [initialized](initialized.md) | [androidJvm]<br>var [initialized](initialized.md): Boolean = false<br>Is model initialized |
 
 ## Inheritors
 

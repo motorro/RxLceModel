@@ -3,7 +3,7 @@
 # Impl
 
 [androidJvm]\
-abstract class [Impl](index.md)&lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [BaseLceModel](../index.md)&lt;[DATA](index.md)&gt; 
+abstract class [Impl](index.md)&lt;[DATA](index.md) : Any&gt; : [BaseLceModel](../index.md)&lt;[DATA](index.md)&gt; 
 
 Basic ViewModel with LceModel inside
 
@@ -19,7 +19,7 @@ Basic ViewModel with LceModel inside
 |---|---|
 | [addCloseable](../../-base-view-model/index.md#264516373%2FFunctions%2F1456247564) | [androidJvm]<br>open fun [addCloseable](../../-base-view-model/index.md#264516373%2FFunctions%2F1456247564)(@[NonNull](https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html)p0: [Closeable](https://developer.android.com/reference/kotlin/java/io/Closeable.html)) |
 | [dismissCurrentError](../dismiss-current-error.md) | [androidJvm]<br>fun [dismissCurrentError](../dismiss-current-error.md)()<br>Dismisses error set in state if it is error |
-| [dismissError](../dismiss-error.md) | [androidJvm]<br>open fun [dismissError](../dismiss-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))<br>Default action on critical error |
+| [dismissError](../dismiss-error.md) | [androidJvm]<br>open fun [dismissError](../dismiss-error.md)(error: Throwable)<br>Default action on critical error |
 | [doClear](do-clear.md) | [androidJvm]<br>open override fun [doClear](do-clear.md)()<br>Disposes active operations when model is destroyed |
 | [initialize](../../-base-view-model/initialize.md) | [androidJvm]<br>fun [initialize](../../-base-view-model/initialize.md)()<br>Call this function to initialize a new model and start receiving events |
 | [refresh](refresh.md) | [androidJvm]<br>open override fun [refresh](refresh.md)()<br>Requests data refresh |
@@ -29,8 +29,8 @@ Basic ViewModel with LceModel inside
 
 | Name | Summary |
 |---|---|
-| [cleared](../../-base-view-model/cleared.md) | [androidJvm]<br>var [cleared](../../-base-view-model/cleared.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>Is model cleared |
-| [initialized](../../-base-view-model/initialized.md) | [androidJvm]<br>var [initialized](../../-base-view-model/initialized.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>Is model initialized |
+| [cleared](../../-base-view-model/cleared.md) | [androidJvm]<br>var [cleared](../../-base-view-model/cleared.md): Boolean<br>Is model cleared |
+| [initialized](../../-base-view-model/initialized.md) | [androidJvm]<br>var [initialized](../../-base-view-model/initialized.md): Boolean<br>Is model initialized |
 | [state](state.md) | [androidJvm]<br>open override val [state](state.md): [LiveData](https://developer.android.com/reference/kotlin/androidx/lifecycle/LiveData.html)&lt;[LceState](../../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>LCE State |
 
 ## Inheritors

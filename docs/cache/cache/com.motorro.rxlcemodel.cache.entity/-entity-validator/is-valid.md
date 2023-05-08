@@ -3,6 +3,6 @@
 # isValid
 
 [common]\
-abstract fun [isValid](is-valid.md)(): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)
+abstract fun [isValid](is-valid.md)(): Boolean
 
 If true cached entity is valid.

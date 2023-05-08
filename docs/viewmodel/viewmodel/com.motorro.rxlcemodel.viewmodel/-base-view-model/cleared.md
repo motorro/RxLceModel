@@ -3,6 +3,6 @@
 # cleared
 
 [androidJvm]\
-var [cleared](cleared.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = false
+var [cleared](cleared.md): Boolean = false
 
 Is model cleared

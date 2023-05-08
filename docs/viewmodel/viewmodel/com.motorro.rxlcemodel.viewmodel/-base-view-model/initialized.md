@@ -3,6 +3,6 @@
 # initialized
 
 [androidJvm]\
-var [initialized](initialized.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = false
+var [initialized](initialized.md): Boolean = false
 
 Is model initialized

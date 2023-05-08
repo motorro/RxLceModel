@@ -3,7 +3,7 @@
 # DataWithCacheKey
 
 [common]\
-data class [DataWithCacheKey](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val data: [D](index.md), val cacheKey: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))
+data class [DataWithCacheKey](index.md)&lt;[D](index.md) : Any&gt;(val data: [D](index.md), val cacheKey: String)
 
 Data combined with full cached key to validate we get exactly what we are looking for For example, DiskLruCache has strict requirements and limited length of a cache key and hashing of keys may be required to fit into requirements - thus there is a possibility of key clash.
 
@@ -28,11 +28,11 @@ common
 
 | | |
 |---|---|
-| [DataWithCacheKey](-data-with-cache-key.md) | [common]<br>fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DataWithCacheKey](-data-with-cache-key.md)(data: [D](index.md), cacheKey: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)) |
+| [DataWithCacheKey](-data-with-cache-key.md) | [common]<br>fun &lt;[D](index.md) : Any&gt; [DataWithCacheKey](-data-with-cache-key.md)(data: [D](index.md), cacheKey: String) |
 
 ## Properties
 
 | Name | Summary |
 |---|---|
-| [cacheKey](cache-key.md) | [common]<br>val [cacheKey](cache-key.md): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [cacheKey](cache-key.md) | [common]<br>val [cacheKey](cache-key.md): String |
 | [data](data.md) | [common]<br>val [data](data.md): [D](index.md) |

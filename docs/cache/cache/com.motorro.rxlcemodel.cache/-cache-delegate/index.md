@@ -3,7 +3,7 @@
 # CacheDelegate
 
 [common]\
-interface [CacheDelegate](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
+interface [CacheDelegate](index.md)&lt;[D](index.md) : Any, [P](index.md) : Any&gt;
 
 Delegate that synchronously performs caching operations
 
@@ -28,5 +28,5 @@ Delegate that synchronously performs caching operations
 
 | Name | Summary |
 |---|---|
-| [makeFriendParams](../make-friend-params.md) | [common]<br>inline fun &lt;[D](../make-friend-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](../make-friend-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [CacheDelegate](index.md)&lt;[D](../make-friend-params.md), [CacheFriend](../-cache-friend/index.md)&gt;.[makeFriendParams](../make-friend-params.md)(crossinline stringify: [P](../make-friend-params.md).() -&gt; [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [CacheDelegate](index.md)&lt;[D](../make-friend-params.md), [P](../make-friend-params.md)&gt;<br>Creates an adapter delegate that creates [CacheFriend](../-cache-friend/index.md) params using [stringify](../make-friend-params.md) function |
-| [stringifyParams](../stringify-params.md) | [common]<br>inline fun &lt;[D](../stringify-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](../stringify-params.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [CacheDelegate](index.md)&lt;[D](../stringify-params.md), [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt;.[stringifyParams](../stringify-params.md)(crossinline stringify: [P](../stringify-params.md).() -&gt; [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = { toString() }): [CacheDelegate](index.md)&lt;[D](../stringify-params.md), [P](../stringify-params.md)&gt;<br>Creates an adapter delegate that [stringify](../stringify-params.md) and uses result string as params to receiver |
+| [makeFriendParams](../make-friend-params.md) | [common]<br>inline fun &lt;[D](../make-friend-params.md) : Any, [P](../make-friend-params.md) : Any&gt; [CacheDelegate](index.md)&lt;[D](../make-friend-params.md), [CacheFriend](../-cache-friend/index.md)&gt;.[makeFriendParams](../make-friend-params.md)(crossinline stringify: [P](../make-friend-params.md).() -&gt; String): [CacheDelegate](index.md)&lt;[D](../make-friend-params.md), [P](../make-friend-params.md)&gt;<br>Creates an adapter delegate that creates [CacheFriend](../-cache-friend/index.md) params using [stringify](../make-friend-params.md) function |
+| [stringifyParams](../stringify-params.md) | [common]<br>inline fun &lt;[D](../stringify-params.md) : Any, [P](../stringify-params.md) : Any&gt; [CacheDelegate](index.md)&lt;[D](../stringify-params.md), String&gt;.[stringifyParams](../stringify-params.md)(crossinline stringify: [P](../stringify-params.md).() -&gt; String = { toString() }): [CacheDelegate](index.md)&lt;[D](../stringify-params.md), [P](../stringify-params.md)&gt;<br>Creates an adapter delegate that [stringify](../stringify-params.md) and uses result string as params to receiver |

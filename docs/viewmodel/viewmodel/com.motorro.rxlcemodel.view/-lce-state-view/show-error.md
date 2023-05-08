@@ -3,7 +3,7 @@
 # showError
 
 [androidJvm]\
-abstract fun [showError](show-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))
+abstract fun [showError](show-error.md)(error: Throwable)
 
 Displays error when there is no data to display.
 

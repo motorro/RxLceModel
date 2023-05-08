@@ -3,7 +3,7 @@
 # mapEmptyData
 
 [common]\
-inline fun &lt;[DATA](map-empty-data.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;.[mapEmptyData](map-empty-data.md)(crossinline block: ([LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;) -&gt; [LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;): [LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;
+inline fun &lt;[DATA](map-empty-data.md) : Any&gt; [LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;.[mapEmptyData](map-empty-data.md)(crossinline block: ([LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;) -&gt; [LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;): [LceState](-lce-state/index.md)&lt;[DATA](map-empty-data.md)&gt;
 
 Substitutes a state with empty data with empty data with state produced by [block](map-empty-data.md)
 

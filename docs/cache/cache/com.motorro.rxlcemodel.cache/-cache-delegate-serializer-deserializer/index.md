@@ -3,7 +3,7 @@
 # CacheDelegateSerializerDeserializer
 
 [jvm]\
-interface [CacheDelegateSerializerDeserializer](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
+interface [CacheDelegateSerializerDeserializer](index.md)&lt;[D](index.md) : Any&gt;
 
 Serializer for cache delegates
 
@@ -17,7 +17,7 @@ Serializer for cache delegates
 
 | Name | Summary |
 |---|---|
-| [deserializeSnapshot](deserialize-snapshot.md) | [jvm]<br>abstract fun [deserializeSnapshot](deserialize-snapshot.md)(input: [InputStream](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html), length: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), invalidated: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)): [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;?<br>Deserializes [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md) snapshot from [input](deserialize-snapshot.md) stream Snapshots are used because the validity status is only actual when we are getting cached data. https://github.com/motorro/RxLceModel/issues/5 |
+| [deserializeSnapshot](deserialize-snapshot.md) | [jvm]<br>abstract fun [deserializeSnapshot](deserialize-snapshot.md)(input: [InputStream](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html), length: Long, invalidated: Boolean): [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;?<br>Deserializes [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md) snapshot from [input](deserialize-snapshot.md) stream Snapshots are used because the validity status is only actual when we are getting cached data. https://github.com/motorro/RxLceModel/issues/5 |
 | [serialize](serialize.md) | [jvm]<br>abstract fun [serialize](serialize.md)(entity: [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;, output: [OutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html))<br>Serializes [entity](serialize.md) to [output](serialize.md) stream |
 
 ## Inheritors

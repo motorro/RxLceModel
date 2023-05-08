@@ -3,7 +3,7 @@
 # deserialize
 
 [common]\
-open override fun [deserialize](deserialize.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [EntityValidator](../../index.md)?
+open override fun [deserialize](deserialize.md)(serialized: String): [EntityValidator](../../index.md)?
 
 Deserializes validator from string if string is recognized
 

@@ -3,7 +3,7 @@
 # DataWithCacheKey
 
 [common]\
-fun &lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [DataWithCacheKey](-data-with-cache-key.md)(data: [D](index.md), cacheKey: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))
+fun &lt;[D](index.md) : Any&gt; [DataWithCacheKey](-data-with-cache-key.md)(data: [D](index.md), cacheKey: String)
 
 #### Parameters
 

@@ -3,7 +3,7 @@
 # Impl
 
 [common]\
-fun &lt;out [T](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [Impl](-impl.md)(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md))
+fun &lt;out [T](index.md) : Any&gt; [Impl](-impl.md)(data: [T](index.md), validator: [EntityValidator](../../-entity-validator/index.md))
 
 #### Parameters
 

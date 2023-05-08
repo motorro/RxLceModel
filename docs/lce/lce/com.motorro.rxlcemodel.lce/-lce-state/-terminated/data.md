@@ -3,6 +3,6 @@
 # data
 
 [common]\
-open override val [data](data.md): [Nothing](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing/index.html)? = null
+open override val [data](data.md): Nothing? = null
 
 State data
