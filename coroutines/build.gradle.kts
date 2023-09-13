@@ -40,7 +40,7 @@ kotlin {
     jvm {
         compilations.all {
             kotlinOptions {
-                kotlinOptions.jvmTarget = "1.8"
+                kotlinOptions.jvmTarget = "17"
                 freeCompilerArgs = freeCompilerArgs + listOf(
                     "-opt-in=kotlin.RequiresOptIn",
                     "-module-name", "rxlcemodel-${project.name}"
