@@ -70,6 +70,12 @@ android {
 
     testOptions.unitTests.includeAndroidResources = true
     namespace 'com.motorro.rxlcemodel.composeview'
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -77,22 +83,21 @@ dependencies {
     implementation project(':rx')
     implementation project(':viewmodel')
 
+    // Bom
+    implementation platform("androidx.compose:compose-bom:${commonLibVersions.compose_ui_bom}")
+
     // Core
-    api "androidx.compose.ui:ui:${commonLibVersions.compose_ui_version}"
+    api "androidx.compose.ui:ui"
     // Tooling support (Previews, etc.)
-    api "androidx.compose.ui:ui-tooling:${commonLibVersions.compose_ui_tooling_version}"
+    api "androidx.compose.ui:ui-tooling"
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    api "androidx.compose.foundation:foundation:${commonLibVersions.compose_ui_foundation_version}"
+    api "androidx.compose.foundation:foundation"
     // Material Design
-    api "androidx.compose.material:material:${commonLibVersions.compose_ui_material_version}"
+    api "androidx.compose.material:material"
     // Integration with ViewModels
     api "androidx.lifecycle:lifecycle-viewmodel-compose:${commonLibVersions.compose_viewmodel_version}"
 
-    // Accompanist widgets
-    // https://google.github.io/accompanist/
-    implementation "com.google.accompanist:accompanist-swiperefresh:${commonLibVersions.compose_accompanist_version}"
-
-    debugImplementation "androidx.compose.ui:ui-test-manifest:${commonLibVersions.compose_ui_test_manifest_version}"
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
     debugImplementation "androidx.compose.ui:ui-tooling:$commonLibVersions.compose_ui_version"
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
@@ -100,7 +105,7 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
     testImplementation "androidx.test:core:1.5.0"
     testImplementation "androidx.compose.ui:ui-test-junit4:${commonLibVersions.compose_ui_test_vi_version}"
-    testImplementation 'org.robolectric:robolectric:4.9.2'
+    testImplementation 'org.robolectric:robolectric:4.10.3'
 }
 
 dokkaJavadoc.configure {

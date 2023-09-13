@@ -9,3 +9,4 @@ build
 release
 /local.properties
 /captures
+/kotlin-js-store/yarn.lock
