@@ -91,20 +91,6 @@ dokkaJavadoc.configure {
     }
 }
 
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
-    archiveClassifier.set('javadoc')
-    from "$buildDir/javadoc"
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from android.sourceSets.main.java.source
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
-}
-
 def libId = 'viewmodel'
 def libName = 'viewmodel'
 def libDesc = 'Basic Android ViewModel for use with LCE use-cases'
@@ -115,8 +101,6 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.release
-                artifact sourcesJar
-                artifact javadocJar
                 groupId = rootProject.group
                 artifactId = libId
                 version = rootProject.version
