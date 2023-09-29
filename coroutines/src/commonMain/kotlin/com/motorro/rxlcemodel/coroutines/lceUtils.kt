@@ -16,6 +16,7 @@ package com.motorro.rxlcemodel.coroutines
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.combine
 import com.motorro.rxlcemodel.lce.map
+import coroutinesRunCatching
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 
@@ -117,9 +118,7 @@ fun <DATA_1: Any, DATA_2: Any> Flow<LceState<DATA_1>>.flatMapSingleData(mapper: 
 
     suspend fun stateMapper(data1: DATA_1?): LceState<DATA_2> = when(data1) {
         null -> LceState.Loading(null, false)
-        else -> try {
-            LceState.Content(mapper(data1), true)
-        } catch (e: Throwable) {
+        else -> coroutinesRunCatching { LceState.Content(mapper(data1), true) }.getOrElse { e ->
             LceState.Error(null, false, e)
         }
     }

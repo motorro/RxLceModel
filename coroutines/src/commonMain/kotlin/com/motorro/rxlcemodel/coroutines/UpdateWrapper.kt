@@ -22,6 +22,7 @@ import com.motorro.rxlcemodel.common.UpdateOperationState
 import com.motorro.rxlcemodel.common.UpdateOperationState.*
 import com.motorro.rxlcemodel.coroutines.service.CacheService
 import com.motorro.rxlcemodel.lce.LceState
+import coroutinesRunCatching
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -55,7 +56,7 @@ abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(
      */
     protected suspend fun doUpdate(dataSource: suspend (params: PARAMS) -> Entity<DATA>) {
         networkOperationState.emit(LOADING)
-        try {
+        coroutinesRunCatching {
             withContext(ioDispatcher) {
                 withLogger { modelLog(INFO, "Subscribing network...") }
                 val data = dataSource(params)
@@ -63,7 +64,7 @@ abstract class UpdateWrapper<DATA: Any, PARAMS: Any>(
                 cacheService.save(params, data)
             }
             networkOperationState.emit(IDLE)
-        } catch (error: Throwable) {
+        }.onFailure { error ->
             withLogger { modelLog(WARNING, "Network error: $error") }
             networkOperationState.emit(ERROR(error))
         }

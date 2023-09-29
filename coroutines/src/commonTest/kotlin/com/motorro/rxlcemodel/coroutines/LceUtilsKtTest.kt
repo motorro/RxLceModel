@@ -14,6 +14,7 @@
 package com.motorro.rxlcemodel.coroutines
 
 import com.motorro.rxlcemodel.lce.LceState
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LceUtilsKtTest {
@@ -245,6 +247,23 @@ class LceUtilsKtTest {
             ),
             source.flatMapSingleData(::mapper).toList()
         )
+    }
+
+    @Test
+    fun singleDataMapperBypassesCancellationExceptions() = runTest {
+        val error1 = Exception("error 1")
+        val error2 = CancellationException("Cancelled")
+
+        @Suppress("UNUSED_PARAMETER")
+        fun mapper(input: Int): String = throw error2
+
+        val source = flowOf(
+            LceState.Loading(null, false),
+            LceState.Content(2, true)
+        )
+
+        val result = source.flatMapSingleData(::mapper).toList()
+        assertEquals(1, result.size)
     }
 
     @Test

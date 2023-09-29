@@ -21,6 +21,7 @@ import com.motorro.rxlcemodel.common.Logger
 import com.motorro.rxlcemodel.coroutines.service.ServiceSet
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.LceState.*
+import coroutinesRunCatching
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
@@ -104,7 +105,7 @@ class CacheThenNetLceModel<DATA: Any, PARAMS: Any>(
                         type = if (null == data) Loading.Type.LOADING else Loading.Type.REFRESHING
                     )
                 )
-                runCatching { loadAndCacheNetwork() }.onFailure { error ->
+                coroutinesRunCatching { loadAndCacheNetwork() }.onFailure { error ->
                     if (error !is CancellationException) {
                         withLogger {
                             modelLog(WARNING, "Error getting data from network - ERROR: $error")
