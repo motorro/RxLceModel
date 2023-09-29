@@ -23,7 +23,6 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LceUtilsKtTest {
@@ -251,7 +250,6 @@ class LceUtilsKtTest {
 
     @Test
     fun singleDataMapperBypassesCancellationExceptions() = runTest {
-        val error1 = Exception("error 1")
         val error2 = CancellationException("Cancelled")
 
         @Suppress("UNUSED_PARAMETER")
