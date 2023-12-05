@@ -304,6 +304,7 @@ class LceUtilsKtTest {
     }
 
     @Test
+    @Suppress("UNUSED_PARAMETER")
     fun catchesMapperErrorInFlowMapper() = runTest {
         val error = Exception("error")
 

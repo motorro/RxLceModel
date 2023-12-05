@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '1.9.20'
     ext.dokka_version = '1.9.0'
     repositories {
         google()
@@ -12,8 +12,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.1'
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
+        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -74,8 +74,8 @@ allprojects {
                 "mockative": "1.2.6",
 
                 // Compose
-                "compose_compiler_version": "1.5.3",
-                "compose_ui_bom": "2023.08.00",
+                "compose_compiler_version": "1.5.5",
+                "compose_ui_bom": '2023.10.01',
                 "compose_ui_activity_version": "1.4.0",
                 "compose_viewmodel_version": '2.6.2',
                 "compose_livedata_version": "1.2.0",
