@@ -13,6 +13,7 @@
 
 package com.motorro.rxlcemodel.rx
 
+import com.motorro.rxlcemodel.lce.LceState
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -22,7 +23,6 @@ import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
 import kotlin.test.assertEquals
-import com.motorro.rxlcemodel.lce.LceState
 
 class LceUtilsKtTest {
     companion object {
@@ -229,6 +229,55 @@ class LceUtilsKtTest {
             )
     }
 
+    @Test
+    fun mapsLceFlowToOtherFlow() {
+        val error = IOException("error")
+
+        fun mapper(input: Int) = Observable.just<LceState<String>>(
+            LceState.Content(input.toString(), true)
+        )
+
+        val source = Observable.just(
+            LceState.Loading(null, false),
+            LceState.Loading(1, true),
+            LceState.Content(2, true),
+            LceState.Error(null, false, error),
+            LceState.Error(3, true, error),
+            LceState.Terminated
+        )
+
+        source.flatMapLatestFlow(::mapper)
+            .test()
+            .assertNoErrors()
+            .assertValues(
+                LceState.Loading(null, false),
+                LceState.Loading("1", true),
+                LceState.Content("2", true),
+                LceState.Error(null, false, error),
+                LceState.Error("3", true, error),
+                LceState.Terminated
+            )
+    }
+
+    @Test
+    fun catchesMapperErrorInFlowMapper() {
+        val error = Exception("error")
+
+        fun mapper(input: Int) = Observable.error<LceState<String>>(error)
+
+        val source = Observable.just<LceState<Int>>(
+            LceState.Loading(null, false),
+            LceState.Loading(1, true)
+        )
+
+        source.flatMapLatestFlow(::mapper)
+            .test()
+            .assertNoErrors()
+            .assertValues(
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error)
+            )
+    }
 
     @Test
     fun createsRefreshingStream() {

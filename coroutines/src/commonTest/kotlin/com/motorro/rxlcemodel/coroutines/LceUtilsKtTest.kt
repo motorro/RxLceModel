@@ -16,10 +16,19 @@ package com.motorro.rxlcemodel.coroutines
 import com.motorro.rxlcemodel.lce.LceState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -262,6 +271,58 @@ class LceUtilsKtTest {
 
         val result = source.flatMapSingleData(::mapper).toList()
         assertEquals(1, result.size)
+    }
+
+    @Test
+    fun mapsLceFlowToOtherFlow() = runTest {
+        val error = Exception("error")
+
+        fun mapper(input: Int) = flowOf(
+            LceState.Content(input.toString(), true)
+        )
+
+        val source = flowOf(
+            LceState.Loading(null, false),
+            LceState.Loading(1, true),
+            LceState.Content(2, true),
+            LceState.Error(null, false, error),
+            LceState.Error(3, true, error),
+            LceState.Terminated
+        )
+
+        assertEquals(
+            listOf(
+                LceState.Loading(null, false),
+                LceState.Loading("1", true),
+                LceState.Content("2", true),
+                LceState.Error(null, false, error),
+                LceState.Error("3", true, error),
+                LceState.Terminated
+            ),
+            source.flatMapLatestFlow(::mapper).toList()
+        )
+    }
+
+    @Test
+    fun catchesMapperErrorInFlowMapper() = runTest {
+        val error = Exception("error")
+
+        suspend fun mapper(input: Int) = suspendCoroutine<Flow<LceState<String>>> {
+            it.resumeWithException(error)
+        }
+
+        val source = flowOf(
+            LceState.Loading(null, false),
+            LceState.Loading(1, true)
+        )
+
+        assertEquals(
+            listOf(
+                LceState.Loading(null, false),
+                LceState.Error(null, false, error),
+            ),
+            source.flatMapLatestFlow(::mapper).toList()
+        )
     }
 
     @Test

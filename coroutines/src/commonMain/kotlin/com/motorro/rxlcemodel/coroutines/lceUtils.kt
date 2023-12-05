@@ -18,7 +18,17 @@ import com.motorro.rxlcemodel.lce.combine
 import com.motorro.rxlcemodel.lce.map
 import coroutinesRunCatching
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.transform
 
 
 /**
@@ -127,6 +137,25 @@ fun <DATA_1: Any, DATA_2: Any> Flow<LceState<DATA_1>>.flatMapSingleData(mapper: 
         data1State.combine(stateMapper(data1State.data)) { _, data2 -> data2 }
     }
 }
+
+/**
+ * Maps each [DATA_1] to flow for [DATA_2] and combines with original state.
+ * If error occurs in [mapper] emits [LceState.Error].
+ * Example: Using original [DATA_1] as a parameter switch to new [DATA_2] LCE flow
+ * @param DATA_1 Source data type
+ * @param DATA_2 Resulting data type
+ * @param mapper Data mapper
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+fun <DATA_1: Any, DATA_2: Any> Flow<LceState<DATA_1>>.flatMapLatestFlow(mapper: suspend (data: DATA_1) -> Flow<LceState<DATA_2>>): Flow<LceState<DATA_2>> =
+    flatMapLatest { state1: LceState<DATA_1> ->
+        when(val data1 = state1.data) {
+            null -> flowOf(state1.combine(LceState.Loading(null, false)) { _,_ -> null })
+            else -> coroutinesRunCatching { mapper(data1).map { state1.combine(it) { _, data2 -> data2 } } }.getOrElse {
+                flowOf(LceState.Error(null, false, it))
+            }
+        }
+    }
 
 /**
  * Creates a use-case wrapper that converts [DATA_1] to [DATA_2]

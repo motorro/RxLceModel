@@ -131,6 +131,23 @@ fun <DATA_1: Any, DATA_2: Any> Observable<LceState<DATA_1>>.flatMapSingleData(ma
 }
 
 /**
+ * Maps each [DATA_1] to flow for [DATA_2] and combines with original state.
+ * If error occurs in [mapper] emits [LceState.Error].
+ * Example: Using original [DATA_1] as a parameter switch to new [DATA_2] LCE flow
+ * @param DATA_1 Source data type
+ * @param DATA_2 Resulting data type
+ * @param mapper Data mapper
+ */
+fun <DATA_1: Any, DATA_2: Any> Observable<LceState<DATA_1>>.flatMapLatestFlow(mapper: (data: DATA_1) -> Observable<LceState<DATA_2>>): Observable<LceState<DATA_2>> {
+    return switchMap { state1 ->
+        when(val data1 = state1.data) {
+            null -> Observable.just(state1.combine(LceState.Loading(null, false)) { _, _ -> null })
+            else -> mapper(data1).map { state1.combine(it) { _, data2 -> data2 } }.errorToLce()
+        }
+    }
+}
+
+/**
  * Creates a use-case wrapper that converts [DATA_1] to [DATA_2]
  * @receiver Original model
  * @param DATA_1 Source data type
