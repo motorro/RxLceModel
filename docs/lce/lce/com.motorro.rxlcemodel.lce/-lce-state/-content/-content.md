@@ -3,4 +3,4 @@
 # Content
 
 [common]\
-fun &lt;out [DATA](index.md) : Any&gt; [Content](-content.md)(data: [DATA](index.md), dataIsValid: Boolean)
+constructor(data: [DATA](index.md), dataIsValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html))

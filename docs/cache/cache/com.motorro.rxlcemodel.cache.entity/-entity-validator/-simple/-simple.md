@@ -3,7 +3,7 @@
 # Simple
 
 [common]\
-fun [Simple](-simple.md)(valid: Boolean)
+constructor(valid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html))
 
 #### Parameters
 

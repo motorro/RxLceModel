@@ -3,7 +3,7 @@
 # Lifespan
 
 [common]\
-fun [Lifespan](-lifespan.md)(ttl: Long, clock: [Clock](../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM)
+constructor(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM)
 
 #### Parameters
 

@@ -3,4 +3,4 @@
 # DataWithCacheKeySerializer
 
 [jvm]\
-fun &lt;[D](index.md) : Any&gt; [DataWithCacheKeySerializer](-data-with-cache-key-serializer.md)(dataSerializer: KSerializer&lt;[D](index.md)&gt;)
+constructor(dataSerializer: KSerializer&lt;[D](index.md)&gt;)

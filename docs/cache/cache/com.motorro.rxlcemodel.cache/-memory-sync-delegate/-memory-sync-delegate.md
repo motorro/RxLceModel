@@ -3,7 +3,7 @@
 # MemorySyncDelegate
 
 [common]\
-fun [MemorySyncDelegate](-memory-sync-delegate.md)()
+constructor()
 
 #### Parameters
 

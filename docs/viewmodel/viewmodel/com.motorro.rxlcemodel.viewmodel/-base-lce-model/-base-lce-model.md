@@ -3,4 +3,4 @@
 # BaseLceModel
 
 [androidJvm]\
-fun [BaseLceModel](-base-lce-model.md)()
+constructor()

@@ -3,7 +3,7 @@
 # serialize
 
 [jvm]\
-open override fun [serialize](serialize.md)(entity: [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[DataWithCacheKey](../../../../cache/cache/com.motorro.rxlcemodel.cache/-data-with-cache-key/index.md)&lt;[D](index.md)&gt;&gt;, output: [OutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html))
+open override fun [serialize](serialize.md)(entity: [Entity](../../com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[DataWithCacheKey](../-data-with-cache-key/index.md)&lt;[D](index.md)&gt;&gt;, output: [OutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html))
 
 Serializes [entity](serialize.md) to [output](serialize.md) stream
 

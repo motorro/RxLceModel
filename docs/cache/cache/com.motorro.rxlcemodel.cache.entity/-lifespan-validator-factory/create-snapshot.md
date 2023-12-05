@@ -3,7 +3,7 @@
 # createSnapshot
 
 [common]\
-open override fun [createSnapshot](create-snapshot.md)(serialized: String?): [EntityValidator](../-entity-validator/index.md)
+open override fun [createSnapshot](create-snapshot.md)(serialized: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)?): [EntityValidator](../-entity-validator/index.md)
 
 Creates a snapshot of entity cache-control.The [EntityValidator.isValid](../-entity-validator/is-valid.md) evaluated at the time of creation.
 
@@ -19,4 +19,4 @@ common
 
 | | |
 |---|---|
-| IllegalArgumentException | if serialized can't be deserialized |
+| [IllegalArgumentException](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception/index.html) | if serialized can't be deserialized |

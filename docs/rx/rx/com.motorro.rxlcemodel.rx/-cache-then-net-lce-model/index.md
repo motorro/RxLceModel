@@ -2,7 +2,6 @@
 
 # CacheThenNetLceModel
 
-[jvm]\
 class [CacheThenNetLceModel](index.md)&lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;(val params: [PARAMS](index.md), serviceSet: [ServiceSet](../../com.motorro.rxlcemodel.rx.service/-service-set/index.md)&lt;[DATA](index.md), [PARAMS](index.md)&gt;, startWith: Observable&lt;[LceState](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;, ioScheduler: Scheduler, logger: [Logger](../../../../common/com.motorro.rxlcemodel.common/-logger/index.md)?) : [LceModel](../-lce-model/index.md)&lt;[DATA](index.md), [PARAMS](index.md)&gt; 
 
 A [LceModel](../-lce-model/index.md) which uses cache subscription as a 'source of truth'. When [state](state.md) is subscribed it loads cache data refreshing it if cache is stall or whenever cache returns empty [java.util.Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html). The model always returns cached data first - then network if data is stall Cache service *must* notify of its data changes!
@@ -25,7 +24,7 @@ jvm
 
 | | |
 |---|---|
-| [CacheThenNetLceModel](-cache-then-net-lce-model.md) | [jvm]<br>fun &lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; [CacheThenNetLceModel](-cache-then-net-lce-model.md)(params: [PARAMS](index.md), serviceSet: [ServiceSet](../../com.motorro.rxlcemodel.rx.service/-service-set/index.md)&lt;[DATA](index.md), [PARAMS](index.md)&gt;, startWith: Observable&lt;[LceState](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;, ioScheduler: Scheduler, logger: [Logger](../../../../common/com.motorro.rxlcemodel.common/-logger/index.md)?) |
+| [CacheThenNetLceModel](-cache-then-net-lce-model.md) | [jvm]<br>constructor(params: [PARAMS](index.md), serviceSet: [ServiceSet](../../com.motorro.rxlcemodel.rx.service/-service-set/index.md)&lt;[DATA](index.md), [PARAMS](index.md)&gt;, startWith: Observable&lt;[LceState](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;, ioScheduler: Scheduler, logger: [Logger](../../../../common/com.motorro.rxlcemodel.common/-logger/index.md)?) |
 
 ## Properties
 
@@ -35,7 +34,7 @@ jvm
 | [refresh](refresh.md) | [jvm]<br>open override val [refresh](refresh.md): Completable<br>Requests a refresh of data. Data will be updated asynchronously |
 | [state](state.md) | [jvm]<br>open override val [state](state.md): Observable&lt;[LceState](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates |
 
-## Extensions
+## Functions
 
 | Name | Summary |
 |---|---|

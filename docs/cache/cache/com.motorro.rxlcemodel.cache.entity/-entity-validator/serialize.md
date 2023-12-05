@@ -3,6 +3,6 @@
 # serialize
 
 [common]\
-abstract fun [serialize](serialize.md)(): String
+abstract fun [serialize](serialize.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 A way to serialize entity

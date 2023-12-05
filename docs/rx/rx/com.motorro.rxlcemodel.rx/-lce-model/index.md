@@ -2,7 +2,6 @@
 
 # LceModel
 
-[jvm]\
 interface [LceModel](index.md)&lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [PARAMS](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [LceUseCase](../-lce-use-case/index.md)&lt;[DATA](index.md)&gt; 
 
 A model interface to load data and transmit it to subscribers along with loading operation state
@@ -15,6 +14,14 @@ jvm
 |---|---|
 | DATA | Data type of data being loaded |
 | PARAMS | Params type that identify data being loaded |
+
+#### Inheritors
+
+| |
+|---|
+| [CacheThenNetLceModel](../-cache-then-net-lce-model/index.md) |
+| [UpdatingLceModel](../-updating-lce-model/index.md) |
+| [UpdateWrapper](../-update-wrapper/index.md) |
 
 ## Types
 
@@ -30,15 +37,7 @@ jvm
 | [refresh](../-lce-use-case/refresh.md) | [jvm]<br>abstract val [refresh](../-lce-use-case/refresh.md): Completable<br>Requests a refresh of data. Data will be updated asynchronously |
 | [state](../-lce-use-case/state.md) | [jvm]<br>abstract val [state](../-lce-use-case/state.md): Observable&lt;[LceState](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates |
 
-## Inheritors
-
-| Name |
-|---|
-| [CacheThenNetLceModel](../-cache-then-net-lce-model/index.md) |
-| [UpdatingLceModel](../-updating-lce-model/index.md) |
-| [UpdateWrapper](../-update-wrapper/index.md) |
-
-## Extensions
+## Functions
 
 | Name | Summary |
 |---|---|

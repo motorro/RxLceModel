@@ -3,4 +3,4 @@
 # BaseViewModel
 
 [androidJvm]\
-fun [BaseViewModel](-base-view-model.md)()
+constructor()

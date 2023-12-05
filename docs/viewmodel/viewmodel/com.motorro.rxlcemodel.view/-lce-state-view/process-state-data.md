@@ -3,6 +3,6 @@
 # processStateData
 
 [androidJvm]\
-open fun [processStateData](process-state-data.md)(data: [DATA](index.md), isValid: Boolean, isUpdating: Boolean)
+open fun [processStateData](process-state-data.md)(data: [DATA](index.md), isValid: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html), isUpdating: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html))
 
 Called by [processState](process-state.md) to process new data.

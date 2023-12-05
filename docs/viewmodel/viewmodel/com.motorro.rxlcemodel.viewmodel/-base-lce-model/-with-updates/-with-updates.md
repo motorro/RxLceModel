@@ -3,7 +3,7 @@
 # WithUpdates
 
 [androidJvm]\
-fun &lt;[DATA](index.md) : Any&gt; [WithUpdates](-with-updates.md)(dataUseCase: [LceUseCase](../../../../../rx/rx/com.motorro.rxlcemodel.rx/-lce-use-case/index.md)&lt;[DATA](index.md)&gt;)
+constructor(dataUseCase: [LceUseCase](../../../../../rx/rx/com.motorro.rxlcemodel.rx/-lce-use-case/index.md)&lt;[DATA](index.md)&gt;)
 
 #### Parameters
 

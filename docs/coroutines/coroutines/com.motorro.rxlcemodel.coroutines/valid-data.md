@@ -3,7 +3,7 @@
 # validData
 
 [common]\
-val &lt;[DATA](valid-data.md) : Any&gt; Flow&lt;[LceState](../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](valid-data.md)&gt;&gt;.[validData](valid-data.md): Flow&lt;[DATA](valid-data.md)&gt;
+val &lt;[DATA](valid-data.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; Flow&lt;[LceState](../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](valid-data.md)&gt;&gt;.[validData](valid-data.md): Flow&lt;[DATA](valid-data.md)&gt;
 
 Model's valid data stream with state information dropped. Will terminate on any error
 

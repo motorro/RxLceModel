@@ -3,7 +3,7 @@
 # stopOnErrors
 
 [common]\
-val &lt;[DATA](stop-on-errors.md) : Any&gt; Flow&lt;[LceState](../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](stop-on-errors.md)&gt;&gt;.[stopOnErrors](stop-on-errors.md): Flow&lt;[LceState](../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](stop-on-errors.md)&gt;&gt;
+val &lt;[DATA](stop-on-errors.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; Flow&lt;[LceState](../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](stop-on-errors.md)&gt;&gt;.[stopOnErrors](stop-on-errors.md): Flow&lt;[LceState](../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](stop-on-errors.md)&gt;&gt;
 
 Model's state stream which terminates on any error
 

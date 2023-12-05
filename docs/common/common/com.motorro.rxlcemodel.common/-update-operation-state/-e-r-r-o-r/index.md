@@ -9,16 +9,16 @@ data class [ERROR](index.md)(val error: [Throwable](https://kotlinlang.org/api/l
 
 | | |
 |---|---|
-| [ERROR](-e-r-r-o-r.md) | [common]<br>fun [ERROR](-e-r-r-o-r.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html)) |
-
-## Functions
-
-| Name | Summary |
-|---|---|
-| [toString](to-string.md) | [common]<br>open override fun [toString](to-string.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [ERROR](-e-r-r-o-r.md) | [common]<br>constructor(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html)) |
 
 ## Properties
 
 | Name | Summary |
 |---|---|
 | [error](error.md) | [common]<br>val [error](error.md): [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html) |
+
+## Functions
+
+| Name | Summary |
+|---|---|
+| [toString](to-string.md) | [common]<br>open override fun [toString](to-string.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |

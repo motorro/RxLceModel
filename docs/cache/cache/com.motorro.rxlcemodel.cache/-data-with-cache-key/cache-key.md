@@ -3,7 +3,7 @@
 # cacheKey
 
 [common]\
-val [cacheKey](cache-key.md): String
+val [cacheKey](cache-key.md): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 #### Parameters
 

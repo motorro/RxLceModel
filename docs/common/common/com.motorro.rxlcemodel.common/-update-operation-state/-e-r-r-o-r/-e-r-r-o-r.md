@@ -3,4 +3,4 @@
 # ERROR
 
 [common]\
-fun [ERROR](-e-r-r-o-r.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))
+constructor(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))

@@ -2,8 +2,7 @@
 
 # SyncDelegateCacheService
 
-[common]\
-class [SyncDelegateCacheService](index.md)&lt;[D](index.md) : Any, [P](index.md) : Any&gt; : [CacheService](../-cache-service/index.md)&lt;[D](index.md), [P](index.md)&gt; 
+class [SyncDelegateCacheService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [CacheService](../-cache-service/index.md)&lt;[D](index.md), [P](index.md)&gt; 
 
 Service implementation
 

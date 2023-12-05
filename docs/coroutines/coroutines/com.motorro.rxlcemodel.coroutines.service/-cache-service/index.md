@@ -2,8 +2,7 @@
 
 # CacheService
 
-[common]\
-interface [CacheService](index.md)&lt;[D](index.md) : Any, in [P](index.md) : Any&gt;
+interface [CacheService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
 
 Interface to cache an [com.motorro.rxlcemodel.cache.entity.Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md) locally Cache should notify subscribers that data has been updated through [getData](get-data.md) channel
 
@@ -15,6 +14,12 @@ common
 |---|---|
 | D | Data type |
 | P | Params that identify data type |
+
+#### Inheritors
+
+| |
+|---|
+| [SyncDelegateCacheService](../-sync-delegate-cache-service/index.md) |
 
 ## Types
 
@@ -33,9 +38,3 @@ common
 | [refetch](refetch.md) | [common]<br>abstract suspend fun [refetch](refetch.md)(params: [P](index.md))<br>Makes cache service to refetch cached data updating subscribers with [params](refetch.md) |
 | [refetchAll](refetch-all.md) | [common]<br>abstract suspend fun [refetchAll](refetch-all.md)()<br>Makes cache service to refetch cached data for all active subscribers |
 | [save](save.md) | [common]<br>abstract suspend fun [save](save.md)(params: [P](index.md), entity: [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;)<br>Saves entity in a cache |
-
-## Inheritors
-
-| Name |
-|---|
-| [SyncDelegateCacheService](../-sync-delegate-cache-service/index.md) |

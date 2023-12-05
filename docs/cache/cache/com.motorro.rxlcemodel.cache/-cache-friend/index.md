@@ -11,4 +11,4 @@ Generates a cache-friendly key value for parameters
 
 | Name | Summary |
 |---|---|
-| [cacheKey](cache-key.md) | [common]<br>open val [cacheKey](cache-key.md): String<br>A cache key |
+| [cacheKey](cache-key.md) | [common]<br>open val [cacheKey](cache-key.md): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br>A cache key |

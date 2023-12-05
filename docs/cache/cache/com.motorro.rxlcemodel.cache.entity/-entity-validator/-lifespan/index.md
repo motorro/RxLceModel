@@ -2,7 +2,6 @@
 
 # Lifespan
 
-[common]\
 class [Lifespan](index.md) : [EntityValidator](../index.md)
 
 Uses creation time and TTL to validate
@@ -21,7 +20,7 @@ common
 
 | | |
 |---|---|
-| [Lifespan](-lifespan.md) | [common]<br>fun [Lifespan](-lifespan.md)(ttl: Long, clock: [Clock](../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM) |
+| [Lifespan](-lifespan.md) | [common]<br>constructor(ttl: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html), clock: [Clock](../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM) |
 
 ## Types
 
@@ -35,8 +34,8 @@ common
 | Name | Summary |
 |---|---|
 | [createSnapshot](create-snapshot.md) | [common]<br>open override fun [createSnapshot](create-snapshot.md)(): [EntityValidator](../index.md)<br>Crates a snapshot of validator preserving it's current [EntityValidator.isValid](../is-valid.md) value |
-| [equals](equals.md) | [common]<br>open operator override fun [equals](equals.md)(other: Any?): Boolean<br>As soon as we should provide [EntityValidator](../index.md) interface we compare only the commonMain property - validity - not the internal state |
-| [hashCode](hash-code.md) | [common]<br>open override fun [hashCode](hash-code.md)(): Int<br>As soon as we should provide [EntityValidator](../index.md) interface we calculate the commonMain property - validity - not the internal state |
-| [isValid](is-valid.md) | [common]<br>open override fun [isValid](is-valid.md)(): Boolean<br>If true cached entity is valid. |
-| [serialize](serialize.md) | [common]<br>open override fun [serialize](serialize.md)(): String<br>A way to serialize entity |
-| [toString](to-string.md) | [common]<br>open override fun [toString](to-string.md)(): String<br>Display string |
+| [equals](equals.md) | [common]<br>open operator override fun [equals](equals.md)(other: [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)?): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>As soon as we should provide [EntityValidator](../index.md) interface we compare only the commonMain property - validity - not the internal state |
+| [hashCode](hash-code.md) | [common]<br>open override fun [hashCode](hash-code.md)(): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>As soon as we should provide [EntityValidator](../index.md) interface we calculate the commonMain property - validity - not the internal state |
+| [isValid](is-valid.md) | [common]<br>open override fun [isValid](is-valid.md)(): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)<br>If true cached entity is valid. |
+| [serialize](serialize.md) | [common]<br>open override fun [serialize](serialize.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br>A way to serialize entity |
+| [toString](to-string.md) | [common]<br>open override fun [toString](to-string.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br>Display string |

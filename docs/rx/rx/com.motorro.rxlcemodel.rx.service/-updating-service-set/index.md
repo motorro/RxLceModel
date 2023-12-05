@@ -2,7 +2,6 @@
 
 # UpdatingServiceSet
 
-[jvm]\
 interface [UpdatingServiceSet](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [U](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [ServiceSet](../-service-set/index.md)&lt;[D](index.md), [P](index.md)&gt; 
 
 [ServiceSet](../-service-set/index.md) extension with updating [net](net.md)

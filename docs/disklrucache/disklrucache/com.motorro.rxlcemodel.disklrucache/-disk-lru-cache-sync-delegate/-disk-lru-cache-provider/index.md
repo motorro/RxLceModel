@@ -2,7 +2,6 @@
 
 # DiskLruCacheProvider
 
-[jvm]\
 class [DiskLruCacheProvider](index.md)(directory: [File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html), appVersion: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), maxSize: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html))
 
 Provides properly configured DiskLruCache with required entry config
@@ -21,7 +20,7 @@ jvm
 
 | | |
 |---|---|
-| [DiskLruCacheProvider](-disk-lru-cache-provider.md) | [jvm]<br>fun [DiskLruCacheProvider](-disk-lru-cache-provider.md)(directory: [File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html), appVersion: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), maxSize: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)) |
+| [DiskLruCacheProvider](-disk-lru-cache-provider.md) | [jvm]<br>constructor(directory: [File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html), appVersion: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), maxSize: [Long](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html)) |
 
 ## Properties
 
@@ -29,7 +28,7 @@ jvm
 |---|---|
 | [cache](cache.md) | [jvm]<br>val [cache](cache.md): DiskLruCache<br>Configured DiskLruCache |
 
-## Extensions
+## Functions
 
 | Name | Summary |
 |---|---|

@@ -3,7 +3,7 @@
 # dismissError
 
 [androidJvm]\
-open fun [dismissError](dismiss-error.md)(error: Throwable)
+open fun [dismissError](dismiss-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))
 
 Default action on critical error
 

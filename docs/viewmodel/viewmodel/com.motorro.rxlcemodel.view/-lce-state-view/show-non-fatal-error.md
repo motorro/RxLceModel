@@ -3,7 +3,7 @@
 # showNonFatalError
 
 [androidJvm]\
-open fun [showNonFatalError](show-non-fatal-error.md)(error: Throwable)
+open fun [showNonFatalError](show-non-fatal-error.md)(error: [Throwable](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html))
 
 Displays some error notification when the error is non-critical and some content may be displayed.
 

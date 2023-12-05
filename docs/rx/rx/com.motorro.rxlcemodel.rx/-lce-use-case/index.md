@@ -2,7 +2,6 @@
 
 # LceUseCase
 
-[jvm]\
 interface [LceUseCase](index.md)&lt;[DATA](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
 
 Base LCE use-case with [state](state.md) and [refresh](refresh.md)
@@ -15,6 +14,12 @@ jvm
 |---|---|
 | DATA | Data type of data being loaded |
 
+#### Inheritors
+
+| |
+|---|
+| [LceModel](../-lce-model/index.md) |
+
 ## Properties
 
 | Name | Summary |
@@ -22,13 +27,7 @@ jvm
 | [refresh](refresh.md) | [jvm]<br>abstract val [refresh](refresh.md): Completable<br>Requests a refresh of data. Data will be updated asynchronously |
 | [state](state.md) | [jvm]<br>abstract val [state](state.md): Observable&lt;[LceState](../../../../lce/lce/com.motorro.rxlcemodel.lce/-lce-state/index.md)&lt;[DATA](index.md)&gt;&gt;<br>Model state. Subscription starts data load for the first subscriber. Whenever last subscriber cancels, the model unsubscribes internal components for data updates |
 
-## Inheritors
-
-| Name |
-|---|
-| [LceModel](../-lce-model/index.md) |
-
-## Extensions
+## Functions
 
 | Name | Summary |
 |---|---|

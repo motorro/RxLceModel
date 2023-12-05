@@ -3,4 +3,4 @@
 # Impl
 
 [androidJvm]\
-fun [Impl](-impl.md)()
+constructor()

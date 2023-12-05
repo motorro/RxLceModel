@@ -2,7 +2,6 @@
 
 # CacheService
 
-[jvm]\
 interface [CacheService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt;
 
 Interface to cache an [com.motorro.rxlcemodel.cache.entity.Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md) locally Cache should notify subscribers that data has been updated through [getData](get-data.md) channel
@@ -16,11 +15,24 @@ jvm
 | D | Data type |
 | P | Params that identify data type |
 
+#### Inheritors
+
+| |
+|---|
+| [SyncDelegateCacheService](../-sync-delegate-cache-service/index.md) |
+
 ## Types
 
 | Name | Summary |
 |---|---|
 | [Companion](-companion/index.md) | [jvm]<br>object [Companion](-companion/index.md) |
+
+## Properties
+
+| Name | Summary |
+|---|---|
+| [invalidateAll](invalidate-all.md) | [jvm]<br>abstract val [invalidateAll](invalidate-all.md): Completable<br>Invalidates all cached values |
+| [refetchAll](refetch-all.md) | [jvm]<br>abstract val [refetchAll](refetch-all.md): Completable<br>Makes cache service to refetch cached data for all active subscribers |
 
 ## Functions
 
@@ -31,16 +43,3 @@ jvm
 | [invalidate](invalidate.md) | [jvm]<br>abstract fun [invalidate](invalidate.md)(params: [P](index.md)): Completable<br>Invalidates cached value |
 | [refetch](refetch.md) | [jvm]<br>abstract fun [refetch](refetch.md)(params: [P](index.md)): Completable<br>Makes cache service to refetch cached data updating subscribers with [params](refetch.md) |
 | [save](save.md) | [jvm]<br>abstract fun [save](save.md)(params: [P](index.md), entity: [Entity](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity/index.md)&lt;[D](index.md)&gt;): Completable<br>Saves entity in a cache |
-
-## Properties
-
-| Name | Summary |
-|---|---|
-| [invalidateAll](invalidate-all.md) | [jvm]<br>abstract val [invalidateAll](invalidate-all.md): Completable<br>Invalidates all cached values |
-| [refetchAll](refetch-all.md) | [jvm]<br>abstract val [refetchAll](refetch-all.md): Completable<br>Makes cache service to refetch cached data for all active subscribers |
-
-## Inheritors
-
-| Name |
-|---|
-| [SyncDelegateCacheService](../-sync-delegate-cache-service/index.md) |

@@ -2,7 +2,6 @@
 
 # UpdatingNetService
 
-[jvm]\
 interface [UpdatingNetService](index.md)&lt;[D](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [U](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html), in [P](index.md) : [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)&gt; : [NetService](../-net-service/index.md)&lt;[D](index.md), [P](index.md)&gt; 
 
 [NetService](../-net-service/index.md) extension to update data on server

@@ -3,7 +3,7 @@
 # KotlinCacheDelegateSerializer
 
 [jvm]\
-fun &lt;[D](index.md) : Any&gt; [KotlinCacheDelegateSerializer](-kotlin-cache-delegate-serializer.md)(validatorFactory: [EntityValidatorFactory](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity-validator-factory/index.md), kSerializer: KSerializer&lt;[D](index.md)&gt;, binaryFormat: BinaryFormat)
+constructor(validatorFactory: [EntityValidatorFactory](../../../../cache/cache/com.motorro.rxlcemodel.cache.entity/-entity-validator-factory/index.md), kSerializer: KSerializer&lt;[D](index.md)&gt;, binaryFormat: BinaryFormat)
 
 #### Parameters
 

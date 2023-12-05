@@ -3,4 +3,4 @@
 # LifespanDeserializer
 
 [common]\
-fun [LifespanDeserializer](-lifespan-deserializer.md)(clock: [Clock](../../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM)
+constructor(clock: [Clock](../../../../../../common/com.motorro.rxlcemodel.common/-clock/index.md) = Clock.SYSTEM)

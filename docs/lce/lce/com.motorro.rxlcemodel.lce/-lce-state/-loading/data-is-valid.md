@@ -3,4 +3,4 @@
 # dataIsValid
 
 [common]\
-open override val [dataIsValid](data-is-valid.md): Boolean
+open override val [dataIsValid](data-is-valid.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)

@@ -3,6 +3,6 @@
 # cacheKey
 
 [common]\
-open val [cacheKey](cache-key.md): String
+open val [cacheKey](cache-key.md): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)
 
 A cache key
