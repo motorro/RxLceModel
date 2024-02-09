@@ -39,6 +39,41 @@ fun <DATA : Any> LceStateView(
     isFatalError: (LceState.Error<DATA>) -> Boolean = { null == it.data },
     content: @Composable (data: DATA, isValid: Boolean, refreshing: Boolean) -> Unit
 ) {
+    LceStateView(
+        viewState = viewState,
+        loading = loading,
+        fatalError = fatalError,
+        nonFatalError = nonFatalError,
+        termination = termination,
+        isFatalError = isFatalError,
+        content = { data, isValid, refreshing ->
+            SwipeRefresh(false, onRefresh) {
+                content(data, isValid, refreshing)
+            }
+        }
+    )
+}
+
+/**
+ * Attaches composable view to view-model
+ * @param viewState View state
+ * @param loading Loading override
+ * @param fatalError Fatal error override
+ * @param nonFatalError Non-fatal error override
+ * @param termination Termination override
+ * @param isFatalError Checks if error is fatal
+ * @param content Content rendering function
+ */
+@Composable
+fun <DATA : Any> LceStateView(
+    viewState: LceState<DATA>,
+    loading: @Composable () -> Unit,
+    fatalError: @Composable (error: Throwable) -> Unit,
+    nonFatalError: @Composable (error: Throwable) -> Unit,
+    termination: @Composable () -> Unit,
+    isFatalError: (LceState.Error<DATA>) -> Boolean = { null == it.data },
+    content: @Composable (data: DATA, isValid: Boolean, refreshing: Boolean) -> Unit
+) {
     when (viewState) {
         is LceState.Loading -> {
             val data = viewState.data
@@ -55,9 +90,7 @@ fun <DATA : Any> LceStateView(
             }
         }
         is LceState.Content -> {
-            SwipeRefresh(false, onRefresh) {
-                content(viewState.data, viewState.dataIsValid, false)
-            }
+            content(viewState.data, viewState.dataIsValid, false)
         }
         is LceState.Error -> {
             val data = viewState.data
