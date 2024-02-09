@@ -8,8 +8,8 @@ kapt {
 }
 
 android {
-    compileSdkVersion androidCompileSdkVersion
-    buildToolsVersion androidBuildToolsVersion
+    compileSdk androidCompileSdkVersion
+    buildToolsVersion = androidBuildToolsVersion
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
