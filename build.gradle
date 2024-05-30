@@ -90,7 +90,8 @@ allprojects {
         kotlinOptions {
             freeCompilerArgs += [
                     "-opt-in=kotlin.RequiresOptIn",
-                    "-Xinline-classes"
+                    "-Xinline-classes",
+                    "-Xexpect-actual-classes"
             ]
         }
     }

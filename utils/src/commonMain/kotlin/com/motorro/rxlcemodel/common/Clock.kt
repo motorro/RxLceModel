@@ -26,11 +26,8 @@ interface Clock {
         /**
          * System clock
          */
-        val SYSTEM: Clock = SystemClock
+        val SYSTEM: Clock = getSystemClock()
     }
 }
 
-/**
- * System clock
- */
-internal expect object SystemClock: Clock
+internal expect fun getSystemClock(): Clock

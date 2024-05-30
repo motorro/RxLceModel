@@ -13,10 +13,7 @@
 
 package com.motorro.rxlcemodel.common
 
-/**
- * System clock
- */
-internal actual object SystemClock : Clock {
+internal actual fun getSystemClock(): Clock = object : Clock {
     /**
      * Current milliseconds value
      */

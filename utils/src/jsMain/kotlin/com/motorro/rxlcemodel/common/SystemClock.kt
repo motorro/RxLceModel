@@ -15,10 +15,7 @@ package com.motorro.rxlcemodel.common
 
 import kotlin.js.Date
 
-/**
- * System clock
- */
-internal actual object SystemClock : Clock {
+internal actual fun getSystemClock(): Clock = object : Clock {
     /**
      * Current milliseconds value
      */
