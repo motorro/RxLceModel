@@ -4,9 +4,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.motorro.rxlcemodel.lce.LceState
-import com.motorro.rxlcemodel.lce.LceState.*
+import com.motorro.rxlcemodel.lce.LceState.Content
+import com.motorro.rxlcemodel.lce.LceState.Error
+import com.motorro.rxlcemodel.lce.LceState.Loading
 import com.motorro.rxlcemodel.lce.LceState.Loading.Type.LOADING
 import com.motorro.rxlcemodel.lce.LceState.Loading.Type.UPDATING
+import com.motorro.rxlcemodel.lce.LceState.Terminated
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
 
 /**
@@ -116,7 +119,7 @@ inline fun <reified DATA : Any, reified MODEL : BaseLceModel<DATA>> LceStateView
     modelStoreOwner: ViewModelStoreOwner,
     init: MODEL.() -> Unit = { initialize() }
 ): MODEL {
-    val model = ViewModelProvider(modelStoreOwner).get(MODEL::class.java)
+    val model = ViewModelProvider(modelStoreOwner)[MODEL::class.java]
     model.state.observe(getLifecycleOwner()) { processState(it) }
     model.init()
     return model
