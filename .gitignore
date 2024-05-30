@@ -4,6 +4,7 @@
 .DS_Store
 .externalNativeBuild
 .log
+.kotlin
 node_modules
 build
 release

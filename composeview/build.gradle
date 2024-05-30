@@ -17,6 +17,7 @@ plugins {
     id 'org.jetbrains.dokka'
     id 'maven-publish'
     id 'signing'
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.0.0"
 }
 
 android {
@@ -64,10 +65,6 @@ android {
         compose true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = commonLibVersions.compose_compiler_version
-    }
-
     testOptions.unitTests.includeAndroidResources = true
     namespace 'com.motorro.rxlcemodel.composeview'
 
@@ -76,6 +73,13 @@ android {
             withSourcesJar()
         }
     }
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
+
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 dependencies {
@@ -98,14 +102,14 @@ dependencies {
     api "androidx.lifecycle:lifecycle-viewmodel-compose:${commonLibVersions.compose_viewmodel_version}"
 
     debugImplementation "androidx.compose.ui:ui-test-manifest"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.6.1"
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.6.7'
 
     testImplementation "junit:junit:${commonLibVersions.junit}"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${commonLibVersions.mockito_kotlin}"
     testImplementation "androidx.test:core:1.5.0"
-    testImplementation "androidx.compose.ui:ui-test-junit4:1.6.1"
-    testImplementation 'org.robolectric:robolectric:4.11.1'
+    testImplementation 'androidx.compose.ui:ui-test-junit4:1.6.7'
+    testImplementation 'org.robolectric:robolectric:4.12.2'
 }
 
 dokkaJavadoc.configure {
