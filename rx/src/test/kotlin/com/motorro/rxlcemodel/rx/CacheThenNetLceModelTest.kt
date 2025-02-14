@@ -20,7 +20,11 @@ import com.motorro.rxlcemodel.lce.LceState.Loading.Type.REFRESHING
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.rx.service.NetService
 import com.motorro.rxlcemodel.rx.service.ServiceSet
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -29,8 +33,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 import java.io.IOException
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 class CacheThenNetLceModelTest {
     companion object {
@@ -283,21 +288,30 @@ class CacheThenNetLceModelTest {
             PARAMS,
             serviceSet,
             Observable.empty(),
-            Schedulers.trampoline(),
+            Schedulers.io(),
             { _, _ -> }
         )
-        val s1 = model.state.test()
-        s1.assertNoErrors()
-        s1.assertNotComplete()
-        s1.assertValues(
-            LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)
-        )
-        val s2 = model.state.test()
-        s2.assertNoErrors()
-        s2.assertNotComplete()
-        s2.assertValues(
-            LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)
-        )
+
+        val t1 = thread {
+            val s1 = model.state.test()
+            s1.awaitCount(1)
+            s1.assertNoErrors()
+            s1.assertNotComplete()
+            s1.assertValues(
+                LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)
+            )
+        }
+        val t2 = thread {
+            val s2 = model.state.test()
+            s2.awaitCount(1)
+            s2.assertNoErrors()
+            s2.assertNotComplete()
+            s2.assertValues(
+                LceState.Loading(INVALID_ENTITY.data, false, REFRESHING)
+            )
+        }
+        t1.join()
+        t2.join()
 
         netValue.onNext(VALID_ENTITY.data)
         verify(serviceSet.cache, times(1)).save(any(), any())
