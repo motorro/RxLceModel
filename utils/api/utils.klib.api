@@ -1,0 +1,32 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.motorro.rxlcemodel:utils>
+final enum class com.motorro.rxlcemodel.common/LogLevel : kotlin/Enum<com.motorro.rxlcemodel.common/LogLevel> { // com.motorro.rxlcemodel.common/LogLevel|null[0]
+    enum entry ERROR // com.motorro.rxlcemodel.common/LogLevel.ERROR|null[0]
+    enum entry INFO // com.motorro.rxlcemodel.common/LogLevel.INFO|null[0]
+    enum entry WARNING // com.motorro.rxlcemodel.common/LogLevel.WARNING|null[0]
+
+    final val entries // com.motorro.rxlcemodel.common/LogLevel.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.motorro.rxlcemodel.common/LogLevel> // com.motorro.rxlcemodel.common/LogLevel.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.motorro.rxlcemodel.common/LogLevel // com.motorro.rxlcemodel.common/LogLevel.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.motorro.rxlcemodel.common/LogLevel> // com.motorro.rxlcemodel.common/LogLevel.values|values#static(){}[0]
+}
+
+abstract fun interface com.motorro.rxlcemodel.common/Logger { // com.motorro.rxlcemodel.common/Logger|null[0]
+    abstract fun log(com.motorro.rxlcemodel.common/LogLevel, kotlin/String) // com.motorro.rxlcemodel.common/Logger.log|log(com.motorro.rxlcemodel.common.LogLevel;kotlin.String){}[0]
+}
+
+abstract interface com.motorro.rxlcemodel.common/Clock { // com.motorro.rxlcemodel.common/Clock|null[0]
+    abstract fun getMillis(): kotlin/Long // com.motorro.rxlcemodel.common/Clock.getMillis|getMillis(){}[0]
+
+    final object Companion { // com.motorro.rxlcemodel.common/Clock.Companion|null[0]
+        final val SYSTEM // com.motorro.rxlcemodel.common/Clock.Companion.SYSTEM|{}SYSTEM[0]
+            final fun <get-SYSTEM>(): com.motorro.rxlcemodel.common/Clock // com.motorro.rxlcemodel.common/Clock.Companion.SYSTEM.<get-SYSTEM>|<get-SYSTEM>(){}[0]
+    }
+}

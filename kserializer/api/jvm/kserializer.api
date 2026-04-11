@@ -1,0 +1,22 @@
+public final class com/motorro/rxlcemodel/kserializer/DataWithCacheKeySerializer : kotlinx/serialization/KSerializer {
+	public fun <init> (Lkotlinx/serialization/KSerializer;)V
+	public final fun component1 ()Lkotlinx/serialization/KSerializer;
+	public final fun copy (Lkotlinx/serialization/KSerializer;)Lcom/motorro/rxlcemodel/kserializer/DataWithCacheKeySerializer;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/kserializer/DataWithCacheKeySerializer;Lkotlinx/serialization/KSerializer;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/kserializer/DataWithCacheKeySerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/motorro/rxlcemodel/cache/DataWithCacheKey;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDataSerializer ()Lkotlinx/serialization/KSerializer;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun hashCode ()I
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/motorro/rxlcemodel/cache/DataWithCacheKey;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/kserializer/KotlinCacheDelegateSerializer : com/motorro/rxlcemodel/cache/CacheDelegateSerializerDeserializer {
+	public fun <init> (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Lkotlinx/serialization/KSerializer;Lkotlinx/serialization/BinaryFormat;)V
+	public fun deserializeSnapshot (Ljava/io/InputStream;JZ)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public fun serialize (Lcom/motorro/rxlcemodel/cache/entity/Entity;Ljava/io/OutputStream;)V
+}
+

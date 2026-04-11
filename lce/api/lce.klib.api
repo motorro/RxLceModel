@@ -1,0 +1,101 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.motorro.rxlcemodel:lce>
+sealed class <#A: out kotlin/Any> com.motorro.rxlcemodel.lce/LceState { // com.motorro.rxlcemodel.lce/LceState|null[0]
+    abstract val data // com.motorro.rxlcemodel.lce/LceState.data|{}data[0]
+        abstract fun <get-data>(): #A? // com.motorro.rxlcemodel.lce/LceState.data.<get-data>|<get-data>(){}[0]
+    abstract val dataIsValid // com.motorro.rxlcemodel.lce/LceState.dataIsValid|{}dataIsValid[0]
+        abstract fun <get-dataIsValid>(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.dataIsValid.<get-dataIsValid>|<get-dataIsValid>(){}[0]
+
+    final fun toError(kotlin/Throwable): com.motorro.rxlcemodel.lce/LceState.Error<#A> // com.motorro.rxlcemodel.lce/LceState.toError|toError(kotlin.Throwable){}[0]
+    final fun toLoading(com.motorro.rxlcemodel.lce/LceState.Loading.Type = ...): com.motorro.rxlcemodel.lce/LceState.Loading<#A> // com.motorro.rxlcemodel.lce/LceState.toLoading|toLoading(com.motorro.rxlcemodel.lce.LceState.Loading.Type){}[0]
+
+    final class <#A1: out kotlin/Any> Content : com.motorro.rxlcemodel.lce/LceState<#A1> { // com.motorro.rxlcemodel.lce/LceState.Content|null[0]
+        constructor <init>(#A1, kotlin/Boolean) // com.motorro.rxlcemodel.lce/LceState.Content.<init>|<init>(1:0;kotlin.Boolean){}[0]
+
+        final val data // com.motorro.rxlcemodel.lce/LceState.Content.data|{}data[0]
+            final fun <get-data>(): #A1 // com.motorro.rxlcemodel.lce/LceState.Content.data.<get-data>|<get-data>(){}[0]
+        final val dataIsValid // com.motorro.rxlcemodel.lce/LceState.Content.dataIsValid|{}dataIsValid[0]
+            final fun <get-dataIsValid>(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Content.dataIsValid.<get-dataIsValid>|<get-dataIsValid>(){}[0]
+
+        final fun component1(): #A1 // com.motorro.rxlcemodel.lce/LceState.Content.component1|component1(){}[0]
+        final fun component2(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Content.component2|component2(){}[0]
+        final fun copy(#A1 = ..., kotlin/Boolean = ...): com.motorro.rxlcemodel.lce/LceState.Content<#A1> // com.motorro.rxlcemodel.lce/LceState.Content.copy|copy(1:0;kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Content.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.lce/LceState.Content.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.lce/LceState.Content.toString|toString(){}[0]
+    }
+
+    final class <#A1: out kotlin/Any> Error : com.motorro.rxlcemodel.lce/LceState<#A1> { // com.motorro.rxlcemodel.lce/LceState.Error|null[0]
+        constructor <init>(#A1?, kotlin/Boolean, kotlin/Throwable) // com.motorro.rxlcemodel.lce/LceState.Error.<init>|<init>(1:0?;kotlin.Boolean;kotlin.Throwable){}[0]
+
+        final val data // com.motorro.rxlcemodel.lce/LceState.Error.data|{}data[0]
+            final fun <get-data>(): #A1? // com.motorro.rxlcemodel.lce/LceState.Error.data.<get-data>|<get-data>(){}[0]
+        final val dataIsValid // com.motorro.rxlcemodel.lce/LceState.Error.dataIsValid|{}dataIsValid[0]
+            final fun <get-dataIsValid>(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Error.dataIsValid.<get-dataIsValid>|<get-dataIsValid>(){}[0]
+        final val error // com.motorro.rxlcemodel.lce/LceState.Error.error|{}error[0]
+            final fun <get-error>(): kotlin/Throwable // com.motorro.rxlcemodel.lce/LceState.Error.error.<get-error>|<get-error>(){}[0]
+
+        final fun component1(): #A1? // com.motorro.rxlcemodel.lce/LceState.Error.component1|component1(){}[0]
+        final fun component2(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Error.component2|component2(){}[0]
+        final fun component3(): kotlin/Throwable // com.motorro.rxlcemodel.lce/LceState.Error.component3|component3(){}[0]
+        final fun copy(#A1? = ..., kotlin/Boolean = ..., kotlin/Throwable = ...): com.motorro.rxlcemodel.lce/LceState.Error<#A1> // com.motorro.rxlcemodel.lce/LceState.Error.copy|copy(1:0?;kotlin.Boolean;kotlin.Throwable){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Error.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.lce/LceState.Error.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.lce/LceState.Error.toString|toString(){}[0]
+    }
+
+    final class <#A1: out kotlin/Any> Loading : com.motorro.rxlcemodel.lce/LceState<#A1> { // com.motorro.rxlcemodel.lce/LceState.Loading|null[0]
+        constructor <init>(#A1?, kotlin/Boolean, com.motorro.rxlcemodel.lce/LceState.Loading.Type = ...) // com.motorro.rxlcemodel.lce/LceState.Loading.<init>|<init>(1:0?;kotlin.Boolean;com.motorro.rxlcemodel.lce.LceState.Loading.Type){}[0]
+
+        final val data // com.motorro.rxlcemodel.lce/LceState.Loading.data|{}data[0]
+            final fun <get-data>(): #A1? // com.motorro.rxlcemodel.lce/LceState.Loading.data.<get-data>|<get-data>(){}[0]
+        final val dataIsValid // com.motorro.rxlcemodel.lce/LceState.Loading.dataIsValid|{}dataIsValid[0]
+            final fun <get-dataIsValid>(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Loading.dataIsValid.<get-dataIsValid>|<get-dataIsValid>(){}[0]
+        final val type // com.motorro.rxlcemodel.lce/LceState.Loading.type|{}type[0]
+            final fun <get-type>(): com.motorro.rxlcemodel.lce/LceState.Loading.Type // com.motorro.rxlcemodel.lce/LceState.Loading.type.<get-type>|<get-type>(){}[0]
+
+        final fun component1(): #A1? // com.motorro.rxlcemodel.lce/LceState.Loading.component1|component1(){}[0]
+        final fun component2(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Loading.component2|component2(){}[0]
+        final fun component3(): com.motorro.rxlcemodel.lce/LceState.Loading.Type // com.motorro.rxlcemodel.lce/LceState.Loading.component3|component3(){}[0]
+        final fun copy(#A1? = ..., kotlin/Boolean = ..., com.motorro.rxlcemodel.lce/LceState.Loading.Type = ...): com.motorro.rxlcemodel.lce/LceState.Loading<#A1> // com.motorro.rxlcemodel.lce/LceState.Loading.copy|copy(1:0?;kotlin.Boolean;com.motorro.rxlcemodel.lce.LceState.Loading.Type){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Loading.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.lce/LceState.Loading.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.lce/LceState.Loading.toString|toString(){}[0]
+
+        final enum class Type : kotlin/Enum<com.motorro.rxlcemodel.lce/LceState.Loading.Type> { // com.motorro.rxlcemodel.lce/LceState.Loading.Type|null[0]
+            enum entry LOADING // com.motorro.rxlcemodel.lce/LceState.Loading.Type.LOADING|null[0]
+            enum entry LOADING_MORE // com.motorro.rxlcemodel.lce/LceState.Loading.Type.LOADING_MORE|null[0]
+            enum entry REFRESHING // com.motorro.rxlcemodel.lce/LceState.Loading.Type.REFRESHING|null[0]
+            enum entry UPDATING // com.motorro.rxlcemodel.lce/LceState.Loading.Type.UPDATING|null[0]
+
+            final val entries // com.motorro.rxlcemodel.lce/LceState.Loading.Type.entries|#static{}entries[0]
+                final fun <get-entries>(): kotlin.enums/EnumEntries<com.motorro.rxlcemodel.lce/LceState.Loading.Type> // com.motorro.rxlcemodel.lce/LceState.Loading.Type.entries.<get-entries>|<get-entries>#static(){}[0]
+
+            final fun valueOf(kotlin/String): com.motorro.rxlcemodel.lce/LceState.Loading.Type // com.motorro.rxlcemodel.lce/LceState.Loading.Type.valueOf|valueOf#static(kotlin.String){}[0]
+            final fun values(): kotlin/Array<com.motorro.rxlcemodel.lce/LceState.Loading.Type> // com.motorro.rxlcemodel.lce/LceState.Loading.Type.values|values#static(){}[0]
+        }
+    }
+
+    final object Terminated : com.motorro.rxlcemodel.lce/LceState<kotlin/Nothing> { // com.motorro.rxlcemodel.lce/LceState.Terminated|null[0]
+        final val data // com.motorro.rxlcemodel.lce/LceState.Terminated.data|{}data[0]
+            final fun <get-data>(): kotlin/Nothing? // com.motorro.rxlcemodel.lce/LceState.Terminated.data.<get-data>|<get-data>(){}[0]
+        final val dataIsValid // com.motorro.rxlcemodel.lce/LceState.Terminated.dataIsValid|{}dataIsValid[0]
+            final fun <get-dataIsValid>(): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Terminated.dataIsValid.<get-dataIsValid>|<get-dataIsValid>(){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.lce/LceState.Terminated.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.lce/LceState.Terminated.hashCode|hashCode(){}[0]
+    }
+}
+
+final inline fun <#A: kotlin/Any, #B: kotlin/Any, #C: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/combine(com.motorro.rxlcemodel.lce/LceState<#B>, kotlin/Function2<#A?, #B?, #C?>): com.motorro.rxlcemodel.lce/LceState<#C> // com.motorro.rxlcemodel.lce/combine|combine@com.motorro.rxlcemodel.lce.LceState<0:0>(com.motorro.rxlcemodel.lce.LceState<0:1>;kotlin.Function2<0:0?,0:1?,0:2?>){0§<kotlin.Any>;1§<kotlin.Any>;2§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/catchToLce(kotlin/Function1<com.motorro.rxlcemodel.lce/LceState<#A>, com.motorro.rxlcemodel.lce/LceState<#B>>): com.motorro.rxlcemodel.lce/LceState<#B> // com.motorro.rxlcemodel.lce/catchToLce|catchToLce@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState<0:0>,com.motorro.rxlcemodel.lce.LceState<0:1>>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/flatMap(kotlin/Function1<#A, com.motorro.rxlcemodel.lce/LceState<#B>>): com.motorro.rxlcemodel.lce/LceState<#B> // com.motorro.rxlcemodel.lce/flatMap|flatMap@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<0:0,com.motorro.rxlcemodel.lce.LceState<0:1>>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/map(kotlin/Function1<#A, #B>): com.motorro.rxlcemodel.lce/LceState<#B> // com.motorro.rxlcemodel.lce/map|map@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/mapEmptyDataItem(crossinline kotlin/Function0<#A?>): com.motorro.rxlcemodel.lce/LceState<#A> // com.motorro.rxlcemodel.lce/mapEmptyDataItem|mapEmptyDataItem@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function0<0:0?>){0§<kotlin.Any>}[0]
+final inline fun <#A: reified kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/mapEmptyData(crossinline kotlin/Function1<com.motorro.rxlcemodel.lce/LceState<#A>, com.motorro.rxlcemodel.lce/LceState<#A>>): com.motorro.rxlcemodel.lce/LceState<#A> // com.motorro.rxlcemodel.lce/mapEmptyData|mapEmptyData@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState<0:0>,com.motorro.rxlcemodel.lce.LceState<0:0>>){0§<kotlin.Any>}[0]

@@ -1,0 +1,135 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.motorro.rxlcemodel:coroutines>
+abstract interface <#A: kotlin/Any, #B: in kotlin/Any, #C: in kotlin/Any> com.motorro.rxlcemodel.coroutines.service/UpdatingNetService : com.motorro.rxlcemodel.coroutines.service/NetService<#A, #C> { // com.motorro.rxlcemodel.coroutines.service/UpdatingNetService|null[0]
+    abstract suspend fun update(#C, #B): com.motorro.rxlcemodel.cache.entity/Entity<#A> // com.motorro.rxlcemodel.coroutines.service/UpdatingNetService.update|update(1:2;1:1){}[0]
+}
+
+abstract interface <#A: kotlin/Any, #B: in kotlin/Any, #C: in kotlin/Any> com.motorro.rxlcemodel.coroutines.service/UpdatingServiceSet : com.motorro.rxlcemodel.coroutines.service/ServiceSet<#A, #C> { // com.motorro.rxlcemodel.coroutines.service/UpdatingServiceSet|null[0]
+    abstract val net // com.motorro.rxlcemodel.coroutines.service/UpdatingServiceSet.net|{}net[0]
+        abstract fun <get-net>(): com.motorro.rxlcemodel.coroutines.service/UpdatingNetService<#A, #B, #C> // com.motorro.rxlcemodel.coroutines.service/UpdatingServiceSet.net.<get-net>|<get-net>(){}[0]
+}
+
+abstract interface <#A: kotlin/Any, #B: in kotlin/Any, #C: kotlin/Any> com.motorro.rxlcemodel.coroutines/UpdatingLceModel : com.motorro.rxlcemodel.coroutines/LceModel<#A, #C> { // com.motorro.rxlcemodel.coroutines/UpdatingLceModel|null[0]
+    abstract suspend fun update(#B) // com.motorro.rxlcemodel.coroutines/UpdatingLceModel.update|update(1:1){}[0]
+}
+
+abstract interface <#A: kotlin/Any, #B: in kotlin/Any> com.motorro.rxlcemodel.coroutines.service/CacheService { // com.motorro.rxlcemodel.coroutines.service/CacheService|null[0]
+    abstract fun getData(#B): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.cache.entity/Entity<#A>?> // com.motorro.rxlcemodel.coroutines.service/CacheService.getData|getData(1:1){}[0]
+    abstract suspend fun delete(#B) // com.motorro.rxlcemodel.coroutines.service/CacheService.delete|delete(1:1){}[0]
+    abstract suspend fun invalidate(#B) // com.motorro.rxlcemodel.coroutines.service/CacheService.invalidate|invalidate(1:1){}[0]
+    abstract suspend fun invalidateAll() // com.motorro.rxlcemodel.coroutines.service/CacheService.invalidateAll|invalidateAll(){}[0]
+    abstract suspend fun refetch(#B) // com.motorro.rxlcemodel.coroutines.service/CacheService.refetch|refetch(1:1){}[0]
+    abstract suspend fun refetchAll() // com.motorro.rxlcemodel.coroutines.service/CacheService.refetchAll|refetchAll(){}[0]
+    abstract suspend fun save(#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>) // com.motorro.rxlcemodel.coroutines.service/CacheService.save|save(1:1;com.motorro.rxlcemodel.cache.entity.Entity<1:0>){}[0]
+
+    final object Companion { // com.motorro.rxlcemodel.coroutines.service/CacheService.Companion|null[0]
+        final fun <#A2: kotlin/Any, #B2: kotlin/Any> withSyncDelegate(com.motorro.rxlcemodel.cache/CacheDelegate<#A2, #B2>): com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService<#A2, #B2> // com.motorro.rxlcemodel.coroutines.service/CacheService.Companion.withSyncDelegate|withSyncDelegate(com.motorro.rxlcemodel.cache.CacheDelegate<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+    }
+}
+
+abstract interface <#A: kotlin/Any, #B: in kotlin/Any> com.motorro.rxlcemodel.coroutines.service/NetService { // com.motorro.rxlcemodel.coroutines.service/NetService|null[0]
+    abstract suspend fun get(#B): com.motorro.rxlcemodel.cache.entity/Entity<#A> // com.motorro.rxlcemodel.coroutines.service/NetService.get|get(1:1){}[0]
+}
+
+abstract interface <#A: kotlin/Any, #B: in kotlin/Any> com.motorro.rxlcemodel.coroutines.service/ServiceSet { // com.motorro.rxlcemodel.coroutines.service/ServiceSet|null[0]
+    abstract val cache // com.motorro.rxlcemodel.coroutines.service/ServiceSet.cache|{}cache[0]
+        abstract fun <get-cache>(): com.motorro.rxlcemodel.coroutines.service/CacheService<#A, #B> // com.motorro.rxlcemodel.coroutines.service/ServiceSet.cache.<get-cache>|<get-cache>(){}[0]
+    abstract val net // com.motorro.rxlcemodel.coroutines.service/ServiceSet.net|{}net[0]
+        abstract fun <get-net>(): com.motorro.rxlcemodel.coroutines.service/NetService<#A, #B> // com.motorro.rxlcemodel.coroutines.service/ServiceSet.net.<get-net>|<get-net>(){}[0]
+}
+
+abstract interface <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.coroutines/LceModel : com.motorro.rxlcemodel.coroutines/LceUseCase<#A> { // com.motorro.rxlcemodel.coroutines/LceModel|null[0]
+    abstract val params // com.motorro.rxlcemodel.coroutines/LceModel.params|{}params[0]
+        abstract fun <get-params>(): #B // com.motorro.rxlcemodel.coroutines/LceModel.params.<get-params>|<get-params>(){}[0]
+
+    final object Companion { // com.motorro.rxlcemodel.coroutines/LceModel.Companion|null[0]
+        final fun <#A2: kotlin/Any, #B2: kotlin/Any> cacheThenNet(#B2, com.motorro.rxlcemodel.coroutines.service/NetService<#A2, #B2>, com.motorro.rxlcemodel.coroutines.service/CacheService<#A2, #B2>, kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A2>> = ..., kotlinx.coroutines/CoroutineDispatcher = ..., com.motorro.rxlcemodel.common/Logger? = ...): com.motorro.rxlcemodel.coroutines/LceModel<#A2, #B2> // com.motorro.rxlcemodel.coroutines/LceModel.Companion.cacheThenNet|cacheThenNet(0:1;com.motorro.rxlcemodel.coroutines.service.NetService<0:0,0:1>;com.motorro.rxlcemodel.coroutines.service.CacheService<0:0,0:1>;kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+        final fun <#A2: kotlin/Any, #B2: kotlin/Any> cacheThenNet(#B2, com.motorro.rxlcemodel.coroutines.service/ServiceSet<#A2, #B2>, kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A2>> = ..., kotlinx.coroutines/CoroutineDispatcher = ..., com.motorro.rxlcemodel.common/Logger? = ...): com.motorro.rxlcemodel.coroutines/LceModel<#A2, #B2> // com.motorro.rxlcemodel.coroutines/LceModel.Companion.cacheThenNet|cacheThenNet(0:1;com.motorro.rxlcemodel.coroutines.service.ServiceSet<0:0,0:1>;kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+    }
+}
+
+abstract interface <#A: kotlin/Any> com.motorro.rxlcemodel.coroutines/LceUseCase { // com.motorro.rxlcemodel.coroutines/LceUseCase|null[0]
+    abstract val state // com.motorro.rxlcemodel.coroutines/LceUseCase.state|{}state[0]
+        abstract fun <get-state>(): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/LceUseCase.state.<get-state>|<get-state>(){}[0]
+
+    abstract suspend fun refresh() // com.motorro.rxlcemodel.coroutines/LceUseCase.refresh|refresh(){}[0]
+}
+
+abstract class <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.coroutines/UpdateWrapper : com.motorro.rxlcemodel.coroutines/LceModel<#A, #B> { // com.motorro.rxlcemodel.coroutines/UpdateWrapper|null[0]
+    constructor <init>(com.motorro.rxlcemodel.coroutines/LceModel<#A, #B>, com.motorro.rxlcemodel.coroutines.service/CacheService<#A, #B>, kotlinx.coroutines/CoroutineDispatcher, com.motorro.rxlcemodel.common/Logger?) // com.motorro.rxlcemodel.coroutines/UpdateWrapper.<init>|<init>(com.motorro.rxlcemodel.coroutines.LceModel<1:0,1:1>;com.motorro.rxlcemodel.coroutines.service.CacheService<1:0,1:1>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){}[0]
+
+    open val params // com.motorro.rxlcemodel.coroutines/UpdateWrapper.params|{}params[0]
+        open fun <get-params>(): #B // com.motorro.rxlcemodel.coroutines/UpdateWrapper.params.<get-params>|<get-params>(){}[0]
+    open val state // com.motorro.rxlcemodel.coroutines/UpdateWrapper.state|{}state[0]
+        open fun <get-state>(): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/UpdateWrapper.state.<get-state>|<get-state>(){}[0]
+
+    final suspend fun doUpdate(kotlin.coroutines/SuspendFunction1<#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>>) // com.motorro.rxlcemodel.coroutines/UpdateWrapper.doUpdate|doUpdate(kotlin.coroutines.SuspendFunction1<1:1,com.motorro.rxlcemodel.cache.entity.Entity<1:0>>){}[0]
+    open suspend fun refresh() // com.motorro.rxlcemodel.coroutines/UpdateWrapper.refresh|refresh(){}[0]
+}
+
+final class <#A: kotlin/Any, #B: in kotlin/Any, #C: kotlin/Any> com.motorro.rxlcemodel.coroutines/UpdatingLceModelWrapper : com.motorro.rxlcemodel.coroutines/UpdateWrapper<#A, #C>, com.motorro.rxlcemodel.coroutines/UpdatingLceModel<#A, #B, #C> { // com.motorro.rxlcemodel.coroutines/UpdatingLceModelWrapper|null[0]
+    constructor <init>(com.motorro.rxlcemodel.coroutines/LceModel<#A, #C>, com.motorro.rxlcemodel.coroutines.service/UpdatingServiceSet<#A, #B, #C>, kotlinx.coroutines/CoroutineDispatcher, com.motorro.rxlcemodel.common/Logger?) // com.motorro.rxlcemodel.coroutines/UpdatingLceModelWrapper.<init>|<init>(com.motorro.rxlcemodel.coroutines.LceModel<1:0,1:2>;com.motorro.rxlcemodel.coroutines.service.UpdatingServiceSet<1:0,1:1,1:2>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){}[0]
+
+    final suspend fun update(#B) // com.motorro.rxlcemodel.coroutines/UpdatingLceModelWrapper.update|update(1:1){}[0]
+}
+
+final class <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService : com.motorro.rxlcemodel.coroutines.service/CacheService<#A, #B> { // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService|null[0]
+    final fun getData(#B): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.cache.entity/Entity<#A>?> // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.getData|getData(1:1){}[0]
+    final suspend fun delete(#B) // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.delete|delete(1:1){}[0]
+    final suspend fun invalidate(#B) // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.invalidate|invalidate(1:1){}[0]
+    final suspend fun invalidateAll() // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.invalidateAll|invalidateAll(){}[0]
+    final suspend fun refetch(#B) // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.refetch|refetch(1:1){}[0]
+    final suspend fun refetchAll() // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.refetchAll|refetchAll(){}[0]
+    final suspend fun save(#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>) // com.motorro.rxlcemodel.coroutines.service/SyncDelegateCacheService.save|save(1:1;com.motorro.rxlcemodel.cache.entity.Entity<1:0>){}[0]
+}
+
+final class <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel : com.motorro.rxlcemodel.coroutines/LceModel<#A, #B> { // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel|null[0]
+    constructor <init>(#B, com.motorro.rxlcemodel.coroutines.service/ServiceSet<#A, #B>, kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>, kotlinx.coroutines/CoroutineDispatcher, com.motorro.rxlcemodel.common/Logger?) // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel.<init>|<init>(1:1;com.motorro.rxlcemodel.coroutines.service.ServiceSet<1:0,1:1>;kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<1:0>>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){}[0]
+
+    final val params // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel.params|{}params[0]
+        final fun <get-params>(): #B // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel.params.<get-params>|<get-params>(){}[0]
+    final val state // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel.state|{}state[0]
+        final fun <get-state>(): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel.state.<get-state>|<get-state>(){}[0]
+
+    final suspend fun refresh() // com.motorro.rxlcemodel.coroutines/CacheThenNetLceModel.refresh|refresh(){}[0]
+}
+
+final class <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.coroutines/StrategyUpdateWrapper : com.motorro.rxlcemodel.coroutines/UpdateWrapper<#A, #B> { // com.motorro.rxlcemodel.coroutines/StrategyUpdateWrapper|null[0]
+    constructor <init>(com.motorro.rxlcemodel.coroutines/LceModel<#A, #B>, com.motorro.rxlcemodel.coroutines.service/CacheService<#A, #B>, kotlinx.coroutines/CoroutineDispatcher, com.motorro.rxlcemodel.common/Logger?) // com.motorro.rxlcemodel.coroutines/StrategyUpdateWrapper.<init>|<init>(com.motorro.rxlcemodel.coroutines.LceModel<1:0,1:1>;com.motorro.rxlcemodel.coroutines.service.CacheService<1:0,1:1>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){}[0]
+
+    final suspend fun update(kotlin.coroutines/SuspendFunction1<#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>>) // com.motorro.rxlcemodel.coroutines/StrategyUpdateWrapper.update|update(kotlin.coroutines.SuspendFunction1<1:1,com.motorro.rxlcemodel.cache.entity.Entity<1:0>>){}[0]
+}
+
+final val com.motorro.rxlcemodel.coroutines/dataNoErrors // com.motorro.rxlcemodel.coroutines/dataNoErrors|@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>{0§<kotlin.Any>}dataNoErrors[0]
+    final fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>>).<get-dataNoErrors>(): kotlinx.coroutines.flow/Flow<#A1> // com.motorro.rxlcemodel.coroutines/dataNoErrors.<get-dataNoErrors>|<get-dataNoErrors>@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(){0§<kotlin.Any>}[0]
+final val com.motorro.rxlcemodel.coroutines/dataStopOnEmptyErrors // com.motorro.rxlcemodel.coroutines/dataStopOnEmptyErrors|@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>{0§<kotlin.Any>}dataStopOnEmptyErrors[0]
+    final fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>>).<get-dataStopOnEmptyErrors>(): kotlinx.coroutines.flow/Flow<#A1> // com.motorro.rxlcemodel.coroutines/dataStopOnEmptyErrors.<get-dataStopOnEmptyErrors>|<get-dataStopOnEmptyErrors>@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(){0§<kotlin.Any>}[0]
+final val com.motorro.rxlcemodel.coroutines/dataStopOnErrors // com.motorro.rxlcemodel.coroutines/dataStopOnErrors|@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>{0§<kotlin.Any>}dataStopOnErrors[0]
+    final fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>>).<get-dataStopOnErrors>(): kotlinx.coroutines.flow/Flow<#A1> // com.motorro.rxlcemodel.coroutines/dataStopOnErrors.<get-dataStopOnErrors>|<get-dataStopOnErrors>@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(){0§<kotlin.Any>}[0]
+final val com.motorro.rxlcemodel.coroutines/stopOnEmptyErrors // com.motorro.rxlcemodel.coroutines/stopOnEmptyErrors|@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>{0§<kotlin.Any>}stopOnEmptyErrors[0]
+    final fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>>).<get-stopOnEmptyErrors>(): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>> // com.motorro.rxlcemodel.coroutines/stopOnEmptyErrors.<get-stopOnEmptyErrors>|<get-stopOnEmptyErrors>@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(){0§<kotlin.Any>}[0]
+final val com.motorro.rxlcemodel.coroutines/stopOnErrors // com.motorro.rxlcemodel.coroutines/stopOnErrors|@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>{0§<kotlin.Any>}stopOnErrors[0]
+    final fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>>).<get-stopOnErrors>(): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>> // com.motorro.rxlcemodel.coroutines/stopOnErrors.<get-stopOnErrors>|<get-stopOnErrors>@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(){0§<kotlin.Any>}[0]
+final val com.motorro.rxlcemodel.coroutines/validData // com.motorro.rxlcemodel.coroutines/validData|@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>{0§<kotlin.Any>}validData[0]
+    final fun <#A1: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A1>>).<get-validData>(): kotlinx.coroutines.flow/Flow<#A1> // com.motorro.rxlcemodel.coroutines/validData.<get-validData>|<get-validData>@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(){0§<kotlin.Any>}[0]
+
+final fun <#A: kotlin/Any, #B: kotlin/Any, #C: kotlin/Any> (com.motorro.rxlcemodel.coroutines/LceModel<#A, #C>).com.motorro.rxlcemodel.coroutines/map(kotlin/Function1<#A, #B>): com.motorro.rxlcemodel.coroutines/LceModel<#B, #C> // com.motorro.rxlcemodel.coroutines/map|map@com.motorro.rxlcemodel.coroutines.LceModel<0:0,0:2>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>;2§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any, #B: kotlin/Any, #C: kotlin/Any> (com.motorro.rxlcemodel.coroutines/LceModel<#A, #C>).com.motorro.rxlcemodel.coroutines/withUpdates(com.motorro.rxlcemodel.coroutines.service/UpdatingServiceSet<#A, #B, #C>, kotlinx.coroutines/CoroutineDispatcher = ..., com.motorro.rxlcemodel.common/Logger? = ...): com.motorro.rxlcemodel.coroutines/UpdatingLceModel<#A, #B, #C> // com.motorro.rxlcemodel.coroutines/withUpdates|withUpdates@com.motorro.rxlcemodel.coroutines.LceModel<0:0,0:2>(com.motorro.rxlcemodel.coroutines.service.UpdatingServiceSet<0:0,0:1,0:2>;kotlinx.coroutines.CoroutineDispatcher;com.motorro.rxlcemodel.common.Logger?){0§<kotlin.Any>;1§<kotlin.Any>;2§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.coroutines/LceUseCase<#A>).com.motorro.rxlcemodel.coroutines/map(kotlin/Function1<#A, #B>): com.motorro.rxlcemodel.coroutines/LceUseCase<#B> // com.motorro.rxlcemodel.coroutines/map|map@com.motorro.rxlcemodel.coroutines.LceUseCase<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any, #B: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/flatMapLatestFlow(kotlin.coroutines/SuspendFunction1<#A, kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#B>>>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#B>> // com.motorro.rxlcemodel.coroutines/flatMapLatestFlow|flatMapLatestFlow@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.coroutines.SuspendFunction1<0:0,kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:1>>>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any, #B: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/flatMapSingleData(kotlin.coroutines/SuspendFunction1<#A, #B>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#B>> // com.motorro.rxlcemodel.coroutines/flatMapSingleData|flatMapSingleData@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.coroutines.SuspendFunction1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (com.motorro.rxlcemodel.coroutines/LceUseCase<#A>).com.motorro.rxlcemodel.coroutines/refreshed(): com.motorro.rxlcemodel.coroutines/LceUseCase<#A> // com.motorro.rxlcemodel.coroutines/refreshed|refreshed@com.motorro.rxlcemodel.coroutines.LceUseCase<0:0>(){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (com.motorro.rxlcemodel.coroutines/LceUseCase<#A>).com.motorro.rxlcemodel.coroutines/withRefresh(kotlinx.coroutines.flow/Flow<kotlin/Any>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/withRefresh|withRefresh@com.motorro.rxlcemodel.coroutines.LceUseCase<0:0>(kotlinx.coroutines.flow.Flow<kotlin.Any>){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/getData(kotlin/Function1<com.motorro.rxlcemodel.lce/LceState.Error<#A>, kotlin/Boolean>): kotlinx.coroutines.flow/Flow<#A> // com.motorro.rxlcemodel.coroutines/getData|getData@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState.Error<0:0>,kotlin.Boolean>){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/refreshed(kotlin.coroutines/SuspendFunction0<kotlin/Unit>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/refreshed|refreshed@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.coroutines.SuspendFunction0<kotlin.Unit>){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/terminateOnError(kotlin/Function1<com.motorro.rxlcemodel.lce/LceState.Error<#A>, kotlin/Boolean>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/terminateOnError|terminateOnError@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState.Error<0:0>,kotlin.Boolean>){0§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/errorToLce(crossinline kotlin/Function1<kotlin/Throwable, #A?> = ...): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/errorToLce|errorToLce@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.Function1<kotlin.Throwable,0:0?>){0§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/onEmptyLoadingReturn(crossinline kotlin/Function1<com.motorro.rxlcemodel.lce/LceState.Loading<#A>, com.motorro.rxlcemodel.lce/LceState<#A>>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/onEmptyLoadingReturn|onEmptyLoadingReturn@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState.Loading<0:0>,com.motorro.rxlcemodel.lce.LceState<0:0>>){0§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any> (kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>>).com.motorro.rxlcemodel.coroutines/onEmptyLoadingReturnItem(crossinline kotlin/Function0<#A?>): kotlinx.coroutines.flow/Flow<com.motorro.rxlcemodel.lce/LceState<#A>> // com.motorro.rxlcemodel.coroutines/onEmptyLoadingReturnItem|onEmptyLoadingReturnItem@kotlinx.coroutines.flow.Flow<com.motorro.rxlcemodel.lce.LceState<0:0>>(kotlin.Function0<0:0?>){0§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (#A)./coroutinesRunCatching(kotlin/Function1<#A, #B>): kotlin/Result<#B> // /coroutinesRunCatching|coroutinesRunCatching@0:0(kotlin.Function1<0:0,0:1>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]

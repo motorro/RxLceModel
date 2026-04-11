@@ -1,0 +1,79 @@
+public abstract class com/motorro/rxlcemodel/lce/LceState {
+	public abstract fun getData ()Ljava/lang/Object;
+	public abstract fun getDataIsValid ()Z
+	public final fun toError (Ljava/lang/Throwable;)Lcom/motorro/rxlcemodel/lce/LceState$Error;
+	public final fun toLoading (Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;)Lcom/motorro/rxlcemodel/lce/LceState$Loading;
+	public static synthetic fun toLoading$default (Lcom/motorro/rxlcemodel/lce/LceState;Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/lce/LceState$Loading;
+}
+
+public final class com/motorro/rxlcemodel/lce/LceState$Content : com/motorro/rxlcemodel/lce/LceState {
+	public fun <init> (Ljava/lang/Object;Z)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun component2 ()Z
+	public final fun copy (Ljava/lang/Object;Z)Lcom/motorro/rxlcemodel/lce/LceState$Content;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/lce/LceState$Content;Ljava/lang/Object;ZILjava/lang/Object;)Lcom/motorro/rxlcemodel/lce/LceState$Content;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getData ()Ljava/lang/Object;
+	public fun getDataIsValid ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/lce/LceState$Error : com/motorro/rxlcemodel/lce/LceState {
+	public fun <init> (Ljava/lang/Object;ZLjava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun component2 ()Z
+	public final fun component3 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Object;ZLjava/lang/Throwable;)Lcom/motorro/rxlcemodel/lce/LceState$Error;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/lce/LceState$Error;Ljava/lang/Object;ZLjava/lang/Throwable;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/lce/LceState$Error;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getData ()Ljava/lang/Object;
+	public fun getDataIsValid ()Z
+	public final fun getError ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/lce/LceState$Loading : com/motorro/rxlcemodel/lce/LceState {
+	public fun <init> (Ljava/lang/Object;ZLcom/motorro/rxlcemodel/lce/LceState$Loading$Type;)V
+	public synthetic fun <init> (Ljava/lang/Object;ZLcom/motorro/rxlcemodel/lce/LceState$Loading$Type;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun component2 ()Z
+	public final fun component3 ()Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public final fun copy (Ljava/lang/Object;ZLcom/motorro/rxlcemodel/lce/LceState$Loading$Type;)Lcom/motorro/rxlcemodel/lce/LceState$Loading;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/lce/LceState$Loading;Ljava/lang/Object;ZLcom/motorro/rxlcemodel/lce/LceState$Loading$Type;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/lce/LceState$Loading;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getData ()Ljava/lang/Object;
+	public fun getDataIsValid ()Z
+	public final fun getType ()Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/lce/LceState$Loading$Type : java/lang/Enum {
+	public static final field LOADING Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public static final field LOADING_MORE Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public static final field REFRESHING Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public static final field UPDATING Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+	public static fun values ()[Lcom/motorro/rxlcemodel/lce/LceState$Loading$Type;
+}
+
+public final class com/motorro/rxlcemodel/lce/LceState$Terminated : com/motorro/rxlcemodel/lce/LceState {
+	public static final field INSTANCE Lcom/motorro/rxlcemodel/lce/LceState$Terminated;
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getData ()Ljava/lang/Object;
+	public fun getData ()Ljava/lang/Void;
+	public fun getDataIsValid ()Z
+	public fun hashCode ()I
+}
+
+public final class com/motorro/rxlcemodel/lce/LceStateKt {
+	public static final fun catchToLce (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/lce/LceState;
+	public static final fun combine (Lcom/motorro/rxlcemodel/lce/LceState;Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function2;)Lcom/motorro/rxlcemodel/lce/LceState;
+	public static final fun flatMap (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/lce/LceState;
+	public static final fun map (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/lce/LceState;
+	public static final fun mapEmptyDataItem (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function0;)Lcom/motorro/rxlcemodel/lce/LceState;
+}
+

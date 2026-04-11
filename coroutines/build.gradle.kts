@@ -11,6 +11,10 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalAbiValidation::class)
+
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+
 plugins {
     alias(libs.plugins.rxlcemodel.kmp)
     alias(libs.plugins.kotlin.dokka)
@@ -24,6 +28,10 @@ group = rootProject.group
 version = rootProject.version
 
 kotlin {
+    abiValidation {
+        enabled = true
+    }
+
     sourceSets {
         commonMain.dependencies {
             api(project(":common"))

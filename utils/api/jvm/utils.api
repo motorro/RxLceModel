@@ -1,0 +1,22 @@
+public abstract interface class com/motorro/rxlcemodel/common/Clock {
+	public static final field Companion Lcom/motorro/rxlcemodel/common/Clock$Companion;
+	public abstract fun getMillis ()J
+}
+
+public final class com/motorro/rxlcemodel/common/Clock$Companion {
+	public final fun getSYSTEM ()Lcom/motorro/rxlcemodel/common/Clock;
+}
+
+public final class com/motorro/rxlcemodel/common/LogLevel : java/lang/Enum {
+	public static final field ERROR Lcom/motorro/rxlcemodel/common/LogLevel;
+	public static final field INFO Lcom/motorro/rxlcemodel/common/LogLevel;
+	public static final field WARNING Lcom/motorro/rxlcemodel/common/LogLevel;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/motorro/rxlcemodel/common/LogLevel;
+	public static fun values ()[Lcom/motorro/rxlcemodel/common/LogLevel;
+}
+
+public abstract interface class com/motorro/rxlcemodel/common/Logger {
+	public abstract fun log (Lcom/motorro/rxlcemodel/common/LogLevel;Ljava/lang/String;)V
+}
+

@@ -1,0 +1,30 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.motorro.rxlcemodel:common>
+sealed class com.motorro.rxlcemodel.common/UpdateOperationState { // com.motorro.rxlcemodel.common/UpdateOperationState|null[0]
+    final class ERROR : com.motorro.rxlcemodel.common/UpdateOperationState { // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR|null[0]
+        constructor <init>(kotlin/Throwable) // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.<init>|<init>(kotlin.Throwable){}[0]
+
+        final val error // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.error|{}error[0]
+            final fun <get-error>(): kotlin/Throwable // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.error.<get-error>|<get-error>(){}[0]
+
+        final fun component1(): kotlin/Throwable // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.component1|component1(){}[0]
+        final fun copy(kotlin/Throwable = ...): com.motorro.rxlcemodel.common/UpdateOperationState.ERROR // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.copy|copy(kotlin.Throwable){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.common/UpdateOperationState.ERROR.toString|toString(){}[0]
+    }
+
+    final object IDLE : com.motorro.rxlcemodel.common/UpdateOperationState { // com.motorro.rxlcemodel.common/UpdateOperationState.IDLE|null[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.common/UpdateOperationState.IDLE.toString|toString(){}[0]
+    }
+
+    final object LOADING : com.motorro.rxlcemodel.common/UpdateOperationState { // com.motorro.rxlcemodel.common/UpdateOperationState.LOADING|null[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.common/UpdateOperationState.LOADING.toString|toString(){}[0]
+    }
+}

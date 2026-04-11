@@ -1,0 +1,177 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.motorro.rxlcemodel:cache>
+abstract interface <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.cache/CacheDelegate { // com.motorro.rxlcemodel.cache/CacheDelegate|null[0]
+    abstract fun delete(#B) // com.motorro.rxlcemodel.cache/CacheDelegate.delete|delete(1:1){}[0]
+    abstract fun get(#B): com.motorro.rxlcemodel.cache.entity/Entity<#A>? // com.motorro.rxlcemodel.cache/CacheDelegate.get|get(1:1){}[0]
+    abstract fun invalidate(#B) // com.motorro.rxlcemodel.cache/CacheDelegate.invalidate|invalidate(1:1){}[0]
+    abstract fun invalidateAll() // com.motorro.rxlcemodel.cache/CacheDelegate.invalidateAll|invalidateAll(){}[0]
+    abstract fun save(#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>) // com.motorro.rxlcemodel.cache/CacheDelegate.save|save(1:1;com.motorro.rxlcemodel.cache.entity.Entity<1:0>){}[0]
+}
+
+abstract interface <#A: out kotlin/Any> com.motorro.rxlcemodel.cache.entity/Entity : com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/Entity|null[0]
+    abstract val data // com.motorro.rxlcemodel.cache.entity/Entity.data|{}data[0]
+        abstract fun <get-data>(): #A // com.motorro.rxlcemodel.cache.entity/Entity.data.<get-data>|<get-data>(){}[0]
+
+    abstract fun <#A1: kotlin/Any> map(kotlin/Function1<#A, #A1>): com.motorro.rxlcemodel.cache.entity/Entity<#A1> // com.motorro.rxlcemodel.cache.entity/Entity.map|map(kotlin.Function1<1:0,0:0>){0§<kotlin.Any>}[0]
+    abstract fun createSnapshot(): com.motorro.rxlcemodel.cache.entity/Entity<#A> // com.motorro.rxlcemodel.cache.entity/Entity.createSnapshot|createSnapshot(){}[0]
+
+    final class <#A1: out kotlin/Any> Impl : com.motorro.rxlcemodel.cache.entity/Entity<#A1>, com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/Entity.Impl|null[0]
+        constructor <init>(#A1, com.motorro.rxlcemodel.cache.entity/EntityValidator) // com.motorro.rxlcemodel.cache.entity/Entity.Impl.<init>|<init>(1:0;com.motorro.rxlcemodel.cache.entity.EntityValidator){}[0]
+
+        final val data // com.motorro.rxlcemodel.cache.entity/Entity.Impl.data|{}data[0]
+            final fun <get-data>(): #A1 // com.motorro.rxlcemodel.cache.entity/Entity.Impl.data.<get-data>|<get-data>(){}[0]
+
+        final fun <#A2: kotlin/Any> map(kotlin/Function1<#A1, #A2>): com.motorro.rxlcemodel.cache.entity/Entity<#A2> // com.motorro.rxlcemodel.cache.entity/Entity.Impl.map|map(kotlin.Function1<1:0,0:0>){0§<kotlin.Any>}[0]
+        final fun component1(): #A1 // com.motorro.rxlcemodel.cache.entity/Entity.Impl.component1|component1(){}[0]
+        final fun copy(#A1 = ..., com.motorro.rxlcemodel.cache.entity/EntityValidator = ...): com.motorro.rxlcemodel.cache.entity/Entity.Impl<#A1> // com.motorro.rxlcemodel.cache.entity/Entity.Impl.copy|copy(1:0;com.motorro.rxlcemodel.cache.entity.EntityValidator){}[0]
+        final fun createSnapshot(): com.motorro.rxlcemodel.cache.entity/Entity<#A1> // com.motorro.rxlcemodel.cache.entity/Entity.Impl.createSnapshot|createSnapshot(){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/Entity.Impl.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.cache.entity/Entity.Impl.hashCode|hashCode(){}[0]
+        final fun isValid(): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/Entity.Impl.isValid|isValid(){}[0]
+        final fun serialize(): kotlin/String // com.motorro.rxlcemodel.cache.entity/Entity.Impl.serialize|serialize(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.cache.entity/Entity.Impl.toString|toString(){}[0]
+    }
+}
+
+abstract interface com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/EntityValidator|null[0]
+    abstract fun isValid(): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.isValid|isValid(){}[0]
+    abstract fun serialize(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.serialize|serialize(){}[0]
+    open fun createSnapshot(): com.motorro.rxlcemodel.cache.entity/EntityValidator // com.motorro.rxlcemodel.cache.entity/EntityValidator.createSnapshot|createSnapshot(){}[0]
+
+    abstract interface Deserializer { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer|null[0]
+        abstract fun deserialize(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer.deserialize|deserialize(kotlin.String){}[0]
+        open fun deserializeSnapshot(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer.deserializeSnapshot|deserializeSnapshot(kotlin.String){}[0]
+    }
+
+    final class Lifespan : com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan|null[0]
+        constructor <init>(kotlin/Long, com.motorro.rxlcemodel.common/Clock = ...) // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.<init>|<init>(kotlin.Long;com.motorro.rxlcemodel.common.Clock){}[0]
+
+        final fun createSnapshot(): com.motorro.rxlcemodel.cache.entity/EntityValidator // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.createSnapshot|createSnapshot(){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.hashCode|hashCode(){}[0]
+        final fun isValid(): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.isValid|isValid(){}[0]
+        final fun serialize(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.serialize|serialize(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.toString|toString(){}[0]
+
+        final class LifespanDeserializer : com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.LifespanDeserializer|null[0]
+            constructor <init>(com.motorro.rxlcemodel.common/Clock = ...) // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.LifespanDeserializer.<init>|<init>(com.motorro.rxlcemodel.common.Clock){}[0]
+
+            final fun deserialize(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.LifespanDeserializer.deserialize|deserialize(kotlin.String){}[0]
+            final fun deserializeSnapshot(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.LifespanDeserializer.deserializeSnapshot|deserializeSnapshot(kotlin.String){}[0]
+
+            final object Companion // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.LifespanDeserializer.Companion|null[0]
+        }
+
+        final object Companion { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.Companion|null[0]
+            final fun createSnapshot(kotlin/Long, com.motorro.rxlcemodel.common/Clock = ...): com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan // com.motorro.rxlcemodel.cache.entity/EntityValidator.Lifespan.Companion.createSnapshot|createSnapshot(kotlin.Long;com.motorro.rxlcemodel.common.Clock){}[0]
+        }
+    }
+
+    final class Simple : com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple|null[0]
+        constructor <init>(kotlin/Boolean) // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.<init>|<init>(kotlin.Boolean){}[0]
+
+        final fun copy(kotlin/Boolean = ...): com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.copy|copy(kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.hashCode|hashCode(){}[0]
+        final fun isValid(): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.isValid|isValid(){}[0]
+        final fun serialize(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.serialize|serialize(){}[0]
+        final fun toString(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.toString|toString(){}[0]
+
+        final object SimpleDeserializer : com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.SimpleDeserializer|null[0]
+            final fun deserialize(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Simple.SimpleDeserializer.deserialize|deserialize(kotlin.String){}[0]
+        }
+    }
+
+    final object Always : com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Always|null[0]
+        final fun isValid(): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.Always.isValid|isValid(){}[0]
+        final fun serialize(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.Always.serialize|serialize(){}[0]
+
+        final object AlwaysDeserializer : com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Always.AlwaysDeserializer|null[0]
+            final fun deserialize(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Always.AlwaysDeserializer.deserialize|deserialize(kotlin.String){}[0]
+        }
+    }
+
+    final object Never : com.motorro.rxlcemodel.cache.entity/EntityValidator { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Never|null[0]
+        final fun isValid(): kotlin/Boolean // com.motorro.rxlcemodel.cache.entity/EntityValidator.Never.isValid|isValid(){}[0]
+        final fun serialize(): kotlin/String // com.motorro.rxlcemodel.cache.entity/EntityValidator.Never.serialize|serialize(){}[0]
+
+        final object NeverDeserializer : com.motorro.rxlcemodel.cache.entity/EntityValidator.Deserializer { // com.motorro.rxlcemodel.cache.entity/EntityValidator.Never.NeverDeserializer|null[0]
+            final fun deserialize(kotlin/String): com.motorro.rxlcemodel.cache.entity/EntityValidator? // com.motorro.rxlcemodel.cache.entity/EntityValidator.Never.NeverDeserializer.deserialize|deserialize(kotlin.String){}[0]
+        }
+    }
+}
+
+abstract interface com.motorro.rxlcemodel.cache.entity/EntityValidatorFactory { // com.motorro.rxlcemodel.cache.entity/EntityValidatorFactory|null[0]
+    abstract fun create(kotlin/String? = ...): com.motorro.rxlcemodel.cache.entity/EntityValidator // com.motorro.rxlcemodel.cache.entity/EntityValidatorFactory.create|create(kotlin.String?){}[0]
+    abstract fun createSnapshot(kotlin/String? = ...): com.motorro.rxlcemodel.cache.entity/EntityValidator // com.motorro.rxlcemodel.cache.entity/EntityValidatorFactory.createSnapshot|createSnapshot(kotlin.String?){}[0]
+}
+
+abstract interface com.motorro.rxlcemodel.cache/CacheFriend { // com.motorro.rxlcemodel.cache/CacheFriend|null[0]
+    open val cacheKey // com.motorro.rxlcemodel.cache/CacheFriend.cacheKey|{}cacheKey[0]
+        open fun <get-cacheKey>(): kotlin/String // com.motorro.rxlcemodel.cache/CacheFriend.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
+}
+
+abstract interface com.motorro.rxlcemodel.cache/CacheManager { // com.motorro.rxlcemodel.cache/CacheManager|null[0]
+    abstract fun close() // com.motorro.rxlcemodel.cache/CacheManager.close|close(){}[0]
+    abstract fun delete() // com.motorro.rxlcemodel.cache/CacheManager.delete|delete(){}[0]
+}
+
+abstract class <#A: kotlin/Any, #B: kotlin/Any> com.motorro.rxlcemodel.cache/MemorySyncDelegate : com.motorro.rxlcemodel.cache/CacheDelegate<#A, #B> { // com.motorro.rxlcemodel.cache/MemorySyncDelegate|null[0]
+    constructor <init>() // com.motorro.rxlcemodel.cache/MemorySyncDelegate.<init>|<init>(){}[0]
+
+    abstract val cache // com.motorro.rxlcemodel.cache/MemorySyncDelegate.cache|{}cache[0]
+        abstract fun <get-cache>(): io.github.reactivecircus.cache4k/Cache<#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>> // com.motorro.rxlcemodel.cache/MemorySyncDelegate.cache.<get-cache>|<get-cache>(){}[0]
+
+    open fun delete(#B) // com.motorro.rxlcemodel.cache/MemorySyncDelegate.delete|delete(1:1){}[0]
+    open fun get(#B): com.motorro.rxlcemodel.cache.entity/Entity<#A>? // com.motorro.rxlcemodel.cache/MemorySyncDelegate.get|get(1:1){}[0]
+    open fun invalidate(#B) // com.motorro.rxlcemodel.cache/MemorySyncDelegate.invalidate|invalidate(1:1){}[0]
+    open fun invalidateAll() // com.motorro.rxlcemodel.cache/MemorySyncDelegate.invalidateAll|invalidateAll(){}[0]
+    open fun save(#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>) // com.motorro.rxlcemodel.cache/MemorySyncDelegate.save|save(1:1;com.motorro.rxlcemodel.cache.entity.Entity<1:0>){}[0]
+
+    final object Companion { // com.motorro.rxlcemodel.cache/MemorySyncDelegate.Companion|null[0]
+        final fun <#A2: kotlin/Any, #B2: kotlin/Any> create(kotlin/Long): com.motorro.rxlcemodel.cache/MemorySyncDelegate<#A2, #B2> // com.motorro.rxlcemodel.cache/MemorySyncDelegate.Companion.create|create(kotlin.Long){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+    }
+}
+
+final class <#A: kotlin/Any, #B: com.motorro.rxlcemodel.cache/CacheFriend> com.motorro.rxlcemodel.cache/CacheFriendDelegate : com.motorro.rxlcemodel.cache/CacheDelegate<#A, #B> { // com.motorro.rxlcemodel.cache/CacheFriendDelegate|null[0]
+    constructor <init>(com.motorro.rxlcemodel.cache/CacheDelegate<com.motorro.rxlcemodel.cache/DataWithCacheKey<#A>, #B>) // com.motorro.rxlcemodel.cache/CacheFriendDelegate.<init>|<init>(com.motorro.rxlcemodel.cache.CacheDelegate<com.motorro.rxlcemodel.cache.DataWithCacheKey<1:0>,1:1>){}[0]
+
+    final fun delete(#B) // com.motorro.rxlcemodel.cache/CacheFriendDelegate.delete|delete(1:1){}[0]
+    final fun get(#B): com.motorro.rxlcemodel.cache.entity/Entity<#A>? // com.motorro.rxlcemodel.cache/CacheFriendDelegate.get|get(1:1){}[0]
+    final fun invalidate(#B) // com.motorro.rxlcemodel.cache/CacheFriendDelegate.invalidate|invalidate(1:1){}[0]
+    final fun invalidateAll() // com.motorro.rxlcemodel.cache/CacheFriendDelegate.invalidateAll|invalidateAll(){}[0]
+    final fun save(#B, com.motorro.rxlcemodel.cache.entity/Entity<#A>) // com.motorro.rxlcemodel.cache/CacheFriendDelegate.save|save(1:1;com.motorro.rxlcemodel.cache.entity.Entity<1:0>){}[0]
+}
+
+final class <#A: kotlin/Any> com.motorro.rxlcemodel.cache/DataWithCacheKey { // com.motorro.rxlcemodel.cache/DataWithCacheKey|null[0]
+    constructor <init>(#A, kotlin/String) // com.motorro.rxlcemodel.cache/DataWithCacheKey.<init>|<init>(1:0;kotlin.String){}[0]
+
+    final val cacheKey // com.motorro.rxlcemodel.cache/DataWithCacheKey.cacheKey|{}cacheKey[0]
+        final fun <get-cacheKey>(): kotlin/String // com.motorro.rxlcemodel.cache/DataWithCacheKey.cacheKey.<get-cacheKey>|<get-cacheKey>(){}[0]
+    final val data // com.motorro.rxlcemodel.cache/DataWithCacheKey.data|{}data[0]
+        final fun <get-data>(): #A // com.motorro.rxlcemodel.cache/DataWithCacheKey.data.<get-data>|<get-data>(){}[0]
+
+    final fun component1(): #A // com.motorro.rxlcemodel.cache/DataWithCacheKey.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.motorro.rxlcemodel.cache/DataWithCacheKey.component2|component2(){}[0]
+    final fun copy(#A = ..., kotlin/String = ...): com.motorro.rxlcemodel.cache/DataWithCacheKey<#A> // com.motorro.rxlcemodel.cache/DataWithCacheKey.copy|copy(1:0;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.cache/DataWithCacheKey.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.cache/DataWithCacheKey.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.motorro.rxlcemodel.cache/DataWithCacheKey.toString|toString(){}[0]
+}
+
+final class com.motorro.rxlcemodel.cache.entity/LifespanValidatorFactory : com.motorro.rxlcemodel.cache.entity/EntityValidatorFactory { // com.motorro.rxlcemodel.cache.entity/LifespanValidatorFactory|null[0]
+    constructor <init>(kotlin/Long, com.motorro.rxlcemodel.common/Clock = ...) // com.motorro.rxlcemodel.cache.entity/LifespanValidatorFactory.<init>|<init>(kotlin.Long;com.motorro.rxlcemodel.common.Clock){}[0]
+
+    final fun create(kotlin/String?): com.motorro.rxlcemodel.cache.entity/EntityValidator // com.motorro.rxlcemodel.cache.entity/LifespanValidatorFactory.create|create(kotlin.String?){}[0]
+    final fun createSnapshot(kotlin/String?): com.motorro.rxlcemodel.cache.entity/EntityValidator // com.motorro.rxlcemodel.cache.entity/LifespanValidatorFactory.createSnapshot|createSnapshot(kotlin.String?){}[0]
+}
+
+final fun <#A: kotlin/Any> (#A).com.motorro.rxlcemodel.cache.entity/toEntity(com.motorro.rxlcemodel.cache.entity/EntityValidator): com.motorro.rxlcemodel.cache.entity/Entity.Impl<#A> // com.motorro.rxlcemodel.cache.entity/toEntity|toEntity@0:0(com.motorro.rxlcemodel.cache.entity.EntityValidator){0§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.cache/CacheDelegate<#A, com.motorro.rxlcemodel.cache/CacheFriend>).com.motorro.rxlcemodel.cache/makeFriendParams(crossinline kotlin/Function1<#B, kotlin/String>): com.motorro.rxlcemodel.cache/CacheDelegate<#A, #B> // com.motorro.rxlcemodel.cache/makeFriendParams|makeFriendParams@com.motorro.rxlcemodel.cache.CacheDelegate<0:0,com.motorro.rxlcemodel.cache.CacheFriend>(kotlin.Function1<0:1,kotlin.String>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.cache/CacheDelegate<#A, kotlin/String>).com.motorro.rxlcemodel.cache/stringifyParams(crossinline kotlin/Function1<#B, kotlin/String> = ...): com.motorro.rxlcemodel.cache/CacheDelegate<#A, #B> // com.motorro.rxlcemodel.cache/stringifyParams|stringifyParams@com.motorro.rxlcemodel.cache.CacheDelegate<0:0,kotlin.String>(kotlin.Function1<0:1,kotlin.String>){0§<kotlin.Any>;1§<kotlin.Any>}[0]

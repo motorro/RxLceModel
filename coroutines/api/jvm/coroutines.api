@@ -1,0 +1,125 @@
+public final class CoroutinesKt {
+	public static final fun coroutinesRunCatching (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/CacheThenNetLceModel : com/motorro/rxlcemodel/coroutines/LceModel {
+	public fun <init> (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/ServiceSet;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)V
+	public fun getParams ()Ljava/lang/Object;
+	public fun getState ()Lkotlinx/coroutines/flow/Flow;
+	public fun refresh (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/LceModel : com/motorro/rxlcemodel/coroutines/LceUseCase {
+	public static final field Companion Lcom/motorro/rxlcemodel/coroutines/LceModel$Companion;
+	public abstract fun getParams ()Ljava/lang/Object;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/LceModel$Companion {
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/NetService;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/NetService;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;Lkotlinx/coroutines/flow/Flow;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/NetService;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/NetService;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/ServiceSet;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/ServiceSet;Lkotlinx/coroutines/flow/Flow;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/ServiceSet;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public final fun cacheThenNet (Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/ServiceSet;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public static synthetic fun cacheThenNet$default (Lcom/motorro/rxlcemodel/coroutines/LceModel$Companion;Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/NetService;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public static synthetic fun cacheThenNet$default (Lcom/motorro/rxlcemodel/coroutines/LceModel$Companion;Ljava/lang/Object;Lcom/motorro/rxlcemodel/coroutines/service/ServiceSet;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/LceModelKt {
+	public static final fun withUpdates (Lcom/motorro/rxlcemodel/coroutines/LceModel;Lcom/motorro/rxlcemodel/coroutines/service/UpdatingServiceSet;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)Lcom/motorro/rxlcemodel/coroutines/UpdatingLceModel;
+	public static synthetic fun withUpdates$default (Lcom/motorro/rxlcemodel/coroutines/LceModel;Lcom/motorro/rxlcemodel/coroutines/service/UpdatingServiceSet;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/coroutines/UpdatingLceModel;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/LceUseCase {
+	public abstract fun getState ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun refresh (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/LceUtilsKt {
+	public static final fun errorToLce (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun errorToLce$default (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun flatMapLatestFlow (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun flatMapSingleData (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getData (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getDataNoErrors (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getDataStopOnEmptyErrors (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getDataStopOnErrors (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getStopOnEmptyErrors (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getStopOnErrors (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getValidData (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun map (Lcom/motorro/rxlcemodel/coroutines/LceModel;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/coroutines/LceModel;
+	public static final fun map (Lcom/motorro/rxlcemodel/coroutines/LceUseCase;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/coroutines/LceUseCase;
+	public static final fun onEmptyLoadingReturn (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun onEmptyLoadingReturnItem (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function0;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun refreshed (Lcom/motorro/rxlcemodel/coroutines/LceUseCase;)Lcom/motorro/rxlcemodel/coroutines/LceUseCase;
+	public static final fun refreshed (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun terminateOnError (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun withRefresh (Lcom/motorro/rxlcemodel/coroutines/LceUseCase;Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/StrategyUpdateWrapper : com/motorro/rxlcemodel/coroutines/UpdateWrapper {
+	public fun <init> (Lcom/motorro/rxlcemodel/coroutines/LceModel;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)V
+	public final fun update (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class com/motorro/rxlcemodel/coroutines/UpdateWrapper : com/motorro/rxlcemodel/coroutines/LceModel {
+	public fun <init> (Lcom/motorro/rxlcemodel/coroutines/LceModel;Lcom/motorro/rxlcemodel/coroutines/service/CacheService;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)V
+	protected final fun doUpdate (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getParams ()Ljava/lang/Object;
+	public fun getState ()Lkotlinx/coroutines/flow/Flow;
+	public fun refresh (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/UpdatingLceModel : com/motorro/rxlcemodel/coroutines/LceModel {
+	public abstract fun update (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/UpdatingLceModelWrapper : com/motorro/rxlcemodel/coroutines/UpdateWrapper, com/motorro/rxlcemodel/coroutines/UpdatingLceModel {
+	public fun <init> (Lcom/motorro/rxlcemodel/coroutines/LceModel;Lcom/motorro/rxlcemodel/coroutines/service/UpdatingServiceSet;Lkotlinx/coroutines/CoroutineDispatcher;Lcom/motorro/rxlcemodel/common/Logger;)V
+	public fun update (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/service/CacheService {
+	public static final field Companion Lcom/motorro/rxlcemodel/coroutines/service/CacheService$Companion;
+	public abstract fun delete (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getData (Ljava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun invalidate (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invalidateAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun refetch (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun refetchAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun save (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/Entity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/service/CacheService$Companion {
+	public final fun withSyncDelegate (Lcom/motorro/rxlcemodel/cache/CacheDelegate;)Lcom/motorro/rxlcemodel/coroutines/service/SyncDelegateCacheService;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/service/NetService {
+	public abstract fun get (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/service/ServiceSet {
+	public abstract fun getCache ()Lcom/motorro/rxlcemodel/coroutines/service/CacheService;
+	public abstract fun getNet ()Lcom/motorro/rxlcemodel/coroutines/service/NetService;
+}
+
+public final class com/motorro/rxlcemodel/coroutines/service/SyncDelegateCacheService : com/motorro/rxlcemodel/coroutines/service/CacheService {
+	public fun delete (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getData (Ljava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public fun invalidate (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun invalidateAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun refetch (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun refetchAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun save (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/Entity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/service/UpdatingNetService : com/motorro/rxlcemodel/coroutines/service/NetService {
+	public abstract fun update (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/motorro/rxlcemodel/coroutines/service/UpdatingServiceSet : com/motorro/rxlcemodel/coroutines/service/ServiceSet {
+	public abstract fun getNet ()Lcom/motorro/rxlcemodel/coroutines/service/UpdatingNetService;
+}
+

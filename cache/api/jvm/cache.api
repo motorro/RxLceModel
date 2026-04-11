@@ -1,0 +1,226 @@
+public abstract interface class com/motorro/rxlcemodel/cache/CacheDelegate {
+	public abstract fun delete (Ljava/lang/Object;)V
+	public abstract fun get (Ljava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public abstract fun invalidate (Ljava/lang/Object;)V
+	public abstract fun invalidateAll ()V
+	public abstract fun save (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/Entity;)V
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/CacheDelegateSerializerDeserializer {
+	public abstract fun deserializeSnapshot (Ljava/io/InputStream;JZ)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public abstract fun serialize (Lcom/motorro/rxlcemodel/cache/entity/Entity;Ljava/io/OutputStream;)V
+}
+
+public final class com/motorro/rxlcemodel/cache/CacheDelegateSerializerDeserializer$WithObjectStream : com/motorro/rxlcemodel/cache/CacheDelegateSerializerDeserializer {
+	public fun <init> (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Ljava/lang/Class;)V
+	public fun deserializeSnapshot (Ljava/io/InputStream;JZ)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public fun serialize (Lcom/motorro/rxlcemodel/cache/entity/Entity;Ljava/io/OutputStream;)V
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/CacheFriend {
+	public fun getCacheKey ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/CacheFriend$DefaultImpls {
+	public static fun getCacheKey (Lcom/motorro/rxlcemodel/cache/CacheFriend;)Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/CacheFriendDelegate : com/motorro/rxlcemodel/cache/CacheDelegate {
+	public fun <init> (Lcom/motorro/rxlcemodel/cache/CacheDelegate;)V
+	public fun delete (Lcom/motorro/rxlcemodel/cache/CacheFriend;)V
+	public synthetic fun delete (Ljava/lang/Object;)V
+	public fun get (Lcom/motorro/rxlcemodel/cache/CacheFriend;)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public synthetic fun get (Ljava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public fun invalidate (Lcom/motorro/rxlcemodel/cache/CacheFriend;)V
+	public synthetic fun invalidate (Ljava/lang/Object;)V
+	public fun invalidateAll ()V
+	public fun save (Lcom/motorro/rxlcemodel/cache/CacheFriend;Lcom/motorro/rxlcemodel/cache/entity/Entity;)V
+	public synthetic fun save (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/Entity;)V
+}
+
+public final class com/motorro/rxlcemodel/cache/CacheFriendDelegateKt {
+	public static final fun makeFriendParams (Lcom/motorro/rxlcemodel/cache/CacheDelegate;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/cache/CacheDelegate;
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/CacheManager {
+	public abstract fun close ()V
+	public abstract fun delete ()V
+}
+
+public final class com/motorro/rxlcemodel/cache/DataWithCacheKey {
+	public fun <init> (Ljava/lang/Object;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/Object;Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/DataWithCacheKey;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/cache/DataWithCacheKey;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/DataWithCacheKey;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCacheKey ()Ljava/lang/String;
+	public final fun getData ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/motorro/rxlcemodel/cache/MemorySyncDelegate : com/motorro/rxlcemodel/cache/CacheDelegate {
+	public static final field Companion Lcom/motorro/rxlcemodel/cache/MemorySyncDelegate$Companion;
+	public fun <init> ()V
+	public fun delete (Ljava/lang/Object;)V
+	public fun get (Ljava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	protected abstract fun getCache ()Lio/github/reactivecircus/cache4k/Cache;
+	public fun invalidate (Ljava/lang/Object;)V
+	public fun invalidateAll ()V
+	public fun save (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/Entity;)V
+}
+
+public final class com/motorro/rxlcemodel/cache/MemorySyncDelegate$Companion {
+	public final fun create (J)Lcom/motorro/rxlcemodel/cache/MemorySyncDelegate;
+}
+
+public final class com/motorro/rxlcemodel/cache/UtilsKt {
+	public static final fun stringifyParams (Lcom/motorro/rxlcemodel/cache/CacheDelegate;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/cache/CacheDelegate;
+	public static synthetic fun stringifyParams$default (Lcom/motorro/rxlcemodel/cache/CacheDelegate;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/CacheDelegate;
+}
+
+public final class com/motorro/rxlcemodel/cache/WithObjectStreamAndCacheKey : com/motorro/rxlcemodel/cache/CacheDelegateSerializerDeserializer {
+	public fun <init> (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Ljava/lang/Class;)V
+	public fun deserializeSnapshot (Ljava/io/InputStream;JZ)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public fun serialize (Lcom/motorro/rxlcemodel/cache/entity/Entity;Ljava/io/OutputStream;)V
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/entity/Entity : com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public abstract fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public abstract fun getData ()Ljava/lang/Object;
+	public abstract fun map (Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/Entity$Impl : com/motorro/rxlcemodel/cache/entity/Entity, com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public fun <init> (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;)Lcom/motorro/rxlcemodel/cache/entity/Entity$Impl;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/cache/entity/Entity$Impl;Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/Entity$Impl;
+	public fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public synthetic fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getData ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun isValid ()Z
+	public fun map (Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/cache/entity/Entity;
+	public fun serialize ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityKt {
+	public static final fun toEntity (Ljava/lang/Object;Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;)Lcom/motorro/rxlcemodel/cache/entity/Entity$Impl;
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public abstract fun isValid ()Z
+	public abstract fun serialize ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Always : com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public static final field INSTANCE Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Always;
+	public fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun isValid ()Z
+	public fun serialize ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Always$AlwaysDeserializer : com/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer {
+	public static final field INSTANCE Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Always$AlwaysDeserializer;
+	public fun deserialize (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun deserializeSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$DefaultImpls {
+	public static fun createSnapshot (Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer {
+	public abstract fun deserialize (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun deserializeSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer$DefaultImpls {
+	public static fun deserializeSnapshot (Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer;Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan : com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public static final field Companion Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$Companion;
+	public synthetic fun <init> (JJLcom/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$Validation;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (JLcom/motorro/rxlcemodel/common/Clock;)V
+	public synthetic fun <init> (JLcom/motorro/rxlcemodel/common/Clock;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun isValid ()Z
+	public fun serialize ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$Companion {
+	public final fun createSnapshot (JLcom/motorro/rxlcemodel/common/Clock;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan;
+	public static synthetic fun createSnapshot$default (Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$Companion;JLcom/motorro/rxlcemodel/common/Clock;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$LifespanDeserializer : com/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer {
+	public static final field Companion Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$LifespanDeserializer$Companion;
+	public fun <init> ()V
+	public fun <init> (Lcom/motorro/rxlcemodel/common/Clock;)V
+	public synthetic fun <init> (Lcom/motorro/rxlcemodel/common/Clock;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun deserialize (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun deserializeSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Lifespan$LifespanDeserializer$Companion {
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Never : com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public static final field INSTANCE Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Never;
+	public fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun isValid ()Z
+	public fun serialize ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Never$NeverDeserializer : com/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer {
+	public static final field INSTANCE Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Never$NeverDeserializer;
+	public fun deserialize (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun deserializeSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Simple : com/motorro/rxlcemodel/cache/entity/EntityValidator {
+	public fun <init> (Z)V
+	public final fun copy (Z)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Simple;
+	public static synthetic fun copy$default (Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Simple;ZILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Simple;
+	public fun createSnapshot ()Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun isValid ()Z
+	public fun serialize ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidator$Simple$SimpleDeserializer : com/motorro/rxlcemodel/cache/entity/EntityValidator$Deserializer {
+	public static final field INSTANCE Lcom/motorro/rxlcemodel/cache/entity/EntityValidator$Simple$SimpleDeserializer;
+	public fun deserialize (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun deserializeSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public abstract interface class com/motorro/rxlcemodel/cache/entity/EntityValidatorFactory {
+	public abstract fun create (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public static synthetic fun create$default (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Ljava/lang/String;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public abstract fun createSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public static synthetic fun createSnapshot$default (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Ljava/lang/String;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/EntityValidatorFactory$DefaultImpls {
+	public static synthetic fun create$default (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Ljava/lang/String;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public static synthetic fun createSnapshot$default (Lcom/motorro/rxlcemodel/cache/entity/EntityValidatorFactory;Ljava/lang/String;ILjava/lang/Object;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
+public final class com/motorro/rxlcemodel/cache/entity/LifespanValidatorFactory : com/motorro/rxlcemodel/cache/entity/EntityValidatorFactory {
+	public fun <init> (JLcom/motorro/rxlcemodel/common/Clock;)V
+	public synthetic fun <init> (JLcom/motorro/rxlcemodel/common/Clock;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun create (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+	public fun createSnapshot (Ljava/lang/String;)Lcom/motorro/rxlcemodel/cache/entity/EntityValidator;
+}
+
