@@ -15,7 +15,10 @@ package com.motorro.rxlcemodel.sample.view
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,17 +30,11 @@ import com.motorro.rxlcemodel.sample.databinding.ActivityMainBinding
 import com.motorro.rxlcemodel.sample.service.CacheManager
 import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
-class MainActivity : AppCompatActivity(), HasAndroidInjector {
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Any>
-
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var cacheManager: CacheManager
 
@@ -45,11 +42,6 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     lateinit var connectionChecker: ConnectionChecker
 
     private lateinit var binding: ActivityMainBinding
-
-    /**
-     * Returns an [AndroidInjector].
-     */
-    override fun androidInjector(): AndroidInjector<Any> = fragmentInjector
 
     /**
      * Destroys cache when activity is destroyed to illustrate cache management.
@@ -62,10 +54,15 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         setupConnectionSwitch()
         setupDeleteListener()

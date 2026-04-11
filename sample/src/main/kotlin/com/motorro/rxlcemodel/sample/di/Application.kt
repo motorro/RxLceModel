@@ -13,56 +13,39 @@
 
 package com.motorro.rxlcemodel.sample.di
 
+import android.app.Application
 import android.content.Context
 import com.motorro.rxlcemodel.rx.service.NetService
-import com.motorro.rxlcemodel.sample.App
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.FakeServer
 import com.motorro.rxlcemodel.sample.service.NetRepository
-import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.service.usecase.NoteListNetService
 import com.motorro.rxlcemodel.sample.service.usecase.NoteNetService
 import com.motorro.rxlcemodel.sample.utils.ConnectionChecker
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
-import dagger.*
-import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Singleton
 
 
-@Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, ApplicationModule::class, ActivityModule::class])
-interface ApplicationComponent: AndroidInjector<App> {
-    @Component.Builder
-    interface Builder {
-
-        fun build(): ApplicationComponent
-
-        @BindsInstance
-        fun application(application: App): Builder
-    }
-
-    /**
-     * Note deletion is done using worker
-     */
-    fun inject(deleteWorker: DeleteWorker)
-}
-
-@Module(includes = [ServiceModule::class, CacheConfigModule::class, CacheModule::class])
 /**
  * Provides common application parts
  */
+@Module
+@InstallIn(SingletonComponent::class)
 class ApplicationModule {
     /**
      * Application context
      */
-    @Singleton
     @Provides
-    fun context(app: App): Context = app.applicationContext
+    fun context(app: Application): Context = app.applicationContext
 
     /**
      * Provides schedulers
@@ -91,12 +74,11 @@ class ApplicationModule {
 }
 
 @Module
+@InstallIn(SingletonComponent::class)
 abstract class ServiceModule {
-    @Singleton
     @Binds
     abstract fun noteListNetService(impl: NoteListNetService): NetService<NoteList, Unit>
 
-    @Singleton
     @Binds
     abstract fun noteNetService(impl: NoteNetService): NetService<Note, Int>
 }

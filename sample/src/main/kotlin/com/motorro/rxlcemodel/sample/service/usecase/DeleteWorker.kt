@@ -14,21 +14,27 @@
 package com.motorro.rxlcemodel.sample.service.usecase
 
 import android.content.Context
+import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.rxjava3.RxWorker
 import androidx.work.workDataOf
-import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.core.Single
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Delete with worker to illustrate how data may be invalidated from non-visual components
  * @see DeleteNote
  */
-class DeleteWorker(context: Context, params: WorkerParameters) : RxWorker(context, params) {
+@HiltWorker
+class DeleteWorker @AssistedInject constructor(
+    private val deleteNote: DeleteNote,
+    @Assisted context: Context,
+    @Assisted params: WorkerParameters
+) : RxWorker(context, params) {
     companion object {
         private const val NOTE_ID = "noteId"
         const val TAG = "deleteNote"
@@ -46,17 +52,6 @@ class DeleteWorker(context: Context, params: WorkerParameters) : RxWorker(contex
             WorkManager.getInstance(context).enqueue(request)
             Timber.d("DeleteWorker scheduled to delete note $noteId")
         }
-    }
-
-    /**
-     * Deletion use-case
-     */
-    @Inject
-    lateinit var deleteNote: DeleteNote
-
-    init {
-        (context as ProvidesApplicationComponent).applicationComponent.inject(this)
-        Timber.d("DeleteWorker created")
     }
 
     /**

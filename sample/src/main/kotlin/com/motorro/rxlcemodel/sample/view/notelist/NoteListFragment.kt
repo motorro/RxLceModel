@@ -14,7 +14,6 @@
 
 package com.motorro.rxlcemodel.sample.view.notelist
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,19 +25,23 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.sample.databinding.FragmentNoteListBinding
+import com.motorro.rxlcemodel.sample.di.NoteListFragmentModule
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
-import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
+@AndroidEntryPoint
 class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
     /**
      * Factory for [noteListModel]
      */
     @Inject
+    @Named(NoteListFragmentModule.VIEW_MODEL_FACTORY)
     lateinit var noteListModelFactory: ViewModelProvider.Factory
 
     /**
@@ -99,11 +102,6 @@ class NoteListFragment : LceFragment<ViewGroup, NoteList>() {
      * Performs action on error click
      */
     override fun onErrorClick() = noteListModel.refresh()
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentNoteListBinding.inflate(inflater, container, false)

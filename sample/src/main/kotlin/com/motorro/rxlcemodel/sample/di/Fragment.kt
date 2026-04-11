@@ -19,25 +19,24 @@ import com.motorro.rxlcemodel.rx.service.NetService
 import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
-import com.motorro.rxlcemodel.sample.view.addnote.AddNoteViewModel
-import com.motorro.rxlcemodel.sample.view.note.NoteFragment
-import com.motorro.rxlcemodel.sample.view.note.NoteViewModel
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.FragmentComponent
 import javax.inject.Named
-import javax.inject.Scope
-
-/**
- * Component lives as long as fragment is alive
- */
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-annotation class FragmentScope
 
 @Module
+@InstallIn(FragmentComponent::class)
 class NoteListFragmentModule {
-    @FragmentScope
+    companion object {
+        /**
+         * Factory ID
+         */
+        const val VIEW_MODEL_FACTORY = "noteList"
+    }
+
     @Provides
+    @Named(VIEW_MODEL_FACTORY)
     fun viewModelFactory(
         netService: @JvmSuppressWildcards NetService<NoteList, Unit>,
         cacheService: @JvmSuppressWildcards CacheService<NoteList, Unit>,
@@ -49,27 +48,3 @@ class NoteListFragmentModule {
         override val params: Unit = Unit
     }
 }
-
-@Module
-class NoteFragmentModule {
-    companion object {
-        const val NOTE_ID = "noteId"
-    }
-
-    @FragmentScope
-    @Provides
-    @Named(NOTE_ID)
-    fun noteId(noteFragment: NoteFragment): Int = noteFragment.noteId
-
-    @FragmentScope
-    @Provides
-    fun viewModelFactory(impl: NoteViewModel.Factory): ViewModelProvider.Factory = impl
-}
-
-@Module
-class AddNoteFragmentModule {
-    @FragmentScope
-    @Provides
-    fun viewModelFactory(impl: AddNoteViewModel.Factory): ViewModelProvider.Factory = impl
-}
-

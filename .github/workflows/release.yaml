@@ -10,23 +10,16 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: refs/remotes/origin/master
-      - name: set up JDK 17
-        uses: actions/setup-java@v1
+      - name: set up JDK 21
+        uses: actions/setup-java@v4
         with:
-          java-version: 17
+          distribution: 'temurin'
+          java-version: 21
       - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.m2
-            ~/.android/build-cache
-          key: ${GITHUB_REF##*/}
+        uses: actions/cache@v4
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Release build

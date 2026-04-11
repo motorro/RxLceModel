@@ -11,14 +11,9 @@
  * limitations under the License.
  */
 
-@file:Suppress("UNUSED_VARIABLE", "DSL_SCOPE_VIOLATION")
-
-import org.jetbrains.dokka.gradle.DokkaTask
-import java.net.URI
-
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.rxlcemodel.kmp)
+    alias(libs.plugins.kotlin.dokka)
     id("maven-publish")
     id("signing")
 }
@@ -28,88 +23,27 @@ val versionName: String by project.extra
 group = rootProject.group
 version = rootProject.version
 
-kotlin {
-
-    jvm {
-        compilations.all {
-            kotlinOptions {
-                kotlinOptions.jvmTarget = "17"
-                freeCompilerArgs = freeCompilerArgs + listOf(
-                    "-opt-in=kotlin.RequiresOptIn",
-                    "-module-name", "rxlcemodel-${project.name}"
-                )
-            }
-        }
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
-    }
-
-    js(IR) {
-        compilations.all {
-            kotlinOptions.freeCompilerArgs += listOf(
-                "-opt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlin.js.ExperimentalJsExport"
-            )
-        }
-        binaries.library()
-        useCommonJs()
-        browser {
-            testTask {
-                useMocha {
-                    timeout = "10s"
-                }
-            }
-        }
-    }
-
-    sourceSets {
-        val commonMain by getting
-        val commonTest by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
-            }
-        }
-        val jvmMain by getting
-        val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
-    }
-}
-
-val dokkaHtml by tasks.getting(DokkaTask::class)
-
-val javadocJar by tasks.creating(Jar::class) {
-    dependsOn(dokkaHtml)
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.dokkaGenerate)
     group = "documentation"
     archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml)
+    from(tasks.dokkaGenerate)
 }
 
 val libId = "utils"
 val libName = "utils"
 val libDesc = "Common utils for RxLceModel"
-val projectUrl: String by rootProject.extra
-val projectScm: String by rootProject.extra
+val projectUrl: String by project.extra
+val projectScm: String by project.extra
 val ossrhUsername: String? by rootProject.extra
 val ossrhPassword: String? by rootProject.extra
-val developerId: String by rootProject.extra
-val developerName: String by rootProject.extra
-val developerEmail: String by rootProject.extra
+val developerId: String by project.extra
+val developerName: String by project.extra
+val developerEmail: String by project.extra
 val signingKey: String? by rootProject.extra
 val signingPassword: String? by rootProject.extra
 
 publishing {
-    repositories {
-        maven {
-            name = "sonatype"
-            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = ossrhUsername
-                password = ossrhPassword
-            }
-        }
-    }
     publications.withType<MavenPublication> {
         artifact(javadocJar)
         pom {
@@ -147,3 +81,4 @@ val signingTasks = tasks.withType<Sign>()
 tasks.withType<AbstractPublishToMaven>().configureEach {
     dependsOn(signingTasks)
 }
+

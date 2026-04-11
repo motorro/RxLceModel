@@ -14,43 +14,13 @@
 package com.motorro.rxlcemodel.sample
 
 import android.app.Application
-import com.motorro.rxlcemodel.sample.di.ApplicationComponent
-import com.motorro.rxlcemodel.sample.di.DaggerApplicationComponent
-import com.motorro.rxlcemodel.sample.di.ProvidesApplicationComponent
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import timber.log.Timber
-import javax.inject.Inject
 
-class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
-    /**
-     * Application component
-     */
-    override lateinit var applicationComponent: ApplicationComponent
-
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Any>
-
-    /**
-     * Returns an AndroidInjector
-     */
-    override fun androidInjector(): AndroidInjector<Any> = activityInjector
-
-    /**
-     * Creates Dagger application component and injects application
-     */
-    private fun inject() {
-        applicationComponent = DaggerApplicationComponent
-            .builder()
-            .application(this)
-            .build()
-
-        applicationComponent.inject(this)
-    }
-
+@HiltAndroidApp
+class App: Application() {
     /**
      * Sets-up console logging
      */
@@ -60,7 +30,6 @@ class App: Application(), HasAndroidInjector, ProvidesApplicationComponent {
 
     override fun onCreate() {
         super.onCreate()
-        inject()
         setupLogger()
         Timber.d("Application started")
         setRxErrorHook()

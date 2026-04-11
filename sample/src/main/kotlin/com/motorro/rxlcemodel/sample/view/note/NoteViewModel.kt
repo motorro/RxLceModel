@@ -20,8 +20,6 @@ import com.motorro.rxlcemodel.rx.LceModel
 import com.motorro.rxlcemodel.rx.UpdateWrapper
 import com.motorro.rxlcemodel.rx.service.CacheService
 import com.motorro.rxlcemodel.rx.service.NetService
-import com.motorro.rxlcemodel.sample.di.FragmentScope
-import com.motorro.rxlcemodel.sample.di.NoteFragmentModule.Companion.NOTE_ID
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.service.usecase.DeleteWorker
 import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteText
@@ -29,13 +27,14 @@ import com.motorro.rxlcemodel.sample.service.usecase.PatchNoteTitle
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.sample.view.BaseLceModelFactory
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * The model that:
@@ -113,9 +112,8 @@ class NoteViewModel(
      * - create [LceModel] in a [ViewModel] on parameters change
      *   e.g. [Transforming LiveData](https://developer.android.com/topic/libraries/architecture/livedata#transform_livedata)
      */
-    @FragmentScope
-    class Factory @Inject constructor(
-        @Named(NOTE_ID) override val params: Int,
+    class Factory @AssistedInject constructor(
+        @Assisted override val params: Int,
         netService: @JvmSuppressWildcards NetService<Note, Int>,
         cacheService: @JvmSuppressWildcards CacheService<Note, Int>,
         private val patchNoteTitle: PatchNoteTitle,
@@ -126,24 +124,27 @@ class NoteViewModel(
         /**
          * Creates a wrapper with update operations
          */
-        private fun createUpdateWrapper(upstream: LceModel<Note, Int>) =
-            NoteUpdateWrapper(
-                upstream,
-                cacheService,
-                patchNoteTitle,
-                patchNoteText
-            )
+        private fun createUpdateWrapper(upstream: LceModel<Note, Int>) = NoteUpdateWrapper(
+            upstream,
+            cacheService,
+            patchNoteTitle,
+            patchNoteText
+        )
 
         /**
          * Model factory function
          */
-        override fun createModel(lceModel: LceModel<Note, Int>): ViewModel =
-            NoteViewModel(
-                noteId = params,
-                lceModel = createUpdateWrapper(createLceModel()),
-                schedulers = schedulers,
-                scheduleDelete = { DeleteWorker.execute(context, it) }
-            )
+        override fun createModel(lceModel: LceModel<Note, Int>): ViewModel = NoteViewModel(
+            noteId = params,
+            lceModel = createUpdateWrapper(createLceModel()),
+            schedulers = schedulers,
+            scheduleDelete = { DeleteWorker.execute(context, it) }
+        )
+
+        @AssistedFactory
+        interface Creator {
+            fun create(params: Int): Factory
+        }
     }
 }
 

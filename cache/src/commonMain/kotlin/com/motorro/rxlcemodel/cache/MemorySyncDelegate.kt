@@ -32,7 +32,7 @@ abstract class MemorySyncDelegate<D: Any, P: Any>: CacheDelegate<D, P> {
             /**
              * Data storage
              */
-            override val cache: Cache<P, Entity<D>> = Cache.Builder().maximumCacheSize(maxEntries).build()
+            override val cache: Cache<P, Entity<D>> = Cache.Builder<P, Entity<D>>().maximumCacheSize(maxEntries).build()
         }
     }
 

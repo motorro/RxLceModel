@@ -27,6 +27,8 @@ import com.motorro.rxlcemodel.sample.domain.data.NoteList
 import com.motorro.rxlcemodel.sample.service.CacheManager
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Named
 import javax.inject.Singleton
@@ -36,6 +38,7 @@ import javax.inject.Singleton
  * @see com.motorro.rxlcemodel.sample.di.ServiceModule
  */
 @Module
+@InstallIn(SingletonComponent::class)
 class CacheConfigModule {
     companion object {
         const val NOTE_LIST = "noteList"
@@ -63,6 +66,7 @@ class CacheConfigModule {
  * Defines caching components
  */
 @Module
+@InstallIn(SingletonComponent::class)
 class CacheModule {
     companion object {
         /**

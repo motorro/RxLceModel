@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.rx.LceUseCase
-import com.motorro.rxlcemodel.sample.di.FragmentScope
 import com.motorro.rxlcemodel.sample.service.usecase.AddNote
 import com.motorro.rxlcemodel.sample.utils.SchedulerRepository
 import com.motorro.rxlcemodel.viewmodel.BaseLceModel
@@ -43,7 +42,6 @@ class AddNoteViewModel(private val addNote: (String, String) -> Completable): Ba
         runUpdate(addNote(title, text), true)
     }
 
-    @FragmentScope
     class Factory @Inject constructor(addNote: AddNote, schedulers: SchedulerRepository): ViewModelProvider.Factory {
 
         private val addNoteOperation = { title: String, text: String ->

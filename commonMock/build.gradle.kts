@@ -11,10 +11,9 @@
  * limitations under the License.
  */
 
-@file:Suppress("UNUSED_VARIABLE", "DSL_SCOPE_VIOLATION")
-
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
+    alias(libs.plugins.rxlcemodel.kmp)
+    alias(libs.plugins.kotlin.dokka)
 }
 
 val versionName: String by project.extra
@@ -22,56 +21,13 @@ val versionName: String by project.extra
 group = rootProject.group
 version = rootProject.version
 
-@Suppress("UNCHECKED_CAST")
-val versions: Map<String, String> = rootProject.extra["commonLibVersions"] as Map<String, String>
-
 kotlin {
-
-    jvm {
-        compilations.all {
-            kotlinOptions {
-                kotlinOptions.jvmTarget = "17"
-                freeCompilerArgs = freeCompilerArgs + listOf(
-                    "-opt-in=kotlin.RequiresOptIn",
-                    "-module-name", "rxlcemodel-${project.name}"
-                )
-            }
-        }
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
-    }
-
-    js(IR) {
-        compilations.all {
-            kotlinOptions.freeCompilerArgs += listOf(
-                "-opt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlin.js.ExperimentalJsExport"
-            )
-        }
-        binaries.library()
-        useCommonJs()
-        browser {
-            testTask {
-                useMocha {
-                    timeout = "10s"
-                }
-            }
-        }
-    }
-
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":utils"))
-                implementation(project(":cache"))
-                implementation("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
-            }
+        commonMain.dependencies {
+            implementation(project(":utils"))
+            implementation(project(":cache"))
+            implementation(libs.kotlin.test)
         }
-        val commonTest by getting
-        val jvmMain by getting
-        val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
     }
 }
+

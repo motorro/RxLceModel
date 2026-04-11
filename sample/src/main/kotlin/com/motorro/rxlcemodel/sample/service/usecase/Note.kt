@@ -24,7 +24,7 @@ class PatchNote @Inject constructor (
     private val connectionChecker: ConnectionChecker,
     private val netRepository: NetRepository,
     private val listCache: @JvmSuppressWildcards CacheService<NoteList, Unit>,
-    @Named(CacheConfigModule.NOTE) private val entityFactory: EntityValidatorFactory
+    @param:Named(CacheConfigModule.NOTE) private val entityFactory: EntityValidatorFactory
 ) {
     /**
      * Patches note properties and invalidates note-list cache

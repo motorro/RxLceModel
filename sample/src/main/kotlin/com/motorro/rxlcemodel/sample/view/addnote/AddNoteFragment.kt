@@ -13,27 +13,26 @@
 
 package com.motorro.rxlcemodel.sample.view.addnote
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.sample.databinding.FragmentAddNoteBinding
 import com.motorro.rxlcemodel.sample.view.LceFragment
-import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
 
     /**
      * Factory for [noteModel]
      */
     @Inject
-    lateinit var noteModelFactory: ViewModelProvider.Factory
+    lateinit var noteModelFactory: AddNoteViewModel.Factory
 
     /**
      * Model to load a note
@@ -69,11 +68,6 @@ class AddNoteFragment: LceFragment<ViewGroup, Unit>() {
      */
     override fun processTermination() {
         findNavController().popBackStack()
-    }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

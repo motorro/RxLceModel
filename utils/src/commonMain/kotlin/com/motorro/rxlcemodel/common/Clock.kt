@@ -12,6 +12,7 @@
  */
 
 package com.motorro.rxlcemodel.common
+import kotlin.time.Clock as KotlinClock
 
 /**
  * Time provider
@@ -26,8 +27,10 @@ interface Clock {
         /**
          * System clock
          */
-        val SYSTEM: Clock = getSystemClock()
+        val SYSTEM: Clock = object : Clock {
+            override fun getMillis(): Long {
+                return KotlinClock.System.now().toEpochMilliseconds()
+            }
+        }
     }
 }
-
-internal expect fun getSystemClock(): Clock

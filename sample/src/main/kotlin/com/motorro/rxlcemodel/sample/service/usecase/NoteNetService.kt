@@ -33,7 +33,7 @@ import javax.inject.Singleton
 class NoteNetService @Inject constructor(
     private val connectionChecker: ConnectionChecker,
     private val netRepository: NetRepository,
-    @Named(NOTE) private val entityFactory: EntityValidatorFactory
+    @param:Named(NOTE) private val entityFactory: EntityValidatorFactory
 ): NetService<Note, Int> {
     /**
      * Gets entity from network or throws on error

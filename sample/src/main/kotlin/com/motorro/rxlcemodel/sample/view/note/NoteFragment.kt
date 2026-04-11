@@ -13,27 +13,30 @@
 
 package com.motorro.rxlcemodel.sample.view.note
 
-import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.sample.R
 import com.motorro.rxlcemodel.sample.databinding.FragmentNoteBinding
-import com.motorro.rxlcemodel.sample.di.ProvidesNoteId
 import com.motorro.rxlcemodel.sample.domain.data.Note
 import com.motorro.rxlcemodel.sample.view.LceFragment
 import com.motorro.rxlcemodel.sample.view.TIME_FORMATTER
-import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
+@AndroidEntryPoint
+class NoteFragment : LceFragment<ViewGroup, Note>() {
 
     /**
      * Fragment arguments - note ID
@@ -41,21 +44,15 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
     private val arguments: NoteFragmentArgs by navArgs()
 
     /**
-     * Provides note ID to injector
-     */
-    override val noteId: Int
-        get() = arguments.noteId
-
-    /**
      * Factory for [noteModel]
      */
     @Inject
-    lateinit var noteModelFactory: ViewModelProvider.Factory
+    lateinit var noteModelFactoryCreator: NoteViewModel.Factory.Creator
 
     /**
      * Model to load a note
      */
-    private val noteModel: NoteViewModel by viewModels { noteModelFactory }
+    private val noteModel: NoteViewModel by viewModels { noteModelFactoryCreator.create(arguments.noteId) }
 
     /**
      * View-binding
@@ -160,11 +157,6 @@ class NoteFragment : LceFragment<ViewGroup, Note>(), ProvidesNoteId {
      */
     override fun processTermination() {
         findNavController().popBackStack()
-    }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

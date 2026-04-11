@@ -17,7 +17,7 @@ package com.motorro.rxlcemodel.lce
  * State for "Loading-Content-Error" resource which retrieves [data]
  * @param DATA Data Type of data being held
  */
-sealed class LceState<out DATA: Any> {
+sealed class LceState<out DATA : Any> {
     /**
      * State data
      */
@@ -48,11 +48,11 @@ sealed class LceState<out DATA: Any> {
      * @property dataIsValid Data validity at the time of emission
      * @property type Loading type
      */
-    data class Loading<out DATA: Any>(
-            override val data: DATA?,
-            override val dataIsValid: Boolean,
-            val type: Type = Type.LOADING
-    ): LceState<DATA>() {
+    data class Loading<out DATA : Any>(
+        override val data: DATA?,
+        override val dataIsValid: Boolean,
+        val type: Type = Type.LOADING
+    ) : LceState<DATA>() {
         /**
          * Loading type
          */
@@ -61,14 +61,17 @@ sealed class LceState<out DATA: Any> {
              * Just loads. May be initial load operation
              */
             LOADING,
+
             /**
              * Loading more items for paginated view
              */
             LOADING_MORE,
+
             /**
              * Refreshing content
              */
             REFRESHING,
+
             /**
              * Updating data on server
              */
@@ -81,10 +84,10 @@ sealed class LceState<out DATA: Any> {
      * @property data State data
      * @property dataIsValid Data validity at the time of emission
      */
-    data class Content<out DATA: Any>(
-            override val data: DATA,
-            override val dataIsValid: Boolean
-    ): LceState<DATA>()
+    data class Content<out DATA : Any>(
+        override val data: DATA,
+        override val dataIsValid: Boolean
+    ) : LceState<DATA>()
 
     /**
      * Data (or part of it) failed to load
@@ -92,11 +95,11 @@ sealed class LceState<out DATA: Any> {
      * @property dataIsValid Data validity at the time of emission
      * @property error Data load error
      */
-    data class Error<out DATA: Any>(
-            override val data: DATA?,
-            override val dataIsValid: Boolean,
-            val error: Throwable
-    ): LceState<DATA>()
+    data class Error<out DATA : Any>(
+        override val data: DATA?,
+        override val dataIsValid: Boolean,
+        val error: Throwable
+    ) : LceState<DATA>()
 
     /**
      * A special state that may be used to terminate state emission in cases we always need a latest state to proceed
@@ -109,7 +112,7 @@ sealed class LceState<out DATA: Any> {
      * does not emit completion and caches the latest emission. So converting stream to LiveData will loose Rx completion
      * logic.
      */
-    object Terminated: LceState<Nothing>() {
+    object Terminated : LceState<Nothing>() {
         /**
          * State data
          */
@@ -132,8 +135,8 @@ sealed class LceState<out DATA: Any> {
  * Maps data in LceState
  * @param mapper Data mapper
  */
-inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.map(mapper: (data: DATA_1) -> DATA_2): LceState<DATA_2> {
-    return when(this) {
+inline fun <DATA_1 : Any, DATA_2 : Any> LceState<DATA_1>.map(mapper: (data: DATA_1) -> DATA_2): LceState<DATA_2> {
+    return when (this) {
         is LceState.Loading -> LceState.Loading(data?.let(mapper), dataIsValid, type)
         is LceState.Content -> LceState.Content(mapper(data), dataIsValid)
         is LceState.Error -> LceState.Error(data?.let(mapper), dataIsValid, error)
@@ -167,7 +170,10 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.map(mapper: (data: DATA_1
  * @param mapper Data mapper function. Returning null from it means data is not ready and will result
  * in loading state even if both states has data. You may return null-value of any kind to alter resulting state.
  */
-inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(other: LceState<DATA_2>, mapper: (data1: DATA_1?, data2: DATA_2?) -> DATA_3?):  LceState<DATA_3> {
+inline fun <DATA_1 : Any, DATA_2 : Any, DATA_3 : Any> LceState<DATA_1>.combine(
+    other: LceState<DATA_2>,
+    mapper: (data1: DATA_1?, data2: DATA_2?) -> DATA_3?
+): LceState<DATA_3> {
     val data3 = mapper(data, other.data)
     val dataIsValid = null != data3 && dataIsValid && other.dataIsValid
 
@@ -177,6 +183,7 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
             is LceState.Terminated -> LceState.Terminated
             else -> LceState.Loading(data3, dataIsValid, this.type)
         }
+
         is LceState.Content -> when (other) {
             is LceState.Error -> LceState.Error(data3, dataIsValid, other.error)
             is LceState.Terminated -> LceState.Terminated
@@ -187,11 +194,13 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
                 LceState.Content(data3, dataIsValid)
             }
         }
+
         is LceState.Error -> if (other is LceState.Terminated) {
             LceState.Terminated
         } else {
             LceState.Error(data3, dataIsValid, error)
         }
+
         is LceState.Terminated -> LceState.Terminated
     }
 }
@@ -220,7 +229,7 @@ inline fun <DATA_1: Any, DATA_2: Any, DATA_3: Any> LceState<DATA_1>.combine(othe
  * @receiver An Lce state that has a priority in final state resolution
  * @param mapper Returns a new [LceState] as a product of receiver data
  */
-inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.flatMap(mapper: (data1: DATA_1) -> LceState<DATA_2>): LceState<DATA_2> = when (this) {
+inline fun <DATA_1 : Any, DATA_2 : Any> LceState<DATA_1>.flatMap(mapper: (data1: DATA_1) -> LceState<DATA_2>): LceState<DATA_2> = when (this) {
     is LceState.Loading -> {
         val other = data?.let(mapper)
         val data3 = other?.data
@@ -232,6 +241,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.flatMap(mapper: (data1: D
             else -> LceState.Loading(data3, dataIsValid, this.type)
         }
     }
+
     is LceState.Content -> {
         val other = mapper(data)
         val data3 = other.data
@@ -248,6 +258,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.flatMap(mapper: (data1: D
             }
         }
     }
+
     is LceState.Error -> {
         val other = data?.let(mapper)
         val data3 = other?.data
@@ -259,6 +270,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.flatMap(mapper: (data1: D
             LceState.Error(data3, dataIsValid, error)
         }
     }
+
     is LceState.Terminated -> {
         LceState.Terminated
     }
@@ -269,7 +281,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.flatMap(mapper: (data1: D
  * - The output data will be null
  * - The data will be invalid
  */
-inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.catchToLce(block: LceState<DATA_1>.() -> LceState<DATA_2>): LceState<DATA_2> = try {
+inline fun <DATA_1 : Any, DATA_2 : Any> LceState<DATA_1>.catchToLce(block: LceState<DATA_1>.() -> LceState<DATA_2>): LceState<DATA_2> = try {
     block()
 } catch (e: Throwable) {
     LceState.Error(null, false, e)
@@ -280,7 +292,7 @@ inline fun <DATA_1: Any, DATA_2: Any> LceState<DATA_1>.catchToLce(block: LceStat
  * @receiver LCE state
  * @param block transformation block
  */
-inline fun <reified DATA: Any> LceState<DATA>.mapEmptyData(crossinline block: (LceState<DATA>) -> LceState<DATA>): LceState<DATA> =
+inline fun <reified DATA : Any> LceState<DATA>.mapEmptyData(crossinline block: (LceState<DATA>) -> LceState<DATA>): LceState<DATA> =
     if (null == this.data) {
         block(this)
     } else {
@@ -292,12 +304,11 @@ inline fun <reified DATA: Any> LceState<DATA>.mapEmptyData(crossinline block: (L
  * @receiver LCE stream
  * @param block transformation block
  */
-inline fun <DATA: Any> LceState<DATA>.mapEmptyDataItem(crossinline block: () -> DATA?): LceState<DATA> =
-    when {
-        null != data -> this
-        else -> when (this) {
-            is LceState.Loading -> LceState.Loading(block(), dataIsValid, type)
-            is LceState.Error -> LceState.Error(block(), dataIsValid, error)
-            else -> this
-        }
+inline fun <DATA : Any> LceState<DATA>.mapEmptyDataItem(crossinline block: () -> DATA?): LceState<DATA> = when {
+    null != data -> this
+    else -> when (this) {
+        is LceState.Loading -> LceState.Loading(block(), dataIsValid, type)
+        is LceState.Error -> LceState.Error(block(), dataIsValid, error)
+        else -> this
     }
+}
