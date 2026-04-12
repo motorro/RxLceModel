@@ -1,5 +1,5 @@
 # RxLceModel
-[![Check](https://github.com/motorro/RxLceModel/actions/workflows/check.yml/badge.svg?branch=master)](https://github.com/motorro/AppUpdateWrapper/actions/workflows/check.yml) 
+[![Check](https://github.com/motorro/RxLceModel/actions/workflows/check.yml/badge.svg?branch=master)](https://github.com/motorro/RxLceModel/actions/workflows/check.yml) ![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/rx/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/)
 
 A reactive data loading for Android based on 
 [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
@@ -61,42 +61,43 @@ To upgrade the version you need to change the dependency as described in the [mi
 Different artifacts for the main use-cases are to be required depending on which library you choose.
 
 ## Setting up the dependency
-`Rx` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/rx/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/):
+`Rx` Usecase module 
+[![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/rx/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/):
 ```groovy
 dependencies {
     // Base model components
     implementation "com.motorro.rxlcemodel:rx:x.x.x"
 }
 ```
-`Coroutines` Usecase module [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/coroutines/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/coroutines/):
+`Coroutines` Usecase module [![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/coroutines/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/coroutines/):
 ```groovy
 dependencies {
     // Base model components
     implementation "com.motorro.rxlcemodel:coroutines:x.x.x"
 }
 ```
-Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/disklrucache/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/disklrucache/):
+Optional: [Jake Wharton's DiskLruCache](https://github.com/JakeWharton/DiskLruCache) cache delegate for RxLceModel [![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/disklrucache/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/disklrucache/):
 ```groovy
 dependencies {
     // Jake Wharton's DiskLruCache delegate for cache implementation
     implementation "com.motorro.rxlcemodel:disklrucache:x.x.x"
 }
 ```
-Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/kserializer/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/kserializer/):
+Optional: [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/) serializer for DiskLruCache delegate [![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/kserializer/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/kserializer/):
 ```groovy
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
     implementation "com.motorro.rxlcemodel:kserializer:x.x.x"
 }
 ```
-Optional: LCE ViewModel and base view ready to accept LCE use-case for your view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/viewmodel/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/viewmodel/):
+Optional: LCE ViewModel and base view ready to accept LCE use-case for your view [![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/viewmodel/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/viewmodel/):
 ```groovy
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
     implementation "com.motorro.rxlcemodel:viewmodel:x.x.x"
 }
 ```
-Optional: Compose LCE view [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.motorro.rxlcemodel/composeview/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/composeview/):
+Optional: Compose LCE view [![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/composeview/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/composeview/):
 ```groovy
 dependencies {
     // Data serializer for DiskLruCache using Kotlin serialization
