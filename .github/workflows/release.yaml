@@ -20,6 +20,13 @@ jobs:
           java-version: 21
       - name: Cache
         uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2
+            ~/.android/build-cache
+          key: ${GITHUB_REF##*/}
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Release build
