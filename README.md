@@ -1,5 +1,5 @@
 # RxLceModel
-[![Check](https://github.com/motorro/RxLceModel/actions/workflows/check.yml/badge.svg?branch=master)](https://github.com/motorro/RxLceModel/actions/workflows/check.yml) ![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/rx/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/)
+[![Check](https://github.com/motorro/RxLceModel/actions/workflows/check.yml/badge.svg?branch=master)](https://github.com/motorro/RxLceModel/actions/workflows/check.yml) [![Maven Central](https://maven-badges.sml.io/maven-central/com.motorro.rxlcemodel/rx/badge.png)](https://repo1.maven.org/maven2/com/motorro/rxlcemodel/rx/)
 
 A reactive data loading for Android based on 
 [RxJava](https://github.com/ReactiveX/RxJava). The library follows the guidelines recommended in official
