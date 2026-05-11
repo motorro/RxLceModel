@@ -13,6 +13,8 @@
 
 package com.motorro.rxlcemodel.lce
 
+import com.motorro.rxlcemodel.lce.exception.UnhandledTerminationException
+
 /**
  * State for "Loading-Content-Error" resource which retrieves [data]
  * @param DATA Data Type of data being held
@@ -310,5 +312,26 @@ inline fun <DATA : Any> LceState<DATA>.mapEmptyDataItem(crossinline block: () ->
         is LceState.Loading -> LceState.Loading(block(), dataIsValid, type)
         is LceState.Error -> LceState.Error(block(), dataIsValid, error)
         else -> this
+    }
+}
+
+/**
+ * Calls handlers for each state type
+ * @param onLoading State handler for [LceState.Loading]
+ * @param onContent State handler for [LceState.Content]
+ * @param onError State handler for [LceState.Error]
+ * @param terminated State handler for [LceState.Terminated]
+ */
+inline fun <DATA : Any> LceState<DATA>.fold(
+    onLoading: (LceState.Loading<DATA>) -> Unit,
+    onContent: (LceState.Content<DATA>) -> Unit,
+    onError: (LceState.Error<DATA>) -> Unit,
+    terminated: () -> Unit = { throw UnhandledTerminationException() }
+) {
+    when (this) {
+        is LceState.Loading -> onLoading(this)
+        is LceState.Content -> onContent(this)
+        is LceState.Error -> onError(this)
+        LceState.Terminated -> terminated()
     }
 }

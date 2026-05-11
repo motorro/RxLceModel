@@ -73,7 +73,19 @@ public final class com/motorro/rxlcemodel/lce/LceStateKt {
 	public static final fun catchToLce (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/lce/LceState;
 	public static final fun combine (Lcom/motorro/rxlcemodel/lce/LceState;Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function2;)Lcom/motorro/rxlcemodel/lce/LceState;
 	public static final fun flatMap (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/lce/LceState;
+	public static final fun fold (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;)V
+	public static synthetic fun fold$default (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 	public static final fun map (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function1;)Lcom/motorro/rxlcemodel/lce/LceState;
 	public static final fun mapEmptyDataItem (Lcom/motorro/rxlcemodel/lce/LceState;Lkotlin/jvm/functions/Function0;)Lcom/motorro/rxlcemodel/lce/LceState;
+}
+
+public final class com/motorro/rxlcemodel/lce/exception/UnhandledTerminationException : java/lang/IllegalStateException {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCause ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 

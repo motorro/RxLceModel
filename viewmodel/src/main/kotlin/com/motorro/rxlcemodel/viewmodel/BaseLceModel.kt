@@ -18,14 +18,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.motorro.rxlcemodel.lce.LceState
 import com.motorro.rxlcemodel.lce.combine
+import com.motorro.rxlcemodel.lce.exception.UnhandledTerminationException
 import com.motorro.rxlcemodel.rx.LceUseCase
-import com.motorro.rxlcemodel.viewmodel.error.UnhandledException
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import java.util.*
+import java.util.Optional
 
 /**
  * Base model with [state] and [refresh]
@@ -138,7 +138,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
         protected fun addSubscription(completable: Completable) {
             val subscription = completable.subscribe(
                 { /* NOOP */ },
-                { error -> throw UnhandledException(error) }
+                { error -> throw UnhandledTerminationException(error) }
             )
 
             addSubscription(subscription)
@@ -166,7 +166,7 @@ abstract class BaseLceModel<DATA : Any> : BaseViewModel() {
             val subscription = stateObservable
                 .subscribe(
                     { state -> stateData.value = state },
-                    { error -> throw UnhandledException(error) }
+                    { error -> throw UnhandledTerminationException(error) }
                 )
             disposables.add(subscription)
         }

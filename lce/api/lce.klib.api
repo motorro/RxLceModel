@@ -6,6 +6,17 @@
 // - Show declarations: true
 
 // Library unique name: <com.motorro.rxlcemodel:lce>
+final class com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException : kotlin/IllegalStateException { // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException|null[0]
+    constructor <init>(kotlin/Throwable? = ...) // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException.<init>|<init>(kotlin.Throwable?){}[0]
+
+    final val cause // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException.cause|{}cause[0]
+        final fun <get-cause>(): kotlin/Throwable? // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException.cause.<get-cause>|<get-cause>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.motorro.rxlcemodel.lce.exception/UnhandledTerminationException.toString|toString(){}[0]
+}
+
 sealed class <#A: out kotlin/Any> com.motorro.rxlcemodel.lce/LceState { // com.motorro.rxlcemodel.lce/LceState|null[0]
     abstract val data // com.motorro.rxlcemodel.lce/LceState.data|{}data[0]
         abstract fun <get-data>(): #A? // com.motorro.rxlcemodel.lce/LceState.data.<get-data>|<get-data>(){}[0]
@@ -97,5 +108,6 @@ final inline fun <#A: kotlin/Any, #B: kotlin/Any, #C: kotlin/Any> (com.motorro.r
 final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/catchToLce(kotlin/Function1<com.motorro.rxlcemodel.lce/LceState<#A>, com.motorro.rxlcemodel.lce/LceState<#B>>): com.motorro.rxlcemodel.lce/LceState<#B> // com.motorro.rxlcemodel.lce/catchToLce|catchToLce@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState<0:0>,com.motorro.rxlcemodel.lce.LceState<0:1>>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
 final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/flatMap(kotlin/Function1<#A, com.motorro.rxlcemodel.lce/LceState<#B>>): com.motorro.rxlcemodel.lce/LceState<#B> // com.motorro.rxlcemodel.lce/flatMap|flatMap@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<0:0,com.motorro.rxlcemodel.lce.LceState<0:1>>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
 final inline fun <#A: kotlin/Any, #B: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/map(kotlin/Function1<#A, #B>): com.motorro.rxlcemodel.lce/LceState<#B> // com.motorro.rxlcemodel.lce/map|map@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
+final inline fun <#A: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/fold(kotlin/Function1<com.motorro.rxlcemodel.lce/LceState.Loading<#A>, kotlin/Unit>, kotlin/Function1<com.motorro.rxlcemodel.lce/LceState.Content<#A>, kotlin/Unit>, kotlin/Function1<com.motorro.rxlcemodel.lce/LceState.Error<#A>, kotlin/Unit>, kotlin/Function0<kotlin/Unit> = ...) // com.motorro.rxlcemodel.lce/fold|fold@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState.Loading<0:0>,kotlin.Unit>;kotlin.Function1<com.motorro.rxlcemodel.lce.LceState.Content<0:0>,kotlin.Unit>;kotlin.Function1<com.motorro.rxlcemodel.lce.LceState.Error<0:0>,kotlin.Unit>;kotlin.Function0<kotlin.Unit>){0§<kotlin.Any>}[0]
 final inline fun <#A: kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/mapEmptyDataItem(crossinline kotlin/Function0<#A?>): com.motorro.rxlcemodel.lce/LceState<#A> // com.motorro.rxlcemodel.lce/mapEmptyDataItem|mapEmptyDataItem@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function0<0:0?>){0§<kotlin.Any>}[0]
 final inline fun <#A: reified kotlin/Any> (com.motorro.rxlcemodel.lce/LceState<#A>).com.motorro.rxlcemodel.lce/mapEmptyData(crossinline kotlin/Function1<com.motorro.rxlcemodel.lce/LceState<#A>, com.motorro.rxlcemodel.lce/LceState<#A>>): com.motorro.rxlcemodel.lce/LceState<#A> // com.motorro.rxlcemodel.lce/mapEmptyData|mapEmptyData@com.motorro.rxlcemodel.lce.LceState<0:0>(kotlin.Function1<com.motorro.rxlcemodel.lce.LceState<0:0>,com.motorro.rxlcemodel.lce.LceState<0:0>>){0§<kotlin.Any>}[0]
